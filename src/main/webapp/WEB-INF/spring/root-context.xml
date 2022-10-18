@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						https://www.springframework.org/schema/beans/spring-beans.xsd 
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" 	value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" 				value="jdbc:oracle:thin:@sonof.iptime.org:8926:xe"></property>
+		<property name="username" 			value="MOBIIL"></property>
+		<property name="password" 			value="MOBIIL"></property>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" 	value="classpath:mybatis-config.xml"></property>
+		<property name="dataSource" 		ref="dataSource"></property>
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
+<!-- 	파일 업로드 관련 bean 등록, MultipartResolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000"></property>
+		<property name="maxInMemorySize" value="100000000"></property>
+	</bean>	
+	
+<!-- 트랜젝션 관리 객체 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+<!-- @Transactional 어노테이션 처리 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+</beans>
