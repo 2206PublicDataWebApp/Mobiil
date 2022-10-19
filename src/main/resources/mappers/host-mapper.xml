@@ -56,7 +56,51 @@
   	  	SELECT COUNT(*) FROM SPACE_TBL
   	  </select>
   
-  
-  
-  
+  	  <!-- 공간 리스트 -->
+	  <select id="spaceList" resultMap="HostResultMap">
+	  	SELECT * FROM SPACE_TBL
+	  </select>
+	  
+	  <!-- 공간 번호로 공간 불러오기 -->
+	  <select id="spaceByNo">
+	  	SELECT * FROM SPACE_TBL
+	  	FORM SPACE_NO = #{spaceNo}
+	  </select>  
+  	
+  	 <!-- 공간 번호로 공간 이미지 불러오기 -->
+  	 <select id="spaceImgByNo">
+  	 	SELECT * FROM SPACE_IMG
+  	 	WHERE SPACE_NO = #{spaceNo}
+  	 </select>
+  	 
+  	 <!-- 공간 수정 -->
+  	 <update id="spaceModify">
+  	 	UPDATE SPACE_TBL
+  	 	SET SPACE_NAME = #{spaceName}, SPACE_ADDRESS = #{address}, SPACE_COMTENT = #{spaceComent}, SPACE_AREA = #{spaceArea}, SPACE_PRICE = #{spacePrice}
+  	 	WHERE SPACE_NO = #{spaceNo}
+  	 </update>
+  	 
+  	 <!-- 공간 이미지 수정 -->
+  	 <update id="spaceImgModify">
+  	 	UPDATE SPACE_IMG
+  	 	SET SPACE_FILENAME = #{spaceFileName}, SPACE_FILERENAME = #{spaceFileRename}, SPACE_FILEPATH = #{spaceFilePath}
+  	 	WHERE SPACE_IMG_NO = #{spaceImgNo}
+  	 </update>
+  	 
+  	 <!-- 공간 삭제 -->
+  	 <update id="spaceRemove">
+  	 	UPDATE SPACE_TBL
+  	 	SET SPCAE_STATUS = 'N'
+  	 	WHERE SPACE_NO = #{spaceNo} 
+  	 </update>
   </mapper>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

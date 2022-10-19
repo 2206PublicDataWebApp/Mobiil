@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="EUC-KR">
-<title>공간 업로드 페이지</title>
+<title>공간 수정 페이지</title>
 <style>
 	#td{
 		text-align : right;
@@ -22,49 +23,54 @@
 
 <body>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
-	<form action="" method="get">
-		<div id="div" align="center">
-			<table>
-				<tr>
-					<td id="td">공간명   :</td>
-					<td><input type="text" id="spaceName" name="spaceName" placeholder="공간 타이틀을 입력 해주세요." required></td>
-				</tr>
-				<tr>
-					<td id="td">주소   :</td>
-					<td><input type="text" id="sample6_postcode" placeholder="우편번호" required>
-						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" id="sample6_address" placeholder="주소" required><br>
-						<input type="text" id="sample6_detailAddress" placeholder="상세주소" required>
-						<input type="text" id="sample6_extraAddress" placeholder="참고항목"></td>
-				</tr>
-				<tr>
-					<td id="td">공간 이미지   :</td>
-					<td>
-						<button type="button" onclick="addFile();">+</button>
-						<button type="button" onclick="removeFile();">-</button>
-						<input multiple="multiple" type="file" name="uploadFile">
-					</td>
-				</tr>
-				<tr>
-					<td id="td">공간 소개   :</td>
-					<td><textarea class="summernote" id="spaceComent" name=spaceComent></textarea></td>
-				</tr>
-				<tr>
-					<td id="td">지역   :</td>
-					<td><input type="text" id="spaceArea" name="spaceArea" placeholder="강북, 강남, 강서, 강동" required></td>
-				</tr>
-				<tr>
-					<td id="td">금액   :</td>
-					<td><input type="text" id="spacePrice" name="spacePrice" placeholder="금액을 입력 해주세요." required>
-					</td>
-				</tr>
-				<tr>
-					<td><button type="submit">공간 업로드</button></td>
-					<td><button type="reset">취소</button></td>
-				</tr>
-			</table>
-		</div>
-	</form>
+	<h1>공간 정보 수정</h1>
+	<br><br>
+		<form action="/host/spaceModify.mobiil" method="POST">
+		<input type="hidden" name="spaceNo" value="${sOne.spaceNo }">
+			<div id="div" align="center">
+				<table>
+					<tr>
+						<td id="td">공간명   :</td>
+						<td><input type="text" id="spaceName" name="spaceName" value="${sOne.spaceName }"></td>
+					</tr>
+					<tr>
+						<td id="td">주소   :</td>
+						<td><input type="text" id="sample6_postcode">
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+							<input type="text" id="sample6_address"><br>
+							<input type="text" id="sample6_detailAddress">
+							<input type="text" id="sample6_extraAddress"></td>
+					</tr>
+					<tr>
+						<td id="td">공간 이미지   :</td>
+						<td>
+							<c:forEach items="${sImg }" var="img">
+							<input type="hidden" value="${sImg.spaceImgNo }" name="spaceImgNo">
+							<input type="hidden" value="${sImg.spaceFileRename }" name="spaceFileRename">
+							<input multiple="multiple" type="file" name="reloadFile">
+							</c:forEach>
+						</td>
+					</tr>
+					<tr>
+						<td id="td">공간 소개   :</td>
+						<td><textarea class="summernote" name=spaceComent></textarea></td>
+					</tr>
+					<tr>
+						<td id="td">지역   :</td>
+						<td><input type="text" id="spaceArea" name="spaceArea" value="${sOne.spaceArea }"></td>
+					</tr>
+					<tr>
+						<td id="td">금액   :</td>
+						<td><input type="text" id="spacePrice" name="spacePrice" value="${sOne.spacePrice }">
+						</td>
+					</tr>
+					<tr>
+						<td><button type="submit">공간 업로드</button></td>
+						<td><button type="reset">취소</button></td>
+					</tr>
+				</table>
+			</div>
+		</form>
 	
 <script>
 	// 사진 추가

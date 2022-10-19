@@ -6,9 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.domain.SpaceImg;
 
-import domain.space;
-import domain.spaceImg;
 import regervation.Reservation;
 
 
@@ -24,9 +23,19 @@ public interface HostStore {
 	
 	int insertSpace(SqlSession session, Space space);
 
-	int insertSpaceImg(SqlSession session, spaceImg spaceImg);
+	int insertSpaceImg(SqlSession session, SpaceImg spaceImg);
 
 	int getSpaceTotalCount(SqlSession session);
 
-	List<space> spaceList(SqlSession session, int currentPage, int boardLimit);
+	List<Space> spaceList(SqlSession session, int currentPage, int boardLimit);
+
+	Space spaceByNo(SqlSession session, Integer spaceNo);
+
+	List<SpaceImg> spaceImgByNo(SqlSession session, Integer spaceNo);
+
+	int spaceModify(SqlSession session, Space space);
+
+	int spaceImgModify(SqlSession session, SpaceImg spaceImg);
+
+	int spaceRemove(SqlSession session, Integer spaceNo);
 }

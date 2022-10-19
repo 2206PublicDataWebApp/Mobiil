@@ -8,10 +8,11 @@ public class Space {
 		private String spaceName;		// 공간 이름
 		private String address;			// 공간 주소
 		private String spaceComent;		// 공간 소개
-		private String spaceArea;		// 공간 주소
+		private String spaceArea;		// 공간 지역
 		private String spacePrice;		// 공간 가격
 		private String approval;  		// 공간 승인 여부
 		private Date   approvalDate;	// 공간 승인일
+		private String spaceStatus;		// 공간 등록여부
 		
 		
 		public int getSpaceNo() {

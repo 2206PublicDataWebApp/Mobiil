@@ -8,9 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.domain.SpaceImg;
 
-import domain.space;
-import domain.spaceImg;
 import regervation.Reservation;
 
 @Repository
@@ -49,7 +48,7 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public int insertSpaceImg(SqlSession session, spaceImg spaceImg) {
+	public int insertSpaceImg(SqlSession session, SpaceImg spaceImg) {
 		int result = session.insert("HostMapper.insertSpaceImg", spaceImg);
 		return result;
 	}
@@ -61,11 +60,41 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public List<space> spaceList(SqlSession session, int currentPage, int boardLimit) {
+	public List<Space> spaceList(SqlSession session, int currentPage, int boardLimit) {
 		int offset = (currentPage-1)*boardLimit;
 		RowBounds rowBounds = new RowBounds(offset, boardLimit);
-		List<space> sList = session.selectList("HostMapper.spaceList",null, rowBounds);
+		List<Space> sList = session.selectList("HostMapper.spaceList",null, rowBounds);
 		return sList;
+	}
+
+	@Override
+	public Space spaceByNo(SqlSession session, Integer spaceNo) {
+		Space space = session.selectOne("HostMapper.spaceByNo", spaceNo);
+		return space;
+	}
+
+	@Override
+	public List<SpaceImg> spaceImgByNo(SqlSession session, Integer spaceNo) {
+		List<SpaceImg> sImg = session.selectList("HostMapper.spaceImgByNo", spaceNo);
+		return sImg;
+	}
+
+	@Override
+	public int spaceModify(SqlSession session, Space space) {
+		int result = session.update("HostMapper.spaceModify", space);
+		return result;
+	}
+
+	@Override
+	public int spaceImgModify(SqlSession session, SpaceImg spaceImg) {
+		int result = session.update("HostMapper.spaceImgModify", spaceImg);
+		return result;
+	}
+
+	@Override
+	public int spaceRemove(SqlSession session, Integer spaceNo) {
+		int result = session.delete("HostMapper.spaceRemove", spaceNo);
+		return result;
 	}
 
 }

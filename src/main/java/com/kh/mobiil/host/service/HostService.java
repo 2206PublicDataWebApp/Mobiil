@@ -4,9 +4,8 @@ import java.util.List;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.domain.SpaceImg;
 
-import domain.space;
-import domain.spaceImg;
 import regervation.Reservation;
 
 
@@ -22,9 +21,19 @@ public interface HostService {
 	
 	int insertSpace(Space space);
 
-	int insertSpaceImg(spaceImg spaceImg);
+	int insertSpaceImg(SpaceImg spaceImg);
 
 	int getSpaceTotalCount();
 
-	List<space> spaceList(int currentPage, int boardLimit);
+	List<Space> spaceList(int currentPage, int boardLimit);
+
+	Space spaceByNo(Integer spaceNo);
+
+	List<SpaceImg> spaceImgByNo(Integer spaceNo);
+
+	int spaceModify(Space space);
+
+	int spaceImgModify(SpaceImg spaceImg);
+
+	int spaceRemove(Integer spaceNo);
 }
