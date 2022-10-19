@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
- 
-
 
 </head>
 
@@ -48,7 +46,6 @@
 </section>
 
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
-
 
 </body>
 </html>
