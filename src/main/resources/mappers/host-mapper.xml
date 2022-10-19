@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="HostMapper">
+  
+  	<resultMap type="Host" id="HostResultMap">
+  		<id property="" 				column=""/>
+  		<id property="" 				column=""/>
+  		<id property="" 				column=""/>
+  		<id property="" 				column=""/>
+  		<id property="" 				column=""/>
+  		<id property="" 				column=""/>
+  	</resultMap>
+  
+  
+  
+  	  <!-- 호스트 정보 -->
+	  <select id="selectHost" resultMap="HostResultMap">
+  		SELECT * FROM HOST_TBL
+  		WHERE HOST_ID = #{host_id}
+	  </select>
+	  
+	  <!-- 호스트 정보 수정 -->
+	  <update id="HostMapper">
+  		UPDATE HOST_TBL
+		SET HOST_NAME = #{hostName}, HOST_PHONE = #{hostPhone}
+		WHERE HOST_ID = #{hostId}
+	  </update>
+
+	  <!-- 예약 갯수 확인 -->
+	  <select id="getMemberTotalCount" resultType="_int">
+ 		SELECT COUNT(*) FROM RESERVARION_TBL
+	  </select>
+	 
+	  <!-- 예약 리스트 조회 -->
+	  <select id="regervationList" resultMap="HostResultMap">
+ 		SELECT * FROM MEMBER_TBL 
+ 		WHERE HOST_EMAIL = #{hostEmail}
+	  </select>
+	  
+	  <!-- 공간 업로드 -->
+  	  <insert id="insertSpace">
+  		INSERT INTO SPACE_TBL
+  		VALUES(SEQ_SPACE_NO.NEXTVAL, #{spaceName}, #{address}, #{spaceComent}, #{spaceArea}, #{spacePrice}, #{approval}, #{approvalDate})
+  	  </insert>
+  	  
+  	  <!-- 공간 이미지 업로드 -->
+  	  <insert id="insertSpaceImg">
+  	  	INSERT INTO SPACE_IMG
+  	  	VALUES(SEQ_S_IMG_NO.NEXTVAL, SEQ_SPACE_NO.NEXTVAL, #{spaceFileName}, #{spaceFileRename}, #{spaceFilePath})
+  	  </insert>
+  	  
+  	  <!-- 공간 갯수 확인 -->
+  	  <select id="getSpaceTotalCount" resultType="_int">
+  	  	SELECT COUNT(*) FROM SPACE_TBL
+  	  </select>
+  
+  
+  
+  
+  </mapper>
