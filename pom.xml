@@ -35,6 +35,14 @@
 	
 	<dependencies>
 	
+<!-- 	메일 센더 -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency> 
+	
+	
 		<!--기본 org.json  -->
 		<dependency>
 		    <groupId>org.json</groupId>

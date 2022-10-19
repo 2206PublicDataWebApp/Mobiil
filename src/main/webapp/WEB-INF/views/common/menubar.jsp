@@ -64,11 +64,13 @@
 				<!-- 상단 바 영역 나중에 cif로 보이고 안보이고 처리 -->
 					<ul class="top-menu text-right list-inline">
 						<li>로그인</li>
+						<li>로그아웃</li>
 						<li>마이페이지</li>
 						<li>마이채팅</li>
-						<li>로그아웃</li>
-						<li>관리자페이지</li>
+						<li><a href="/admin/banner/list.kh">관리자페이지</a></li>
 						<li>호스트페이지</li>
+						<li><a href="/admin/bannerMail.kh">광고 문의</a></li>
+						
 					</ul>
 				</div>
 		</div>
