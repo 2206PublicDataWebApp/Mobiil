@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,14 +63,29 @@
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<!-- 상단 바 영역 나중에 cif로 보이고 안보이고 처리 -->
+				<c:if test="${sessionScope.loginUser eq null }">
 					<ul class="top-menu text-right list-inline">
-						<li>로그인</li>
-						<li>마이페이지</li>
-						<li>마이채팅</li>
-						<li>로그아웃</li>
-						<li>관리자페이지</li>
-						<li>호스트페이지</li>
+						<li>
+							<a href="/home/login.kh">로그인</a>
+						</li>
 					</ul>
+				</c:if>
+				<c:if test="${not empty loginUser }"> 
+					<ul class="top-menu text-right list-inline">
+						<li>
+							<a href="/member/myInfo.kh">마이페이지</a>
+						</li>
+						<li>
+							<a href="/">마이채팅</a>
+						</li>
+						<li>
+							<a href="/member/logout.kh">로그아웃</a>
+						</li>
+						
+<!-- 						<li>관리자페이지</li> -->
+<!-- 						<li>호스트페이지</li> -->
+					</ul>
+				</c:if>
 				</div>
 		</div>
 	</div>

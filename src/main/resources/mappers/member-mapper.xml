@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="MemberMapper">
+
+	<insert id="insertMember">
+		  INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+	 </insert>
+  
+  	<select id="selectLoginOne" resultType="Member">
+  		SELECT memberEmail, memberName FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
+  	</select>
+  	
+  	<select id="selectOneByEmail" resultType="Member">
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND mStatus = 'Y'
+  	</select>
+  	
+  </mapper>

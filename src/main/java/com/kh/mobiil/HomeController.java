@@ -29,4 +29,9 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/home/login.kh", method = RequestMethod.GET) // 로그인,회원가입 페이지(개인/기업 선택)
+	public String homeLogin(Model model) {
+		return "login/choose";
+	}
+	
 }
