@@ -10,14 +10,23 @@
 	
 	<typeAliases>
 
-		<typeAlias type="com.kh.mobiil.member.domain.Member" alias="Member"/>
-		<typeAlias type="com.kh.mobiil.banner.domain.Banner" alias="Banner"/>
+		<typeAlias type="com.kh.mobiil.member.domain.Member"  	alias="Member"/>
+		<typeAlias type="com.kh.mobiil.banner.domain.Banner" 	alias="Banner"/>
+		<typeAlias type="com.kh.mobiil.chat.domain.ChatRoom" 	alias="ChatRoom"/>
+		<typeAlias type="com.kh.mobiil.chat.domain.Chat" 	 	alias="Chat"/>
+		<typeAlias type="com.kh.mobiil.partner.domain.Partner" 	 alias="Partner"/>
+		
+		
+		
 
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
-		 <mapper resource="mappers/banner-mapper.xml"/>
+		<mapper resource="mappers/banner-mapper.xml"/>
+		<mapper resource="mappers/chatRoom-mapper.xml"/>
+		<mapper resource="mappers/chat-mapper.xml"/>
+		<mapper resource="mappers/partner-mapper.xml"/>
 	</mappers>
 
 </configuration>

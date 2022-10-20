@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="partnerMapper">
+
+
+	<insert id="insertPartner">
+	
+		INSERT INTO PARTNER_TBL VALUES(
+		SEQ_PARTNERNO.NEXTVAL
+		,#{memberNick},#{memberEmail},#{area},#{instrument}
+		,#{title},#{contents}
+		,#{profileFileName},#{profileRename},#{profilePath}
+		,DEFAULT, NULL
+		)
+	
+	</insert>
+	
+	<select id="selectOnePartner" resultType="Partner">
+		SELECT * FROM PARTNER_TBL
+		WHERE memberEmail = #{memberEmail}
+	</select>
+	
+	<select id="selectOneByNo" resultType="Partner">
+		SELECT * FROM PARTNER_TBL
+		WHERE partnerNo = #{partnerNo}
+	</select>
+	
+	<select id="selectTotalCount" resultType="_int">
+	
+		<if test="searchByWho.toString()== 'service'">
+			SELECT COUNT(*) FROM PARTNER_TBL
+			WHERE approval = 'Y'
+		</if>
+		
+		<if test="searchByWho.toString()== 'admin'">
+			SELECT COUNT(*) FROM PARTNER_TBL
+		</if>
+	
+	</select>
+	
+	<select id="selectPartnerList" resultType="Partner">
+		<if test="searchByWho.toString()== 'service'">
+			SELECT * FROM PARTNER_TBL
+			WHERE approval = 'Y'
+			ORDER BY 1 DESC
+		</if>
+		
+		<if test="searchByWho.toString()== 'admin'">
+			SELECT * FROM PARTNER_TBL
+			ORDER BY approval
+		</if>
+	</select>
+	
+	<update id="updateApproval">
+		UPDATE PARTNER_TBL
+		SET		approval = 'Y', approvalDate = SYSDATE
+		WHERE partnerNo = #{partnerNo}
+	</update>
+	
+	
+	
+
+</mapper>

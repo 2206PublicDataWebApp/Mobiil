@@ -10,7 +10,7 @@
 	 </insert>
   
   	<select id="selectLoginOne" resultType="Member">
-  		SELECT memberEmail, memberName FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
+  		SELECT memberEmail, memberName, memberNick FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
   	</select>
   	
   	<select id="selectOneByEmail" resultType="Member">

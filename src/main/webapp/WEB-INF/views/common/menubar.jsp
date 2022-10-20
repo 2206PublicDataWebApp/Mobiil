@@ -40,6 +40,7 @@
   
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="/resources/css/style.css">
+  <!-- 제이쿼리 -->
 
 </head>
 <body>

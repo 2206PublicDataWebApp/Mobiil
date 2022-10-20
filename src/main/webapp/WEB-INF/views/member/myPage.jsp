@@ -52,7 +52,7 @@
             <span> | </span> 
             <span onclick="location.href='#'">결제 내역 보기</span>
             <span> | </span> 
-            <span onclick="location.href='#'">내 파트너 정보</span> 
+            <span onclick="location.href='/partner/myPartnerInfo.kh?memberEmail=${loginUser.memberEmail}'">내 파트너 정보</span>
         </div>
         <br><br><br>
         <div class="required">
