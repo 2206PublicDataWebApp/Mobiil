@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 	function payment(){
-		location.href = "";
+		location.href = "/payment";
 	}
 	
 	function chatting(){
