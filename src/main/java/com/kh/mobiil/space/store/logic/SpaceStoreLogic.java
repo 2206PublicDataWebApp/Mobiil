@@ -16,6 +16,7 @@ public class SpaceStoreLogic implements SpaceStore{
 		map.put("start", start);
 		map.put("end", end);
 		map.put("reservDate", reservDate);
+		System.out.println(map);
 		int result = session.selectOne("SpaceMapper.checkTime", map);
 		return result;
 	}

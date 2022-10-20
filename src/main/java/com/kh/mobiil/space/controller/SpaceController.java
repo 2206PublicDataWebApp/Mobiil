@@ -40,6 +40,7 @@ public class SpaceController {
 	public String checkTime(String start, String end, String reservDate) {
 		System.out.println(start + end + reservDate);
 		int result = sService.checkTime(start, end, reservDate);
+		System.out.println(result);
 		return String.valueOf(result);
 	}
 }

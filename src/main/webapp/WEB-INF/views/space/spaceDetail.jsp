@@ -105,16 +105,21 @@ document.addEventListener('DOMContentLoaded', function() {
 	function payment(){
 		var start = $('#startTime option:selected').val();
 		var end = $('#endTime option:selected').val();
+		if(sDate == "" || start == "시작" || end == "끝"){
+			alert("날짜 혹은 시간을 선택해주세요.");
+		}
+		console.log(sDate);
 		$.ajax({
 			url : "/space/checkTime",
 			data : {"start": start, "end":end, "reservDate":sDate},
 			type : "get",
 			success : function(result) {
+				
 				if(result != 0){
-					alert("예약 가능한 시간입니다.");
+					alert("예약할 수 없는 시간입니다.");
 					/* location.href = "/space/payment"; */
 				}else{
-					alert("예약할 수 없는 시간입니다.");
+					alert("예약 가능한 시간입니다.");
 				}
 			},
 			error : function(){
