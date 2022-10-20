@@ -21,39 +21,21 @@
 <jsp:include page="../views/common/menubar.jsp"></jsp:include>
 
 <div class="hero-slider">
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(/resources/images/slider/slider-1.jpg);">
+	<c:forEach items="${bList }" var="banner" >
+  <div class="slider-item th-fullpage hero-area" style="background-image: url(/resources/images/slider/${banner.bannerRename });">
     <div class="container">
       <div class="row">
         <div class="col-lg-8 text-center">
-      <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">광고</p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">붕어빵이 생각나는 밤 <br> 날이 넘 춥다</h1>
+	      <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">광고</p>
+          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">${banner.bannerMsg }</h1>
           <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="#">Shop Now</a>
         </div>
       </div>
     </div>
   </div>
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(/resources//images/slider/slider-2.jpg);">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 text-left">
-          <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">ê´ê³ </p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="#">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(/resources/images/slider/slider-3.jpg);">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 text-right">
-          <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">ê´ê³ </p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="#">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  </c:forEach>
+  
+
 </div>
 
 

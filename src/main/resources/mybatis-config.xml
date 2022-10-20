@@ -9,15 +9,15 @@
 	</settings>
 	
 	<typeAliases>
-<!-- 		<typeAlias type="com.kh.mobiil.banner.domain.Banner" 			alias="Banner"/> -->
+
 		<typeAlias type="com.kh.mobiil.member.domain.Member" alias="Member"/>
+		<typeAlias type="com.kh.mobiil.banner.domain.Banner" alias="Banner"/>
 
 	</typeAliases>
 
 	<mappers>
-<!-- 		 <mapper resource="mappers/banner-mapper.xml"/> -->
 		<mapper resource="mappers/member-mapper.xml"/>
-
+		 <mapper resource="mappers/banner-mapper.xml"/>
 	</mappers>
 
 </configuration>
