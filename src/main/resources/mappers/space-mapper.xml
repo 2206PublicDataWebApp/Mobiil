@@ -1,9 +1,14 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="spaceMapper">
-
-</mapper> -->
+<mapper namespace="SpaceMapper">
+	<select id="checkTime" resultType="_int">
+		<![CDATA[SELECT COUNT(*) FROM RESERVATION_TBL
+		WHERE RESERV_DATE = #{reservDate} 
+		AND REV_START < #{start} 
+		AND REV_END > #{end}]]>
+	</select>
+</mapper>

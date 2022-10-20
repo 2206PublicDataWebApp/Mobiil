@@ -18,6 +18,7 @@
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		 <mapper resource="mappers/banner-mapper.xml"/>
+		 <mapper resource="mappers/space-mapper.xml"/>
 	</mappers>
 
 </configuration>
