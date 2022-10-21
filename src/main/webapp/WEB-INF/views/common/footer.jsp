@@ -37,7 +37,7 @@
 				<ul class="footer-menu text-uppercase">
 					<!-- 깃 주소 달아주세요-->
 					<li>
-						<a href="#">고종규</a>
+						<a href="https://github.com/JongGyuGo">고종규</a>
 					</li>
 					<li>
 						<a href="#">김다현</a>

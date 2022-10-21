@@ -83,7 +83,7 @@
 							<a href="/member/logout.kh">로그아웃</a>
 						</li>
 						<li><a href="/admin/banner/list.kh">관리자페이지</a></li>
-						<li>호스트페이지</li>
+						<li><a href="/host/hostPage.mobiil">호스트페이지</a></li>
 						<li><a href="/admin/bannerMail.kh">광고 문의</a></li>
 					</ul>
 				</c:if>

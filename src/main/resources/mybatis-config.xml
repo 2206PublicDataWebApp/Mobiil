@@ -16,8 +16,9 @@
 		<typeAlias type="com.kh.mobiil.chat.domain.Chat" 	 	alias="Chat"/>
 		<typeAlias type="com.kh.mobiil.partner.domain.Partner" 	 alias="Partner"/>
 		<typeAlias type="com.kh.mobiil.host.domain.Host" alias="Host"/>
-		
-
+		<typeAlias type="com.kh.mobiil.space.domain.Space" alias="Space"/>
+		<typeAlias type="com.kh.mobiil.space.domain.SpaceImg" alias="SpaceImg"/>
+		<typeAlias type="com.kh.mobiil.space.domain.Reservation" alias="Reservation"/>
 
 	</typeAliases>
 
@@ -27,7 +28,7 @@
 		<mapper resource="mappers/chatRoom-mapper.xml"/>
 		<mapper resource="mappers/chat-mapper.xml"/>
 		<mapper resource="mappers/partner-mapper.xml"/>
-
+		 <mapper resource="mappers/host-mapper.xml"/>
 	</mappers>
 
 </configuration>

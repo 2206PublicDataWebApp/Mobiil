@@ -4,28 +4,69 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="HostMapper">
   
-  	<resultMap type="Host" id="HostResultMap">
-  		<id property="" 				column=""/>
-  		<id property="" 				column=""/>
-  		<id property="" 				column=""/>
-  		<id property="" 				column=""/>
-  		<id property="" 				column=""/>
-  		<id property="" 				column=""/>
-  	</resultMap>
-  
-  
+  		<resultMap type="Host" 						id="HostResultMap">
+  		<id 	property="hostEmail" 				column="HOSTEMAIL"/>
+  		<result property="hostPwd" 					column="HOSTPWD"/>
+  		<result property="hostName" 				column="HOSTNAME"/>
+  		<result property="hostPhone" 				column="HOSTPHONE"/>
+  		<result property="companyName" 				column="COMPANYNAME"/>
+  		<result property="companyRegNum" 			column="COMPANYREGNUM"/>
+  		<result property="accountName" 				column="ACCOUNTNAME"/>
+  		<result property="accountHolder" 			column="ACCOUNTHOLDER"/>
+  		<result property="accountNumber" 			column="ACCOUNTNUMBER"/>
+  		<result property="enrollDate" 				column="ENROLLDATE"/>
+  		<result property="updateDate" 				column="UPDATEDATE"/>
+  		<result property="hStatus" 					column="HSTATUS"/>
+  		</resultMap>
+  	
+  	  	<resultMap type="Space" 					id="SpaceResultMap">
+  		<id 	property="spaceNo" 					column="SPACE_NO"/>
+  		<result property="spaceName" 				column="SPACE_NAME"/>
+  		<result property="address" 					column="SPACE_ADDRESS"/>
+  		<result property="spaceComent" 				column="SPACE_COMENT"/>
+  		<result property="spaceArea" 				column="SPACE_AREA"/>
+  		<result property="spacePrice" 				column="SPACE_PRICE"/>
+  		<result property="approval" 				column="SPACE_PRICE"/>
+  		<result property="approvalDate" 			column="APPROVAL_DATE"/>
+  		<result property="spaceStatus" 				column="SPACE_STATUS"/>
+  		</resultMap>
+  	
+  		<resultMap type="SpaceImg" 					id="SpaceImgResultMap">
+  		<id 	property="spaceImgNo" 				column="SPACE_IMG_NO"/>
+  		<result property="spaceNo" 					column="SPACE_NO"/>
+  		<result property="spaceFileName" 			column="SPACE_FILENAME"/>
+  		<result property="spaceFileRename" 			column="SPACE_FILERENAME"/>
+  		<result property="spaceFilePath" 			column="SPACE_FILEPATH"/>
+  		</resultMap>
+  	
+  		<resultMap type="Reservation" 				id="ReservationResultMap">
+  		<id 	property="reservationNo" 			column="RESERV_NO"/>
+  		<result property="memberEmail" 				column="MEMBER_EMAIL"/>
+  		<result property="hostEmail" 				column="HOST_EMAIL"/>
+  		<result property="spaceNo" 					column="SPACE_NO"/>
+  		<result property="spaceName" 				column="SPACE_TITLE"/>
+  		<result property="spaceAddress" 			column="SPACE_ADDRESS"/>
+  		<result property="price" 					column="PRICE"/>
+  		<result property="reservationDate" 			column="RESERV_DATE"/>
+  		<result property="reservationTime" 			column="RESERV_TIME"/>
+  		<result property="memberName" 				column="MEMBER_NAME"/>
+  		<result property="memberPhone" 				column="MEMBER_PHONE"/>
+  		<result property="paymentDate" 				column="PAYMENT_DATE"/>
+  		<result property="reservationStatus" 		column="RESERV_STATUS"/>
+  		<result property="reviewStatus" 			column="REV_STATUS"/>
+  		</resultMap>
   
   	  <!-- 호스트 정보 -->
 	  <select id="selectHost" resultMap="HostResultMap">
   		SELECT * FROM HOST_TBL
-  		WHERE HOST_ID = #{host_id}
+  		WHERE HOSTEMAIL = #{hostEmail}
 	  </select>
 	  
 	  <!-- 호스트 정보 수정 -->
-	  <update id="HostMapper">
+	  <update id="hostModify">
   		UPDATE HOST_TBL
-		SET HOST_NAME = #{hostName}, HOST_PHONE = #{hostPhone}
-		WHERE HOST_ID = #{hostId}
+		SET HOSTNAME = #{hostName}, HOSTPHONE = #{hostPhone}
+		WHERE HOSTEMAIL = #{hostEmail}
 	  </update>
 
 	  <!-- 예약 갯수 확인 -->
@@ -36,19 +77,19 @@
 	  <!-- 예약 리스트 조회 -->
 	  <select id="regervationList" resultMap="HostResultMap">
  		SELECT * FROM MEMBER_TBL 
- 		WHERE HOST_EMAIL = #{hostEmail}
+ 		WHERE HOSTEMAIL = #{hostEmail}
 	  </select>
 	  
 	  <!-- 공간 업로드 -->
   	  <insert id="insertSpace">
   		INSERT INTO SPACE_TBL
-  		VALUES(SEQ_SPACE_NO.NEXTVAL, #{spaceName}, #{address}, #{spaceComent}, #{spaceArea}, #{spacePrice}, #{approval}, #{approvalDate})
+  		VALUES(SEQ_SPACE_NO.NEXTVAL, #{spaceName}, #{address}, #{spaceComent}, #{spaceArea}, #{spacePrice}, DEFAULT, DEFAULT, DEFAULT)
   	  </insert>
   	  
   	  <!-- 공간 이미지 업로드 -->
   	  <insert id="insertSpaceImg">
   	  	INSERT INTO SPACE_IMG
-  	  	VALUES(SEQ_S_IMG_NO.NEXTVAL, SEQ_SPACE_NO.NEXTVAL, #{spaceFileName}, #{spaceFileRename}, #{spaceFilePath})
+  	  	VALUES(SEQ_SPACE_IMG.NEXTVAL, SEQ_SPACE_NO.CURRVAL, #{spaceFileName}, #{spaceFileRename}, #{spaceFilePath})
   	  </insert>
   	  
   	  <!-- 공간 갯수 확인 -->
@@ -57,18 +98,19 @@
   	  </select>
   
   	  <!-- 공간 리스트 -->
-	  <select id="spaceList" resultMap="HostResultMap">
+	  <select id="spaceList" resultMap="SpaceResultMap">
 	  	SELECT * FROM SPACE_TBL
+	  	WHERE SPACE_STATUS = 'Y'
 	  </select>
 	  
 	  <!-- 공간 번호로 공간 불러오기 -->
-	  <select id="spaceByNo">
+	  <select id="spaceByNo" resultMap="SpaceResultMap">
 	  	SELECT * FROM SPACE_TBL
-	  	FORM SPACE_NO = #{spaceNo}
+	  	WHERE SPACE_NO = #{spaceNo}
 	  </select>  
   	
   	 <!-- 공간 번호로 공간 이미지 불러오기 -->
-  	 <select id="spaceImgByNo">
+  	 <select id="spaceImgByNo" resultMap="SpaceImgResultMap">
   	 	SELECT * FROM SPACE_IMG
   	 	WHERE SPACE_NO = #{spaceNo}
   	 </select>
@@ -90,7 +132,7 @@
   	 <!-- 공간 삭제 -->
   	 <update id="spaceRemove">
   	 	UPDATE SPACE_TBL
-  	 	SET SPCAE_STATUS = 'N'
+  	 	SET SPACE_STATUS = 'N'
   	 	WHERE SPACE_NO = #{spaceNo} 
   	 </update>
   </mapper>
