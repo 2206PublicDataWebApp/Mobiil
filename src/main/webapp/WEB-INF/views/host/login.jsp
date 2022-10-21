@@ -8,7 +8,6 @@
     <style>
         .login {
             text-align: center;
-            margin-top: 200px;
         }
 
         #input {
@@ -29,12 +28,14 @@
     </style>
 </head>
 <body>
+<jsp:include page="../common/menubar.jsp"></jsp:include>
+
     <div class="login">
         <h1>기업회원 로그인</h1>
         <br><br><br>
-        <form name="email" action="/" method="post">
-            <input style="margin: 1px 1px 10px 1px;" type="email" id="input" placeholder="이메일" required><br>
-            <input type="password" id="input" placeholder="비밀번호" required>
+        <form name="email" action="/host/login.kh" method="post">
+            <input style="margin: 1px 1px 10px 1px;" type="email" id="input" name="hostEmail" placeholder="이메일" required><br>
+            <input type="password" id="input" name="hostPwd" placeholder="비밀번호" required>
 
             <div>
                 <span style="padding: 1px 295px 1px 1px;">
@@ -50,7 +51,10 @@
         </form>
         <br>
         <span>아직 모빌 회원이 아니신가요?</span>
-        <span><a href="">회원가입</a></span>
+        <span><a href="/host/joinView.kh">회원가입</a></span>
     </div>
+    
+       <br><br><br><br>
+  <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -4,17 +4,38 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="MemberMapper">
-
-	<insert id="insertMember">
+  
+	<!-- 멤버(개인회원) -->
+	<insert id="insertMember"> <!-- 회원가입 -->
 		  INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	 </insert>
   
-  	<select id="selectLoginOne" resultType="Member">
-  		SELECT memberEmail, memberName FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
+  	<select id="selectLoginOne" resultType="Member"> <!-- 로그인 -->
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
   	</select>
   	
-  	<select id="selectOneByEmail" resultType="Member">
+  	<select id="selectOneByEmail" resultType="Member"> <!-- 마이페이지 -->
   		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND mStatus = 'Y'
+  	</select>
+  	
+  	 <update id="updateMember"> <!-- 정보수정 -->
+		UPDATE MEMBER_TBL
+		SET memberNick = #{memberNick}, memberPwd = #{memberPwd}, memberPhone = #{memberPhone} WHERE memberEmail = #{memberEmail}
+	</update>
+  	
+  	<update id="deleteMember"> <!-- 회원탈퇴 -->
+  		UPDATE MEMBER_TBL SET mStatus = 'N' WHERE memberEmail = #{memberEmail} 
+  	</update>
+  	
+  	
+  	<!-- 호스트 -->
+  	<insert id="insertHost">
+		  INSERT INTO HOST_TBL VALUES(#{hostEmail}, #{hostPwd}, #{hostName}, #{hostPhone}, #{companyName}, #{companyRegNum}, 
+		  #{accountName}, #{accountHolder}, #{accountNumber}, #{regPhotoName}, #{regPhotoRename}, #{regPhotoPath}, DEFAULT, DEFAULT, DEFAULT)
+	 </insert>
+  
+  	<select id="selectLoginhOne" resultType="Host">
+  		SELECT * FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hostPwd = #{hostPwd} AND hStatus = 'Y'
   	</select>
   	
   </mapper>

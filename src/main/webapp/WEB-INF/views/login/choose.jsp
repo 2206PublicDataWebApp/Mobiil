@@ -7,7 +7,8 @@
  <title>개인/기업 로그인 선택</title>
     <style>
         .btn {
-            margin-left: 450px;
+           width: 100%; 
+           text-align: center;
         }
         .button {
             width: 250px;
@@ -28,12 +29,12 @@
 <jsp:include page="../common/menubar.jsp"></jsp:include>
     <div class="btn">
         <button class="button" onclick="location.href='/member/loginView.kh'">개인회원<br>로그인 하기</button>
-        <button class="button">기업(호스트)회원<br>로그인 하기</button>
+        <button class="button" onclick="location.href='/host/loginView.kh'">기업(호스트)회원<br>로그인 하기</button>
     </div>
     <div class="span">
         <span onclick="location.href='/member/joinView.kh'">개인 회원가입하기</span>
         <span> | </span> 
-        <span onclick="location.href='#'">기업 회원가입하기</span> 
+        <span onclick="location.href='/host/joinView.kh'">기업 회원가입하기</span> 
         <span> | </span> 
         <span onclick="location.href='#'">비밀번호 찾기</span>
     </div>
