@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="EUC-KR">
-<title>°ø°£ ¾÷·Îµå ÆäÀÌÁö</title>
+<meta charset="UTF-8">
+<title>ê³µê°„ ì—…ë¡œë“œ í˜ì´ì§€</title>
 <style>
 	#td{
 		text-align : right;
@@ -22,23 +22,25 @@
 
 <body>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
-	<form action="" method="get">
+	<form action="/host/spaceInsert.mobiil" method="POST" enctype="multipart/form-data">
 		<div id="div" align="center">
+		<h2>ê³µê°„ ì—…ë¡œë“œ</h2><br>
+		<hr>
 			<table>
 				<tr>
-					<td id="td">°ø°£¸í   :</td>
-					<td><input type="text" id="spaceName" name="spaceName" placeholder="°ø°£ Å¸ÀÌÆ²À» ÀÔ·Â ÇØÁÖ¼¼¿ä." required></td>
+					<td id="td">ê³µê°„ëª…   :</td>
+					<td><input type="text" id="spaceName" name="spaceName" placeholder="ê³µê°„ íƒ€ì´í‹€ì„ ì…ë ¥ í•´ì£¼ì„¸ìš”." required></td>
 				</tr>
 				<tr>
-					<td id="td">ÁÖ¼Ò   :</td>
-					<td><input type="text" id="sample6_postcode" placeholder="¿ìÆí¹øÈ£" required>
-						<input type="button" onclick="sample6_execDaumPostcode()" value="¿ìÆí¹øÈ£ Ã£±â"><br>
-						<input type="text" id="sample6_address" placeholder="ÁÖ¼Ò" required><br>
-						<input type="text" id="sample6_detailAddress" placeholder="»ó¼¼ÁÖ¼Ò" required>
-						<input type="text" id="sample6_extraAddress" placeholder="Âü°íÇ×¸ñ"></td>
+					<td id="td">ì£¼ì†Œ   :</td>
+					<td><input type="text" id="sample6_postcode" placeholder="ìš°í¸ë²ˆí˜¸" required>
+						<input type="button" onclick="sample6_execDaumPostcode()" value="ìš°í¸ë²ˆí˜¸ ì°¾ê¸°"><br>
+						<input type="text" id="sample6_address" name="address" placeholder="ì£¼ì†Œ" required><br>
+						<input type="text" id="sample6_detailAddress" placeholder="ìƒì„¸ì£¼ì†Œ" required>
+						<input type="text" id="sample6_extraAddress" placeholder="ì°¸ê³ í•­ëª©"></td>
 				</tr>
-				<tr>
-					<td id="td">°ø°£ ÀÌ¹ÌÁö   :</td>
+				<tr class="fileTr">
+					<td id="td">ê³µê°„ ì´ë¯¸ì§€   :</td>
 					<td>
 						<button type="button" onclick="addFile();">+</button>
 						<button type="button" onclick="removeFile();">-</button>
@@ -46,35 +48,35 @@
 					</td>
 				</tr>
 				<tr>
-					<td id="td">°ø°£ ¼Ò°³   :</td>
+					<td id="td">ê³µê°„ ì†Œê°œ   :</td>
 					<td><textarea class="summernote" id="spaceComent" name=spaceComent></textarea></td>
 				</tr>
 				<tr>
-					<td id="td">Áö¿ª   :</td>
-					<td><input type="text" id="spaceArea" name="spaceArea" placeholder="°­ºÏ, °­³², °­¼­, °­µ¿" required></td>
+					<td id="td">ì§€ì—­   :</td>
+					<td><input type="text" id="spaceArea" name="spaceArea" placeholder="ê°•ë¶, ê°•ë‚¨, ê°•ì„œ, ê°•ë™" required></td>
 				</tr>
 				<tr>
-					<td id="td">±İ¾×   :</td>
-					<td><input type="text" id="spacePrice" name="spacePrice" placeholder="±İ¾×À» ÀÔ·Â ÇØÁÖ¼¼¿ä." required>
+					<td id="td">ê¸ˆì•¡   :</td>
+					<td><input type="text" id="spacePrice" name="spacePrice" placeholder="ê¸ˆì•¡ì„ ì…ë ¥ í•´ì£¼ì„¸ìš”." required>
 					</td>
 				</tr>
 				<tr>
-					<td><button type="submit">°ø°£ ¾÷·Îµå</button></td>
-					<td><button type="reset">Ãë¼Ò</button></td>
+					<td><button type="submit">ê³µê°„ ì—…ë¡œë“œ</button></td>
+					<td><button type="reset">ì·¨ì†Œ</button></td>
 				</tr>
 			</table>
 		</div>
 	</form>
 	
 <script>
-	// »çÁø Ãß°¡
+	// ì‚¬ì§„ ì¶”ê°€
 	function addFile(){
 		var number = 2;
 		var trTag = $(".fileTr");
 		$(trTag).children('td').eq(1).append("<br><input multiple='multiple' type='file' name='uploadFile' />");
 		number = number + 1;
 	}
-	// »çÁø »èÁ¦
+	// ì‚¬ì§„ ì‚­ì œ
 	function removeFile(){
 		var trTag = $(".fileTr");
 	 	if($(trTag).children('td').eq(1).children('input').length > 1) {
@@ -82,7 +84,7 @@
 		 	$(trTag).children('td').eq(1).children('br:last').remove();
 		} 
 	}
-	// ÁÖ¼Ò °Ë»ö
+	// ì£¼ì†Œ ê²€ìƒ‰
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -94,7 +96,7 @@
                     addr = data.jibunAddress;
                 }
                 if(data.userSelectedType === 'R'){
-                    if(data.bname !== '' && /[µ¿|·Î|°¡]$/g.test(data.bname)){
+                    if(data.bname !== '' && /[ë™|ë¡œ|ê°€]$/g.test(data.bname)){
                         extraAddr += data.bname;
                     }
                     if(data.buildingName !== '' && data.apartment === 'Y'){
@@ -115,15 +117,15 @@
         }).open();
     }
     
-	// ¼­¸Ó³ëÆ®
+	// ì„œë¨¸ë…¸íŠ¸
     $(document).ready(function() {
     	$('.summernote').summernote({
-    		  height: 300,                 // ¿¡µğÅÍ ³ôÀÌ
-    		  minHeight: null,             // ÃÖ¼Ò ³ôÀÌ
-    		  maxHeight: null,             // ÃÖ´ë ³ôÀÌ
-    		  focus: true,                  // ¿¡µğÅÍ ·ÎµùÈÄ Æ÷Ä¿½º¸¦ ¸ÂÃâÁö ¿©ºÎ
-    		  lang: "ko-KR",					// ÇÑ±Û ¼³Á¤
-    		  placeholder: 'ÃÖ´ë 2048ÀÚ±îÁö ¾µ ¼ö ÀÖ½À´Ï´Ù'	//placeholder ¼³Á¤
+    		  height: 300,                 // ì—ë””í„° ë†’ì´
+    		  minHeight: null,             // ìµœì†Œ ë†’ì´
+    		  maxHeight: null,             // ìµœëŒ€ ë†’ì´
+    		  focus: true,                  // ì—ë””í„° ë¡œë”©í›„ í¬ì»¤ìŠ¤ë¥¼ ë§ì¶œì§€ ì—¬ë¶€
+    		  lang: "ko-KR",					// í•œê¸€ ì„¤ì •
+    		  placeholder: 'ìµœëŒ€ 2048ìê¹Œì§€ ì“¸ ìˆ˜ ìˆìŠµë‹ˆë‹¤'	//placeholder ì„¤ì •
               
     	});
     });

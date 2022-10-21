@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여행카세 : 관리자 페이지</title>
+<title>모빌</title>
 	<style>
 		body{
 			font-family: 'Noto Sans KR', sans-serif;
@@ -21,6 +21,14 @@
 		}
 		li{
 			text-align:center;
+		}
+		
+		#side{
+			float : left;
+			width : 20%;
+			border-right : 1px solid black;
+			padding-left : 20px;
+			font-size: 20px;
 		}
 	</style>
 </head>
@@ -50,7 +58,7 @@
 				<a class="function" href="/host/spaceInsertView.mobiil">공간 업로드</a><br><br>
 			</li>
 			<li>
-				<a class="function" href="/host/spaceListView.mobiil" onclick="">공간 리스트</a>
+				<a class="function" href="/host/spaceList.mobiil" onclick="">공간 리스트</a>
 			</li>
 		</ul>
 	</div>

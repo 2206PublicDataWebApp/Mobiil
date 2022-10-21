@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>°ø°£ ¸®½ºÆ®</title>
+<meta charset="UTF-8">
+<title>ê³µê°„ ë¦¬ìŠ¤íŠ¸</title>
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 <style>
 	#td{
@@ -24,16 +24,16 @@
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
 
 		<div id="div" align="center">
-		<h2>°ø°£ ¸®½ºÆ®</h2><br>
+		<h2>ê³µê°„ ë¦¬ìŠ¤íŠ¸</h2><br>
 		<hr>
 				<table>
 						<tr>
 							<td>No.</td>
-							<td>°ø°£¸í</td>
-							<td>Áö¿ª</td>
-							<td>±Ý¾×</td>
-							<td>¼öÁ¤</td>
-							<td>»èÁ¦</td>
+							<td>ê³µê°„ëª…</td>
+							<td>ì§€ì—­</td>
+							<td>ê¸ˆì•¡</td>
+							<td>ìˆ˜ì •</td>
+							<td>ì‚­ì œ</td>
 						</tr>
 						<c:forEach items="${sList }" var="space">
 						<tr>
@@ -41,8 +41,8 @@
 							<td>${space.spaceName }</td>
 							<td>${space.spaceArea }</td>
 							<td>${space.spacePrice }</td>
-							<td><button type="button" onclick="location.href='/host/spaceModifyView.mobiil?spaceNo=${space.spaceNo}'">¼öÁ¤</button></td>
-							<td><button type="button" onclick="location.href='/host/spaceRemove.mobiil?spaceNo=${space.spaceNo}'">»èÁ¦</button></td>
+							<td><button type="button" onclick="location.href='/host/spaceModifyView.mobiil?spaceNo=${space.spaceNo}'">ìˆ˜ì •</button></td>
+							<td><button type="button" onclick="location.href='/host/spaceRemove.mobiil?spaceNo=${space.spaceNo}'">ì‚­ì œ</button></td>
 						</tr>
 						</c:forEach>
 						<tr>
@@ -50,7 +50,7 @@
 								<ul class="pagination">
 									<li>
 										<c:if test="${currentPage ne 1 }">
-											<a href="/host/spaceList.mobiil?page=${currentPage - 1}">ÀÌÀü</a>
+											<a href="/host/spaceList.mobiil?page=${currentPage - 1}">ì´ì „</a>
 										</c:if>
 									</li>
 									<li>
@@ -60,7 +60,7 @@
 									</li>
 									<li>
 										<c:if test="${currentPage ne maxPage}">
-											<a href="/host/spaceList.mobiil?page=${currentPage + 1 }">´ÙÀ½</a>
+											<a href="/host/spaceList.mobiil?page=${currentPage + 1 }">ë‹¤ìŒ</a>
 										</c:if>
 									</li>
 							    </ul>

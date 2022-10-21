@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>¿¹¾à ¸®½ºÆ®</title>
+<meta charset="UTF-8">
+<title>ì˜ˆì•½ ë¦¬ìŠ¤íŠ¸</title>
 
 <style>
 	#td{
@@ -23,65 +23,48 @@
 <body>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
 
-		<div id="div" align="center">
-		<h2>¿¹¾à ¸®½ºÆ®</h2><br>
+	<div id="div" align="center">
+		<h2>ì˜ˆì•½ ë¦¬ìŠ¤íŠ¸</h2>
+		<br>
 		<hr>
-				<table>
-						<tr>
-							<td>No.</td>
-							<td>¿¹¾àÀÚ</td>
-							<td>¿¹¾àÀÏÀÚ</td>
-							<td>¿¹¾à½Ã°£</td>
-							<td>¼öÁ¤</td>
-							<td>»èÁ¦</td>
-						</tr>
-					<c:forEach items="${rList }" var="reservation">
-						<tr>
-							<td>${reservation. }</td>
-							<td>${reservation. }</td>
-							<td>${reservation. }</td>
-							<td>${reservation. }</td>
-							<td><button onclick="">¼öÁ¤</button></td>
-							<td><button onclick="">»èÁ¦</button></td>
-						</tr>
-					</c:forEach>
-						<tr>
-							<td height="30" colspan="6" align="center">
-								<ul class="pagination">
-									<li>
-										<c:if test="${currentPage ne 1 }">
-											<a href="/host/registList.mobiil?page=${currentPage - 1}">ÀÌÀü</a>
-										</c:if>
-									</li>
-									<li>
-										<c:forEach var="page" begin="${startNavi }" end="${endNavi }">
-											<a href="/host/registList.mobiil?page=${page }">${page }</a>
-										</c:forEach>
-									</li>
-									<li>
-										<c:if test="${currentPage ne maxPage}">
-											<a href="/host/registList.mobiil?page=${currentPage + 1 }">´ÙÀ½</a>
-										</c:if>
-									</li>
-							    </ul>
-							</td>
-						</tr>
-				</table>
-				<br><br>
-				
-				
-				
-				
-				
-				
-		</div>
-
-
-
-
-
-
-
-
+		<table>
+			<tr>
+				<td>No.</td>
+				<td>ì˜ˆì•½ìž</td>
+				<td>ì˜ˆì•½ì¼ìž</td>
+				<td>ì˜ˆì•½ì‹œê°„</td>
+				<td>ìˆ˜ì •</td>
+				<td>ì‚­ì œ</td>
+			</tr>
+			<%-- <c:forEach items="" var=""> --%>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><button onclick="">ìˆ˜ì •</button></td>
+					<td><button onclick="">ì‚­ì œ</button></td>
+				</tr>
+			<%-- </c:forEach> --%>
+			<tr>
+				<td height="30" colspan="6" align="center">
+					<ul class="pagination">
+						<li><c:if test="${currentPage ne 1 }">
+								<a href="/host/registList.mobiil?page=${currentPage - 1}">ì´ì „</a>
+							</c:if></li>
+						<li><c:forEach var="page" begin="${startNavi }"
+								end="${endNavi }">
+								<a href="/host/registList.mobiil?page=${page }">${page }</a>
+							</c:forEach></li>
+						<li><c:if test="${currentPage ne maxPage}">
+								<a href="/host/registList.mobiil?page=${currentPage + 1 }">ë‹¤ìŒ</a>
+							</c:if></li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<br>
+	</div>
 </body>
 </html>

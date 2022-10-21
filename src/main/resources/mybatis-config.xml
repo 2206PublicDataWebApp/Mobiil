@@ -12,12 +12,17 @@
 
 		<typeAlias type="com.kh.mobiil.member.domain.Member" alias="Member"/>
 		<typeAlias type="com.kh.mobiil.banner.domain.Banner" alias="Banner"/>
+		<typeAlias type="com.kh.mobiil.host.domain.Host" alias="Host"/>
+		<typeAlias type="com.kh.mobiil.space.domain.Space" alias="Space"/>
+		<typeAlias type="com.kh.mobiil.space.domain.SpaceImg" alias="SpaceImg"/>
+		<typeAlias type="com.kh.mobiil.space.domain.Reservation" alias="Reservation"/>
 
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml"/>
 		 <mapper resource="mappers/banner-mapper.xml"/>
+		 <mapper resource="mappers/host-mapper.xml"/>
 	</mappers>
 
 </configuration>
