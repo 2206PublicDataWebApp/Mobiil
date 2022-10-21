@@ -49,7 +49,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="category-box category-box-2">
-					<a href="/partner.kh">
+					<a href="/partner/list.kh">
 						<img src="/resources/images/board/category/category-1.jpg" alt="" />
 						<div class="content">
 							<h3>파트너</h3>

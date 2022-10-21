@@ -1,5 +1,0 @@
-package com.kh.mobiil.chat.domain;
-
-public class ChatMsg {
-
-}

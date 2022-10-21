@@ -10,8 +10,10 @@
 		  INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	 </insert>
   
+
   	<select id="selectLoginOne" resultType="Member"> <!-- 로그인 -->
   		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
+
   	</select>
   	
   	<select id="selectOneByEmail" resultType="Member"> <!-- 마이페이지 -->

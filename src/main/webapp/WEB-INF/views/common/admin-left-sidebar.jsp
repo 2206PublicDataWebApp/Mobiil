@@ -20,7 +20,7 @@
 					        </li>
 					        <li><a href="#!">대시보드</a>
 					        </li>
-					        <li><a href="#!">파트너 관리</a>
+					        <li><a href="/admin/partner/list.kh">파트너 관리</a>
 					        </li>
 					        <li><a href="#!">공간 관리</a>
 					        </li>

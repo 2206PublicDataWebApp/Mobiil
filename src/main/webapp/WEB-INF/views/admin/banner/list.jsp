@@ -18,7 +18,7 @@
 		<div class="row">
 		<jsp:include page="../../../views/common/admin-left-sidebar.jsp"></jsp:include>
 			<div class="col-md-10">
-			<h1 align="center">배너 리스트</h1>
+			<h1 align="center">배너 관리</h1>
 		
 		
 	<c:forEach items="${bList }" var="banner" >
@@ -34,7 +34,8 @@
 							<br>저장된 배너가 없습니다.
 						</c:if>
 						</td>
-						<td width='20%'><input type="file" name="uploadFile" ></td>
+						<td width='20%'><input type="file" name="uploadFile"  
+						src="/resources/images/slider/${banner.bannerRename }"></td>
 						<td width='30%'><input type="text" name="bannerMsg" value="${banner.bannerMsg }"> </td>
 						<td width='5%'><input type="submit" value="저장" class="btn btn-primary"></td>
 						<td width='5%' ><input type="reset" value="취소" class="btn btn-danger"></td>
