@@ -40,7 +40,7 @@
 						<a href="https://github.com/JongGyuGo">고종규</a>
 					</li>
 					<li>
-						<a href="#">김다현</a>
+						<a href="https://github.com/hhdk0">김다현</a>
 					</li>
 					<li>
 						<a href="https://github.com/seulki1211">정슬기</a>

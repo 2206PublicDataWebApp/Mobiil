@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Mobiil</title>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=163c926f2747f3a404b998b190a36731"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script>
+
 <!-- fullcalendar CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
@@ -23,8 +27,17 @@
 </head>
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
-<div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
+<div>
+<h1>${space.spaceName }</h1>
+</div>
+<div>
+${space.spaceComent }
+</div>
+<div id="map" style="width:500px;height:400px;"></div>
 
+<br><br><br><br><br>
+<div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
+<br><br><br><br><br>
 <select id="startTime" onchange="check();">
 <option value="시작">시작</option>
 <option value="9">9시</option>
@@ -66,42 +79,66 @@
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
-var sDate = "";
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-    	headerToolbar: {
-    		left: 'prev',
-            center: 'title',
-            right: 'next'
-        },
-        locale: "ko",
-        height: 360,
-    	initialView: 'dayGridMonth',
-    	editable: false,
-    	unselectAuto : true,
-    	selectOverlap : false,
-    	dateClick: function (dateClickInfo) {
-    		  // get all fc-day element
-    		  const fcDayElements = document.querySelectorAll(
-    		    ".fc-daygrid-day.fc-day"
-    		  );
-    		  // init background color found element
-    		  fcDayElements.forEach((element, key, parent) => {
-    		    element.style.backgroundColor = "";
-    		  });
-    		  // set background color clicked Element
-    		  dateClickInfo.dayEl.style.backgroundColor = "#CAF5DC";
-    		  sDate = dateClickInfo.dateStr;
-    		  alert(sDate); // 날짜 담기
-    		},
-    	  function( dropInfo ) { 
-    		  event.remove();
-    	  }
-    });
-    calendar.render();
-  });
-  
+	
+	// 카카오 지도
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표간 변환 서비스 객체 생성
+	var callback = function(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+	        console.log(result);
+	    }
+	};
+	geocoder.addressSearch(${space.address}, callback);
+	mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	// fullcalender
+	var sDate = "";
+	document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('calendar');
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	    	headerToolbar: {
+	    		left: 'prev',
+	            center: 'title',
+	            right: 'next'
+	        },
+	        locale: "ko",
+	        height: 360,
+	    	initialView: 'dayGridMonth',
+	    	editable: false,
+	    	unselectAuto : true,
+	    	selectOverlap : false,
+	    	dateClick: function (dateClickInfo) {
+	    		  // get all fc-day element
+	    		  const fcDayElements = document.querySelectorAll(
+	    		    ".fc-daygrid-day.fc-day"
+	    		  );
+	    		  // init background color found element
+	    		  fcDayElements.forEach((element, key, parent) => {
+	    		    element.style.backgroundColor = "";
+	    		  });
+	    		  // set background color clicked Element
+	    		  dateClickInfo.dayEl.style.backgroundColor = "#CAF5DC";
+	    		  sDate = dateClickInfo.dateStr;
+	    		  const clickDate = new Date(sDate);
+	    		  const today = new Date();
+	    		  if(today>clickDate){
+	    			  alert("선택할 수 없는 날짜입니다.");
+	    		  }
+	    		},
+	    	  function( dropInfo ) { 
+	    		  event.remove();
+	    	  }
+	    });
+	    calendar.render();
+	  });
+
+	// 결제하기 누르면 날짜 및 시간 유효성 검사
 	function payment(){
 		var start = $('#startTime option:selected').val();
 		var end = $('#endTime option:selected').val();
@@ -128,10 +165,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		})
 	}
 	
+	// 채팅 이동
 	function chatting(){
 		location.href = "";
 	}
 	
+	// 시작시간 > 끝시간 선택시 option 리셋 유효성 검사
 	function check(){
 		var start = $('#startTime option:selected').val();
 		var end = $('#endTime option:selected').val();
