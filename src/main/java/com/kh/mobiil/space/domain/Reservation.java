@@ -12,13 +12,13 @@ public class Reservation {
 	private String  spaceAddress;		// 공간 주소
 	private int 	price;				// 결제금액
 	private Date 	reservationDate;	// 예약 날짜
-	private String  reservationTime;	// 예약 시간
 	private String  memberName;			// 이름
 	private String  memberPhone;		// 연락처
 	private Date 	paymentDate;		// 결제 날짜
 	private String  reservationStatus;	// 예약 상태
 	private String  reviewStatus;		// 리뷰 상태
-	
+	private int revStart;
+	private int revEnd;
 	
 	public int getReservationNo() {
 		return reservationNo;
@@ -68,12 +68,6 @@ public class Reservation {
 	public void setReservationDate(Date reservationDate) {
 		this.reservationDate = reservationDate;
 	}
-	public String getReservationTime() {
-		return reservationTime;
-	}
-	public void setReservationTime(String reservationTime) {
-		this.reservationTime = reservationTime;
-	}
 	public String getMemberName() {
 		return memberName;
 	}
@@ -104,14 +98,28 @@ public class Reservation {
 	public void setReviewStatus(String reviewStatus) {
 		this.reviewStatus = reviewStatus;
 	}
+	public int getRevStart() {
+		return revStart;
+	}
+	public void setRevStart(int revStart) {
+		this.revStart = revStart;
+	}
+	public int getRevEnd() {
+		return revEnd;
+	}
+	public void setRevEnd(int revEnd) {
+		this.revEnd = revEnd;
+	}
 	
 	@Override
 	public String toString() {
-		return "Reservarion [reservationNo=" + reservationNo + ", memberEmail=" + memberEmail + ", hostEmail="
+		return "Reservation [reservationNo=" + reservationNo + ", memberEmail=" + memberEmail + ", hostEmail="
 				+ hostEmail + ", spaceNo=" + spaceNo + ", spaceName=" + spaceName + ", spaceAddress=" + spaceAddress
-				+ ", price=" + price + ", reservationDate=" + reservationDate + ", reservationTime=" + reservationTime
-				+ ", memberName=" + memberName + ", memberPhone=" + memberPhone + ", paymentDate=" + paymentDate
-				+ ", reservationStatus=" + reservationStatus + ", reviewStatus=" + reviewStatus + "]";
+				+ ", price=" + price + ", reservationDate=" + reservationDate + ", memberName=" + memberName
+				+ ", memberPhone=" + memberPhone + ", paymentDate=" + paymentDate + ", reservationStatus="
+				+ reservationStatus + ", reviewStatus=" + reviewStatus + ", revStart=" + revStart + ", revEnd=" + revEnd
+				+ "]";
 	}
 	
+
 }

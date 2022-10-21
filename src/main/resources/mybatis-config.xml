@@ -29,6 +29,7 @@
 		<mapper resource="mappers/chat-mapper.xml"/>
 		<mapper resource="mappers/partner-mapper.xml"/>
 		 <mapper resource="mappers/host-mapper.xml"/>
+		 <mapper resource="mappers/space-mapper.xml"/>
 	</mappers>
 
 </configuration>
