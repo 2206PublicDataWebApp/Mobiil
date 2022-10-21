@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		var start = $('#startTime option:selected').val();
 		var end = $('#endTime option:selected').val();
 		if(sDate == "" || start == "시작" || end == "끝"){
-			alert("날짜 혹은 시간을 선택해주세요.");
+			alert("날짜 혹은 시간을 확인해주세요.");
 		}
 		console.log(sDate);
 		$.ajax({
