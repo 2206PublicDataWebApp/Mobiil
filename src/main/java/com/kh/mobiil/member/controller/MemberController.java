@@ -3,17 +3,23 @@ package com.kh.mobiil.member.controller;
 import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -140,7 +146,60 @@ public class MemberController {
 		return mv;
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/member/checkEmail.kh", method=RequestMethod.GET)
+	public String checkEmail(@RequestParam("memberEmail") String memberEmail) {
+		int result = mService.checkDupEmail(memberEmail);
+		return result+"";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/member/checkNick.kh", method=RequestMethod.GET)
+	public String checkNick(@RequestParam("memberNick") String memberNick) {
+		int result = mService.checkDupNick(memberNick);
+		return result+"";
+	}
+	
+	@Autowired
+    private JavaMailSender mailSender;
+	
+	@ResponseBody
+	@RequestMapping(value="/mailCheck", produces = "text/plain;charset=utf-8", method = RequestMethod.GET)
+	public String mailCheck(String memberEmail) throws Exception{
+		
+		Random random = new Random();
+		int checkNum = random.nextInt(888888)+111111;
 
+		// 이메일 보내기
+		String setFrom = "kh_mobiil@naver.com";
+		String toEmail = memberEmail;
+		String title = "모빌 회원가입 인증 이메일 입니다.";
+		String content = "안녕하세요." + "<br><br>"
+							+"회원님이 사용하는 이메일을 인증하려면,<br>"
+							+"아래 인증번호를 인증번호 확인란에 기입하여 주세요.<br><br>"
+							+"인증 번호: " + "<b>" + checkNum + "</b>" + "<br><br>"
+							+"감사합니다."+ "<br>"
+							+ "Mobiil팀 드림.";
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom, "모빌");
+            helper.setTo(toEmail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        String num = Integer.toString(checkNum);
+        return num;
+	}
+	
+	
+	
 //////////////////////////////호스트 로그인///////////////////////////////////////
 	
 	@RequestMapping(value = "/host/joinView.kh", method=RequestMethod.GET) // 회원가입 페이지
@@ -220,4 +279,11 @@ public class MemberController {
 		return mv;
 	}
 	
+
+	@ResponseBody
+	@RequestMapping(value="/host/checkEmail.kh", method=RequestMethod.GET) // 이메일 중복 체크
+	public String checkhostEmail(@RequestParam("hostEmail") String hostEmail) {
+		int result = mService.checkDupHostEmail(hostEmail);
+		return result+"";
+	}
 }

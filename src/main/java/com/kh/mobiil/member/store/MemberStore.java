@@ -1,6 +1,7 @@
 package com.kh.mobiil.member.store;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
@@ -11,6 +12,7 @@ public interface MemberStore {
 	
 	public int insertMember(SqlSession session, Member member); // 회원가입
 
+
 	public Member selectLoginMember(SqlSession session, Member member); // 로그인
 
 	public Member selectOneByEmail(SqlSession session, String memberEmail); // my page
@@ -19,11 +21,20 @@ public interface MemberStore {
 	
 	public int deleteMember(SqlSession session, String memberEmail); // 회원 탈퇴
 	
+	public int checkDupEmail(SqlSession session, String memberEmail); // 이메일 중복 체크
+
+	public int checkDupNick(SqlSession session, String memberNick); // 닉네임 중복 체크
+
 	// 호스트
 	
 	public int insertHost(SqlSession session, Host host); // 가입
 
 	public Host selectLoginHost(SqlSession session, Host host); // 로그인
+
+	public int checkDupHostEmail(SqlSession session, String hostEmail); // 이메일 중복 체크
+
+
+
 
 
 

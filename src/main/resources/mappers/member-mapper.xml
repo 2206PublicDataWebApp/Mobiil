@@ -29,6 +29,16 @@
   		UPDATE MEMBER_TBL SET mStatus = 'N' WHERE memberEmail = #{memberEmail} 
   	</update>
   	
+  	<select id="checkEmailDuplicate" resultType="_int">
+  		SELECT COUNT(*) FROM (
+		SELECT memberEmail FROM MEMBER_TBL WHERE mStatus = 'Y'
+		UNION
+		SELECT hostEmail FROM HOST_TBL WHERE hStatus = 'Y') WHERE memberEmail = #{memberEmail}
+  	</select>
+  	
+  	<select id="checkNickDuplicate" resultType="_int">
+  		SELECT COUNT(*) FROM MEMBER_TBL WHERE memberNick = #{memberNick} AND mStatus = 'Y'
+  	</select>
   	
   	<!-- 호스트 -->
   	<insert id="insertHost">
@@ -38,6 +48,13 @@
   
   	<select id="selectLoginhOne" resultType="Host">
   		SELECT * FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hostPwd = #{hostPwd} AND hStatus = 'Y'
+  	</select>
+  	
+  	<select id="checkHostEmailDuplicate" resultType="_int">
+  		SELECT COUNT(*) FROM (
+		SELECT hostEmail FROM HOST_TBL WHERE hStatus = 'Y'
+		UNION
+		SELECT memberEmail FROM MEMBER_TBL WHERE mStatus = 'Y') WHERE hostEmail =  #{hostEmail}
   	</select>
   	
   </mapper>
