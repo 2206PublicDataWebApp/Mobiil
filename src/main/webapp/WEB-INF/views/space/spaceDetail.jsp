@@ -32,6 +32,8 @@
 </div>
 <div>
 ${space.spaceComent }
+${iList[0].spaceFileRename }
+${iList[1].spaceFileRename }
 </div>
 <div id="map" style="width:500px;height:400px;"></div>
 
@@ -147,14 +149,14 @@ ${space.spaceComent }
 		}
 		console.log(sDate);
 		$.ajax({
-			url : "/space/checkTime",
+			url : "/space/checkTime.kh",
 			data : {"start": start, "end":end, "reservDate":sDate},
 			type : "get",
 			success : function(result) {
 				
 				if(result != 0){
 					alert("예약할 수 없는 시간입니다.");
-					/* location.href = "/space/payment"; */
+					/* location.href = "/space/payment.kh"; */
 				}else{
 					alert("예약 가능한 시간입니다.");
 				}

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.domain.SpaceImg;
 
 public interface SpaceService {
 	
@@ -12,10 +13,12 @@ public interface SpaceService {
 	int checkTime(String start, String end, String reservDate);
 
 	// 리스트 게시물 전체 개수
-	int getTotalCount(String searchCondition, String searchValue);
+	int getTotalCount();
 	
 	List<Space> printSpace(RowBounds rowBounds);
 
 	Space printOneByNo(Integer spaceNo);
+
+	List<SpaceImg> printImg(Integer spaceNo);
 
 }

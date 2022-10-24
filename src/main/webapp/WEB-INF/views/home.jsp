@@ -60,7 +60,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="category-box category-box-2">
-					<a href="#!">
+					<a href="/space/spaceList.kh">
 						<img src="/resources/images/board/category/category-2.jpg" alt="" />
 						<div class="content">
 							<h3>공간</h3>

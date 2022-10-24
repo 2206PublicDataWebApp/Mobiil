@@ -18,7 +18,7 @@
 	<c:forEach items='${sList }' var='space'>
 	<div class="col-md-4">
 			<div class="product-item">
-				<a href="/space/spaceDetail?spaceNo=${space.spaceNo }">${space.spaceName }</a>
+				<a href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }">${space.spaceName }</a>
 				${space.spaceImg.spaceFileRename }
 				<div class="product-thumb">
 					<span class="bage">Sale</span><!-- 필요없으면 떼면 됨 -->
@@ -45,7 +45,33 @@
 	</c:forEach>
 		<!-- 썸네일 1개당 영역 끝-->
 		
-		
+	<!-- 페이징 -->
+		<table align="center" class="table col-10 table-borderless" width="100%">
+		<tr align='center' height="20">
+		<td align='center'>
+		<ul class="pagination justify-content-center">
+			<c:if test="${paging.currentPage != 1 }">
+			<li class="page-item"><a class="page-link" href='/space/${urlVal }.kh?page=${paging.currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>이전</a>
+			</li>
+			</c:if>
+			<c:forEach var='p' begin="${paging.startNavi }" end="${paging.endNavi }">
+				<c:if test="${paging.currentPage eq p}">
+				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
+				</c:if>
+				<c:if test="${paging.currentPage ne p}">
+				<li class="page-item"><a class="page-link"  href="/space/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
+				</li>
+				</c:if>
+			</c:forEach>
+			
+			<c:if test="${paging.currentPage <paging.maxPage }">
+			<li class="page-item"><a class="page-link"  href='/space/${urlVal }.kh?page=${paging.currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>다음</a>
+			</li>
+			</c:if>
+		</ul>
+		</td>
+		</tr>
+	</table>
 	</div>
 </section>
 

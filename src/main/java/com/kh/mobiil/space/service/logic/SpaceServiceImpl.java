@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.service.SpaceService;
 import com.kh.mobiil.space.store.SpaceStore;
 
@@ -27,8 +28,8 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int getTotalCount(String searchCondition, String searchValue) {
-		int totalCount = sStore.selectTotalCount(session, searchCondition, searchValue);
+	public int getTotalCount() {
+		int totalCount = sStore.selectTotalCount(session);
 		return totalCount;
 	}
 
@@ -43,6 +44,14 @@ public class SpaceServiceImpl implements SpaceService{
 		Space space = sStore.selectOneByNo(session, spaceNo);
 		return space;
 	}
+
+	@Override
+	public List<SpaceImg> printImg(Integer spaceNo) {
+		List<SpaceImg> iList = sStore.selectImg(session, spaceNo);
+		return iList;
+	}
+
+
 	
 	
 }

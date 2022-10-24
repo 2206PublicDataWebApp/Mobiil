@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.store.SpaceStore;
 
 @Repository
@@ -15,11 +16,8 @@ public class SpaceStoreLogic implements SpaceStore{
 
 	// 리스트 전체 게시물 개수
 	@Override
-	public int selectTotalCount(SqlSessionTemplate session, String searchCondition, String searchValue) {
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("searchCondition", searchCondition);
-		map.put("searchValue", searchValue);
-		int totalCount = session.selectOne("SpaceMapper.selectTotalCount", map);
+	public int selectTotalCount(SqlSessionTemplate session) {
+		int totalCount = session.selectOne("SpaceMapper.selectTotalCount");
 		return totalCount;
 	}
 	
@@ -46,6 +44,14 @@ public class SpaceStoreLogic implements SpaceStore{
 		Space space = session.selectOne("SpaceMapper.selectOneByNo", spaceNo);
 		return space;
 	}
+
+	@Override
+	public List<SpaceImg> selectImg(SqlSessionTemplate session, Integer spaceNo) {
+		List<SpaceImg> iList = session.selectList("SpaceMapper.selectImg", spaceNo);
+		return iList;
+	}
+
+	
 
 	
 
