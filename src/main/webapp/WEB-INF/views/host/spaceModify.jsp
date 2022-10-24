@@ -45,8 +45,8 @@
 						<td id="td">공간 이미지   :</td>
 						<td>
 							<c:forEach items="${sImg }" var="img">
-							<input type="hidden" value="${sImg.spaceImgNo }" name="spaceImgNo">
-							<input type="hidden" value="${sImg.spaceFileRename }" name="spaceFileRename">
+							<input type="hidden" value="${img.spaceImgNo }" name="spaceImgNo">
+							<input type="hidden" value="${img.spaceFileRename }" name="spaceFileRename">
 							<input multiple="multiple" type="file" name="reloadFile">
 							</c:forEach>
 						</td>

@@ -60,10 +60,8 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public List<Space> spaceList(SqlSession session, int currentPage, int boardLimit) {
-		int offset = (currentPage-1)*boardLimit;
-		RowBounds rowBounds = new RowBounds(offset, boardLimit);
-		List<Space> sList = session.selectList("HostMapper.spaceList",null, rowBounds);
+	public List<Space> spaceList(SqlSession session, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("HostMapper.spaceList", rowBounds);
 		return sList;
 	}
 
@@ -96,5 +94,24 @@ public class HostStoreImpl implements HostStore{
 		int result = session.delete("HostMapper.spaceRemove", spaceNo);
 		return result;
 	}
+
+	@Override
+	public Reservation regervationByNo(SqlSession session, String reservationNo) {
+		Reservation result = session.selectOne("HostMapper.regervationByNo", reservationNo);
+		return result;
+	}
+
+	@Override
+	public int reservationModify(SqlSession session, Reservation reservation) {
+		int result = session.update("HostMapper.reservationModify", reservation);
+		return result;
+	}
+
+	@Override
+	public int reservationRemove(SqlSession session, String reservationNo) {
+		int result = session.update("HostMapper.reservationRemove", reservationNo);
+		return result;
+	}
+
 
 }

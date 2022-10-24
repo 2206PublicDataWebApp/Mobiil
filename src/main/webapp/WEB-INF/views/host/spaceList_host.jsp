@@ -8,11 +8,12 @@
 <title>공간 리스트</title>
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 <style>
-	#td{
-		
-		text-align : right;
-	}
 	
+	table, td, th {
+	  border : 1px solid black;
+	  border-collapse : collapse;
+	  text-align: center;
+	};
 	
 </style>
 
@@ -28,7 +29,7 @@
 		<hr>
 				<table>
 						<tr>
-							<td>No.</td>
+							<td>공간번호</td>
 							<td>공간명</td>
 							<td>지역</td>
 							<td>금액</td>

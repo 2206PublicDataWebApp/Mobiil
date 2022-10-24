@@ -2,6 +2,7 @@ package com.kh.mobiil.host.store;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.mobiil.host.domain.Host;
@@ -27,7 +28,7 @@ public interface HostStore {
 
 	int getSpaceTotalCount(SqlSession session);
 
-	List<Space> spaceList(SqlSession session, int currentPage, int boardLimit);
+	List<Space> spaceList(SqlSession session, RowBounds rowBounds);
 
 	Space spaceByNo(SqlSession session, Integer spaceNo);
 
@@ -38,4 +39,11 @@ public interface HostStore {
 	int spaceImgModify(SqlSession session, SpaceImg spaceImg);
 
 	int spaceRemove(SqlSession session, Integer spaceNo);
+
+	Reservation regervationByNo(SqlSession session, String reservationNo);
+
+	int reservationModify(SqlSession session, Reservation reservation);
+
+	int reservationRemove(SqlSession session, String reservationNo);
+
 }

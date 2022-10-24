@@ -40,7 +40,7 @@
 				<h3>호스트 페이지</h3>
 			</li>
 			<li>
-				<a class="function" href="/host/hostPage.mobiil">정보 조회</a>
+				<a class="function" href="/host/hostInfo.mobiil">정보 조회</a>
 			</li>
 			<li>
 				<a class="function" href="/host/hostModifyView.mobiil">정보 수정</a>
@@ -49,7 +49,7 @@
 				<a class="function" href="/host/reservationCheckView.mobiil">예약 확인</a><br><br>
 			</li>
 			<li>
-				<a class="function" href="/host/regervationListView.mobiil">예약 리스트</a>
+				<a class="function" href="/host/registList.mobiil">예약 리스트</a>
 			</li>
 			<li>
 				<a class="function" href="#" onclick="">정산 확인</a><br><br>
