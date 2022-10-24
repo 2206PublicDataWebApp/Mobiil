@@ -39,19 +39,10 @@ public class ChatServiceImpl implements ChatService {
 		return result;
 	}
 	@Override
-	public List<Chat> chatReadLog(int roomNo) {
-		List<Chat> cLog = cStore.selectReadRog(roomNo, session);
+	public List<Chat> chatLog(int roomNo) {
+		int result = cStore.updateChatRead(roomNo, session);
+		List<Chat> cLog = cStore.selectChatLog(roomNo, session);
 		return cLog;
-	}
-//	@Override
-//	public int unReadCount(int roomNo) {
-//		int unRead = cStore.unReadCount(roomNo,session);
-//		return unRead;
-//	}
-	@Override
-	public Chat UnreadOnechat(int roomNo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
