@@ -248,23 +248,23 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/host/login.kh", method=RequestMethod.POST) // 로그인
-	public ModelAndView hostLogin(@ModelAttribute Host host, ModelAndView mv, HttpServletRequest request) {
-		try {
-			Host loginUser = mService.loginHost(host);
-			if(loginUser != null) {
-				HttpSession session = request.getSession();
-				session.setAttribute("loginUser", loginUser);
-				mv.setViewName("redirect:/");
-			}else {
-				request.setAttribute("msg", "회원정보가 없습니다.");
-				request.setAttribute("url", "/host/loginView.kh");
-				mv.setViewName("/common/alert");
-			}
-			}catch(Exception e) {
-				mv.addObject("msg", e.toString()).setViewName("common/errorPage");
-			}
-			return mv;
-		}	
+	   public ModelAndView hostLogin(@ModelAttribute Host host, ModelAndView mv, HttpServletRequest request) {
+	      try {
+	         Host loginHost = mService.loginHost(host);
+	         if(loginHost != null) {
+	            HttpSession session = request.getSession();
+	            session.setAttribute("loginHost", loginHost);
+	            mv.setViewName("redirect:/");
+	         }else {
+	            request.setAttribute("msg", "회원정보가 없습니다.");
+	            request.setAttribute("url", "/host/loginView.kh");
+	            mv.setViewName("/common/alert");
+	         }
+	         }catch(Exception e) {
+	            mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+	         }
+	         return mv;
+	      }	
 	
 	@RequestMapping(value="/host/logout.kh", method=RequestMethod.GET) // 로그아웃
 	public ModelAndView hostLogout(ModelAndView mv, HttpServletRequest request) {

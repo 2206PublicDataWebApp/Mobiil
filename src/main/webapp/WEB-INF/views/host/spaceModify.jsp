@@ -23,18 +23,19 @@
 
 <body>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
+	<div id="div" align="center">
 	<h1>공간 정보 수정</h1>
 	<br><br>
-		<form action="/host/spaceModify.mobiil" method="POST">
+		<form action="/host/spaceModify.mobiil" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name="spaceNo" value="${sOne.spaceNo }">
 			<div id="div" align="center">
 				<table>
 					<tr>
-						<td id="td">공간명   :</td>
+						<td id="td">공간명</td>
 						<td><input type="text" id="spaceName" name="spaceName" value="${sOne.spaceName }"></td>
 					</tr>
 					<tr>
-						<td id="td">주소   :</td>
+						<td id="td">주소</td>
 						<td><input type="text" id="sample6_postcode">
 							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 							<input type="text" id="sample6_address" value="${sOne.address }"><br>
@@ -42,7 +43,7 @@
 							<input type="text" id="sample6_extraAddress"></td>
 					</tr>
 					<tr>
-						<td id="td">공간 이미지   :</td>
+						<td id="td">공간 이미지</td>
 						<td>
 							<c:forEach items="${sImg }" var="img">
 							<input type="hidden" value="${img.spaceImgNo }" name="spaceImgNo">
@@ -52,15 +53,15 @@
 						</td>
 					</tr>
 					<tr>
-						<td id="td">공간 소개   :</td>
+						<td id="td">공간 소개</td>
 						<td><textarea class="summernote" name=spaceComent value="${sOne.spaceComent }"></textarea></td>
 					</tr>
 					<tr>
-						<td id="td">지역   :</td>
+						<td id="td">지역</td>
 						<td><input type="text" id="spaceArea" name="spaceArea" value="${sOne.spaceArea }"></td>
 					</tr>
 					<tr>
-						<td id="td">금액   :</td>
+						<td id="td">금액</td>
 						<td><input type="text" id="spacePrice" name="spacePrice" value="${sOne.spacePrice }">
 						</td>
 					</tr>
@@ -71,7 +72,7 @@
 				</table>
 			</div>
 		</form>
-	
+	</div>
 <script>
 	// 사진 추가
 	function addFile(){

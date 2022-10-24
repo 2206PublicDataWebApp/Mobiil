@@ -29,37 +29,37 @@
 				<tr>
 					<td id="td">대표자명   :</td>
 					<td>
-					<input type="text" id="hostName" name="hostName" size="31" value="${sessionScope.loginUser.hostName }">
+					<input type="text" id="hostName" name="hostName" size="31" value="${sessionScope.loginHost.hostName }">
 					</td>
 				</tr>
 				<tr>
 					<td id="td">상호명   :</td>
 					<td>
-					<input type="text" id="companyName" name="companyName" size="31" value="${sessionScope.loginUser.companyName }">
+					<input type="text" id="companyName" name="companyName" size="31" value="${sessionScope.loginHost.companyName }">
 					</td>
 				</tr>
 				<tr>
 					<td id="td">연락처   :</td>
 					<td>
-					<input type="text" id="hostPhone" name="hostPhone" size="31" value="${sessionScope.loginUser.hostPhone }">
+					<input type="text" id="hostPhone" name="hostPhone" size="31" value="${sessionScope.loginHost.hostPhone }">
 					</td>
 				</tr>
 				<tr>
 					<td id="td">사업자 등록번호   :</td>
 					<td>
-					<input type="text" id="companyRegNum" name="companyRegNum" size="31" value="${sessionScope.loginUser.companyRegNum }">
+					<input type="text" id="companyRegNum" name="companyRegNum" size="31" value="${sessionScope.loginHost.companyRegNum }">
 					</td>
 				</tr>
 				<tr>
 					<td id="td">은행명   :</td>
 					<td>
-					<input type="text" id="accountName" name="accountName" size="31" value="${sessionScope.loginUser.accountName }">
+					<input type="text" id="accountName" name="accountName" size="31" value="${sessionScope.loginHost.accountName }">
 					</td>
 				</tr>
 				<tr>
 					<td id="td">Email   :</td>
 					<td>
-					<input type="text" id="hostEmail" name="hostEmail" size="31" value="${sessionScope.loginUser.hostEmail }" readonly>
+					<input type="text" id="hostEmail" name="hostEmail" size="31" value="${sessionScope.loginHost.hostEmail }" readonly>
 					</td>
 				</tr>
 				<tr>

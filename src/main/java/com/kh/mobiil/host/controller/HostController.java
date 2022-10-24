@@ -85,6 +85,15 @@ public class HostController {
 	}
 	
 	/**
+	 * 정산 확인 
+	 * @return
+	 */
+	@RequestMapping(value="/host/profitsCheckView.kh", method = RequestMethod.GET)
+	public String profitsCheckView() {
+		return "host/profitsCheck";
+	}
+	
+	/**
 	 * 공간 업로드.jsp
 	 * @return
 	 */
@@ -128,7 +137,7 @@ public class HostController {
 	public ModelAndView hostInfo(ModelAndView mv, HttpServletRequest request) {
 
 			HttpSession session = request.getSession();
-			Host host = (Host)session.getAttribute("loginUser");
+			Host host = (Host)session.getAttribute("loginHost");
 			String hostEmail = host.getHostEmail();
 			Host hOne = hService.getHostInfo(hostEmail);
 			if(hOne != null) {
@@ -265,7 +274,7 @@ public class HostController {
 			reservation.setReservationDate(java.sql.Date.valueOf(reservationDateStr));	// String -> Date
 			int result = hService.reservationModify(reservation);
 			if(result > 0) {
-				mv.setViewName("host/reservationList");
+				mv.setViewName("redirect:/host/registList.mobiil");
 			}
 		}catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -285,11 +294,42 @@ public class HostController {
 		try {
 			int result = hService.reservationRemove(reservationNo);
 			if (result > 0) {
-				mv.setViewName("host/reservationList");
+				mv.setViewName("redirect:/host/registList.mobiil");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("common.errorPage");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 정산확인 - > 조회기간내 예약 리스트 출력 후 금액 합산 보여주기
+	 * @param mv
+	 * @param d1
+	 * @param d2
+	 * @return
+	 */			
+	@RequestMapping(value="/host/profitsCheck.kh", method = RequestMethod.GET)
+	public ModelAndView profitsCheck(
+			ModelAndView mv,
+			@RequestParam("date1") String d1,
+			@RequestParam("date2") String d2) {
+		try {
+			// http://127.0.0.1:1111/host/profitsCheck.kh?date1=20221019&date2=20221024
+			java.sql.Date date1 = java.sql.Date.valueOf(d1);	// String -> Date
+			java.sql.Date date2 = java.sql.Date.valueOf(d2);	// String -> Date
+			System.out.println(date1);
+			System.out.println(date2);
+			List<Reservation> rList = hService.rListByDate(date1, date2);
+			System.out.println(rList);
+			if(!rList.isEmpty()) {
+				mv.addObject("rList", rList);
+				mv.setViewName("redirect:http://127.0.0.1:1111/host/profitsCheck.kh?date1="+date1+"&date2="+date2+"");
+			}
+		}catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}
