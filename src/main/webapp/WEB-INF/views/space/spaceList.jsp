@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,12 @@
 
 <section class="products section">
 	<div class="container">
-	
 	<!-- 썸네일 1개당 영역 시작-->
+	<c:forEach items='${sList }' var='space'>
 	<div class="col-md-4">
 			<div class="product-item">
+				<a href="/space/spaceDetail?spaceNo=${space.spaceNo }">${space.spaceName }</a>
+				${space.spaceImg.spaceFileRename }
 				<div class="product-thumb">
 					<span class="bage">Sale</span><!-- 필요없으면 떼면 됨 -->
 					<img class="img-responsive" src="/resources/images/board/products/product-1.jpg" alt="product-img" /><!-- 이미지 불러올때 경로 잘 설정하기 -->
@@ -39,6 +42,7 @@
 			</div>
 		</div>
 	</div>
+	</c:forEach>
 		<!-- 썸네일 1개당 영역 끝-->
 		
 		

@@ -5,6 +5,33 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="SpaceMapper">
+	<resultMap type="Space" id="SpaceResultMap">
+  		<id property="spaceNo" 				column="SPACE_NO"/>
+  		<result property="spaceName" 		column="SPACE_NAME"/>
+  		<result property="address" 			column="SPACE_ADDRESS"/>
+  		<result property="spaceComent" 		column="SPACE_COMENT"/>
+  		<result property="spaceArea" 		column="SPACE_AREA"/>
+  		<result property="spacePrice" 		column="SPACE_PRICE"/>
+  		<result property="approval" 		column="APPROVAL"/>
+  		<result property="approvalDate" 	column="APPROVAL_DATE"/>
+  		<result property="spaceStatus" 		column="SPACE_STATUS"/>
+  		<association property="spaceImg" javaType="SpaceImg">
+  			<result property="spaceFileRename" column="SPACE_FILERENAME"/>
+  		</association>
+  	</resultMap>
+	<select id="selectTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM SPACE_TBL WHERE SPACE_STATUS = 'Y' 
+	</select>
+	<select id="selectAllSpace" resultMap="SpaceResultMap">
+		SELECT SPACE_TBL.SPACE_NO, SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_FILERENAME
+		FROM SPACE_TBL LEFT OUTER JOIN SPACE_IMG
+		ON SPACE_TBL.SPACE_NO = SPACE_IMG.SPACE_NO 
+		<!-- WHERE SPACE_STATUS = 'Y' -->
+		GROUP BY SPACE_TBL.SPACE_NO, SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_FILERENAME
+	</select>
+	<select id="selectOneByNo" resultMap="SpaceResultMap">
+		SELECT * FROM SPACE_TBL WHERE SPACE_NO = #{spaceNo}
+	</select>
 	<select id="checkTime" resultType="_int">
 		<![CDATA[SELECT COUNT(*) FROM RESERVATION_TBL
 		WHERE RESERV_DATE = #{reservDate} 

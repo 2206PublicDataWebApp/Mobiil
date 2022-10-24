@@ -14,7 +14,15 @@ public class Space {
 		private Date   approvalDate;	// 공간 승인일
 		private String spaceStatus;		// 공간 등록여부
 		
+		// spaceFileRename 한 개 가져오기 위해서 생성
+		private SpaceImg spaceImg;
 		
+		public SpaceImg getSpaceImg() {
+			return spaceImg;
+		}
+		public void setSpaceImg(SpaceImg spaceImg) {
+			this.spaceImg = spaceImg;
+		}
 		public int getSpaceNo() {
 			return spaceNo;
 		}
@@ -63,12 +71,20 @@ public class Space {
 		public void setApprovalDate(Date approvalDate) {
 			this.approvalDate = approvalDate;
 		}
+		public String getSpaceStatus() {
+			return spaceStatus;
+		}
+		public void setSpaceStatus(String spaceStatus) {
+			this.spaceStatus = spaceStatus;
+		}
 		
 		@Override
 		public String toString() {
-			return "space [spaceNo=" + spaceNo + ", spaceName=" + spaceName + ", address=" + address + ", spaceComent="
+			return "Space [spaceNo=" + spaceNo + ", spaceName=" + spaceName + ", address=" + address + ", spaceComent="
 					+ spaceComent + ", spaceArea=" + spaceArea + ", spacePrice=" + spacePrice + ", approval=" + approval
-					+ ", approvalDate=" + approvalDate + "]";
+					+ ", approvalDate=" + approvalDate + ", spaceStatus=" + spaceStatus + ", spaceImg=" + spaceImg
+					+ "]";
 		}
+		
 		
 }
