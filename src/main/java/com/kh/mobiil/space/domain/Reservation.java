@@ -1,10 +1,10 @@
 package com.kh.mobiil.space.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Reservation {
 
-	private	int 	reservationNo; 		// 예약 번호
+	private	String 	reservationNo; 		// 예약 번호
 	private String  memberEmail;		// 멤버 이메일
 	private String  hostEmail;			// 호스트 이메일
 	private int 	spaceNo;			// 공간 순번
@@ -17,13 +17,13 @@ public class Reservation {
 	private Date 	paymentDate;		// 결제 날짜
 	private String  reservationStatus;	// 예약 상태
 	private String  reviewStatus;		// 리뷰 상태
-	private int revStart;
-	private int revEnd;
+	private int 	revStart;			// 체크인 시간
+	private int 	revEnd;				// 체크아웃 시간
 	
-	public int getReservationNo() {
+	public String getReservationNo() {
 		return reservationNo;
 	}
-	public void setReservationNo(int reservationNo) {
+	public void setReservationNo(String reservationNo) {
 		this.reservationNo = reservationNo;
 	}
 	public String getMemberEmail() {
@@ -121,5 +121,7 @@ public class Reservation {
 				+ "]";
 	}
 	
+
+
 
 }

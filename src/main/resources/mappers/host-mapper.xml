@@ -14,6 +14,9 @@
   		<result property="accountName" 				column="ACCOUNTNAME"/>
   		<result property="accountHolder" 			column="ACCOUNTHOLDER"/>
   		<result property="accountNumber" 			column="ACCOUNTNUMBER"/>
+  		<result property="regPhotoName" 			column="REGPHOTONAME"/>
+  		<result property="regPhotoRename" 			column="REGPHOTORENAME"/>
+  		<result property="regPhotoPath" 			column="REGPHOTOPATH"/>
   		<result property="enrollDate" 				column="ENROLLDATE"/>
   		<result property="updateDate" 				column="UPDATEDATE"/>
   		<result property="hStatus" 					column="HSTATUS"/>
@@ -48,12 +51,13 @@
   		<result property="spaceAddress" 			column="SPACE_ADDRESS"/>
   		<result property="price" 					column="PRICE"/>
   		<result property="reservationDate" 			column="RESERV_DATE"/>
-  		<result property="reservationTime" 			column="RESERV_TIME"/>
   		<result property="memberName" 				column="MEMBER_NAME"/>
   		<result property="memberPhone" 				column="MEMBER_PHONE"/>
   		<result property="paymentDate" 				column="PAYMENT_DATE"/>
   		<result property="reservationStatus" 		column="RESERV_STATUS"/>
   		<result property="reviewStatus" 			column="REV_STATUS"/>
+  		<result property="revStart" 				column="REV_START"/>
+  		<result property="revEnd" 					column="REV_END"/>
   		</resultMap>
   
   	  <!-- 호스트 정보 -->
@@ -65,20 +69,41 @@
 	  <!-- 호스트 정보 수정 -->
 	  <update id="hostModify">
   		UPDATE HOST_TBL
-		SET HOSTNAME = #{hostName}, HOSTPHONE = #{hostPhone}
+		SET HOSTNAME = #{hostName}, COMPANYNAME = #{companyName}, HOSTPHONE = #{hostPhone}, COMPANYREGNUM = #{companyRegNum}, ACCOUNTNAME = #{accountName}, HOSTEMAIL = #{hostEmail}, 
+			REGPHOTONAME = #{regPhotoName}, REGPHOTORENAME = #{regPhotoRename}, REGPHOTOPATH = #{regPhotoPath}  
 		WHERE HOSTEMAIL = #{hostEmail}
 	  </update>
 
 	  <!-- 예약 갯수 확인 -->
-	  <select id="getMemberTotalCount" resultType="_int">
- 		SELECT COUNT(*) FROM RESERVARION_TBL
+	  <select id="getRegervationTotalCount" resultType="_int">
+ 		SELECT COUNT(*) FROM RESERVATION_TBL
 	  </select>
 	 
 	  <!-- 예약 리스트 조회 -->
-	  <select id="regervationList" resultMap="HostResultMap">
- 		SELECT * FROM MEMBER_TBL 
- 		WHERE HOSTEMAIL = #{hostEmail}
+	  <select id="regervationList" resultMap="ReservationResultMap">
+ 		SELECT * FROM RESERVATION_TBL 
+ 		
 	  </select>
+	  
+	  <!-- 예약 번호로 예약 정보 가져오기 -->
+	  <select id="regervationByNo" resultMap="ReservationResultMap">
+	  	SELECT * FROM RESERVATION_TBL
+	  	WHERE RESERV_NO = #{reservationNo}
+	  </select>
+	  
+	  <!-- 예약 정보 수정 -->
+	  <update id="reservationModify">
+	  	UPDATE RESERVATION_TBL
+	  	SET MEMBER_NAME = #{memberName}, MEMBER_PHONE = #{memberPhone}, RESERV_DATE = #{reservationDate}, REV_START = #{revStart}, REV_END = #{revEnd}, PRICE = #{price}
+	  	WHERE RESERV_NO = #{reservationNo}
+	  </update>
+	  
+	  <!-- 예약 삭제  -->
+	  <update id="reservationRemove">
+	  	UPDATE RESERVATION_TBL
+	  	SET	REV_STATUS = 'N'
+	  	WHERE RESERV_NO = #{reservationNo}
+	  </update>
 	  
 	  <!-- 공간 업로드 -->
   	  <insert id="insertSpace">

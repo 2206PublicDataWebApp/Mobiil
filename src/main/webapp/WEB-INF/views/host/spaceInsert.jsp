@@ -7,7 +7,7 @@
 <title>공간 업로드 페이지</title>
 <style>
 	#td{
-		text-align : right;
+		text-align : center;
 	}
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
@@ -28,11 +28,11 @@
 		<hr>
 			<table>
 				<tr>
-					<td id="td">공간명   :</td>
+					<td id="td">공간명   </td>
 					<td><input type="text" id="spaceName" name="spaceName" placeholder="공간 타이틀을 입력 해주세요." required></td>
 				</tr>
 				<tr>
-					<td id="td">주소   :</td>
+					<td id="td">주소   </td>
 					<td><input type="text" id="sample6_postcode" placeholder="우편번호" required>
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 						<input type="text" id="sample6_address" name="address" placeholder="주소" required><br>
@@ -40,7 +40,7 @@
 						<input type="text" id="sample6_extraAddress" placeholder="참고항목"></td>
 				</tr>
 				<tr class="fileTr">
-					<td id="td">공간 이미지   :</td>
+					<td id="td">공간 이미지   </td>
 					<td>
 						<button type="button" onclick="addFile();">+</button>
 						<button type="button" onclick="removeFile();">-</button>
@@ -48,15 +48,15 @@
 					</td>
 				</tr>
 				<tr>
-					<td id="td">공간 소개   :</td>
+					<td id="td">공간 소개   </td>
 					<td><textarea class="summernote" id="spaceComent" name=spaceComent></textarea></td>
 				</tr>
 				<tr>
-					<td id="td">지역   :</td>
+					<td id="td">지역   </td>
 					<td><input type="text" id="spaceArea" name="spaceArea" placeholder="강북, 강남, 강서, 강동" required></td>
 				</tr>
 				<tr>
-					<td id="td">금액   :</td>
+					<td id="td">금액   </td>
 					<td><input type="text" id="spacePrice" name="spacePrice" placeholder="금액을 입력 해주세요." required>
 					</td>
 				</tr>

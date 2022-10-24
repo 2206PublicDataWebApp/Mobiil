@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.mobiil.host.domain.Host;
@@ -64,8 +65,8 @@ public class HostServiceImpl implements HostService{
 	}
 
 	@Override
-	public List<Space> spaceList(int currentPage, int boardLimit) {
-		List<Space> sList = hStore.spaceList(session, currentPage, boardLimit);
+	public List<Space> spaceList(RowBounds rowBounds) {
+		List<Space> sList = hStore.spaceList(session, rowBounds);
 		return sList;
 	}
 
@@ -98,5 +99,24 @@ public class HostServiceImpl implements HostService{
 		int result = hStore.spaceRemove(session, spaceNo);
 		return result;
 	}
+
+	@Override
+	public Reservation regervationByNo(String reservationNo) {
+		Reservation regervation = hStore.regervationByNo(session, reservationNo);
+		return regervation;
+	}
+
+	@Override
+	public int reservationModify(Reservation reservation) {
+		int result = hStore.reservationModify(session, reservation);
+		return result;
+	}
+
+	@Override
+	public int reservationRemove(String reservationNo) {
+		int result = hStore.reservationRemove(session, reservationNo);
+		return result;
+	}
+
 
 }

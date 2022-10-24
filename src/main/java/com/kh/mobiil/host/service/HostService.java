@@ -2,6 +2,8 @@ package com.kh.mobiil.host.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
@@ -25,8 +27,6 @@ public interface HostService {
 
 	int getSpaceTotalCount();
 
-	List<Space> spaceList(int currentPage, int boardLimit);
-
 	Space spaceByNo(Integer spaceNo);
 
 	List<SpaceImg> spaceImgByNo(int spaceNo);
@@ -36,4 +36,12 @@ public interface HostService {
 	int spaceImgModify(SpaceImg spaceImg);
 
 	int spaceRemove(Integer spaceNo);
+
+	List<Space> spaceList(RowBounds rowBounds);
+
+	Reservation regervationByNo(String reservationNo);
+
+	int reservationModify(Reservation reservation);
+
+	int reservationRemove(String reservationNo);
 }
