@@ -49,6 +49,20 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	@Override
+	public int checkDupEmail(String memberEmail) { // 이메일 중복 체크
+		int result = mStore.checkDupEmail(session, memberEmail);
+		return result;
+	}
+
+
+	@Override
+	public int checkDupNick(String memberNick) { // 닉네임 중복 체크
+		int result = mStore.checkDupNick(session, memberNick);
+		return result;
+	}
+
+
 	// 호스트
 	
 	@Override
@@ -63,5 +77,10 @@ public class MemberServiceImpl implements MemberService {
 		return hOne;
 	}
 
+	@Override
+	public int checkDupHostEmail(String hostEmail) {  // 이메일 중복 체크
+		int result = mStore.checkDupHostEmail(session, hostEmail);
+		return result;
+	}
 	
 }

@@ -38,6 +38,15 @@
             content: '* ';
         }
 
+		.email_ok{
+		color:#008000;
+		display: none;
+		}
+		
+		.email_already{
+		color:#6A82FB; 
+		display: none;
+		}
     </style>
 </head>
 <body>
@@ -48,7 +57,11 @@
         <br>
         <div class="required">
             <form name="join_form" action="/host/register.kh" method="post" enctype="multipart/form-data">
-                <label>이메일</label><input type="email" class="input" id="email" name="hostEmail" placeholder=""><br>
+                <label>이메일</label>
+                <input type="email" class="input" id="email" name="hostEmail" oninput = "checkEmail()" >
+                <span class="email_ok">사용 가능한 이메일이에요 :)</span>
+				<span class="email_already">이미 사용중인 이메일이에요 :(</span>
+				<br>
                 <label>비밀번호</label><input type="password" class="input" id="pwd" name="hostPwd" placeholder="문자/숫자/기호 포함, 6자~20자"><br>
                 <label>비밀번호 확인</label><input type="password" class="input" id="pwd2" name="hostPwd2" placeholder="문자/숫자/기호 포함, 6자~20자" ><br><br>
                 <label>대표자명</label><input type="text" class="input" id="name" name="hostName" placeholder="" ><br>
@@ -65,7 +78,7 @@
             </form>
         </div>
     </div>
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script>
         
         const hypenTel = (target) => {
@@ -201,6 +214,26 @@
         document.join_form.submit();
       }
 
+      function checkEmail(){
+          var emailValue = $('#email').val();
+          $.ajax({
+          	url : "/host/checkEmail.kh",
+              data: { "hostEmail" : emailValue },
+              type: "get",
+              success : function(result){
+                  if(result == 0){ // 사용 가능 이메일
+                      $('.email_ok').css("display","inline-block"); 
+                      $('.email_already').css("display", "none");
+                  } else { // 이미 존재하는 이메일
+                      $('.email_already').css("display","inline-block");
+                      $('.email_ok').css("display", "none");
+                  }
+              },
+              error:function(){
+                  alert("에러입니다");
+              }
+          });
+          };
       </script>
       
   <br><br><br><br><br><br>

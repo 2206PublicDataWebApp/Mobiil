@@ -42,6 +42,19 @@ public class MemberStoreLogic implements MemberStore{
 		return result;
 	}
 	
+	@Override
+	public int checkDupEmail(SqlSession session, String memberEmail) { // 이메일 중복 체크
+		int result = session.selectOne("MemberMapper.checkEmailDuplicate", memberEmail);
+		return result;
+	}
+	
+	
+	@Override
+	public int checkDupNick(SqlSession session, String memberNick) { // 닉네임 중복 체크
+		int result = session.selectOne("MemberMapper.checkNickDuplicate", memberNick);
+		return result;
+	}
+	
 	// 호스트
 	
 	@Override
@@ -54,6 +67,12 @@ public class MemberStoreLogic implements MemberStore{
 	public Host selectLoginHost(SqlSession session, Host host) { // 로그인
 		Host hOne = session.selectOne("MemberMapper.selectLoginhOne", host);
 		return hOne;
+	}
+
+	@Override
+	public int checkDupHostEmail(SqlSession session, String hostEmail) { // 이메일 중복 체크
+		int result = session.selectOne("MemberMapper.checkHostEmailDuplicate", hostEmail);
+		return result;
 	}
 
 
