@@ -25,6 +25,8 @@
 						<td > 제목</td>
 						<td > 승인여부</td>
 						<td > 승인일 </td>
+						<td > 승인 거부 메일 </td>
+						
 					</tr>
 					<c:forEach items="${pList }" var="partner" >
 					<tr>
@@ -38,6 +40,8 @@
 						<c:if test='${partner.approval eq "Y"}'>${partner.approval}</c:if>
 						</td>
 						<td > ${partner.approvalDate }</td>
+						<td > ${partner.rejectMailChk }</td>
+						
 					</tr>
 					</c:forEach>
 				</table>

@@ -6,8 +6,23 @@
 <mapper namespace="chatMapper">
 
 
+	<insert id="insertChat">
+		INSERT INTO CHAT_TBL VALUES(
+		SEQ_CHATNO.NEXTVAL,#{refRoomNo},
+		#{sender},#{chat},
+		DEFAULT,DEFAULT
+		)
+	</insert>
 	
 	
+	<select id="selectReadChat" resultType="Chat">
+		SELECT * FROM CHAT_TBL
+		WHERE refRoomNo = #{roomNo} and read_chk = 'Y'
+	</select> 
 	
+<!-- 	<select id="unReadCount" resultMap="_int"> -->
+<!-- 		SELECT COUNT(*) FROM CHAT_TBL -->
+<!-- 		WHERE refRoomNo = #{roomNo} and read_chk = 'N' -->
+<!-- 	</select> -->
 
 </mapper>

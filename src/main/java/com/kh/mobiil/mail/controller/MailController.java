@@ -18,7 +18,7 @@ import com.kh.mobiil.mail.domain.MailInfo;
 @Controller
 public class MailController {
 	
-	public void MailSender(MailInfo info) {
+	public int mailSender(MailInfo info) {
         
         Properties p = System.getProperties();
         p.put("mail.smtp.starttls.enable", "true");     // gmail은 true 고정
@@ -50,13 +50,17 @@ public class MailController {
             msg.setHeader("content-Type", "text/html");
             //메일보내기
             javax.mail.Transport.send(msg, msg.getAllRecipients());
+            return 1;
              
         }catch (AddressException addr_e) {
             addr_e.printStackTrace();
+            return 0;
         }catch (MessagingException msg_e) {
             msg_e.printStackTrace();
+            return 0;
         }catch (Exception msg_e) {
             msg_e.printStackTrace();
+            return 0;
         }
     }
 }

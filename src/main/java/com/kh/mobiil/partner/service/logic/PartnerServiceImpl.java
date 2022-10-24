@@ -56,4 +56,22 @@ public class PartnerServiceImpl implements PartnerService {
 		return result;
 	}
 
+	@Override
+	public int modifyPartner(Partner partner) {
+		int result = pStore.updatePartnerInfo(partner, session);
+		return result;
+	}
+
+	@Override
+	public int deletePartner(int partnerNo) {
+		int result = pStore.deletePartnerInfo(partnerNo, session);
+		return result;
+	}
+
+	@Override
+	public int sendMail(int partnerNo) {
+		int result = pStore.updateRejectMail(partnerNo, session);
+		return result;
+	}
+
 }

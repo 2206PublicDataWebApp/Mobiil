@@ -94,17 +94,19 @@ public class BannerController {
 		return mv;
 	}
 	
+	//배너 광고 메일 뷰
 	@RequestMapping(value="admin/bannerMail.kh", method = RequestMethod.GET)
 	public ModelAndView  showBannerMail(ModelAndView mv) {
 		mv.setViewName("admin/banner/bannerMail");
 		return mv;
 	}
 	
+	//배너 광고 메일 보내기
 	@RequestMapping(value="admin/bannerMailSend.kh", method = RequestMethod.POST)
 	public ModelAndView sendMail(ModelAndView mv, @ModelAttribute MailInfo info) {
 		
 		try {
-			mailSender.MailSender(info);
+			mailSender.mailSender(info);
 			mv.setViewName("home");
 		} catch (Exception e) {
 			mv.setViewName("common/errorPage");

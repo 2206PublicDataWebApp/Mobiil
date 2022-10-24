@@ -4,10 +4,6 @@ package com.kh.mobiil.partner.domain;
 	
 	public class Page{
 		
-		//생성자에 매개변수를 넣어주면
-		//필요한 값들을 getter로 얻을 수 있다.
-		//1.게시물 개수, 2.현재페이지, 3.페이지당 게시물개수, 4.페이징네비사이즈
-		
 		private int currentPage;
 		private int totalCount;
 		private int naviLimit;

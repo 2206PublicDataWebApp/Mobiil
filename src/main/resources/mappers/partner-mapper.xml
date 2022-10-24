@@ -13,7 +13,7 @@
 		,#{memberNick},#{memberEmail},#{area},#{instrument}
 		,#{title},#{contents}
 		,#{profileFileName},#{profileRename},#{profilePath}
-		,DEFAULT, NULL
+		,DEFAULT, NULL, DEFAULT
 		)
 	
 	</insert>
@@ -60,6 +60,25 @@
 		WHERE partnerNo = #{partnerNo}
 	</update>
 	
+	<update id="updatePartnerInfo">
+		UPDATE PARTNER_TBL
+		SET		area = #{area}, instrument = #{instrument},
+				title = #{title}, contents = #{contents},
+				profileFileName = #{profileFileName}, profileRename = #{profileRename}, profilePath= #{profilePath},
+				approval = 'N', approvalDate = null, rejectMailChk = 'N'
+		WHERE partnerNo = #{partnerNo}
+	</update>
+	
+	<update id="updateRejectMail">
+		UPDATE PARTNER_TBL
+		SET rejectMailChk = 'Y'
+		WHERE partnerNo = #{partnerNo}
+	</update>
+	
+	<delete id="deletePartnerInfo">
+		DELETE FROM PARTNER_TBL
+		WHERE partnerNo = #{partnerNo}
+	</delete>
 	
 	
 

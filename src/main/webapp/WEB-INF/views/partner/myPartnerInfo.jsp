@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>파트너 디테일</title>
 </head>
@@ -66,8 +67,14 @@
 				<td> ${myPartnerInfo.instrument } </td>
 			</tr>
 			<tr>
+				<td  class="col-2" scope="col" align='center' >승인일</td>
+				<td> ${myPartnerInfo.approvalDate } </td>
+			</tr>
+			<tr>
 			<td colspan='2' align='right'>
-				<input type="button" value="수정하기" class='btn btn-dark' onclick="location.href=''">
+				<input type="button" value="수정하기" class='btn btn-dark' onclick="location.href='/partner/modify.kh?partnerNo=${myPartnerInfo.partnerNo}'">
+				<input type="button" value="삭제하기" class='btn btn-dark' onclick='deletePartner(${myPartnerInfo.partnerNo});'">
+				
 			</td>
 			</tr>
 		</table>
@@ -76,6 +83,32 @@
 	</section>
 	
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
+
+<script type="text/javascript">
+	function deletePartner(partnerNo) {
+		if(confirm("삭제한 정보는 복구가 불가능합니다. 정말 삭제하시겠습니까?")){
+			$.ajax({
+				url:"/partner/deletePartner.kh",
+				data:{partnerNo:partnerNo},
+				type:"get",
+				success: function(data) {
+					if(data = "success"){
+						alert("삭제되었습니다.")
+						alert("마이페이지로 이동합니다.")
+						window.location.href = "/member/myInfo.kh"				
+					}else{
+						alert("삭제에 실패하였습니다.")
+					}
+				},
+				error: function() {
+					alert("통신 오류")
+				}
+			})
+		}else{
+			return false;
+		}
+	}
+</script>
 
 </body>
 </html>

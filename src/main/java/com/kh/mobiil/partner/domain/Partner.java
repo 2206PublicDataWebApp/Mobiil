@@ -15,9 +15,7 @@ public class Partner {
 	private String profilePath;
 	private String approval;
 	private Date approvalDate;
-	
-	
-	
+	private String rejectMailChk;
 	public int getPartnerNo() {
 		return partnerNo;
 	}
@@ -90,12 +88,19 @@ public class Partner {
 	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
 	}
+	public String getRejectMailChk() {
+		return rejectMailChk;
+	}
+	public void setRejectMailChk(String rejectMailChk) {
+		this.rejectMailChk = rejectMailChk;
+	}
 	@Override
 	public String toString() {
 		return "Partner [partnerNo=" + partnerNo + ", memberNick=" + memberNick + ", memberEmail=" + memberEmail
 				+ ", area=" + area + ", instrument=" + instrument + ", title=" + title + ", contents=" + contents
 				+ ", profileFileName=" + profileFileName + ", profileRename=" + profileRename + ", profilePath="
-				+ profilePath + ", approval=" + approval + ", approvalDate=" + approvalDate + "]";
+				+ profilePath + ", approval=" + approval + ", approvalDate=" + approvalDate + ", rejectMailChk="
+				+ rejectMailChk + "]";
 	}
 	
 	

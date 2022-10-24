@@ -26,6 +26,15 @@ public interface PartnerService {
 
 	//파트너 넘버로 파트너 승인하기
 	public int approvePartner(int partnerNo);
+
+	//파트너 정보 수정
+	public int modifyPartner(Partner partner);
+
+	//파트너 정보 삭제
+	public int deletePartner(int partnerNo);
+
+	// 메일 보내고 메일 발송 여부 업데이트
+	public int sendMail(int partnerNo);
 	
 
 }

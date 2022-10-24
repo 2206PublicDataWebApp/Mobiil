@@ -77,7 +77,7 @@
 							<a href="/member/myInfo.kh">마이페이지</a>
 						</li>
 						<li>
-							<a href="/">마이채팅</a>
+							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')">마이채팅</a>
 						</li>
 						<li>
 							<a href="/member/logout.kh">로그아웃</a>
@@ -119,6 +119,11 @@
 </section>
 
 
+<script type="text/javascript">
+function chatWindow(memberNick) {
+	window.open('/chat/chatWindow.kh?memberNick='+memberNick+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
+}
+</script>
  
     
     

@@ -65,8 +65,12 @@
 				<td> ${partner.contents } </td>
 			</tr>
 			<tr>
+				<td  class="col-2" scope="col" align='center' >승인일</td>
+				<td> ${partner.approvalDate } </td>
+			</tr>
+			<tr>
 			<td colspan='2' align='right'>
-				채팅하기
+				<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${partner.memberNick }');" value='채팅하기'>
 			</td>
 			</tr>
 			<tr>
@@ -74,7 +78,7 @@
 				<input type="button" onclick="history.back(-1);" value='이전으로'>
 			<c:if test='${loginUser.memberNick eq "관리자" }'>
 				<input type="button" onclick="approve(${partner.partnerNo}, '${partner.approval }');" value='승인'>
-				<input type="button" onclick="reject();" value='거부'>
+				<input type="button" onclick="location.href='/admin/rejectMail.kh?partnerNo=${partner.partnerNo}';" value='거부'>
 			</c:if>
 			</td>
 			</tr>
@@ -110,6 +114,33 @@
 			})
 		}
 	}
+	
+	function openChatRoom(createUser, withUser) {
+		$.ajax({
+			url:"/chat/createChatRoom.kh",
+			tyep: "get",
+			data: {createUser: createUser,
+					withUser:withUser},
+			success:
+				function(data) {
+				console.log(data);
+					if(data == "already"){
+						alert("이미 생성된 채팅방입니다");
+						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
+					}else if(data == "success"){
+						alert("채팅이 시작됩니다.");
+						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
+					}else{
+						alert("생성에 실패했습니다.");
+					}
+				},
+			error:
+				function() {
+					alert("에러")
+				},
+		})
+	}
+	
 </script>
 
 </body>

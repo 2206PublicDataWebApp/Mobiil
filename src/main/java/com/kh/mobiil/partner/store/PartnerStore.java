@@ -22,4 +22,10 @@ public interface PartnerStore {
 
 	public int updateApproval(int partnerNo, SqlSessionTemplate session);
 
+	public int updatePartnerInfo(Partner partner, SqlSessionTemplate session);
+
+	public int deletePartnerInfo(int partnerNo, SqlSessionTemplate session);
+
+	public int updateRejectMail(int partnerNo, SqlSessionTemplate session);
+
 }

@@ -49,4 +49,22 @@ public class PartnerStoreLogic implements PartnerStore{
 		return result;
 	}
 
+	@Override
+	public int updatePartnerInfo(Partner partner, SqlSessionTemplate session) {
+		int result = session.update("partnerMapper.updatePartnerInfo", partner);
+		return result;
+	}
+
+	@Override
+	public int deletePartnerInfo(int partnerNo, SqlSessionTemplate session) {
+		int result = session.delete("partnerMapper.deletePartnerInfo", partnerNo);
+		return result;
+	}
+
+	@Override
+	public int updateRejectMail(int partnerNo, SqlSessionTemplate session) {
+		int result = session.update("partnerMapper.updateRejectMail", partnerNo);
+		return result;
+	}
+
 }

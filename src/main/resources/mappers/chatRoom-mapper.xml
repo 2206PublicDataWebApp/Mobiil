@@ -5,7 +5,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatRoomMapper">
 
-
+	<select id="selectOneRoom" resultType="ChatRoom">
+		SELECT * FROM CHATROOM_TBL
+		WHERE (createUser = #{createUser} AND withUser = #{withUser})
+			OR (createUser = #{withUser} AND withUser = #{createUser}) 
+	</select>
+	
+	<select id="selectAllRoom" resultType="ChatRoom">
+		SELECT * FROM CHATROOM_TBL
+		WHERE (createUser = #{memberName})
+			OR (withUser = #{memberName})
+		ORDER BY 1 DESC	
+	</select>
+	
+	
+	<insert id="insertRoom">
+		INSERT INTO CHATROOM_TBL VALUES(
+		SEQ_ROOMNO.NEXTVAL, #{createUser}, #{withUser}, DEFAULT)
+	</insert>
+	
+	
 	
 	
 	
