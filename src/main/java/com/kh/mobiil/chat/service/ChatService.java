@@ -15,11 +15,11 @@ public interface ChatService {
 
 	public int registerChat(Chat chat);
 
-	public List<Chat> chatReadLog(int roomNo);
+	public List<Chat> chatLog(int roomNo);
 
 //	public int unReadCount(int roomNo);
 
-	public Chat UnreadOnechat(int roomNo);
+//	public Chat UnreadOnechat(int roomNo);
 
 
 }

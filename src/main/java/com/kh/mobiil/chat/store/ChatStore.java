@@ -17,7 +17,9 @@ public interface ChatStore {
 
 	public int insertChat(Chat chat, SqlSessionTemplate session);
 
-	public List<Chat> selectReadRog(int roomNo, SqlSessionTemplate session);
+	public List<Chat> selectChatLog(int roomNo, SqlSessionTemplate session);
+
+	public int updateChatRead(int roomNo, SqlSessionTemplate session);
 
 //	public int unReadCount(int roomNo, SqlSessionTemplate session);
 

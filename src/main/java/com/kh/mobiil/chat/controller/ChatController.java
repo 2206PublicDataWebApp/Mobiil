@@ -63,22 +63,16 @@ public class ChatController {
 		}
 	}
 	
-//	// 채팅 로그 조회하기
-//	@ResponseBody
-//	@RequestMapping(value="/chat/chatLog.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
-//	public String chatLog(@RequestParam("roomNo") int roomNo) {
-//		
-//		List<Chat> cLog = cService.chatReadLog(roomNo);
-//		int unRead = cService.unReadCount(roomNo);
-//		for(int i = 0; i < unRead+1 ; i++) {
-//			Chat oneChat = cService.UnreadOnechat(roomNo); // 안읽은 애들 하나씩 불러서 리스트에 add
-//			cLog.add(oneChat);
-//			cService.updateOneChatRead(oneChat.getChatNo()); // read_chk도 업데이트 
-//		}
-//		
-//		Gson gson = new GsonBuilder().setDateFormat("MM-dd hh:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
-//		return gson.toJson(cLog);
-//		
-//	}
+	// 채팅 로그 조회하기
+	@ResponseBody
+	@RequestMapping(value="/chat/chatLog.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
+	public String chatLog(@RequestParam("roomNo") int roomNo) {
+		
+		List<Chat> cLog = cService.chatLog(roomNo);
+
+		Gson gson = new GsonBuilder().setDateFormat("MM-dd hh:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
+		return gson.toJson(cLog);
+		
+	}
 
 }

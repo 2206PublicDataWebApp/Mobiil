@@ -15,14 +15,17 @@
 	</insert>
 	
 	
-	<select id="selectReadChat" resultType="Chat">
+	<select id="selectChatLog" resultType="Chat">
 		SELECT * FROM CHAT_TBL
-		WHERE refRoomNo = #{roomNo} and read_chk = 'Y'
+		WHERE refRoomNo = #{roomNo}
+		ORDER BY 1
 	</select> 
 	
-<!-- 	<select id="unReadCount" resultMap="_int"> -->
-<!-- 		SELECT COUNT(*) FROM CHAT_TBL -->
-<!-- 		WHERE refRoomNo = #{roomNo} and read_chk = 'N' -->
-<!-- 	</select> -->
+	<update id="updateChatRead">
+		UPDATE CHAT_TBL
+		SET read_chk = 'Y'
+		WHERE refRoomNo = #{roomNo}
+	</update>
+	
 
 </mapper>
