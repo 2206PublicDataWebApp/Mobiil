@@ -3,6 +3,7 @@ package com.kh.mobiil.host.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -116,6 +117,12 @@ public class HostServiceImpl implements HostService{
 	public int reservationRemove(String reservationNo) {
 		int result = hStore.reservationRemove(session, reservationNo);
 		return result;
+	}
+
+	@Override
+	public List<Reservation> rListByDate(Date date1, Date date2) {
+		List<Reservation> rList = hStore.rListByDate(session, date1, date2);
+		return rList;
 	}
 
 

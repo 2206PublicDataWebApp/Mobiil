@@ -1,5 +1,7 @@
 package com.kh.mobiil.host.store;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -112,6 +114,16 @@ public class HostStoreImpl implements HostStore{
 		int result = session.update("HostMapper.reservationRemove", reservationNo);
 		return result;
 	}
+
+	@Override
+	public List<Reservation> rListByDate(SqlSession session, Date date1, Date date2) {
+		HashMap<String, Date> map = new HashMap<String, Date>();
+		map.put("date1", date1);
+		map.put("date2", date2);
+		List<Reservation> rList = session.selectList("HostMapper.rListByDate", map);
+		return rList;
+	}
+
 
 
 }

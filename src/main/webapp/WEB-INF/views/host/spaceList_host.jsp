@@ -16,11 +16,7 @@
 	};
 	
 </style>
-
-
 </head>
-
-
 <body>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
 
@@ -69,20 +65,6 @@
 						</tr>
 				</table>
 				<br><br>
-				
-				
-				
-				
-				
-				
 		</div>
-
-
-
-
-
-
-
-
 </body>
 </html>
