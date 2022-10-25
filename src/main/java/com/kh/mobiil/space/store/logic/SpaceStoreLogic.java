@@ -16,20 +16,31 @@ public class SpaceStoreLogic implements SpaceStore{
 
 	// 리스트 전체 게시물 개수
 	@Override
-	public int selectTotalCount(SqlSessionTemplate session) {
-		int totalCount = session.selectOne("SpaceMapper.selectTotalCount");
+	public int selectTotalCount(SqlSessionTemplate session, String area, String searchValue) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("area", area);
+		paramMap.put("searchValue", searchValue);
+		int totalCount = session.selectOne("SpaceMapper.selectTotalCount", paramMap);
+		return totalCount;
+	}
+	
+	@Override
+	public int selectPriceCount(SqlSessionTemplate session, Integer minNum, Integer maxNum) {
+		HashMap<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("minNum", minNum);
+		paramMap.put("maxNum", maxNum);
+		int totalCount = session.selectOne("SpaceMapper.selectPriceCount", paramMap);
 		return totalCount;
 	}
 	
 	// 날짜 및 시간 유효성 검사
 	@Override
 	public int checkTime(SqlSessionTemplate session, String start, String end, String reservDate) {
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("start", start);
-		map.put("end", end);
-		map.put("reservDate", reservDate);
-		System.out.println(map);
-		int result = session.selectOne("SpaceMapper.checkTime", map);
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("start", start);
+		paramMap.put("end", end);
+		paramMap.put("reservDate", reservDate);
+		int result = session.selectOne("SpaceMapper.checkTime", paramMap);
 		return result;
 	}
 
@@ -50,6 +61,29 @@ public class SpaceStoreLogic implements SpaceStore{
 		List<SpaceImg> iList = session.selectList("SpaceMapper.selectImg", spaceNo);
 		return iList;
 	}
+
+	@Override
+	public List<Space> selectAllByValue(SqlSessionTemplate session, String searchValue, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectAllByValue", searchValue, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectByArea(SqlSessionTemplate session, String area, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectByArea", area, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectByPrice(SqlSessionTemplate session, Integer minNum, Integer maxNum, RowBounds rowBounds) {
+		HashMap<String, Integer> paramMap = new HashMap<String, Integer>();
+		paramMap.put("minNum", minNum);
+		paramMap.put("maxNum", maxNum);
+		List<Space> sList = session.selectList("SpaceMapper.selectByPrice", paramMap, rowBounds);
+		return sList;
+	}
+
+
 
 	
 

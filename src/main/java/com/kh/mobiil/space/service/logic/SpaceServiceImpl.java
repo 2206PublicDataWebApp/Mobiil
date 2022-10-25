@@ -28,11 +28,17 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int getTotalCount() {
-		int totalCount = sStore.selectTotalCount(session);
+	public int getTotalCount(String area, String searchValue) {
+		int totalCount = sStore.selectTotalCount(session, area, searchValue);
 		return totalCount;
 	}
 
+	@Override
+	public int getPriceCount(Integer minNum, Integer maxNum) {
+		int totalCount = sStore.selectPriceCount(session, minNum, maxNum);
+		return totalCount;
+	}
+	
 	@Override
 	public List<Space> printSpace(RowBounds rowBounds) {
 		List<Space> sList = sStore.selectSpace(session, rowBounds);
@@ -50,6 +56,25 @@ public class SpaceServiceImpl implements SpaceService{
 		List<SpaceImg> iList = sStore.selectImg(session, spaceNo);
 		return iList;
 	}
+
+	@Override
+	public List<Space> printAllByValue(String searchValue, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectAllByValue(session, searchValue, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printByArea(String area, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectByArea(session, area, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectByPrice(session, minNum, maxNum, rowBounds);
+		return sList;
+	}
+
 
 
 	

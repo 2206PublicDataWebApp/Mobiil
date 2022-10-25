@@ -1,5 +1,6 @@
 package com.kh.mobiil.space.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mobiil.partner.domain.Page;
+import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.service.SpaceService;
@@ -29,11 +31,10 @@ public class SpaceController {
 	@RequestMapping(value="/space/spaceList.kh", method=RequestMethod.GET)
 	public ModelAndView spaceListView(
 			ModelAndView mv
-			,HttpServletRequest request
 			,@RequestParam(value="page", required=false) Integer page) {
 		// 페이징
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = sService.getTotalCount();
+		int totalCount = sService.getTotalCount("","");
 		int naviLimit = 5;
 		int boardLimit = 9;
 		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
@@ -60,20 +61,128 @@ public class SpaceController {
 			Space space = sService.printOneByNo(spaceNo);
 			List<SpaceImg> iList = sService.printImg(spaceNo);
 			session.setAttribute("spaceNo", space.getSpaceNo());
+			session.setAttribute("spaceName", space.getSpaceName());
 			mv.addObject("space", space);
 			mv.addObject("iList", iList);
 			mv.addObject("page", page);
 			mv.setViewName("space/spaceDetail");
 		} catch (Exception e) {
-			mv.addObject("msg", e.toString());
-			mv.setViewName("common/errorPage");
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
 		}
 		return mv;
 	}
 	
+	// 공간 검색
+	@RequestMapping(value="/space/spaceSearch.kh", method=RequestMethod.GET)
+	public ModelAndView spaceSearchList(
+			ModelAndView mv
+			, @RequestParam("searchValue") String searchValue
+			, @RequestParam(value="page", required=false) Integer page) {
+		try {
+			// 페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = sService.getTotalCount("",searchValue);
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			
+			List<Space> sList = sService.printAllByValue(searchValue, rowBounds);
+			if(!sList.isEmpty()) {
+				mv.addObject("sList", sList);
+			}else {
+				mv.addObject("sList", null);
+			}
+			mv.addObject("urlVal", "spaceSearch");
+			mv.addObject("searchValue", searchValue);
+			mv.addObject("paging", paging);
+			mv.setViewName("space/spaceList");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 지역 검색
+	@RequestMapping(value="/space/spaceArea.kh", method=RequestMethod.GET)
+	public ModelAndView spaceAreaList(
+			ModelAndView mv
+			, @RequestParam("area") String area
+			, @RequestParam(value="page", required=false) Integer page) {
+		try {
+			// 페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = sService.getTotalCount(area,"");
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			
+			List<Space> sList = sService.printByArea(area, rowBounds);
+			if(!sList.isEmpty()) {
+				mv.addObject("sList", sList);
+			}else {
+				mv.addObject("sList", null);
+			}
+			mv.addObject("urlVal", "spaceArea");
+			mv.addObject("area", area);
+			mv.addObject("paging", paging);
+			mv.setViewName("space/spaceList");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 가격 검색
+	@RequestMapping(value="/space/spacePrice.kh", method=RequestMethod.GET)
+	public ModelAndView spacePriceList(
+			ModelAndView mv
+			, @RequestParam("minNum") Integer minNum
+			, @RequestParam("maxNum") Integer maxNum
+			, @RequestParam(value="page", required=false) Integer page) {
+		try {
+			// 페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = sService.getPriceCount(minNum,maxNum);
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			
+			List<Space> sList = sService.printByPrice(minNum, maxNum, rowBounds);
+			if(!sList.isEmpty()) {
+				mv.addObject("sList", sList);
+			}else {
+				mv.addObject("sList", null);
+			}
+			mv.addObject("urlVal", "spacePrice");
+			mv.addObject("minNum", minNum);
+			mv.addObject("maxNum", maxNum);
+			mv.addObject("paging", paging);
+			mv.setViewName("space/spaceList");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
 	@RequestMapping(value="/space/payment.kh", method=RequestMethod.GET)
-	public String payment() {
-		return "space/payment";
+	public ModelAndView payment( ModelAndView mv
+			, @RequestParam(value="sDate") Date sDate
+			, @RequestParam(value="start") int start
+			, @RequestParam(value="end") int end
+			, @RequestParam(value="price") int price
+			, HttpSession session) {
+		try {
+			mv.addObject("sDate",sDate);
+			mv.addObject("start",start);
+			mv.addObject("end",end);
+			mv.addObject("price",price);
+			mv.setViewName("space/payment");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
 	@RequestMapping(value="/space/reservationInfo.kh", method=RequestMethod.GET)

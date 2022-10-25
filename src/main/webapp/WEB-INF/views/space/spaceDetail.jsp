@@ -76,14 +76,18 @@ ${iList[1].spaceFileRename }
 <option value="23">23시</option>
 <option value="24">24시</option>
 </select>
+
+<span>
+
+</span>
 <input type="button" value="호스트와 채팅하기" onclick="chatting()">
 <input type="button" value="결제하기" onclick="payment()">
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
 	
-	// 카카오 지도
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	/* // 카카오 지도
+	var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
 	var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표간 변환 서비스 객체 생성
 	var callback = function(result, status) {
 	    if (status === kakao.maps.services.Status.OK) {
@@ -97,10 +101,13 @@ ${iList[1].spaceFileRename }
     };
 
 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
-	
+	var map = new kakao.maps.Map(mapContainer, mapOption);  */
+	 
 	// fullcalender
 	var sDate = "";
+	var price = "";
+	var end = "";
+	var start = "";
 	document.addEventListener('DOMContentLoaded', function() {
 	    var calendarEl = document.getElementById('calendar');
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -142,8 +149,8 @@ ${iList[1].spaceFileRename }
 
 	// 결제하기 누르면 날짜 및 시간 유효성 검사
 	function payment(){
-		var start = $('#startTime option:selected').val();
-		var end = $('#endTime option:selected').val();
+		start = $('#startTime option:selected').val();
+		end = $('#endTime option:selected').val();
 		if(sDate == "" || start == "시작" || end == "끝"){
 			alert("날짜 혹은 시간을 확인해주세요.");
 		}
@@ -156,9 +163,9 @@ ${iList[1].spaceFileRename }
 				
 				if(result != 0){
 					alert("예약할 수 없는 시간입니다.");
-					/* location.href = "/space/payment.kh"; */
 				}else{
 					alert("예약 가능한 시간입니다.");
+					location.href = '/space/payment.kh?sDate='+sDate+'&start='+start+'&end='+end+'&price='+price;
 				}
 			},
 			error : function(){
@@ -174,12 +181,16 @@ ${iList[1].spaceFileRename }
 	
 	// 시작시간 > 끝시간 선택시 option 리셋 유효성 검사
 	function check(){
-		var start = $('#startTime option:selected').val();
-		var end = $('#endTime option:selected').val();
+		start = $('#startTime option:selected').val();
+		end = $('#endTime option:selected').val();
 		if(Number(start) >= Number(end)){
 			alert("잘못된 시간을 선택하셨습니다.");
 			$('#startTime option:eq(0)').prop('selected', true);
 			$('#endTime option:eq(0)').prop('selected', true);
+		}
+		if(Number(start) < Number(end)){
+			price = ${space.spacePrice}*(Number(end) - Number(start));
+			$("span").append(price+"원");
 		}
 	}
 </script>
