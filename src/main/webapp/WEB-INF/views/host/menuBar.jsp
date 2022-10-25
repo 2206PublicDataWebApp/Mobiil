@@ -52,7 +52,7 @@
 				<a class="function" href="/host/registList.mobiil">예약 리스트</a>
 			</li>
 			<li>
-				<a class="function" href="#" onclick="">정산 확인</a><br><br>
+				<a class="function" href="/host/profitsCheckView.kh">정산 확인</a><br><br>
 			</li>
 			<li>
 				<a class="function" href="/host/spaceInsertView.mobiil">공간 업로드</a><br><br>

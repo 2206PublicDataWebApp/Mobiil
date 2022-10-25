@@ -1,5 +1,6 @@
 package com.kh.mobiil.host.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -44,4 +45,6 @@ public interface HostService {
 	int reservationModify(Reservation reservation);
 
 	int reservationRemove(String reservationNo);
+
+	List<Reservation> rListByDate(Date date1, Date date2);
 }
