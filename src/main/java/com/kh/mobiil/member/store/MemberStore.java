@@ -1,10 +1,13 @@
 package com.kh.mobiil.member.store;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
+import com.kh.mobiil.space.domain.Reservation;
 
 public interface MemberStore {
 	
@@ -25,6 +28,11 @@ public interface MemberStore {
 
 	public int checkDupNick(SqlSession session, String memberNick); // 닉네임 중복 체크
 
+	public int selectTotalCount(SqlSession session); // 결제 내역
+	
+	public List<Reservation> selectAllReserve(SqlSession session, int currentPage, int limit); // 결제 내역
+	
+	
 	// 호스트
 	
 	public int insertHost(SqlSession session, Host host); // 가입
@@ -32,6 +40,10 @@ public interface MemberStore {
 	public Host selectLoginHost(SqlSession session, Host host); // 로그인
 
 	public int checkDupHostEmail(SqlSession session, String hostEmail); // 이메일 중복 체크
+
+
+
+
 
 
 

@@ -5,6 +5,24 @@
   
   <mapper namespace="MemberMapper">
   
+  <resultMap type="Reservation" 					id="reserveResultMap">
+  		<id 	property="reservNo" 				column="RESERV_NO"/>
+  		<result property="memberEmail" 				column="MEMBER_EMAIL"/>
+  		<result property="hostEmail" 				column="HOST_EMAIL"/>
+  		<result property="spaceNo" 					column="SPACE_NO"/>
+  		<result property="spaceTitle" 				column="SPACE_TITLE"/>
+  		<result property="spaceAddress" 			column="SPACE_ADDRESS"/>
+  		<result property="price" 					column="PRICE"/>
+  		<result property="reservDate" 				column="RESERV_DATE"/>
+  		<result property="memberName" 				column="MEMBER_NAME"/>
+  		<result property="memberPhone" 				column="MEMBER_PHONE"/>
+  		<result property="paymentDate" 				column="PAYMENT_DATE"/>
+  		<result property="reservStatus" 			column="RESERV_STATUS"/>
+  		<result property="revStatus" 				column="REV_STATUS"/>
+  		<result property="revStart" 				column="REV_START"/>
+  		<result property="revEnd" 					column="REV_END"/>
+  </resultMap>
+  		
 	<!-- 멤버(개인회원) -->
 	<insert id="insertMember"> <!-- 회원가입 -->
 		  INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
@@ -29,15 +47,23 @@
   		UPDATE MEMBER_TBL SET mStatus = 'N' WHERE memberEmail = #{memberEmail} 
   	</update>
   	
-  	<select id="checkEmailDuplicate" resultType="_int">
+  	<select id="checkEmailDuplicate" resultType="_int"> <!-- 이메일 중복방지 -->
   		SELECT COUNT(*) FROM (
 		SELECT memberEmail FROM MEMBER_TBL WHERE mStatus = 'Y'
 		UNION
 		SELECT hostEmail FROM HOST_TBL WHERE hStatus = 'Y') WHERE memberEmail = #{memberEmail}
   	</select>
   	
-  	<select id="checkNickDuplicate" resultType="_int">
+  	<select id="checkNickDuplicate" resultType="_int"> <!-- 닉네임 중복방지 -->
   		SELECT COUNT(*) FROM MEMBER_TBL WHERE memberNick = #{memberNick} AND mStatus = 'Y'
+  	</select>
+  	
+  	<select id="selectTotalCount" resultType="_int"> <!-- 결제내역 갯수-->
+  		SELECT COUNT(*) FROM RESERVATION_TBL
+  	</select>
+  	
+  	<select id="selectAllReserve" resultMap="reserveResultMap"> <!-- 결제내역-->
+  		SELECT * FROM RESERVATION_TBL WHERE MEMBER_EMAIL = #{memberEmail} AND RESERV_STATUS = 'Y' ORDER BY RESERV_NO DESC
   	</select>
   	
   	<!-- 호스트 -->

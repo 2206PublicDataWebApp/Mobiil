@@ -3,6 +3,7 @@ package com.kh.mobiil.member.controller;
 import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
+import com.kh.mobiil.space.domain.Reservation;
 
 @Controller
 public class MemberController {
@@ -198,6 +200,33 @@ public class MemberController {
         return num;
 	}
 	
+	// 결제 내역 조회
+	@RequestMapping(value="/payment/list.kh", method=RequestMethod.GET)
+	public ModelAndView paymentListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = mService.getTotalCount();
+		int reserveLimit = 10;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int)((double)totalCount/reserveLimit + 0.9);
+		startNavi = ((int)((double)currentPage/naviLimit+0.9)-1)*naviLimit+1;
+		endNavi = startNavi + naviLimit - 1;
+		if(maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		List<Reservation> rList = mService.printAllReserve(currentPage, reserveLimit);
+		if(!rList.isEmpty()) {
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.addObject("rList", rList);
+		}
+		mv.setViewName("member/paymentHistory");
+		return mv;
+	}
 	
 	
 //////////////////////////////호스트 로그인///////////////////////////////////////
@@ -250,10 +279,10 @@ public class MemberController {
 	@RequestMapping(value = "/host/login.kh", method=RequestMethod.POST) // 로그인
 	public ModelAndView hostLogin(@ModelAttribute Host host, ModelAndView mv, HttpServletRequest request) {
 		try {
-			Host loginUser = mService.loginHost(host);
-			if(loginUser != null) {
+			Host loginHost = mService.loginHost(host);
+			if(loginHost != null) {
 				HttpSession session = request.getSession();
-				session.setAttribute("loginUser", loginUser);
+				session.setAttribute("loginHost", loginHost);
 				mv.setViewName("redirect:/");
 			}else {
 				request.setAttribute("msg", "회원정보가 없습니다.");

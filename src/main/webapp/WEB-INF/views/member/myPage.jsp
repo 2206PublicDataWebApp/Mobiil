@@ -60,7 +60,7 @@
             <span> | </span>
             <span onclick="location.href='#'">찜한 공간 보기</span> 
             <span> | </span> 
-            <span onclick="location.href='#'">결제 내역 보기</span>
+            <span onclick="location.href='/payment/list.kh'">결제 내역 보기</span>
             <span> | </span> 
             <span onclick="location.href='/partner/myPartnerInfo.kh?memberEmail=${loginUser.memberEmail}'">내 파트너 정보</span>
         </div>

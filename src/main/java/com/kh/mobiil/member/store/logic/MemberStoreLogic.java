@@ -1,11 +1,15 @@
 package com.kh.mobiil.member.store.logic;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.store.MemberStore;
+import com.kh.mobiil.space.domain.Reservation;
 
 @Repository
 public class MemberStoreLogic implements MemberStore{
@@ -55,6 +59,20 @@ public class MemberStoreLogic implements MemberStore{
 		return result;
 	}
 	
+	@Override
+	public int selectTotalCount(SqlSession session) { // 결제 내역
+		int result = session.selectOne("MemberMapper.selectTotalCount");
+		return result;
+	}
+
+	@Override
+	public List<Reservation> selectAllReserve(SqlSession session, int currentPage, int limit) { // 결제 내역
+		int offset = (currentPage-1)*limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Reservation> rList = session.selectList("MemberMapper.selectAllReserve", null, rowBounds);
+		return rList;
+	}
+	
 	// 호스트
 	
 	@Override
@@ -74,7 +92,5 @@ public class MemberStoreLogic implements MemberStore{
 		int result = session.selectOne("MemberMapper.checkHostEmailDuplicate", hostEmail);
 		return result;
 	}
-
-
 
 }

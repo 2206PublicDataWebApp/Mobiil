@@ -1,5 +1,7 @@
 package com.kh.mobiil.member.service.logic;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
 import com.kh.mobiil.member.store.MemberStore;
+import com.kh.mobiil.space.domain.Reservation;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -62,7 +65,18 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public int getTotalCount() {
+		int totalCount = mStore.selectTotalCount(session);
+		return totalCount;
+	}
 
+	@Override
+	public List<Reservation> printAllReserve(int currentPage, int limit) {
+		List<Reservation> rList = mStore.selectAllReserve(session, currentPage, limit);
+		return rList;
+	}
+	
 	// 호스트
 	
 	@Override
@@ -82,5 +96,7 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.checkDupHostEmail(session, hostEmail);
 		return result;
 	}
+
+
 	
 }

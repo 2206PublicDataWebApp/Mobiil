@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ReviewMapper">
+	  <resultMap type="Review" id="reviewResultMap">
+	 		<id 	property="reviewNo" 		column="REVIEW_NO"/>
+	  		<result property="spaceNo" 			column="SPACE_NO"/>
+			<result property="reviewImgNo" 		column="REVIEW_IMG_NO"/>
+	  		<result property="memberEmail" 	 	column="MEMBER_EMAIL"/>
+	  		<result property="reviewContents"	column="REVIEW_CONTENTS"/>
+	  		<result property="reviewWriter" 	column="REVIEW_WRITER"/>
+	  		<result property="rCreateDate" 		column="R_CREATE_DATE"/>
+	  		<result property="rUpdateDate" 		column="R_UPDATE_DATE"/>
+	  		<result property="rStatus" 			column="R_STATUS"/>
+	 	</resultMap>
+	 	
+  <insert id="insertReview">
+ 		INSERT INTO REVIEW_TBL
+ 		VALUES(SEQ_REVIEW_NO.NEXTVAL, SEQ_SPACE_NO.CURRVAL, SEQ_REVIEW_IMG_NO.CURRVAL, 
+ 		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT)
+ </insert>
+  
+  
+  
+  
+  </mapper>

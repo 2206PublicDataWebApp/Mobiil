@@ -1,7 +1,10 @@
 package com.kh.mobiil.member.service;
 
+import java.util.List;
+
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
+import com.kh.mobiil.space.domain.Reservation;
 
 public interface MemberService {
 
@@ -22,6 +25,10 @@ public interface MemberService {
 
 	public int checkDupNick(String memberNick); // 닉네임 중복 체크
 	
+	public int getTotalCount(); // 마이페이지 -> 결제 내역 조회
+	
+	public List<Reservation> printAllReserve(int offset, int limit); // 마이페이지 -> 결제 내역 조회
+	
 	// 호스트
 	
 	public int registerHost(Host host); // 회원가입
@@ -29,6 +36,9 @@ public interface MemberService {
 	public Host loginHost(Host host); // 로그인
 
 	public int checkDupHostEmail(String hostEmail); // 이메일 중복 체크
+
+
+
 
 
 
