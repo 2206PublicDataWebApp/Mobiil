@@ -2,6 +2,7 @@ package com.kh.mobiil.space.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.mobiil.partner.domain.Page;
 import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.service.SpaceService;
 
 @Controller
@@ -24,13 +26,14 @@ public class SpaceController {
 	private SpaceService sService;
 	
 	// 공간 리스트 조회
-	@RequestMapping(value="/space/spaceList", method=RequestMethod.GET)
+	@RequestMapping(value="/space/spaceList.kh", method=RequestMethod.GET)
 	public ModelAndView spaceListView(
 			ModelAndView mv
+			,HttpServletRequest request
 			,@RequestParam(value="page", required=false) Integer page) {
 		// 페이징
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = sService.getTotalCount("","");
+		int totalCount = sService.getTotalCount();
 		int naviLimit = 5;
 		int boardLimit = 9;
 		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
@@ -47,7 +50,7 @@ public class SpaceController {
 	}
 	
 	// 공간 상세 조회
-	@RequestMapping(value="/space/spaceDetail", method=RequestMethod.GET)
+	@RequestMapping(value="/space/spaceDetail.kh", method=RequestMethod.GET)
 	public ModelAndView spaceDetail(
 			ModelAndView mv
 			, @RequestParam(value="spaceNo") Integer spaceNo
@@ -55,8 +58,10 @@ public class SpaceController {
 			, HttpSession session) { // 세션 사용 안하면 나중에 삭제하기
 		try {
 			Space space = sService.printOneByNo(spaceNo);
+			List<SpaceImg> iList = sService.printImg(spaceNo);
 			session.setAttribute("spaceNo", space.getSpaceNo());
 			mv.addObject("space", space);
+			mv.addObject("iList", iList);
 			mv.addObject("page", page);
 			mv.setViewName("space/spaceDetail");
 		} catch (Exception e) {
@@ -66,19 +71,19 @@ public class SpaceController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/space/payment", method=RequestMethod.GET)
+	@RequestMapping(value="/space/payment.kh", method=RequestMethod.GET)
 	public String payment() {
 		return "space/payment";
 	}
 	
-	@RequestMapping(value="/space/reservationInfo", method=RequestMethod.GET)
+	@RequestMapping(value="/space/reservationInfo.kh", method=RequestMethod.GET)
 	public String reservationInfo() {
 		return "space/reservationInfo";
 	}
 	
 	// 예약날짜 및 시간 유효성 체크
 	@ResponseBody
-	@RequestMapping(value="/space/checkTime", method=RequestMethod.GET)
+	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)
 	public String checkTime(String start, String end, String reservDate) {
 		System.out.println(start + end + reservDate);
 		int result = sService.checkTime(start, end, reservDate);

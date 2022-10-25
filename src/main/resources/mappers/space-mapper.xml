@@ -6,7 +6,7 @@
   
 <mapper namespace="SpaceMapper">
 	<resultMap type="Space" id="SpaceResultMap">
-  		<id property="spaceNo" 				column="SPACE_NO"/>
+  		<id 	property="spaceNo" 			column="SPACE_NO"/>
   		<result property="spaceName" 		column="SPACE_NAME"/>
   		<result property="address" 			column="SPACE_ADDRESS"/>
   		<result property="spaceComent" 		column="SPACE_COMENT"/>
@@ -15,9 +15,16 @@
   		<result property="approval" 		column="APPROVAL"/>
   		<result property="approvalDate" 	column="APPROVAL_DATE"/>
   		<result property="spaceStatus" 		column="SPACE_STATUS"/>
-  		<association property="spaceImg" javaType="SpaceImg">
+  		<association property="spaceImg" 	javaType="SpaceImg">
   			<result property="spaceFileRename" column="SPACE_FILERENAME"/>
   		</association>
+  	</resultMap>
+  	<resultMap type="SpaceImg" 				id="SpaceImgResultMap">
+  		<id 	property="spaceImgNo" 		column="SPACE_IMG_NO"/>
+  		<result property="spaceNo" 			column="SPACE_NO"/>
+  		<result property="spaceFileName" 	column="SPACE_FILENAME"/>
+  		<result property="spaceFileRename" 	column="SPACE_FILERENAME"/>
+  		<result property="spaceFilePath" 	column="SPACE_FILEPATH"/>
   	</resultMap>
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM SPACE_TBL WHERE SPACE_STATUS = 'Y' 
@@ -28,6 +35,9 @@
 		ON SPACE_TBL.SPACE_NO = SPACE_IMG.SPACE_NO 
 		<!-- WHERE SPACE_STATUS = 'Y' -->
 		GROUP BY SPACE_TBL.SPACE_NO, SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_FILERENAME
+	</select>
+	<select id="selectImg" resultMap="SpaceImgResultMap">
+		SELECT * FROM SPACE_IMG WHERE SPACE_NO = #{spaceNo}
 	</select>
 	<select id="selectOneByNo" resultMap="SpaceResultMap">
 		SELECT * FROM SPACE_TBL WHERE SPACE_NO = #{spaceNo}
