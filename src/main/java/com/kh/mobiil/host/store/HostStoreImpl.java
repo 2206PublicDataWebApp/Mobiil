@@ -124,6 +124,12 @@ public class HostStoreImpl implements HostStore{
 		return rList;
 	}
 
+	@Override
+	public List<Reservation> regervationList(SqlSession session) {
+		List<Reservation> rList = session.selectList("HostMapper.reservationCkList");
+		return rList;
+	}
+
 
 
 }

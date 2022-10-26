@@ -125,5 +125,11 @@ public class HostServiceImpl implements HostService{
 		return rList;
 	}
 
+	@Override
+	public List<Reservation> regervationList() {
+		List<Reservation> rList = hStore.regervationList(session);
+		return rList;
+	}
+
 
 }

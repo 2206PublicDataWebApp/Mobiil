@@ -73,6 +73,12 @@
 			REGPHOTONAME = #{regPhotoName}, REGPHOTORENAME = #{regPhotoRename}, REGPHOTOPATH = #{regPhotoPath}  
 		WHERE HOSTEMAIL = #{hostEmail}
 	  </update>
+	  
+	  <!-- 예약 확인용 예약 조회  -->
+	  <select id="reservationCkList" resultMap="ReservationResultMap">
+	  	SELECT * FROM RESERVATION_TBL
+	  	WHERE RESERV_STATUS = 'Y'
+	  </select>
 
 	  <!-- 예약 갯수 확인 -->
 	  <select id="getRegervationTotalCount" resultType="_int">

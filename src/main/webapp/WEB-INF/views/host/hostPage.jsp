@@ -5,71 +5,89 @@
 <head>
 <meta charset="UTF-8">
 <title>호스트 페이지</title>
-
 <style>
 		#td{
-		text-align : center;
+		text-align : right;
 	}
 	
 	#image{
-		widtg : 250px;
-		height : 250px;
+	  	width: 500px;
+		height : 300px;
+		margin-left: 50px;
 	}
 	
 	#imageTr{
 		text-align : right;
 	}
+	
+	#imgtd{
+		text-align : center;
+	}
+	
+	.input {
+            height: 30px;
+            width: 400px;
+            font-size: 15px;
+            margin: 1px 80px 10px 20px;
+            text-align: center;
+            font-weight: bolder;
+        }
+        
+      #wapper{
+      	text-align : center;
+      }
 </style>
 
 
 </head>
 
-
 <body>
+<jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
-
+	<div id="wapper">
 		<h2 align="center">안녕하세요, OOO님</h2><br>
 		<hr>
 		
 			<table align="center">
 				<tr>
-					<td id="td">대표자명   :</td>
+					<td id="td">대표자명 </td>
 					<td>
-					<input type="text" id="name" name="name" value="${hOne.hostName }" readonly>
+					<input type="text" id="name" class="input" name="name" value="${hOne.hostName }" readonly>
 					</td>
 				</tr>
 				<tr>
-					<td id="td">상호명   :</td>
+					<td id="td">상호명</td>
 					<td>
-					<input type="text" id="business_name" name="business_name" value="${hOne.companyName }"readonly>
+					<input type="text" id="business_name" class="input" name="business_name" value="${hOne.companyName }"readonly>
 					</td>
 				</tr>
 				<tr>
-					<td id="td">연락처   :</td>
+					<td id="td">연락처</td>
 					<td>
-					<input type="text" id="phone" name="phone" value="${hOne.hostPhone }" readonly>
+					<input type="text" id="phone" class="input" name="phone" value="${hOne.hostPhone }" readonly>
 					</td>
 				</tr>
 				<tr>
-					<td id="td">사업자 등록번호   :</td>
+					<td>사업자 등록번호</td>
 					<td>
-					<input type="text" id="businessNo" name="businessNo" value="${hOne.companyRegNum }" readonly>
+					<input type="text" id="businessNo" class="input" name="businessNo" value="${hOne.companyRegNum }" readonly>
 					</td>
 				</tr>
 				<tr>
-					<td id="td">은행명   :</td>
+					<td id="td">은행명</td>
 					<td>
-					<input type="text" id="bankName" name="bankName" value="${hOne.accountName }" readonly>
+					<input type="text" id="bankName" class="input" name="bankName" value="${hOne.accountName }" readonly>
 					</td>
 				</tr>
 				<tr>
-					<td id="td">Email   :</td>
+					<td id="td">Email</td>
 					<td>
-					<input type="text" id="Email" name="Email" value="${hOne.hostEmail }" readonly>
+					<input type="text" id="Email" class="input" name="Email" value="${hOne.hostEmail }" readonly>
 					</td>
 				</tr>
+				<br>
 				<tr>
-					<td id="td" colspan ='2'>사업자 등록증 </td>
+					<td id="imgtd" colspan ='2'>사업자 등록증 </td>
 					<td></td>
 				</tr>
 				<tr>
@@ -77,5 +95,8 @@
 					<td><td>
 				</tr>
 			</table>
+		</div>	
+		<br><br><br><br><br><br><br>
+<jsp:include page="../../views/common/footer.jsp"></jsp:include>
 </body>
 </html>

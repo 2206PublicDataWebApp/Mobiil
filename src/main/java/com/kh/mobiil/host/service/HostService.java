@@ -47,4 +47,6 @@ public interface HostService {
 	int reservationRemove(String reservationNo);
 
 	List<Reservation> rListByDate(Date date1, Date date2);
+
+	List<Reservation> regervationList();
 }

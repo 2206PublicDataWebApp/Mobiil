@@ -37,7 +37,8 @@ const renderCalender = () => {
     const condition = i >= firstDateIndex && i < lastDateIndex + 1
                       ? 'this'
                       : 'other';
-    dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+    dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
+    		    <span id=${viewYear + "-" + (viewMonth+1) + "-" + date}>예약자</span></div>`;
   });
 
   document.querySelector('.dates').innerHTML = dates.join('');
@@ -69,3 +70,4 @@ const goToday = () => {
   date = new Date();
   renderCalender();
 };
+

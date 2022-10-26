@@ -1,7 +1,10 @@
 package com.kh.mobiil.host.controller;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -135,12 +138,23 @@ public class HostController {
 	 */
 	@RequestMapping(value="/host/hostInfo.mobiil", method = RequestMethod.GET)
 	public ModelAndView hostInfo(ModelAndView mv, HttpServletRequest request) {
-
 			HttpSession session = request.getSession();
 			Host host = (Host)session.getAttribute("loginHost");
 			String hostEmail = host.getHostEmail();
 			Host hOne = hService.getHostInfo(hostEmail);
+			// 오늘날짜 구하기
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//			Calendar c1 = Calendar.getInstance();
+//			String today = sdf.format(c1.getTime());
+//			System.out.println(today);
+//			// 오늘날짜 기준으로 7일전 날짜구하기
+//			c1.add(c1.DATE, -7);
+//			String today7 = sdf.format(c1.getTime());
+//			System.out.println(today7);
 			if(hOne != null) {
+				// addObject * 2 -> 오늘날짜, 7일전 날짜
+//				mv.addObject("today", today);
+//				mv.addObject("today7", today7);
 				mv.addObject("hOne", hOne);
 				mv.setViewName("/host/hostPage");
 			} else {
@@ -200,18 +214,24 @@ public class HostController {
 	
 	/**
 	 * 예약확인
+	 * @param mv
+	 * @return
 	 */
 	@RequestMapping(value="/host/reservationCheck.mobiil", method = RequestMethod.GET)
 	public ModelAndView checkedRegister(ModelAndView mv) {
-		
+		// 예약 리스트 필요함
+		// 일자에 맞춰 달력 id에 넣어줘야됨
+		List<Reservation> rList = hService.regervationList();
+		try {
+			if(!rList.isEmpty()) {
+				mv.addObject("rList", rList);
+				mv.setViewName("host/reservationCheck");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("commom/errorPage");
+		}
 		return mv;
-	}
-	
-	/**
-	 * 예약 상세정보
-	 */
-	public void registerDetail() {
-		
 	}
 	
 	/**
@@ -319,13 +339,11 @@ public class HostController {
 			// http://127.0.0.1:1111/host/profitsCheck.kh?date1=20221019&date2=20221024
 			java.sql.Date date1 = java.sql.Date.valueOf(d1);	// String -> Date
 			java.sql.Date date2 = java.sql.Date.valueOf(d2);	// String -> Date
-			System.out.println(date1);
-			System.out.println(date2);
 			List<Reservation> rList = hService.rListByDate(date1, date2);
 			System.out.println(rList);
 			if(!rList.isEmpty()) {
 				mv.addObject("rList", rList);
-				mv.setViewName("redirect:http://127.0.0.1:1111/host/profitsCheck.kh?date1="+date1+"&date2="+date2+"");
+				mv.setViewName("host/profitsCheck"); // redirect ??
 			}
 		}catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
@@ -466,14 +484,13 @@ public class HostController {
 				}
 					int result2 = hService.spaceImgModify(spaceImg);
 					mv.setViewName("redirect:/host/spaceList.mobiil");
-			}
-		}catch (Exception e) {
+				}
+			} catch (Exception e) {
 
+			}
+			return mv;
 		}
-		return mv;
-		
-	}
-	
+
 	/**
 	 * 공간 삭제
 	 * @param mv

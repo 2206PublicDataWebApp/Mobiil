@@ -6,8 +6,52 @@
 <meta charset="UTF-8">
 <title>공간 업로드 페이지</title>
 <style>
-	#td{
-		text-align : center;
+	td {
+		width: 100px;
+	}
+	
+	form {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	#td {
+		text-align: center;
+	}
+	
+	.input {
+		height: 30px;
+		width: 400px;
+		font-size: 15px;
+		margin: 1px 80px 10px 20px;
+		text-align: center;
+		font-weight: bolder;
+	}
+	
+	table {
+		width: 750px;
+	}
+	
+	.button1 {
+		height: 40px;
+		width: 100px;
+		background-color: #ecf3fd;
+		border-radius: 20px;
+		border: none;
+		font-size: 20px;
+		margin: 1px 1px 10px 50px;
+		font-size: 15px;
+	}
+	
+	.button2 {
+		height: 40px;
+		width: 100px;
+		background-color: #f3f3f3;
+		border-radius: 20px;
+		border: none;
+		font-size: 20px;
+		margin: 1px 1px 10px 50px;
+		font-size: 15px;
 	}
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
@@ -21,23 +65,24 @@
 </head>
 
 <body>
-	<jsp:include page="../host/menuBar.jsp"></jsp:include>
+<jsp:include page="../../views/common/menubar.jsp"></jsp:include>
+<jsp:include page="../host/menuBar.jsp"></jsp:include>
 	<form action="/host/spaceInsert.mobiil" method="POST" enctype="multipart/form-data">
 		<div id="div" align="center">
 		<h2>공간 업로드</h2><br>
 		<hr>
-			<table>
+			<table >
 				<tr>
-					<td id="td">공간명   </td>
-					<td><input type="text" id="spaceName" name="spaceName" placeholder="공간 타이틀을 입력 해주세요." required></td>
+					<td id="td">공간명</td>
+					<td><input type="text" id="spaceName" class="input" name="spaceName" placeholder="공간 타이틀을 입력 해주세요." required></td>
 				</tr>
 				<tr>
-					<td id="td">주소   </td>
-					<td><input type="text" id="sample6_postcode" placeholder="우편번호" required>
+					<td id="td">주소</td>
+					<td><input type="text" id="sample6_postcode" class="input" placeholder="우편번호" required>
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" id="sample6_address" name="address" placeholder="주소" required><br>
-						<input type="text" id="sample6_detailAddress" placeholder="상세주소" required>
-						<input type="text" id="sample6_extraAddress" placeholder="참고항목"></td>
+						<input type="text" id="sample6_address" class="input" name="address" placeholder="주소" required><br>
+						<input type="text" id="sample6_detailAddress" class="input" placeholder="상세주소" required>
+						<input type="text" id="sample6_extraAddress" class="input" placeholder="참고항목"></td>
 				</tr>
 				<tr class="fileTr">
 					<td id="td">공간 이미지   </td>
@@ -53,16 +98,18 @@
 				</tr>
 				<tr>
 					<td id="td">지역   </td>
-					<td><input type="text" id="spaceArea" name="spaceArea" placeholder="강북, 강남, 강서, 강동" required></td>
+					<td><input type="text" id="spaceArea" class="input" name="spaceArea" placeholder="강북, 강남, 강서, 강동" required></td>
 				</tr>
 				<tr>
 					<td id="td">금액   </td>
-					<td><input type="text" id="spacePrice" name="spacePrice" placeholder="금액을 입력 해주세요." required>
+					<td><input type="text" id="spacePrice" class="input" name="spacePrice" placeholder="금액을 입력 해주세요." required>
 					</td>
 				</tr>
 				<tr>
-					<td><button type="submit">공간 업로드</button></td>
-					<td><button type="reset">취소</button></td>
+					<td colspan='2' align="center">
+					<button class="button1" type="submit">공간 업로드</button>
+					<button class="button2" type="reset">취소</button>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -130,7 +177,8 @@
     	});
     });
 </script>
+<br><br><br><br><br><br><br>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+<jsp:include page="../../views/common/footer.jsp"></jsp:include>
 </body>
 </html>
