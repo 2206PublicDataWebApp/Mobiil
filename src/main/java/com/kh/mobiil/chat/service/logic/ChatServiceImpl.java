@@ -40,9 +40,20 @@ public class ChatServiceImpl implements ChatService {
 	}
 	@Override
 	public List<Chat> chatLog(int roomNo) {
-		int result = cStore.updateChatRead(roomNo, session);
+		int result = cStore.updateChatRead(roomNo, session); // read 업데이트
 		List<Chat> cLog = cStore.selectChatLog(roomNo, session);
 		return cLog;
+	}
+	@Override
+	public Chat chatNewOne(int roomNo) {
+		Chat cOne = cStore.selectOneNew(roomNo, session);
+		int result = cStore.updateChatRead(roomNo, session); // read 업데이트
+		return cOne;
+	}
+	@Override
+	public int getDailyNewRoom(int dayBefore) {
+		int result = cStore.selectDailyNewRoom(dayBefore, session);
+		return result;
 	}
 
 }

@@ -47,4 +47,8 @@ public interface HostService {
 	int reservationRemove(String reservationNo);
 
 	List<Reservation> rListByDate(Date date1, Date date2);
+
+	
+	//////////어드민 대시보드 숫자뽑는 메소드들//////
+	int getHostCount();
 }

@@ -82,7 +82,7 @@
 						<li>
 							<a href="/member/logout.kh">로그아웃</a>
 						</li>
-						<li><a href="/admin/banner/list.kh">관리자페이지</a></li>
+						<li><a href="/admin/dashboard.kh">관리자페이지</a></li>
 						<li><a href="/host/hostInfo.mobiil">호스트페이지</a></li>
 						<li><a href="/admin/bannerMail.kh">광고 문의</a></li>
 					</ul>
@@ -121,7 +121,7 @@
 
 <script type="text/javascript">
 function chatWindow(memberNick) {
-	window.open('/chat/chatWindow.kh?memberNick='+memberNick+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
+	window.open('/chat/chatWindow.kh?memberNick='+memberNick+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
 }
 </script>
  

@@ -80,6 +80,15 @@
 		WHERE partnerNo = #{partnerNo}
 	</delete>
 	
+	<select id="selectApprovedPartnerCount" resultType="_int">
+		SELECT COUNT(*) FROM PARTNER_TBL
+		WHERE approval = 'Y'
+	</select>
+	
+	<select id="selectNotApprovedPartnerCount" resultType="_int">
+		SELECT COUNT(*) FROM PARTNER_TBL
+		WHERE approval = 'N'
+	</select>
 	
 
 </mapper>

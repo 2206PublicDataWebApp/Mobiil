@@ -18,7 +18,7 @@
 	<select id="selectChatLog" resultType="Chat">
 		SELECT * FROM CHAT_TBL
 		WHERE refRoomNo = #{roomNo}
-		ORDER BY 1
+		ORDER BY 1 
 	</select> 
 	
 	<update id="updateChatRead">
@@ -27,5 +27,12 @@
 		WHERE refRoomNo = #{roomNo}
 	</update>
 	
+	<select id="selectOneNew" resultType="Chat">
+	<![CDATA[ 
+		SELECT * FROM CHAT_TBL
+		WHERE (refRoomNo = #{roomNo}) AND (ROWNUM <= 1) 
+		ORDER BY 1 desc
+		]]>
+	</select>
 
 </mapper>

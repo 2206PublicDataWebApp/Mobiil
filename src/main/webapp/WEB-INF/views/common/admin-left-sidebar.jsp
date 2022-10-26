@@ -6,11 +6,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<style type="text/css">
 
+
+</style>
 
 </head>
 <body>
-      		<div class="col-md-2">
+      		<div id = 'sidebar' class="col-md-2">
 				<aside class="sidebar">
 				<!-- Widget Category -->
 					<div class="widget widget-category">
@@ -18,7 +21,7 @@
 						<ul class="widget-category-list">
 							<li><a href="/">서비스 페이지로 이동</a>
 					        </li>
-					        <li><a href="#!">대시보드</a>
+					        <li><a href="/admin/dashboard.kh">대시보드</a>
 					        </li>
 					        <li><a href="/admin/partner/list.kh">파트너 관리</a>
 					        </li>

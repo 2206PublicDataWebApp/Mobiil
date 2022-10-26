@@ -124,6 +124,12 @@ public class HostStoreImpl implements HostStore{
 		return rList;
 	}
 
+	@Override
+	public int selectHostCount(SqlSession session) {
+		int result =session.selectOne("HostMapper.selectHostCount");
+		return result;
+	}
+
 
 
 }

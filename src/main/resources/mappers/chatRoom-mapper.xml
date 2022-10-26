@@ -17,7 +17,10 @@
 			OR (withUser = #{memberName})
 		ORDER BY 1 DESC	
 	</select>
-	
+	<select id="selectDailyNewRoom" resultType="_int">
+		SELECT count(*) FROM CHATROOM_TBL
+		WHERE TO_CHAR(CAST(createDate AS DATE)) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD'))
+	</select>
 	
 	<insert id="insertRoom">
 		INSERT INTO CHATROOM_TBL VALUES(

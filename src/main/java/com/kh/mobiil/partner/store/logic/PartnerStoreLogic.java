@@ -67,4 +67,16 @@ public class PartnerStoreLogic implements PartnerStore{
 		return result;
 	}
 
+	@Override
+	public int selectApprovedPartnerCount(SqlSessionTemplate session) {
+		int result = session.selectOne("partnerMapper.selectApprovedPartnerCount");
+		return result;
+	}
+
+	@Override
+	public int selectNotApprovedPartnerCount(SqlSessionTemplate session) {
+		int result = session.selectOne("partnerMapper.selectNotApprovedPartnerCount");
+		return result;
+	}
+
 }

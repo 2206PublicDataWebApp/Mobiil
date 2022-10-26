@@ -97,6 +97,25 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	/////////////어드민 대시보드
+	@Override
+	public int getMemberCount() {
+		int result = mStore.selectMemberCount(session);
+		return result;
+	}
+
+	@Override
+	public int getDailyNewMember(int dayBefore) {
+		int result = mStore.selecMemberDaily(dayBefore, session);
+		return result;
+	}
+
+	@Override
+	public int getDailyNewHost(int dayBefore) {
+		int result = mStore.selecHostDaily(dayBefore, session);
+		return result;
+	}
+
 
 	
 }

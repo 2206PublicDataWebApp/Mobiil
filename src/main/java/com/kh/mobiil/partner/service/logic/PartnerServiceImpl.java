@@ -74,4 +74,16 @@ public class PartnerServiceImpl implements PartnerService {
 		return result;
 	}
 
+	@Override
+	public int getApprovedPartnerCount() {
+		int result = pStore.selectApprovedPartnerCount(session);
+		return result;
+	}
+
+	@Override
+	public int getNotApprovedPartnerCount() {
+		int result = pStore.selectNotApprovedPartnerCount(session);
+		return result;
+	}
+
 }
