@@ -7,8 +7,53 @@
 <meta charset="UTF-8">
 <title>공간 수정 페이지</title>
 <style>
+
+	table {
+			width: 750px;
+		}
+		
 	#td{
-		text-align : right;
+		text-align : center;
+	}
+	
+	td {
+		width: 90px;
+	}
+	
+	form {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	.input {
+		height: 30px;
+		width: 400px;
+		font-size: 15px;
+		margin: 1px 80px 10px 20px;
+		text-align: center;
+		font-weight: bolder;
+	}
+	
+	.button1 {
+		height: 40px;
+		width: 100px;
+		background-color: #ecf3fd;
+		border-radius: 20px;
+		border: none;
+		font-size: 20px;
+		margin: 1px 1px 10px 50px;
+		font-size: 15px;
+	}
+	
+	.button2 {
+		height: 40px;
+		width: 100px;
+		background-color: #f3f3f3;
+		border-radius: 20px;
+		border: none;
+		font-size: 20px;
+		margin: 1px 1px 10px 50px;
+		font-size: 15px;
 	}
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
@@ -22,7 +67,8 @@
 </head>
 
 <body>
-	<jsp:include page="../host/menuBar.jsp"></jsp:include>
+<jsp:include page="../../views/common/menubar.jsp"></jsp:include>
+<jsp:include page="../host/menuBar.jsp"></jsp:include>
 	<div id="div" align="center">
 	<h1>공간 정보 수정</h1>
 	<br><br>
@@ -32,15 +78,15 @@
 				<table>
 					<tr>
 						<td id="td">공간명</td>
-						<td><input type="text" id="spaceName" name="spaceName" value="${sOne.spaceName }"></td>
+						<td><input type="text" id="spaceName" class="input" name="spaceName" value="${sOne.spaceName }"></td>
 					</tr>
 					<tr>
 						<td id="td">주소</td>
-						<td><input type="text" id="sample6_postcode">
+						<td><input type="text" id="sample6_postcode" class="input">
 							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" id="sample6_address" value="${sOne.address }"><br>
-							<input type="text" id="sample6_detailAddress">
-							<input type="text" id="sample6_extraAddress"></td>
+							<input type="text" id="sample6_address" class="input" value="${sOne.address }"><br>
+							<input type="text" id="sample6_detailAddress"class="input" >
+							<input type="text" id="sample6_extraAddress"class="input" ></td>
 					</tr>
 					<tr>
 						<td id="td">공간 이미지</td>
@@ -54,20 +100,22 @@
 					</tr>
 					<tr>
 						<td id="td">공간 소개</td>
-						<td><textarea class="summernote" name=spaceComent value="${sOne.spaceComent }"></textarea></td>
+						<td><textarea class="summernote" name=spaceComent></textarea></td>
 					</tr>
 					<tr>
 						<td id="td">지역</td>
-						<td><input type="text" id="spaceArea" name="spaceArea" value="${sOne.spaceArea }"></td>
+						<td><input type="text" id="spaceArea" class="input" name="spaceArea" value="${sOne.spaceArea }"></td>
 					</tr>
 					<tr>
 						<td id="td">금액</td>
-						<td><input type="text" id="spacePrice" name="spacePrice" value="${sOne.spacePrice }">
+						<td><input type="text" id="spacePrice" class="input" name="spacePrice" value="${sOne.spacePrice }">
 						</td>
 					</tr>
 					<tr>
-						<td><button type="submit">공간 업로드</button></td>
-						<td><button type="reset">취소</button></td>
+						<td colspan='2' align="center">
+						<button class="button1" type="submit">공간 업로드</button>
+						<button class="button2" type="reset">취소</button>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -131,11 +179,11 @@
     		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
     		  lang: "ko-KR",					// 한글 설정
     		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-              
     	});
+    	$(".summernote").summernote('code',  '${sOne.spaceComent }');
     });
 </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+<jsp:include page="../../views/common/footer.jsp"></jsp:include>
 </body>
 </html>

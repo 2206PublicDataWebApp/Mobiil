@@ -33,6 +33,7 @@
 	</style>
 </head>
 <body>
+
 	<div id="side">
 		<br>
 		<ul>
@@ -46,13 +47,13 @@
 				<a class="function" href="/host/hostModifyView.mobiil">정보 수정</a>
 			</li>
 			<li>
-				<a class="function" href="/host/reservationCheckView.mobiil">예약 확인</a><br><br>
+				<a class="function" href="/host/reservationCheck.mobiil">예약 확인</a><br><br>
 			</li>
 			<li>
 				<a class="function" href="/host/registList.mobiil">예약 리스트</a>
 			</li>
 			<li>
-				<a class="function" href="/host/profitsCheckView.kh">정산 확인</a><br><br>
+				<a class="function" href="javascript:void(0)" onclick="getProfitsCheck();">정산 확인</a><br><br>
 			</li>
 			<li>
 				<a class="function" href="/host/spaceInsertView.mobiil">공간 업로드</a><br><br>
@@ -62,5 +63,27 @@
 			</li>
 		</ul>
 	</div>
+	<script>
+		function getProfitsCheck() {
+			var today = new Date();
+			var year = today.getFullYear();    // 년도
+			var month = today.getMonth() + 1;  // 월
+			var date = today.getDate(); 	   // 일자
+			var day = today.getDay(); 		   // 요일
+			// 오눌날짜
+			var date1 = year + "-" + month + "-" + date;	
+			
+			var nowDate = new Date();	
+			var weekDate = nowDate.getTime() - (7 * 24 * 60 * 60 * 1000);	// 일주일전 시간
+			nowDate.setTime(weekDate);	// nowDate에 주입
+			var weekYear = nowDate.getFullYear();	// 년도
+			var weekMonth = nowDate.getMonth() +1;	// 월
+			var weekDay = nowDate.getDate();		// 일자
+			// 일주일전 날짜
+			var date2 = weekYear + "-" + weekMonth + "-" + weekDay;
+			
+			location.href = "/host/profitsCheck.kh?date1="+date1+"&date2="+date2;
+		}
+	</script>
 </body>
 </html>

@@ -8,17 +8,37 @@
 <title>공간 리스트</title>
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 <style>
-	
+
 	table, td, th {
-	  border : 1px solid black;
-	  border-collapse : collapse;
-	  text-align: center;
-	};
+		border: 1px solid black;
+		border-collapse: collapse;
+		text-align: center;
+		width : 650px;
+	}
+	
+	.button1 {
+		height: 30px;
+		width: 80px;
+		background-color: #ecf3fd;
+		border-radius: 20px;
+		border: none;
+		font-size: 15px;
+	}
+	
+	.button2 {
+		height: 30px;
+		width: 80px;
+		background-color: #f3f3f3;
+		border-radius: 20px;
+		border: none;
+		font-size: 15px;
+	}
 	
 </style>
 </head>
 <body>
-	<jsp:include page="../host/menuBar.jsp"></jsp:include>
+<jsp:include page="../../views/common/menubar.jsp"></jsp:include>
+<jsp:include page="../host/menuBar.jsp"></jsp:include>
 
 		<div id="div" align="center">
 		<h2>공간 리스트</h2><br>
@@ -26,8 +46,8 @@
 				<table>
 						<tr>
 							<td>공간번호</td>
-							<td>공간명</td>
-							<td>지역</td>
+							<td style="width: 2000px;">공간명</td>
+							<td style="width: 800px;">지역</td>
 							<td>금액</td>
 							<td>수정</td>
 							<td>삭제</td>
@@ -38,8 +58,8 @@
 							<td>${space.spaceName }</td>
 							<td>${space.spaceArea }</td>
 							<td>${space.spacePrice }</td>
-							<td><button type="button" onclick="location.href='/host/spaceModifyView.mobiil?spaceNo=${space.spaceNo}'">수정</button></td>
-							<td><button type="button" onclick="location.href='/host/spaceRemove.mobiil?spaceNo=${space.spaceNo}'">삭제</button></td>
+							<td><button type="button" class="button1" onclick="location.href='/host/spaceModifyView.mobiil?spaceNo=${space.spaceNo}'">수정</button></td>
+							<td><button type="button" class="button2" onclick="location.href='/host/spaceRemove.mobiil?spaceNo=${space.spaceNo}'">삭제</button></td>
 						</tr>
 						</c:forEach>
 						<tr>
@@ -66,5 +86,7 @@
 				</table>
 				<br><br>
 		</div>
+		<br><br><br><br><br><br><br>
+<jsp:include page="../../views/common/footer.jsp"></jsp:include>		
 </body>
 </html>

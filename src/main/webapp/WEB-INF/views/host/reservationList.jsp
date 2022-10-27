@@ -8,13 +8,32 @@
 <title>예약 리스트</title>
 
 <style>
-	table, td, th {
-	  border : 1px solid black;
-	  border-collapse : collapse;
-	  text-align: center;
-	};
 
-	
+table, td, th {
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	width : 650px;
+}
+
+
+.button1 {
+	height: 30px;
+	width: 80px;
+	background-color: #ecf3fd;
+	border-radius: 20px;
+	border: none;
+	font-size: 15px;
+}
+
+.button2 {
+	height: 30px;
+	width: 80px;
+	background-color: #f3f3f3;
+	border-radius: 20px;
+	border: none;
+	font-size: 15px;
+}
 </style>
 
 
@@ -22,7 +41,8 @@
 
 
 <body>
-	<jsp:include page="../host/menuBar.jsp"></jsp:include>
+<jsp:include page="../../views/common/menubar.jsp"></jsp:include>
+<jsp:include page="../host/menuBar.jsp"></jsp:include>
 
 	<div id="div" align="center">
 		<h2>예약 리스트</h2>
@@ -45,8 +65,8 @@
 					<td>${reservation.reservationDate }</td>
 					<td>${reservation.revStart }</td>
 					<td>${reservation.revEnd }</td>
-					<td><button type="button" onclick="location.href='/host/reservationModifyView.mobiil?reservationNo=${reservation.reservationNo}'">수정</button></td>
-					<td><button type="button" onclick="location.href='/host/reservationRemove.mobiil?reservationNo=${reservation.reservationNo}'">삭제</button></td>
+					<td><button type="button" class="button1" onclick="location.href='/host/reservationModifyView.mobiil?reservationNo=${reservation.reservationNo}'">수정</button></td>
+					<td><button type="button" class="button2" onclick="location.href='/host/reservationRemove.mobiil?reservationNo=${reservation.reservationNo}'">삭제</button></td>
 				</tr>
 			 </c:forEach> 
 			<tr>
@@ -69,5 +89,7 @@
 		<br>
 		<br>
 	</div>
+	<br><br><br><br><br><br><br><br>
+<jsp:include page="../../views/common/footer.jsp"></jsp:include>	
 </body>
 </html>

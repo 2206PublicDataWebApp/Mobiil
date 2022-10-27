@@ -130,6 +130,11 @@ public class HostServiceImpl implements HostService{
 		int result = hStore.selectHostCount(session);
 		return result;
 	}
+	@Override	
+	public List<Reservation> regervationList() {
+		List<Reservation> rList = hStore.regervationList(session);
+		return rList;
+	}
 
 
 }
