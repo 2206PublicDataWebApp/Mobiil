@@ -83,4 +83,25 @@
 		SELECT memberEmail FROM MEMBER_TBL WHERE mStatus = 'Y') WHERE hostEmail =  #{hostEmail}
   	</select>
   	
+  	
+  	
+<!--   	어드민 대시보드에 숫자뽑는 쿼리들  -->
+<!-- 	일반회원 카운트 -->
+  	<select id="selectMemberCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER_TBL
+  		WHERE mStatus = 'Y'
+  	</select>
+<!-- 	일일 일반회원 가입 카운트 -->
+  	<select id="selectMemberDailyCount" resultType="_int">
+		SELECT COUNT(*) FROM MEMBER_TBL
+		WHERE (TO_CHAR(enrollDate) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD')))
+				AND (mStatus = 'Y')
+	</select>
+<!-- 	일일 호스트회원 가입 카운트 -->
+	<select id="selectHostDailyCount" resultType="_int">
+		SELECT COUNT(*) FROM HOST_TBL
+		WHERE (TO_CHAR(enrollDate) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD')))
+				AND (hStatus = 'Y')
+	</select>
+  	
   </mapper>

@@ -35,6 +35,12 @@ public interface PartnerService {
 
 	// 메일 보내고 메일 발송 여부 업데이트
 	public int sendMail(int partnerNo);
+
+	//승인 파트너 수 추출
+	public int getApprovedPartnerCount();
+
+	//미승인 파트너 수 추출
+	public int getNotApprovedPartnerCount();
 	
 
 }

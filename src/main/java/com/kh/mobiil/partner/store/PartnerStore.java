@@ -28,4 +28,8 @@ public interface PartnerStore {
 
 	public int updateRejectMail(int partnerNo, SqlSessionTemplate session);
 
+	public int selectApprovedPartnerCount(SqlSessionTemplate session);
+
+	public int selectNotApprovedPartnerCount(SqlSessionTemplate session);
+
 }

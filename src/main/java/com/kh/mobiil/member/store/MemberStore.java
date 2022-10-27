@@ -42,6 +42,18 @@ public interface MemberStore {
 	public int checkDupHostEmail(SqlSession session, String hostEmail); // 이메일 중복 체크
 
 
+	////어드민 대시보드
+	public int selectMemberCount(SqlSessionTemplate session);
+
+
+	public int selecMemberDaily(int dayBefore, SqlSessionTemplate session);
+
+
+	public int selecHostDaily(int dayBefore, SqlSessionTemplate session);
+
+
+
+
 
 
 

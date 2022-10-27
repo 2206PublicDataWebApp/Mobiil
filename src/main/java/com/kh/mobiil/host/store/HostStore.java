@@ -49,4 +49,6 @@ public interface HostStore {
 
 	List<Reservation> rListByDate(SqlSession session, Date date1, Date date2);
 
+	int selectHostCount(SqlSession session);
+
 }

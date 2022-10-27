@@ -39,6 +39,14 @@ public interface MemberService {
 
 
 
+	// 어드민 대시보드
+	public int getMemberCount();
+
+
+	public int getDailyNewMember(int dayBefore); // 일일 일반 가입자
+
+
+	public int getDailyNewHost(int dayBefore); // 일일 호스트 가입자
 
 
 

@@ -125,5 +125,11 @@ public class HostServiceImpl implements HostService{
 		return rList;
 	}
 
+	@Override
+	public int getHostCount() {
+		int result = hStore.selectHostCount(session);
+		return result;
+	}
+
 
 }

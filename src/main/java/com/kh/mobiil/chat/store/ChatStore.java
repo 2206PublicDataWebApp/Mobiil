@@ -21,6 +21,13 @@ public interface ChatStore {
 
 	public int updateChatRead(int roomNo, SqlSessionTemplate session);
 
-//	public int unReadCount(int roomNo, SqlSessionTemplate session);
+	public Chat selectOneNew(int roomNo, SqlSessionTemplate session);
+
+	public int selectDailyNewRoom(int dayBefore, SqlSessionTemplate session);
+
+	public int selectUnRead(int refRoomNo, SqlSessionTemplate session);
+
+	public int disableRoom(int roomNo, SqlSessionTemplate session);
+
 
 }

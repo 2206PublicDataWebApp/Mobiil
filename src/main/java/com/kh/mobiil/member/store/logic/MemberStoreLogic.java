@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mobiil.host.domain.Host;
@@ -90,6 +91,27 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public int checkDupHostEmail(SqlSession session, String hostEmail) { // 이메일 중복 체크
 		int result = session.selectOne("MemberMapper.checkHostEmailDuplicate", hostEmail);
+		return result;
+	}
+	
+	
+	////////어드민 대시보드
+
+	@Override
+	public int selectMemberCount(SqlSessionTemplate session) {
+		int result = session.selectOne("MemberMapper.selectMemberCount");
+		return result;
+	}
+
+	@Override
+	public int selecMemberDaily(int dayBefore, SqlSessionTemplate session) {
+		int result = session.selectOne("MemberMapper.selectMemberDailyCount", dayBefore);
+		return result;
+	}
+
+	@Override
+	public int selecHostDaily(int dayBefore, SqlSessionTemplate session) {
+		int result = session.selectOne("MemberMapper.selectHostDailyCount", dayBefore);
 		return result;
 	}
 

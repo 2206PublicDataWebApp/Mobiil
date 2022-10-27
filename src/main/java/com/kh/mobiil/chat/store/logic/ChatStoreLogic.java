@@ -48,11 +48,28 @@ public class ChatStoreLogic implements ChatStore{
 		return result;
 	}
 
-	
-//	@Override
-//	public int unReadCount(int roomNo, SqlSessionTemplate session) {
-//		int unRead = session.selectOne("chatMapper.unReadCount", roomNo);
-//		return unRead;
-//	}
+	@Override
+	public Chat selectOneNew(int roomNo, SqlSessionTemplate session) {
+		Chat cOne = session.selectOne("chatMapper.selectOneNew", roomNo);
+		return cOne;
+	}
 
+	@Override
+	public int selectDailyNewRoom(int dayBefore, SqlSessionTemplate session) {
+		int result = session.selectOne("chatRoomMapper.selectDailyNewRoom", dayBefore);
+		return result;
+	}
+
+	@Override
+	public int selectUnRead(int refRoomNo, SqlSessionTemplate session) {
+		int result = session.selectOne("chatMapper.selectUnRead", refRoomNo);
+		return result;
+	}
+
+	@Override
+	public int disableRoom(int roomNo, SqlSessionTemplate session) {
+		int result = session.update("chatRoomMapper.disableRoom", roomNo);
+		return result;
+	}
+	
 }

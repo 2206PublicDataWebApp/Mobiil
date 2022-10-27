@@ -17,9 +17,13 @@ public interface ChatService {
 
 	public List<Chat> chatLog(int roomNo);
 
-//	public int unReadCount(int roomNo);
+	public Chat chatNewOne(int roomNo);
 
-//	public Chat UnreadOnechat(int roomNo);
+	public int getDailyNewRoom(int dayBefore);
+
+	public int unReadCount(int refRoomNo);
+
+	public int disableRoom(int roomNo);
 
 
 }

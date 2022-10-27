@@ -8,7 +8,8 @@
 	<select id="selectOneRoom" resultType="ChatRoom">
 		SELECT * FROM CHATROOM_TBL
 		WHERE (createUser = #{createUser} AND withUser = #{withUser})
-			OR (createUser = #{withUser} AND withUser = #{createUser}) 
+			OR (createUser = #{withUser} AND withUser = #{createUser})
+			AND (roomStatus = 'Y')
 	</select>
 	
 	<select id="selectAllRoom" resultType="ChatRoom">
@@ -18,12 +19,21 @@
 		ORDER BY 1 DESC	
 	</select>
 	
+	<select id="selectDailyNewRoom" resultType="_int">
+		SELECT count(*) FROM CHATROOM_TBL
+		WHERE TO_CHAR(CAST(createDate AS DATE)) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD'))
+	</select>
 	
 	<insert id="insertRoom">
 		INSERT INTO CHATROOM_TBL VALUES(
-		SEQ_ROOMNO.NEXTVAL, #{createUser}, #{withUser}, DEFAULT)
+		SEQ_ROOMNO.NEXTVAL, #{createUser}, #{withUser}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
+	<update id="disableRoom">
+		UPDATE CHATROOM_TBL
+		SET roomStatus = 'N', disableDate = SYSDATE, listDeleteDate = SYSDATE + 3
+		WHERE roomNo = #{roomNo}
+	</update>
 	
 	
 	

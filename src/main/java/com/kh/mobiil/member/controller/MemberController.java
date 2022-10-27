@@ -316,4 +316,5 @@ public class MemberController {
 		int result = mService.checkDupHostEmail(hostEmail);
 		return result+"";
 	}
+	
 }

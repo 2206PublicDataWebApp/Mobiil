@@ -166,6 +166,14 @@
   	 	SET SPACE_STATUS = 'N'
   	 	WHERE SPACE_NO = #{spaceNo} 
   	 </update>
+  	 
+  	 
+<!--   	어드민 대시보드에 숫자뽑는 쿼리들  -->
+	<!-- 	호스트수 -->
+  	 <select id="selectHostCount" resultType="_int">
+  	 	SELECT COUNT(*) FROM HOST_TBL
+  	 	WHERE hStatus = 'Y'
+  	 </select>
   </mapper>
   
   
