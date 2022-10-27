@@ -10,6 +10,7 @@ import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
 import com.kh.mobiil.member.store.MemberStore;
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 
 @Service
@@ -72,9 +73,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<Reservation> printAllReserve(int currentPage, int limit) {
-		List<Reservation> rList = mStore.selectAllReserve(session, currentPage, limit);
+	public List<Reservation> printAllReserve(String memberEmail, int currentPage, int reserveLimit) {
+		List<Reservation> rList = mStore.selectAllReserve(session, memberEmail, currentPage, reserveLimit);
 		return rList;
+	}
+	
+	@Override
+	public Reservation printOneByNo(Integer reservationNo) {
+		Reservation reservation = mStore.selectOneByNo(session, reservationNo);
+		return reservation;
 	}
 	
 	// 호스트

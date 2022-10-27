@@ -16,13 +16,29 @@
 	  		<result property="rStatus" 			column="R_STATUS"/>
 	 	</resultMap>
 	 	
-  <insert id="insertReview">
- 		INSERT INTO REVIEW_TBL
- 		VALUES(SEQ_REVIEW_NO.NEXTVAL, SEQ_SPACE_NO.CURRVAL, SEQ_REVIEW_IMG_NO.CURRVAL, 
- 		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT)
- </insert>
-  
-  
-  
-  
+	 	<resultMap type="ReviewImg" id="reviewImgResultMap">
+	 		<id 	property="reviewImgNo" 		column="REVIEW_IMG_NO"/>
+	  		<result property="reviewNo" 		column="REVIEW_NO"/>
+			<result property="reviewFileName" 	column="REVIEW_FILENAME"/>
+	  		<result property="reviewFileRename" column="REVIEW_FILERENAME"/>
+	  		<result property="reviewFilePath"	column="REVIEW_FILEPATH"/>
+	 	</resultMap>
+		 	
+	 <insert id="insertReview"> <!-- 리뷰 업로드 -->
+	 	INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{spaceNo}, #{reviewImgNo},
+	 		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT)
+	 </insert>
+   
+	 <insert id="insertReviewImg"> <!-- 리뷰 이미지 업로드 -->
+	   	INSERT INTO REVIEW_IMG VALUES(SEQ_REVIEW_IMG_NO.NEXTVAL, SEQ_REVIEW_NO.CURRVAL, 
+	 		#{reviewFileName}, #{reviewFileRename}, #{reviewFilePath})
+	 </insert>
+
+	 <update id="deleteReview"> <!-- 리뷰 삭제 -->
+	 	UPDATE REVIEW_TBL SET R_STATUS = 'N' WHERE REVIEW_NO = #{reviewNo}
+	 </update>
+	 
+	 <select id="selectOneByNo" resultMap="reviewResultMap"> <!-- 리뷰 상세보기 -->
+  		SELECT * FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo} AND R_STATUS = 'Y' 
+  	 </select>
   </mapper>
