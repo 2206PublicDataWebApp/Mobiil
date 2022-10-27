@@ -2,6 +2,7 @@ package com.kh.mobiil.space.controller;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -185,6 +186,22 @@ public class SpaceController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/space/paymentResult.kh", method=RequestMethod.GET)
+	public ModelAndView registerReservation(ModelAndView mv
+			, @RequestParam(value="reservNo") String reservNo
+			, @RequestParam(value="price") String price
+			, @RequestParam(value="paymentDate") String paymentDate
+			, @RequestParam(value="memberName") String memberName
+			, @RequestParam(value="memberPhone") String memberPhone
+			, @RequestParam(value="memberEmail") String memberEmail
+			, @RequestParam(value="spaceNo") Integer spaceNo
+			, @RequestParam(value="reservDate") String reservDate
+			, @RequestParam(value="revStart") Integer revStart
+			, @RequestParam(value="revEnd") Integer revEnd) {
+			System.out.println(reservNo+" "+price+" "+paymentDate+" "+memberName+" "+memberPhone+" "+memberEmail+" "+spaceNo+" "+reservDate+" "+revStart+" "+revEnd);
+		return mv;
+	}
 	@RequestMapping(value="/space/reservationInfo.kh", method=RequestMethod.GET)
 	public String reservationInfo() {
 		return "space/reservationInfo";

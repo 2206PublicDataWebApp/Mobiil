@@ -46,20 +46,42 @@ function requestPay() {
 	var IMP = window.IMP; // 생략 가능
 	var memberName = $('.memberName').val();
 	var memberPhone = $('.memberPhone').val();
+	var price = ${price };
+	var spaceNo = ${spaceNo};
+	const sDate = new Date('${sDate}');
+	var reservDate = sDate.toLocaleDateString();
+	console.log(reservDate);
+	var start = ${start };
+	var end = ${end };
     IMP.init("imp55727473"); // 예: imp00000000
     // IMP.request_pay(param, callback) 결제창 호출
     IMP.request_pay({ // param
         pg: "html5_inicis",
         pay_method: paymethod,
-        merchant_uid: "ORD20180131-0000011",
-        name: 'dd',
-        amount: 100,
-        buyer_email: "${loginUser.memberEmail }",
+        merchant_uid: "MB" + spaceNo + new Date().getTime(),
+        name: '${spaceName }',
+        amount: price,
         buyer_name: memberName,
         buyer_tel: memberPhone,
+        custom_data : { memberName:memberName, memberPhone:memberPhone, memberEmail:"${loginUser.memberEmail }", spaceNo : spaceNo, reservDate:${sDate }, revStart:start, revEnd:end}
     }, function (rsp) { // callback
         if (rsp.success) {
-            // 결제 성공 시 로직,
+            $.ajax({
+            	url : "/space/paymentResult.kh",
+            	type : "get",
+            	data : {"reservNo" : rsp.merchant_uid, "price" : rsp.paid_amount, "paymentDate" : rsp.paid_at,
+            			"memberName" : rsp.custom_data.memberName, "memberPhone" : rsp.custom_data.memberPhone,
+            			"memberEmail" : rsp.custom_data.memberEmail, "spaceNo" : rsp.custom_data.spaceNo,
+            			"reservDate" : rsp.custom_data.reservDate, "revStart" : rsp.custom_data.revStart,
+            			"revEnd" : rsp.custom_data.revEnd},
+				success : function(data){
+					console.log(data);
+					location.href='/space/reservationInfo.kh';
+				},
+				error : function(){
+					alert("통신 실패");
+				}
+            });
         } else {
             // 결제 실패 시 로직,
         }
