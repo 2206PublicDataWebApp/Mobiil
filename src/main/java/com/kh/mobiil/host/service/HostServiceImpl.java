@@ -136,5 +136,10 @@ public class HostServiceImpl implements HostService{
 		return rList;
 	}
 
+	@Override
+	public int approveSpace(int spaceNo) {
+		int result = hStore.approveSpace(session, spaceNo);
+		return result;
+	}
 
 }

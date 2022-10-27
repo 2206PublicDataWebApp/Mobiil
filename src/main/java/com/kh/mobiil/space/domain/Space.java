@@ -14,13 +14,10 @@ public class Space {
 		private Date   approvalDate;	// 공간 승인일
 		private String spaceStatus;		// 공간 등록여부
 		private String hostEmail;		// 호스트 이메일
+		private String rejectMailChk;	// 승인 거부 메일
 		
 		// spaceFileRename 한 개 가져오기 위해서 생성
 		private SpaceImg spaceImg;
-		
-		public SpaceImg getSpaceImg() {
-			return spaceImg;
-		}
 
 		public int getSpaceNo() {
 			return spaceNo;
@@ -102,16 +99,29 @@ public class Space {
 			this.hostEmail = hostEmail;
 		}
 
+		public String getRejectMailChk() {
+			return rejectMailChk;
+		}
+
+		public void setRejectMailChk(String rejectMailChk) {
+			this.rejectMailChk = rejectMailChk;
+		}
+
+		public SpaceImg getSpaceImg() {
+			return spaceImg;
+		}
+
 		public void setSpaceImg(SpaceImg spaceImg) {
 			this.spaceImg = spaceImg;
 		}
 
+		
 		@Override
 		public String toString() {
 			return "Space [spaceNo=" + spaceNo + ", spaceName=" + spaceName + ", address=" + address + ", spaceComent="
 					+ spaceComent + ", spaceArea=" + spaceArea + ", spacePrice=" + spacePrice + ", approval=" + approval
 					+ ", approvalDate=" + approvalDate + ", spaceStatus=" + spaceStatus + ", hostEmail=" + hostEmail
-					+ ", spaceImg=" + spaceImg + "]";
+					+ ", rejectMailChk=" + rejectMailChk + ", spaceImg=" + spaceImg + "]";
 		}
 		
 }

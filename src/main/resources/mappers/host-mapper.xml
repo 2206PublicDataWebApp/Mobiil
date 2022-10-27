@@ -89,6 +89,7 @@
 	  <select id="regervationList" resultMap="ReservationResultMap">
  		SELECT * FROM RESERVATION_TBL 
  		WHERE RESERV_STATUS = 'Y'
+ 		ORDER BY 1 DESC
 	  </select>
 	  
 	  <!-- 예약 번호로 예약 정보 가져오기 -->
@@ -120,7 +121,7 @@
 	  <!-- 공간 업로드 -->
   	  <insert id="insertSpace">
   		INSERT INTO SPACE_TBL
-  		VALUES(SEQ_SPACE_NO.NEXTVAL, #{spaceName}, #{address}, #{spaceComent}, #{spaceArea}, #{spacePrice}, DEFAULT, DEFAULT, DEFAULT, #{hostEmail)
+  		VALUES(SEQ_SPACE_NO.NEXTVAL, #{spaceName}, #{address}, #{spaceComent}, #{spaceArea}, #{spacePrice}, DEFAULT, DEFAULT, DEFAULT, #{hostEmail}, DEFAULT)
   	  </insert>
   	  
   	  <!-- 공간 이미지 업로드 -->
@@ -138,6 +139,7 @@
 	  <select id="spaceList" resultMap="SpaceResultMap">
 	  	SELECT * FROM SPACE_TBL
 	  	WHERE SPACE_STATUS = 'Y'
+	  	ORDER BY 1 DESC
 	  </select>
 	  
 	  <!-- 공간 번호로 공간 불러오기 -->
@@ -173,13 +175,20 @@
   	 	WHERE SPACE_NO = #{spaceNo} 
   	 </update>
   	 
-  	 
-<!--   	어드민 대시보드에 숫자뽑는 쿼리들  -->
+	<!--   	어드민 대시보드에 숫자뽑는 쿼리들  -->
 	<!-- 	호스트수 -->
   	 <select id="selectHostCount" resultType="_int">
   	 	SELECT COUNT(*) FROM HOST_TBL
   	 	WHERE hStatus = 'Y'
   	 </select>
+  	 
+  	 <!-- 공간 승인 -->
+  	 <update id="approveSpace">
+  	 	UPDATE SPACE_TBL
+  	 	SET APPROVAL = 'Y', APPROVAL_DATE = SYSDATE
+  	 	WHERE SPACE_NO = #{spaceNo}
+  	 </update>
+  	 
   </mapper>
   
   

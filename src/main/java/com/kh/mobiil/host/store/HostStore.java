@@ -53,4 +53,6 @@ public interface HostStore {
 	
 	List<Reservation> regervationList(SqlSession session);
 
+	int approveSpace(SqlSession session, int spaceNo);
+
 }

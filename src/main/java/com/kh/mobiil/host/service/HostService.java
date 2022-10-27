@@ -52,4 +52,6 @@ public interface HostService {
 	//////////어드민 대시보드 숫자뽑는 메소드들//////
 	int getHostCount();
 	List<Reservation> regervationList();
+
+	int approveSpace(int spaceNo);
 }
