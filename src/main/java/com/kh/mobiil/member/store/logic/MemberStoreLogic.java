@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.store.MemberStore;
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 
 @Repository
@@ -67,11 +68,17 @@ public class MemberStoreLogic implements MemberStore{
 	}
 
 	@Override
-	public List<Reservation> selectAllReserve(SqlSession session, int currentPage, int limit) { // 결제 내역
-		int offset = (currentPage-1)*limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		List<Reservation> rList = session.selectList("MemberMapper.selectAllReserve", null, rowBounds);
+	public List<Reservation> selectAllReserve(SqlSession session, String memberEmail, int currentPage, int reserveLimit) { // 결제 내역
+		int offset = (currentPage-1) * reserveLimit;
+		RowBounds rowBounds = new RowBounds(offset, reserveLimit);
+		List<Reservation> rList = session.selectList("MemberMapper.selectAllReserve", memberEmail, rowBounds);
 		return rList;
+	}
+	
+	@Override
+	public Reservation selectOneByNo(SqlSession session, Integer reservationNo) {
+		Reservation reservation = session.selectOne("MemberMapper.selectOneByNo", reservationNo);
+		return reservation;
 	}
 	
 	// 호스트
@@ -114,5 +121,6 @@ public class MemberStoreLogic implements MemberStore{
 		int result = session.selectOne("MemberMapper.selectHostDailyCount", dayBefore);
 		return result;
 	}
+
 
 }

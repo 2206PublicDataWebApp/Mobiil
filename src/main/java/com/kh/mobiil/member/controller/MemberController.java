@@ -15,7 +15,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 
 @Controller
@@ -202,7 +202,10 @@ public class MemberController {
 	
 	// 결제 내역 조회
 	@RequestMapping(value="/payment/list.kh", method=RequestMethod.GET)
-	public ModelAndView paymentListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+	public ModelAndView paymentListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, 
+			HttpSession session) {
+		Member member =(Member)session.getAttribute("loginUser");
+		String memberEmail = member.getMemberEmail();
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = mService.getTotalCount();
 		int reserveLimit = 10;
@@ -216,8 +219,9 @@ public class MemberController {
 		if(maxPage < endNavi) {
 			endNavi = maxPage;
 		}
-		List<Reservation> rList = mService.printAllReserve(currentPage, reserveLimit);
+		List<Reservation> rList = mService.printAllReserve(memberEmail, currentPage, reserveLimit);
 		if(!rList.isEmpty()) {
+			mv.addObject("memberEmail", memberEmail);
 			mv.addObject("maxPage", maxPage);
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("startNavi", startNavi);
@@ -225,9 +229,27 @@ public class MemberController {
 			mv.addObject("rList", rList);
 		}
 		mv.setViewName("member/paymentHistory");
+		
 		return mv;
 	}
 	
+	// 결제내역 상세조회
+	@RequestMapping(value="/payment/detail.kh", method=RequestMethod.GET)
+	public ModelAndView paymentDetailView(
+			ModelAndView mv, @RequestParam("reservationNo") Integer reservationNo, @RequestParam("page") Integer page, 
+			HttpSession session) {
+		try {
+			Reservation reservation = mService.printOneByNo(reservationNo);
+			session.setAttribute("reservationNo", reservation.getReservationNo());
+			mv.addObject("reservation", reservation);
+			mv.addObject("page", page);
+			mv.setViewName("member/paymentDetail");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString());
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
 	
 //////////////////////////////호스트 로그인///////////////////////////////////////
 	

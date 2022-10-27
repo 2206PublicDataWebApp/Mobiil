@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 
 public interface MemberStore {
@@ -30,8 +31,9 @@ public interface MemberStore {
 
 	public int selectTotalCount(SqlSession session); // 결제 내역
 	
-	public List<Reservation> selectAllReserve(SqlSession session, int currentPage, int limit); // 결제 내역
+	public List<Reservation> selectAllReserve(SqlSession session, String memberEmail, int currentPage, int reserveLimit); // 결제 내역
 	
+	public Reservation selectOneByNo(SqlSession session, Integer reservationNo); // 결제 상세 내역
 	
 	// 호스트
 	
@@ -50,6 +52,8 @@ public interface MemberStore {
 
 
 	public int selecHostDaily(int dayBefore, SqlSessionTemplate session);
+
+
 
 
 

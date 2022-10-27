@@ -18,8 +18,9 @@
 		<typeAlias type="com.kh.mobiil.host.domain.Host" 		alias="Host"/>
 		<typeAlias type="com.kh.mobiil.space.domain.Space" 		alias="Space"/>
 		<typeAlias type="com.kh.mobiil.space.domain.SpaceImg" 	alias="SpaceImg"/>
-		<typeAlias type="com.kh.mobiil.space.domain.Reservation" alias="Reservation"/>
-		<typeAlias type="com.kh.mobiil.review.domain.Review"  	alias="Review"/>
+		<typeAlias type="com.kh.mobiil.space.domain.Reservation"  alias="Reservation"/>
+		<typeAlias type="com.kh.mobiil.review.domain.Review"  	  alias="Review"/>
+		<typeAlias type="com.kh.mobiil.review.domain.ReviewImg" alias="ReviewImg"/>
 		
 
 	</typeAliases>
