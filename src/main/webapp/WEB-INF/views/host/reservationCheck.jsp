@@ -32,12 +32,16 @@
       </div>
       <div class="dates"></div>
     </div>
-  </div>${rList }
+  </div>
   
-  <script>	// 여기서 달력안에 값 넣기 시도해보기
-  	<c:forEach items="${rList}" var="reservation">
-  	
-  	</c:forEach>
+  <script>	// 여기서 달력 span태그에 값 넣기 시도해보기
+  window.onload = function() {
+	  <c:forEach items="${rList}" var="reservation">
+		var rDate = '${reservation.reservationDate}'
+		document.getElementById(rDate).textContent  += '"예약자 : '+'${reservation.memberName}"'
+													+ ' "예약시간 : ' + '${reservation.revStart}시' + '~' + '${reservation.revEnd}시"'; // span 태그 내부에 예약자 성함 넣기
+	  </c:forEach>
+  }
   </script>
   
  <script src="../resources/js/calendar.js"></script>

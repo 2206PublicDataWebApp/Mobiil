@@ -6,14 +6,14 @@ const renderCalender = () => {
 
   document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
 
-  const prevLast = new Date(viewYear, viewMonth, 0);
-  const thisLast = new Date(viewYear, viewMonth + 1, 0);
+  const prevLast = new Date(viewYear, viewMonth, 0);	 	// 지난달
+  const thisLast = new Date(viewYear, viewMonth + 1, 0);	// 이번달
 
-  const PLDate = prevLast.getDate();
-  const PLDay = prevLast.getDay();
+  const PLDate = prevLast.getDate();	// 지난달 마지막 일자
+  const PLDay = prevLast.getDay();		// 지난달 마지막 요일
 
-  const TLDate = thisLast.getDate();
-  const TLDay = thisLast.getDay();
+  const TLDate = thisLast.getDate();	// 이번달 마지막 일자
+  const TLDay = thisLast.getDay();		// 이번달 마지막 요일
 
   const prevDates = [];
   const thisDates = [...Array(TLDate + 1).keys()].slice(1);
@@ -21,12 +21,12 @@ const renderCalender = () => {
 
   if (PLDay !== 6) {
     for (let i = 0; i < PLDay + 1; i++) {
-      prevDates.unshift(PLDate - i);
+      prevDates.unshift("");
     }
   }
 
   for (let i = 1; i < 7 - TLDay; i++) {
-    nextDates.push(i);
+    nextDates.push("");
   }
 
   const dates = prevDates.concat(thisDates, nextDates);
@@ -34,12 +34,16 @@ const renderCalender = () => {
   const lastDateIndex = dates.lastIndexOf(TLDate);
 
   dates.forEach((date, i) => {
-    const condition = i >= firstDateIndex && i < lastDateIndex + 1
-                      ? 'this'
-                      : 'other';
-    dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
-    		    <span id=${viewYear + "-" + (viewMonth+1) + "-" + date}>예약자</span></div>`;
-  });
+    const condition = i >= firstDateIndex && i < lastDateIndex + 1 ? 'this' : 'other';
+	  if(date < 10){
+			dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
+	    		    <span id=${viewYear + "-" + (viewMonth+1) + "-" + "0" +date}> </span></div>`;
+		}else{
+			dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
+	    		    <span id=${viewYear + "-" + (viewMonth+1) + "-" +date}> </span></div>`;
+		}	
+	  });
+	    
 
   document.querySelector('.dates').innerHTML = dates.join('');
 
@@ -70,4 +74,3 @@ const goToday = () => {
   date = new Date();
   renderCalender();
 };
-

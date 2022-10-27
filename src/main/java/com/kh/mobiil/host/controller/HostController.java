@@ -416,6 +416,7 @@ public class HostController {
 	@RequestMapping(value="/host/spaceList.mobiil", method = RequestMethod.GET)
 	public ModelAndView spaceList(ModelAndView mv, HttpServletRequest request, @RequestParam(value="page", required = false) Integer page) {
 		
+		
 		//----------------------페이징
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = hService.getSpaceTotalCount(); 
