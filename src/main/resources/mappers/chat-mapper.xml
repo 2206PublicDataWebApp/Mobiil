@@ -21,6 +21,12 @@
 		ORDER BY 1 
 	</select> 
 	
+	<select id="selectUnRead" resultType="_int">
+		SELECT COUNT(*) FROM CHAT_TBL
+		WHERE refRoomNo = #{refRoomNo}
+			AND read_chk = 'N'
+	</select>
+	
 	<update id="updateChatRead">
 		UPDATE CHAT_TBL
 		SET read_chk = 'Y'

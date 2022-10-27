@@ -153,7 +153,6 @@ public class PartnerController {
 	@RequestMapping(value="/admin/partnerRejectMail.kh", method = RequestMethod.POST)
 	public int sendMail(@ModelAttribute MailInfo info, @RequestParam("partnerNo") int partnerNo) {
 		int updateResult = 0;
-		System.out.println(info.toString());
 		int mailResult = mailSender.mailSender(info);	// 메일 보내는 메소드 (성공시 1반환)
 		if(mailResult > 0) { // 메일 보내기 성공 시 업데이트
 			updateResult = pService.sendMail(partnerNo);	// 메일 보내고 메일 발송 여부 업데이트 메소드(성공시 1반환)

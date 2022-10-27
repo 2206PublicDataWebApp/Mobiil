@@ -80,7 +80,7 @@ font-size: 20px
 <body>
 
 <%--  <span id="header" align='center'><h1>myChat</h1> <a href='/chat/chatWindow.kh?memberNick=${memberNick }'>리스트로</a></q></span> --%>
-<span id="header" align='center'><h1>myChat</h1> <a href= "javascript:void(0)" onclick = "clearRoom();">리스트로</a></q></span>
+<span id="header" align='center'><h1>myChat</h1> <a href= "javascript:void(0)" onclick = "clearRoom();">리스트로</a> <a href= "javascript:void(0)" onclick = "disableRoom();">채팅방 나가기</a></span>
 
 <br>
 	<!--  채팅 로그 --> 
@@ -114,9 +114,37 @@ getChatLog(roomNo, memberNick);
 //getChatNewLog();
 setInterval(getChatNewLog, 500);
 
+// 목록으로 돌아가면서 인터벌 클리어
 function clearRoom() {
 	clearInterval(getChatNewLog, 500);
 	 window.location.href="/chat/chatWindow.kh?memberNick="+memberNick+""	
+}
+
+// 채팅방 나가기
+function disableRoom() {
+	if(confirm("채팅방은 복구할 수 없습니다. 정말 나가시겠습니까?")){
+		$.ajax({
+			url: "/chat/disableChatRoom.kh",
+			data: {
+				"roomNo" : roomNo,
+			},
+			type: "get",
+			success: function(data) {
+				if(data == "success"){
+					alert("리스트로 돌아갑니다");
+					window.location.href="/chat/chatWindow.kh?memberNick="+memberNick+"";
+				}else{
+					alert("채팅방 삭제 실패!");
+				}
+			},
+			error: function() {
+				console.log("서버 처리 실패")
+			}
+		})
+	}else{
+		return false;
+	}
+	
 }
 
 

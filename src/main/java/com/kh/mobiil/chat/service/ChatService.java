@@ -21,9 +21,9 @@ public interface ChatService {
 
 	public int getDailyNewRoom(int dayBefore);
 
-//	public int unReadCount(int roomNo);
+	public int unReadCount(int refRoomNo);
 
-//	public Chat UnreadOnechat(int roomNo);
+	public int disableRoom(int roomNo);
 
 
 }

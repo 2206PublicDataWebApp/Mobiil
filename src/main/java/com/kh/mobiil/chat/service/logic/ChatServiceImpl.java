@@ -47,12 +47,22 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public Chat chatNewOne(int roomNo) {
 		Chat cOne = cStore.selectOneNew(roomNo, session);
-		int result = cStore.updateChatRead(roomNo, session); // read 업데이트
+	//	int result = cStore.updateChatRead(roomNo, session); // read 업데이트
 		return cOne;
 	}
 	@Override
 	public int getDailyNewRoom(int dayBefore) {
 		int result = cStore.selectDailyNewRoom(dayBefore, session);
+		return result;
+	}
+	@Override
+	public int unReadCount(int refRoomNo) {
+		int result = cStore.selectUnRead(refRoomNo, session);
+		return result;
+	}
+	@Override
+	public int disableRoom(int roomNo) {
+		int result = cStore.disableRoom(roomNo, session);
 		return result;
 	}
 

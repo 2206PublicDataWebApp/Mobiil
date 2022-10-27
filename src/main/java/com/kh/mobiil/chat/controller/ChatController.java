@@ -1,5 +1,8 @@
 package com.kh.mobiil.chat.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -17,6 +20,8 @@ import com.google.gson.GsonBuilder;
 import com.kh.mobiil.chat.domain.Chat;
 import com.kh.mobiil.chat.domain.ChatRoom;
 import com.kh.mobiil.chat.service.ChatService;
+import com.kh.mobiil.mail.controller.MailController;
+import com.kh.mobiil.mail.domain.MailInfo;
 
 @Controller
 public class ChatController {
@@ -24,10 +29,22 @@ public class ChatController {
 	@Autowired
 	private ChatService cService;
 	
-	// 채팅방 리스트 띄우기
+	// 채팅방 리스트 띄우기 + 언리드 카운트 띄우기 + 채팅방 비활성화 이후 3일 지나면 채팅방 안보이게 함
 	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
 	public ModelAndView showChatList(@RequestParam("memberNick") String memberNick, ModelAndView mv) {
+		
 		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
+		// refRoomNo랑 언리드 read_ckh 확인해서 출력해야함
+		
+		for(int i = 0; i < cList.size() ; i++) {
+			int refRoomNo = cList.get(i).getRoomNo();
+			int unReadCount = cService.unReadCount(refRoomNo);
+			cList.get(i).setUnReadCount(unReadCount);
+		}
+		Date timeNow = new Date(System.currentTimeMillis());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd"); 
+		String today = simpleDateFormat.format(timeNow); 
+		mv.addObject("today", today);
 		mv.addObject("cList", cList);
 		mv.setViewName("/chat/chatWindow");
 		return mv;
@@ -82,7 +99,7 @@ public class ChatController {
 	@RequestMapping(value="/chat/chatLog.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
 	public String chatLog(@RequestParam("roomNo") int roomNo) {
 		List<Chat> cLog = cService.chatLog(roomNo);
-		Gson gson = new GsonBuilder().setDateFormat("MM-dd hh:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
+		Gson gson = new GsonBuilder().setDateFormat("MM-dd HH:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
 		return gson.toJson(cLog);
 	}
 
@@ -108,5 +125,32 @@ public class ChatController {
 		}
 		return gson.toJson(jsonObj);
 	}
+	
+	//채팅방 비활성화(채팅 나가기) 
+	@ResponseBody
+	@RequestMapping(value = "/chat/disableChatRoom.kh")
+	public String disableChatRoom(@RequestParam("roomNo") int roomNo) {
+		int result = cService.disableRoom(roomNo);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+//	@ResponseBody
+//	@RequestMapping(value = "chat/askMail.kh")
+//	public String askMail(@RequestParam("roomNo") int roomNO) {
+//		MailController mailSender = new MailController();
+//		MailInfo info = new MailInfo();
+//		info.setRecipient(recipient); // 수신자 조회해서 넣기
+//		info.setSubject(subject); // 게목 정해주기
+//		info.setText(text); // 내용에 재활성화 버튼 넣어서 보내기
+//		int mailResult = mailSender.mailSender(info);	// 메일 보내는 메소드 (성공시 1반환)
+//		return null;
+//
+//	}
+	
+	
+
 
 }

@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,10 +13,14 @@
 <style type="text/css">
 
 
+body{
+font-family:'Gamja Flower', cursive;
+}
+
 .list{
 pading:0;
 margin-top: 50px;
-width: 50px;
+width: 100%;
 position: relative;}
 
 
@@ -24,7 +29,7 @@ ul{
     list-style-type: none;
     padding: 0px;
    margin-top: 50px;
-    width: 150px;
+width: 100%;
     background: white;
     height: 100%;
     overflow: auto;
@@ -76,10 +81,12 @@ color:black;
 		<td>
 			<ul>
 <c:forEach items="${cList }" var="chatRoom" >
+
+		<c:if test="${chatRoom.roomStatus eq 'Y' }">
 			<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
 					<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}" >
 				<li>				
-					<span>	${chatRoom.withUser } </span>
+					<span>	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
 				</li>
 					</a>
 			</c:if>
@@ -87,10 +94,32 @@ color:black;
 			<c:if test="${chatRoom.createUser ne loginUser.memberNick }">
 					<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}">
 				<li>				
-					<span>	${chatRoom.createUser } </span>
+					<span>	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
 				</li>
 					</a>
 			</c:if>
+		</c:if>
+		
+		<c:if test="${(chatRoom.roomStatus eq 'N') and (chatRoom.listDeleteDate < today)}">
+			<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
+				<li>				
+					<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 3일 후 채팅방이 삭제됩니다.</span>
+					<button type='button' onclick='ask()'>재활성화 요청</button>
+				</li>
+			</c:if>
+		
+			<c:if test="${chatRoom.createUser ne loginUser.memberNick }">
+				<li>				
+					<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 3일 후 채팅방이 삭제됩니다.</span>
+					<button type='button' onclick='ask(${chatRoom.roomNo})'>재활성화 요청</button>
+				</li>
+			</c:if>
+		</c:if>
+		<c:if test="${(chatRoom.roomStatus eq 'N') and (chatRoom.listDeleteDate >= today)}">
+		
+		</c:if>
+		
+		
 </c:forEach>
 			</ul>
 		</td>
@@ -100,6 +129,28 @@ color:black;
 
 
 </div>
+
+<script type="text/javascript">
+	function ask(roomNo) { // 재활성화 요청 누르면 메일로 재활성화 요청 링크를 보냄 그거 누르면 수락-->업데이트
+		$.ajax({
+			url: "chat/askMail.kh",
+			data: {roomNo: roomNo}, //
+			type: "get",
+			success: function(data) {
+				if(data == success){
+					alert("활성화 메일 요청 성공")
+				}else{
+					alert("활성화 메일 요청 실패")
+				}
+			},
+			error: function() {
+				console.log("실패")
+			},
+			
+		})
+		
+	}
+</script>
 
 
 </body>
