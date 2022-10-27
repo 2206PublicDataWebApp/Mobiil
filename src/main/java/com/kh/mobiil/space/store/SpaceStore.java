@@ -12,9 +12,13 @@ public interface SpaceStore {
 	// 날짜 및 시간 유효성 검사
 	int checkTime(SqlSessionTemplate session, String start, String end, String reservDate);
 	// 리스트 전체 게시물 개수
-	int selectTotalCount(SqlSessionTemplate session);
+	int selectTotalCount(SqlSessionTemplate session, String area, String searchValue);
+	int selectPriceCount(SqlSessionTemplate session, Integer minNum, Integer maxNum);
 	List<Space> selectSpace(SqlSessionTemplate session, RowBounds rowBounds);
 	Space selectOneByNo(SqlSessionTemplate session, Integer spaceNo);
 	List<SpaceImg> selectImg(SqlSessionTemplate session, Integer spaceNo);
+	List<Space> selectAllByValue(SqlSessionTemplate session, String searchValue, RowBounds rowBounds);
+	List<Space> selectByArea(SqlSessionTemplate session, String area, RowBounds rowBounds);
+	List<Space> selectByPrice(SqlSessionTemplate session, Integer minNum, Integer maxNum, RowBounds rowBounds);
 	
 }

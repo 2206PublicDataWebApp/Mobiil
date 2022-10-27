@@ -12,6 +12,24 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <body>
 
+<div>
+<form action="/space/spacePrice.kh" method="get">
+<input type="text" name="minNum" value="${minNum }">
+<input type="text" name="maxNum" value="${maxNum }">
+<input type="submit" value="검색">
+</form>
+<form action="/space/spaceArea.kh" method="get">
+	<input type="submit" name="area" value="전체">
+	<input type="submit" name="area" value="강동">
+	<input type="submit" name="area" value="강서">
+	<input type="submit" name="area" value="강남">
+	<input type="submit" name="area" value="강북">
+</form>
+<form action="/space/spaceSearch.kh" method="get">
+	<input type="text" name="searchValue" value="${searchValue }">
+	<input type="submit" value="검색">
+</form>
+</div>
 <section class="products section">
 	<div class="container">
 	<!-- 썸네일 1개당 영역 시작-->
@@ -51,7 +69,7 @@
 		<td align='center'>
 		<ul class="pagination justify-content-center">
 			<c:if test="${paging.currentPage != 1 }">
-			<li class="page-item"><a class="page-link" href='/space/${urlVal }.kh?page=${paging.currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>이전</a>
+			<li class="page-item"><a class="page-link" href='/space/${urlVal }.kh?page=${paging.currentPage - 1 }&area=${area }&searchValue=${searchValue }&minNum=${maxNum}&maxNum=${maxNum}'>이전</a>
 			</li>
 			</c:if>
 			<c:forEach var='p' begin="${paging.startNavi }" end="${paging.endNavi }">
@@ -59,13 +77,13 @@
 				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
 				</c:if>
 				<c:if test="${paging.currentPage ne p}">
-				<li class="page-item"><a class="page-link"  href="/space/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
+				<li class="page-item"><a class="page-link"  href="/space/${urlVal }.kh?page=${p }&area=${area }&searchValue=${searchValue }&minNum=${minNum}&maxNum=${maxNum}">${p }</a>
 				</li>
 				</c:if>
 			</c:forEach>
 			
 			<c:if test="${paging.currentPage <paging.maxPage }">
-			<li class="page-item"><a class="page-link"  href='/space/${urlVal }.kh?page=${paging.currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>다음</a>
+			<li class="page-item"><a class="page-link"  href='/space/${urlVal }.kh?page=${paging.currentPage + 1 }&area=${area }&searchValue=${searchValue }&minNum=${minNum}&maxNum=${maxNum}'>다음</a>
 			</li>
 			</c:if>
 		</ul>

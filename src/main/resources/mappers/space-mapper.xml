@@ -27,7 +27,32 @@
   		<result property="spaceFilePath" 	column="SPACE_FILEPATH"/>
   	</resultMap>
 	<select id="selectTotalCount" resultType="_int">
-		SELECT COUNT(*) FROM SPACE_TBL WHERE SPACE_STATUS = 'Y' 
+		SELECT COUNT(*) FROM SPACE_TBL
+		<where>
+			<if test="searchValue.toString() != ''">
+				SPACE_NAME LIKE '%'||#{searchValue}||'%'
+				OR SPACE_AREA LIKE '%'||#{searchValue}||'%'
+			</if>
+			<if test="area.toString() == '전체'">
+				SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
+			</if>
+			<if test="area.toString() == '강동'">
+				SPACE_AREA LIKE '강동'
+			</if>
+			<if test="area.toString() == '강서'">
+				SPACE_AREA LIKE '강서'
+			</if>
+			<if test="area.toString() == '강남'">
+				SPACE_AREA LIKE '강남'
+			</if>
+			<if test="area.toString() == '강북'">
+				SPACE_AREA LIKE '강북'
+			</if>
+		</where>
+	</select>
+	<select id="selectPriceCount"  resultType="_int">
+		<![CDATA[SELECT COUNT(*) FROM SPACE_TBL
+		WHERE #{minNum} <= TO_NUMBER(SPACE_PRICE) AND TO_NUMBER(SPACE_PRICE) <= #{maxNum}]]>
 	</select>
 	<select id="selectAllSpace" resultMap="SpaceResultMap">
 		SELECT SPACE_TBL.SPACE_NO, SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_FILERENAME
@@ -41,6 +66,39 @@
 	</select>
 	<select id="selectOneByNo" resultMap="SpaceResultMap">
 		SELECT * FROM SPACE_TBL WHERE SPACE_NO = #{spaceNo}
+	</select>
+	<select id="selectAllByValue" resultMap="SpaceResultMap">
+		SELECT * FROM SPACE_TBL
+		<where>
+			<if test="searchValue.toString() != ''">
+				SPACE_NAME LIKE '%'||#{searchValue}||'%'
+				OR SPACE_AREA LIKE '%'||#{searchValue}||'%'
+			</if>
+		</where>
+	</select>
+	<select id="selectByPrice" resultMap="SpaceResultMap">
+		<![CDATA[SELECT * FROM SPACE_TBL
+		WHERE #{minNum} <= TO_NUMBER(SPACE_PRICE) AND TO_NUMBER(SPACE_PRICE) <= #{maxNum}]]>
+	</select>
+	<select id="selectByArea" resultMap="SpaceResultMap">
+		SELECT * FROM SPACE_TBL
+		<where>
+			<if test="area.toString() == '전체'">
+				SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
+			</if>
+			<if test="area.toString() == '강동'">
+				SPACE_AREA LIKE '강동'
+			</if>
+			<if test="area.toString() == '강서'">
+				SPACE_AREA LIKE '강서'
+			</if>
+			<if test="area.toString() == '강남'">
+				SPACE_AREA LIKE '강남'
+			</if>
+			<if test="area.toString() == '강북'">
+				SPACE_AREA LIKE '강북'
+			</if>
+		</where>
 	</select>
 	<select id="checkTime" resultType="_int">
 		<![CDATA[SELECT COUNT(*) FROM RESERVATION_TBL
