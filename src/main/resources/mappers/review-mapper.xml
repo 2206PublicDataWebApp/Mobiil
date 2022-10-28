@@ -14,6 +14,7 @@
 	  		<result property="rCreateDate" 		column="R_CREATE_DATE"/>
 	  		<result property="rUpdateDate" 		column="R_UPDATE_DATE"/>
 	  		<result property="rStatus" 			column="R_STATUS"/>
+	  		<result property="spaceName" 		column="SPACE_NAME"/>
 	 	</resultMap>
 	 	
 	 	<resultMap type="ReviewImg" id="reviewImgResultMap">
@@ -39,6 +40,10 @@
 	 </update>
 	 
 	 <select id="selectOneByNo" resultMap="reviewResultMap"> <!-- 리뷰 상세보기 -->
-  		SELECT * FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo} AND R_STATUS = 'Y' 
+  		  SELECT SPACE_NAME, REVIEW_NO, SPACE_TBL.SPACE_NO, REVIEW_IMG_NO, MEMBER_EMAIL, REVIEW_CONTENTS, 
+          REVIEW_WRITER, R_CREATE_DATE, R_UPDATE_DATE, R_STATUS
+		  FROM REVIEW_TBL
+		  JOIN SPACE_TBL ON REVIEW_TBL.SPACE_NO = SPACE_TBL.SPACE_NO 
+		  WHERE REVIEW_NO = #{reviewNo} AND R_STATUS = 'Y'
   	 </select>
   </mapper>

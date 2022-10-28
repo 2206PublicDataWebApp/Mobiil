@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 작성</title>
+<title>리뷰 상세</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  <style>
          .header {
@@ -59,7 +59,7 @@
 	<table align="center" width="500" border="1" class="table table-bordered">
 		<tr>
 			<td id="cl" align="center" width="150">공간명</td>
-			<td>${reservation.spaceName}</td>
+			<td>${review.spaceName}</td>
 		</tr>
 		<tr>
 			<td id="cl" align="center" width="150">작성자</td>
