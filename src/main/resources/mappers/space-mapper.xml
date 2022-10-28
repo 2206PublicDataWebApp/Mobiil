@@ -15,6 +15,7 @@
   		<result property="approval" 		column="APPROVAL"/>
   		<result property="approvalDate" 	column="APPROVAL_DATE"/>
   		<result property="spaceStatus" 		column="SPACE_STATUS"/>
+  		<result property="hostEmail"		column="HOST_EMAIL"/>
   		<association property="spaceImg" 	javaType="SpaceImg">
   			<result property="spaceFileRename" column="SPACE_FILERENAME"/>
   		</association>
@@ -26,6 +27,27 @@
   		<result property="spaceFileRename" 	column="SPACE_FILERENAME"/>
   		<result property="spaceFilePath" 	column="SPACE_FILEPATH"/>
   	</resultMap>
+  	<resultMap type="Reservation" 				id="ReservationResultMap">
+  		<id 	property="reservationNo" 			column="RESERV_NO"/>
+  		<result property="memberEmail" 				column="MEMBER_EMAIL"/>
+  		<result property="hostEmail" 				column="HOST_EMAIL"/>
+  		<result property="spaceNo" 					column="SPACE_NO"/>
+  		<result property="spaceName" 				column="SPACE_TITLE"/>
+  		<result property="spaceAddress" 			column="SPACE_ADDRESS"/>
+  		<result property="price" 					column="PRICE"/>
+  		<result property="reservationDate" 			column="RESERV_DATE"/>
+  		<result property="memberName" 				column="MEMBER_NAME"/>
+  		<result property="memberPhone" 				column="MEMBER_PHONE"/>
+  		<result property="paymentDate" 				column="PAYMENT_DATE"/>
+  		<result property="reservationStatus" 		column="RESERV_STATUS"/>
+  		<result property="reviewStatus" 			column="REV_STATUS"/>
+  		<result property="revStart" 				column="REV_START"/>
+  		<result property="revEnd" 					column="REV_END"/>
+  		</resultMap>
+  	<insert id="insertReservation">
+  		INSERT INTO RESERVATION_TBL
+  		VALUES(#{reservationNo},#{memberEmail},#{hostEmail},#{spaceNo},#{spaceName},#{spaceAddress},#{price},#{reservationDate},#{memberName},#{memberPhone},#{paymentDate},DEFAULT,DEFAULT,#{revStart},#{revEnd})
+  	</insert>
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM SPACE_TBL
 		<where>

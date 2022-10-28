@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.store.SpaceStore;
@@ -81,6 +82,12 @@ public class SpaceStoreLogic implements SpaceStore{
 		paramMap.put("maxNum", maxNum);
 		List<Space> sList = session.selectList("SpaceMapper.selectByPrice", paramMap, rowBounds);
 		return sList;
+	}
+
+	@Override
+	public int insertReservation(SqlSessionTemplate session, Reservation rsv) {
+		int result = session.insert("SpaceMapper.insertReservation", rsv);
+		return result;
 	}
 
 

@@ -1,15 +1,15 @@
 package com.kh.mobiil.space.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -189,8 +189,9 @@ public class SpaceController {
 	@ResponseBody
 	@RequestMapping(value="/space/paymentResult.kh", method=RequestMethod.GET)
 	public ModelAndView registerReservation(ModelAndView mv
+			, Reservation rsv
 			, @RequestParam(value="reservNo") String reservNo
-			, @RequestParam(value="price") String price
+			, @RequestParam(value="price") Integer price
 			, @RequestParam(value="paymentDate") String paymentDate
 			, @RequestParam(value="memberName") String memberName
 			, @RequestParam(value="memberPhone") String memberPhone
@@ -199,7 +200,40 @@ public class SpaceController {
 			, @RequestParam(value="reservDate") String reservDate
 			, @RequestParam(value="revStart") Integer revStart
 			, @RequestParam(value="revEnd") Integer revEnd) {
-			System.out.println(reservNo+" "+price+" "+paymentDate+" "+memberName+" "+memberPhone+" "+memberEmail+" "+spaceNo+" "+reservDate+" "+revStart+" "+revEnd);
+			try {
+					SimpleDateFormat format = new SimpleDateFormat("yyyy. MM. dd.");
+					SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
+					java.util.Date rDate = format.parse(reservDate);
+					java.util.Date pDate = format2.parse(paymentDate);
+					String rsvD = format2.format(rDate);
+					String pmD = format2.format(pDate);
+					Date rsvDate = Date.valueOf(rsvD);
+					Date pmDate = Date.valueOf(pmD);
+					Space space = sService.printOneByNo(spaceNo);
+					rsv.setReservationNo(reservNo);
+					rsv.setMemberEmail(memberEmail);
+					rsv.setHostEmail(space.getHostEmail());
+					rsv.setSpaceNo(spaceNo);
+					rsv.setSpaceName(space.getSpaceName());
+					rsv.setSpaceAddress(space.getAddress());
+					rsv.setPrice(price);
+					rsv.setReservationDate(rsvDate);
+					rsv.setMemberName(memberName);
+					rsv.setMemberPhone(memberPhone);
+					rsv.setPaymentDate(pmDate);
+					rsv.setRevStart(revStart);
+					rsv.setRevEnd(revEnd);
+					
+					int result = sService.registerReservation(rsv);
+					if(result > 0) {
+						mv.setViewName("redirect:/space/reservationInfo.kh");
+					}else {
+					}
+//				System.out.println(pmDate+" "+rsvDate);
+			} catch (Exception e) {
+				// TODO: handle exception
+				mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+			}
 		return mv;
 	}
 	@RequestMapping(value="/space/reservationInfo.kh", method=RequestMethod.GET)

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.service.SpaceService;
@@ -73,6 +74,12 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds) {
 		List<Space> sList = sStore.selectByPrice(session, minNum, maxNum, rowBounds);
 		return sList;
+	}
+
+	@Override
+	public int registerReservation(Reservation rsv) {
+		int result = sStore.insertReservation(session, rsv);
+		return result;
 	}
 
 

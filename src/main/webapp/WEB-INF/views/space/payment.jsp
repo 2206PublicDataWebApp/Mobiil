@@ -50,7 +50,12 @@ function requestPay() {
 	var spaceNo = ${spaceNo};
 	const sDate = new Date('${sDate}');
 	var reservDate = sDate.toLocaleDateString();
-	console.log(reservDate);
+	var date = new Date();
+	var yyyy = date.getFullYear();
+	var mm = date.getMonth()+1;
+	var dd = date.getDate();
+	var paymentDate = yyyy + "-" + mm + "-" + dd;
+	console.log(typeof(paymentDate));
 	var start = ${start };
 	var end = ${end };
     IMP.init("imp55727473"); // 예: imp00000000
@@ -61,22 +66,22 @@ function requestPay() {
         merchant_uid: "MB" + spaceNo + new Date().getTime(),
         name: '${spaceName }',
         amount: price,
+        buyer_email: '',
         buyer_name: memberName,
         buyer_tel: memberPhone,
-        custom_data : { memberName:memberName, memberPhone:memberPhone, memberEmail:"${loginUser.memberEmail }", spaceNo : spaceNo, reservDate:${sDate }, revStart:start, revEnd:end}
+        custom_data : { paymentDate:paymentDate, memberName:memberName, memberPhone:memberPhone, memberEmail:"${loginUser.memberEmail }", spaceNo : spaceNo, reservDate:reservDate, revStart:start, revEnd:end}
     }, function (rsp) { // callback
         if (rsp.success) {
             $.ajax({
             	url : "/space/paymentResult.kh",
             	type : "get",
-            	data : {"reservNo" : rsp.merchant_uid, "price" : rsp.paid_amount, "paymentDate" : rsp.paid_at,
+            	data : {"reservNo" : rsp.merchant_uid, "price" : rsp.paid_amount, "paymentDate" : rsp.custom_data.paymentDate,
             			"memberName" : rsp.custom_data.memberName, "memberPhone" : rsp.custom_data.memberPhone,
             			"memberEmail" : rsp.custom_data.memberEmail, "spaceNo" : rsp.custom_data.spaceNo,
             			"reservDate" : rsp.custom_data.reservDate, "revStart" : rsp.custom_data.revStart,
             			"revEnd" : rsp.custom_data.revEnd},
 				success : function(data){
 					console.log(data);
-					location.href='/space/reservationInfo.kh';
 				},
 				error : function(){
 					alert("통신 실패");
