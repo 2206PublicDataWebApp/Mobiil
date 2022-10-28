@@ -53,6 +53,27 @@
 		margin: 1px 1px 10px 50px;
 		font-size: 15px;
 	}
+	
+	.btn-upload {
+		  width: 150px;
+		  height: 30px;
+		  background: #fff;
+		  border: 1px solid rgb(77,77,77);
+		  border-radius: 10px;
+		  font-weight: 500;
+		  cursor: pointer;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  &:hover {
+		    background: rgb(77,77,77);
+		    color: #fff;
+  }
+}
+
+	#uploadFile {
+	  display: none;
+	}
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -82,7 +103,7 @@
 				<tr>
 					<td id="td">주소</td>
 					<td><input type="text" id="sample6_postcode" class="input" placeholder="우편번호" required>
-						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 						<input type="text" id="sample6_address" class="input" name="address" placeholder="주소" required><br>
 						<input type="text" id="sample6_detailAddress" class="input" placeholder="상세주소" required>
 						<input type="text" id="sample6_extraAddress" class="input" placeholder="참고항목"></td>
@@ -90,9 +111,10 @@
 				<tr class="fileTr">
 					<td id="td">공간 이미지   </td>
 					<td>
-						<button type="button" onclick="addFile();">+</button>
-						<button type="button" onclick="removeFile();">-</button>
-						<input multiple="multiple" type="file" name="uploadFile">
+						<button type="button" class="btn btn-default" onclick="addFile();">+</button>
+						<button type="button" class="btn btn-default" onclick="removeFile();">-</button>
+						<label for="uploadFile"><div class="btn-upload">파일첨부</div></label>
+						<input multiple="multiple" type="file" id="uploadFile" name="uploadFile">
 					</td>
 				</tr>
 				<tr>

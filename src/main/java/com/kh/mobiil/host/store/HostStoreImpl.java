@@ -3,6 +3,7 @@ package com.kh.mobiil.host.store;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -68,6 +69,15 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
+	public List<Space> spaceListByhostEmail(SqlSession session, RowBounds rowBounds, String hostEmail) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("hostEmail", hostEmail);
+		map.put("rowBounds", rowBounds);
+		List<Space> sList = session.selectList("HostMapper.spaceListByhostEmail", map);
+		return sList;
+	}
+	
+	@Override
 	public Space spaceByNo(SqlSession session, Integer spaceNo) {
 		Space space = session.selectOne("HostMapper.spaceByNo", spaceNo);
 		return space;
@@ -116,10 +126,11 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public List<Reservation> rListByDate(SqlSession session, Date date1, Date date2) {
-		HashMap<String, Date> map = new HashMap<String, Date>();
+	public List<Reservation> rListByDate(SqlSession session, Date date1, Date date2, String hostEmail) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("date1", date1);
 		map.put("date2", date2);
+		map.put("hostEmail", hostEmail);
 		List<Reservation> rList = session.selectList("HostMapper.rListByDate", map);
 		return rList;
 	}
@@ -139,6 +150,12 @@ public class HostStoreImpl implements HostStore{
 	@Override
 	public int approveSpace(SqlSession session, int spaceNo) {
 		int result = session.update("HostMapper.approveSpace", spaceNo);
+		return result;
+	}
+
+	@Override
+	public int sendMail(SqlSession session, int spaceNo) {
+		int result = session.update("HostMapper.sendMail", spaceNo);
 		return result;
 	}
 

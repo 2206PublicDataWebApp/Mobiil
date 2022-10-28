@@ -45,6 +45,27 @@
             margin: 1px 1px 10px 50px;
             font-size: 15px;
         }
+        
+       	.btn-upload {
+		  width: 150px;
+		  height: 30px;
+		  background: #fff;
+		  border: 1px solid rgb(77,77,77);
+		  border-radius: 10px;
+		  font-weight: 500;
+		  cursor: pointer;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  &:hover {
+		    background: rgb(77,77,77);
+		    color: #fff;
+  		}
+  		
+  		#file {
+		  display: none;
+		}
+  		
 </style>
 
 
@@ -99,14 +120,15 @@
 					<td>사업자 등록증</td>
 					<td>
 						<input type="hidden" value="" name="regPhotoRename">
-						<input type="file" class="file" name="reloadFile">
+						<label for="file"><div class="btn-upload">사업자 등록증 첨부</div></label>
+						<input type="file" class="file" id="file" name="reloadFile">
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
 					<br><br>
 						<input type="submit" class="button1" value="수정하기">
-						<input type="reset"  class="button2" value="취소">
+						<input type="reset"  class="button2" value="취소" onclick="location.href='/host/hostInfo.mobiil'">
 					</td>
 				</tr>
 			</table>

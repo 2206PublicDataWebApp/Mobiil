@@ -10,7 +10,7 @@
 <title>파트너 디테일</title>
 </head>
 <body>
-${space }
+
 	<body id="body">
 
 	<jsp:include page="../../views/common/menubar.jsp"></jsp:include>
@@ -74,7 +74,7 @@ ${space }
 				<input type="button" onclick="history.back(-1);" value='이전으로'>
 			<c:if test='${loginUser.memberNick eq "관리자" }'>
 				<input type="button" onclick="approve(${space.spaceNo}, '${space.approval }');" value='승인'>
-				<input type="button" onclick="location.href='/host/spaceRejectMail.kh?spaceNo=${space.spaceNo}';" value='거부'>
+				<input type="button" onclick="location.href='/host/rejectMail.kh?spaceNo=${space.spaceNo}';" value='거부'>
 			</c:if>
 			</td>
 			</tr>

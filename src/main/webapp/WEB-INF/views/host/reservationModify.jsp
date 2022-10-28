@@ -102,7 +102,7 @@
 					<td colspan="2" align="center">
 					<br><br>
 						<input class="button1" type="submit" value="수정하기">
-						<input class="button2" type="reset"  value="취소">
+						<input class="button2" type="reset"  value="취소" onclick="location.href='/host/registList.mobiil'">
 					</td>
 				</tr>
 			</table>

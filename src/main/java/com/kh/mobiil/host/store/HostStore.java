@@ -47,12 +47,16 @@ public interface HostStore {
 
 	int reservationRemove(SqlSession session, String reservationNo);
 
-	List<Reservation> rListByDate(SqlSession session, Date date1, Date date2);
+	List<Reservation> rListByDate(SqlSession session, Date date1, Date date2, String hostEmail);
 
 	int selectHostCount(SqlSession session);
 	
 	List<Reservation> regervationList(SqlSession session);
 
 	int approveSpace(SqlSession session, int spaceNo);
+
+	int sendMail(SqlSession session, int spaceNo);
+
+	List<Space> spaceListByhostEmail(SqlSession session, RowBounds rowBounds, String hostEmail);
 
 }
