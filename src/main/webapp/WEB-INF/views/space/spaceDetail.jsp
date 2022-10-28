@@ -108,7 +108,7 @@ ${iList[1].spaceFileRename }
 <option value="24">24시</option>
 </select>
 
-<span>
+<span class='sum'>
 
 </span>
 	<c:if test='${!empty loginUser.memberNick }'>
@@ -228,7 +228,8 @@ ${iList[1].spaceFileRename }
 		}
 		if(Number(start) < Number(end)){
 			price = ${space.spacePrice}*(Number(end) - Number(start));
-			$("span").append(price+"원");
+			$(".sum").text('');
+			$(".sum").text(price+"원");
 		}
 	}
 	
