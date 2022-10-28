@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,10 @@ import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.host.service.HostService;
+import com.kh.mobiil.mail.domain.MailInfo;
 import com.kh.mobiil.partner.domain.Page;
+import com.kh.mobiil.partner.domain.Partner;
+import com.kh.mobiil.partner.domain.SearchPartner;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
@@ -512,6 +516,93 @@ public class HostController {
 		}
 		return mv;
 	}
+	
+	/**
+	 * 공간 리스트_관리자 페이지
+	 * @param mv
+	 * @param page
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/space/list.kh", method = RequestMethod.GET)
+	public ModelAndView spaceApprovalList(ModelAndView mv
+			,@RequestParam(value = "page", required = false) Integer page, HttpServletRequest request) {
+		
+		//----------------------검색 조건
+		SearchPartner sp = new SearchPartner("admin"); // 관리자에서 검색하는 걸로 지정
+		
+		//----------------------페이징
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = hService.getSpaceTotalCount(); // 관리자에서 검색할 때는 승인안된 파트너는 출력o
+		int naviLimit = 5;
+		int boardLimit = 10;
+		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+		RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+
+		//-------------------- 리스트 출력
+		List<Space> sList = hService.spaceList(rowBounds); // 검색 조건, rowBounds(끊어서 가져오게)
+		
+		//-------------------- view세팅
+		mv.addObject("sList", sList).addObject("paging", paging).addObject("urlVal", "list");
+		mv.setViewName("/admin/manageSpace/spaceList");
+		return mv;
+	}
+	
+	/**
+	 * 공간 상세정보_관리자 페이지
+	 * @param mv
+	 * @param partnerNo
+	 * @return
+	 */
+	@RequestMapping(value = "/space/detail.kh", method = RequestMethod.GET)
+	public ModelAndView spaceInfoAdmin(ModelAndView mv
+			,@RequestParam("spaceNo") int spaceNo) {
+		
+		Space space = hService.spaceByNo(spaceNo);
+		
+		// partner 넘겨주고 정보 없을 시 처리는 jsp에서
+		mv.addObject("space", space);
+		mv.setViewName("/host/spaceDetail_Admin");
+		return mv;
+	}
+	
+	// 에이잭스로 공간 승인하기
+	@ResponseBody
+	@RequestMapping(value="/host/approveSpace.kh", method = RequestMethod.GET)
+	public String approvePartner(@RequestParam("spaceNo") int spaceNo) {
+		
+		int result = hService.approveSpace(spaceNo);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	// 공간 승인거절 메일 뷰
+	@RequestMapping(value = "/host/spaceRejectMail.kh", method = RequestMethod.GET)
+	public ModelAndView rejectMailView(@RequestParam("spaceNo") int spaceNo, ModelAndView mv) {
+		Space rejectedSpace = hService.spaceByNo(spaceNo);
+		mv.addObject("rejectedPartner", rejectedSpace);
+		mv.setViewName("/admin/manageSpace/rejectMail");
+		return mv;
+	}
+	
+	//공간 승인거절 메일 보내기
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value="/admin/partnerRejectMail.kh", method =
+	 * RequestMethod.POST) public int sendMail(@ModelAttribute MailInfo
+	 * info, @RequestParam("partnerNo") int partnerNo) { int updateResult = 0; int
+	 * mailResult = mailSender.mailSender(info); // 메일 보내는 메소드 (성공시 1반환)
+	 * if(mailResult > 0) { // 메일 보내기 성공 시 업데이트 updateResult =
+	 * pService.sendMail(partnerNo); // 메일 보내고 메일 발송 여부 업데이트 메소드(성공시 1반환) } return
+	 * mailResult+updateResult ; // 둘다 성공해야 2 반환 }
+	 */
+
+	
 }
 
 

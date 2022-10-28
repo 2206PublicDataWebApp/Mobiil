@@ -38,8 +38,8 @@
   window.onload = function() {
 	  <c:forEach items="${rList}" var="reservation">
 		var rDate = '${reservation.reservationDate}'
-		document.getElementById(rDate).textContent  += '"예약자 : '+'${reservation.memberName}"'
-													+ ' "예약시간 : ' + '${reservation.revStart}시' + '~' + '${reservation.revEnd}시"'; // span 태그 내부에 예약자 성함 넣기
+		document.getElementById(rDate).innerHTML  += '"예약자 : '+'${reservation.memberName}"' + "<br>"
+													+ ' "예약시간 : ' + '${reservation.revStart}시' + '~' + '${reservation.revEnd}시"' + "<br>"; // span 태그 내부에 예약자 성함 넣기
 	  </c:forEach>
   }
   </script>

@@ -25,7 +25,7 @@
 					        </li>
 					        <li><a href="/admin/partner/list.kh">파트너 관리</a>
 					        </li>
-					        <li><a href="#!">공간 관리</a>
+					        <li><a href="/admin/space/list.kh">공간 관리</a>
 					        </li>
 					        <li><a href="/admin/banner/list.kh">배너 관리</a>
 					        </li>

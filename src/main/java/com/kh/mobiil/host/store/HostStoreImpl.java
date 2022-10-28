@@ -136,6 +136,10 @@ public class HostStoreImpl implements HostStore{
 		return rList;
 	}
 
-
+	@Override
+	public int approveSpace(SqlSession session, int spaceNo) {
+		int result = session.update("HostMapper.approveSpace", spaceNo);
+		return result;
+	}
 
 }

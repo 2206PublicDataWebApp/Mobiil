@@ -73,6 +73,9 @@
 		<hr>
 			<table >
 				<tr>
+					<td><input type="hidden" id="hostEmail" class="input" name="hostEmail" value="${loginHost.hostEmail }"></td>
+				</tr>
+				<tr>
 					<td id="td">공간명</td>
 					<td><input type="text" id="spaceName" class="input" name="spaceName" placeholder="공간 타이틀을 입력 해주세요." required></td>
 				</tr>
