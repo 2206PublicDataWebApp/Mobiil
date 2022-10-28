@@ -56,12 +56,12 @@
 				<th width="150" class="th" rowspan="5">예약 정보</th>
 				<td width="150" class="td">공간명</td>
 				<td width="300"><a href="">${reservation.spaceName}</a></td>
-				<td width="100"><c:if test="${reservation.reviewStatus eq 'Y'}">
-						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&page=${currentPage }';" class="btn btn-info">내 리뷰 조회</button>
-					</c:if> <c:if test="${reservation.reviewStatus eq 'N'}">
-						<button type="button"
-							onclick="location.href='/review/writeView.kh';"
-							class="btn btn-info">리뷰 작성</button>
+				<td width="100">
+					<c:if test="${reservation.reviewStatus eq 'Y'}">
+						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}';" class="btn btn-info">내 리뷰 조회</button>
+					</c:if> 
+					<c:if test="${reservation.reviewStatus eq 'N'}">
+						<button type="button" onclick="location.href='/review/writeView.kh?spaceNo=${reservation.spaceNo}';"  class="btn btn-info">리뷰 작성</button>
 					</c:if></td>
 				<td width="100">
 					<button type="button" onclick="" class="btn btn-danger">예약 취소</button>
