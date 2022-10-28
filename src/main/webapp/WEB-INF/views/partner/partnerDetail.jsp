@@ -70,7 +70,12 @@
 			</tr>
 			<tr>
 			<td colspan='2' align='right'>
-				<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${partner.memberNick }');" value='채팅하기'>
+				<c:if test='${!empty loginUser.memberNick }'>
+					<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${partner.memberNick }');" value='채팅하기'>
+				</c:if>
+				<c:if test='${!empty loginHost.companyName }'>
+					<input type="button" onclick="openChatRoom('${loginHost.companyName}', '${partner.memberNick }');" value='채팅하기'>
+				</c:if>
 			</td>
 			</tr>
 			<tr>

@@ -83,21 +83,44 @@ color:black;
 <c:forEach items="${cList }" var="chatRoom" >
 
 		<c:if test="${chatRoom.roomStatus eq 'Y' }">
-			<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
-					<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}" >
-				<li>				
-					<span>	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
-				</li>
-					</a>
+			<c:if test="${!empty loginUser.memberNick }"> 
+				<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
+						<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}" >
+					<li>				
+						<span>	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
+					</li>
+						</a>
+				</c:if>
+			
+				<c:if test="${chatRoom.createUser ne loginUser.memberNick }">
+						<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}">
+					<li>				
+						<span>	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
+					</li>
+						</a>
+				</c:if>
 			</c:if>
-		
-			<c:if test="${chatRoom.createUser ne loginUser.memberNick }">
-					<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}">
-				<li>				
-					<span>	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
-				</li>
-					</a>
+			
+			
+			<c:if test="${!empty loginHost.memberNick }"> 
+				<c:if test="${chatRoom.createUser eq loginHost.memberNick }">
+						<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}" >
+					<li>				
+						<span>	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
+					</li>
+						</a>
+				</c:if>
+			
+				<c:if test="${chatRoom.createUser ne loginHost.memberNick }">
+						<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}">
+					<li>				
+						<span>	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
+					</li>
+						</a>
+				</c:if>
 			</c:if>
+			
+			
 		</c:if>
 		
 		<c:if test="${(chatRoom.roomStatus eq 'N') and (chatRoom.listDeleteDate < today)}">

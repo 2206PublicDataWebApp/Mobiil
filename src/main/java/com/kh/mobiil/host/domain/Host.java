@@ -18,6 +18,7 @@ public class Host {
 	private Date enrollDate; 
 	private Date updateDate; 
 	private String hStatus;
+	private String memberNick;
 	
 	public Host() {}
 	
@@ -146,6 +147,16 @@ public class Host {
 	public void sethStatus(String hStatus) {
 		this.hStatus = hStatus;
 	}
+	
+	
+
+	public String getMemberNick() {
+		return memberNick;
+	}
+
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
+	}
 
 	@Override
 	public String toString() {
@@ -154,8 +165,10 @@ public class Host {
 				+ accountName + ", accountHolder=" + accountHolder + ", accountNumber=" + accountNumber
 				+ ", regPhotoName=" + regPhotoName + ", regPhotoRename=" + regPhotoRename + ", regPhotoPath="
 				+ regPhotoPath + ", enrollDate=" + enrollDate + ", updateDate=" + updateDate + ", hStatus=" + hStatus
-				+ "]";
+				+ ", memberNick=" + memberNick + "]";
 	}
+
+	
 	
 
 }

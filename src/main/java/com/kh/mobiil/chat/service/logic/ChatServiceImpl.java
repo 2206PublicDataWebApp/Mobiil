@@ -56,8 +56,8 @@ public class ChatServiceImpl implements ChatService {
 		return result;
 	}
 	@Override
-	public int unReadCount(int refRoomNo) {
-		int result = cStore.selectUnRead(refRoomNo, session);
+	public int unReadCount(int refRoomNo, String memberNick) {
+		int result = cStore.selectUnRead(refRoomNo, memberNick, session);
 		return result;
 	}
 	@Override

@@ -31,14 +31,22 @@ public class ChatController {
 	
 	// 채팅방 리스트 띄우기 + 언리드 카운트 띄우기 + 채팅방 비활성화 이후 3일 지나면 채팅방 안보이게 함
 	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
-	public ModelAndView showChatList(@RequestParam("memberNick") String memberNick, ModelAndView mv) {
+	public ModelAndView showChatList(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
 		
+		//memberNick은 로그인한사람의 memberNick임
 		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
 		// refRoomNo랑 언리드 read_ckh 확인해서 출력해야함
 		
 		for(int i = 0; i < cList.size() ; i++) {
 			int refRoomNo = cList.get(i).getRoomNo();
-			int unReadCount = cService.unReadCount(refRoomNo);
+			// 상대방의 닉네임을 넣어줘야함
+			String other = "";
+			if(memberNick != cList.get(i).getCreateUser()) { // 만든사람이 로그인한사람이랑 다르면
+				other = cList.get(i).getCreateUser();
+			}else { // 만든사람이 로그인한사람이랑 같으면
+				other = cList.get(i).getWithUser();
+			}
+			int unReadCount = cService.unReadCount(refRoomNo, other);
 			cList.get(i).setUnReadCount(unReadCount);
 		}
 		Date timeNow = new Date(System.currentTimeMillis());
@@ -52,10 +60,12 @@ public class ChatController {
 	
 	// 채팅방 띄우기
 	@RequestMapping(value="/chat/chatRoom.kh")
-	public ModelAndView showChatRoom(@RequestParam("memberNick") String memberNick,
-										@RequestParam("roomNo") int roomNo,
-										ModelAndView mv) {
+	public ModelAndView showChatRoom(@RequestParam(value = "memberNick", required = false) String memberNick,
+									@RequestParam(value = "hostEmail", required = false) String hostEmail,
+									@RequestParam("roomNo") int roomNo,
+									ModelAndView mv) {
 		mv.addObject("memberNick", memberNick);
+		mv.addObject("hostEmail", hostEmail);
 		mv.addObject("roomNo", roomNo);
 		mv.setViewName("/chat/chatLog");
 		return mv;

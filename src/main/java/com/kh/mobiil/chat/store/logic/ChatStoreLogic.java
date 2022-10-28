@@ -1,5 +1,6 @@
 package com.kh.mobiil.chat.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -61,8 +62,10 @@ public class ChatStoreLogic implements ChatStore{
 	}
 
 	@Override
-	public int selectUnRead(int refRoomNo, SqlSessionTemplate session) {
-		int result = session.selectOne("chatMapper.selectUnRead", refRoomNo);
+	public int selectUnRead(int refRoomNo, String memberNick, SqlSessionTemplate session) {
+		HashMap<Integer, String> param = new HashMap<Integer, String>();
+		param.put(refRoomNo, memberNick);
+		int result = session.selectOne("chatMapper.selectUnRead", param);
 		return result;
 	}
 

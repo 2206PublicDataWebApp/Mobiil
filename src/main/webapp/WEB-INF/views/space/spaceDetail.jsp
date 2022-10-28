@@ -25,7 +25,38 @@
 }
 </style>
 </head>
+
 <body>
+<script type="text/javascript">
+
+//채팅방 열기
+function openChatRoom(createUser, withUser) {
+	$.ajax({
+		url:"/chat/createChatRoom.kh",
+		tyep: "get",
+		data: {createUser: createUser,
+				withUser:withUser},
+		success:
+			function(data) {
+			console.log(data);
+				if(data == "already"){
+					alert("이미 생성된 채팅방입니다");
+					window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
+				}else if(data == "success"){
+					alert("채팅이 시작됩니다.");
+					window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
+				}else{
+					alert("생성에 실패했습니다.");
+				}
+			},
+		error:
+			function() {
+				alert("에러")
+			}
+	})
+}
+</script>
+
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <div>
 <h1>${space.spaceName }</h1>
@@ -80,11 +111,18 @@ ${iList[1].spaceFileRename }
 <span>
 
 </span>
-<input type="button" value="호스트와 채팅하기" onclick="chatting()">
+	<c:if test='${!empty loginUser.memberNick }'>
+		<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${memberNick }');" value='채팅하기'>
+	</c:if>
+	<c:if test='${!empty loginHost.hostEmail }'>
+		<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅하기'>
+	</c:if>
 <input type="button" value="결제하기" onclick="payment()">
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
+
+
 	
 	/* // 카카오 지도
 	var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
@@ -193,6 +231,9 @@ ${iList[1].spaceFileRename }
 			$("span").append(price+"원");
 		}
 	}
+	
+	
+	
 </script>
 </body>
 </html>

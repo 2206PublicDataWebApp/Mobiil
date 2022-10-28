@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mobiil.host.controller.HostController;
+import com.kh.mobiil.host.domain.Host;
+import com.kh.mobiil.host.service.HostService;
 import com.kh.mobiil.partner.domain.Page;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
@@ -27,6 +30,9 @@ public class SpaceController {
 	
 	@Autowired
 	private SpaceService sService;
+	@Autowired
+	private HostService hService;
+	
 	
 	// 공간 리스트 조회
 	@RequestMapping(value="/space/spaceList.kh", method=RequestMethod.GET)
@@ -60,11 +66,14 @@ public class SpaceController {
 			, HttpSession session) { // 세션 사용 안하면 나중에 삭제하기
 		try {
 			Space space = sService.printOneByNo(spaceNo);
+			Host hOne = hService.getHostInfo(space.getHostEmail());
+			String memberNick = hOne.getMemberNick();
 			List<SpaceImg> iList = sService.printImg(spaceNo);
 			session.setAttribute("spaceNo", space.getSpaceNo());
 			session.setAttribute("spaceName", space.getSpaceName());
 			mv.addObject("space", space);
 			mv.addObject("iList", iList);
+			mv.addObject("memberNick", memberNick);
 			mv.addObject("page", page);
 			mv.setViewName("space/spaceDetail");
 		} catch (Exception e) {

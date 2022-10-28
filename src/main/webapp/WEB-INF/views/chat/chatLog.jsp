@@ -98,7 +98,7 @@ font-size: 20px
 			<textarea class = 'form-control' rows='1' cols='100' name='chat' id='chat'></textarea>
 		</td>
 		<td  id='buttonArea'>   
-			<button type='button' class='btn btn-light' onclick="cSubmit(${roomNo}, '${memberNick }')">SEND</button>
+			<button type='button' class='btn btn-light' onclick="cSubmit()">SEND</button>
 		</td>
 		</tr>
 	</table>
@@ -108,6 +108,7 @@ font-size: 20px
 <script type="text/javascript">
 var roomNo = "${roomNo}";
 var memberNick = "${memberNick}";
+var hostEmail = "${hostEmail}"
 var $chatlog = $("#chatlog");
 
 getChatLog(roomNo, memberNick);
@@ -149,7 +150,7 @@ function disableRoom() {
 
 
 // 전송하기
-function cSubmit(roomNo, memberNick) {
+function cSubmit() {
 	var chat = $("#chat").val();
 	var sender = memberNick
 	$.ajax({

@@ -20,6 +20,8 @@
   		<result property="enrollDate" 				column="ENROLLDATE"/>
   		<result property="updateDate" 				column="UPDATEDATE"/>
   		<result property="hStatus" 					column="HSTATUS"/>
+  		<result property="memberNick" 				column="MEMBERNICK"/>
+  		
   		</resultMap>
   	
   	  	<resultMap type="Space" 					id="SpaceResultMap">
@@ -70,7 +72,7 @@
 	  <update id="hostModify">
   		UPDATE HOST_TBL
 		SET HOSTNAME = #{hostName}, COMPANYNAME = #{companyName}, HOSTPHONE = #{hostPhone}, COMPANYREGNUM = #{companyRegNum}, ACCOUNTNAME = #{accountName}, HOSTEMAIL = #{hostEmail}, 
-			REGPHOTONAME = #{regPhotoName}, REGPHOTORENAME = #{regPhotoRename}, REGPHOTOPATH = #{regPhotoPath}  
+			REGPHOTONAME = #{regPhotoName}, REGPHOTORENAME = #{regPhotoRename}, REGPHOTOPATH = #{regPhotoPath}, MEMBERNICK=#{memberNick}  
 		WHERE HOSTEMAIL = #{hostEmail}
 	  </update>
 	  

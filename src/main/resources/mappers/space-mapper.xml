@@ -14,7 +14,8 @@
   		<result property="spacePrice" 		column="SPACE_PRICE"/>
   		<result property="approval" 		column="APPROVAL"/>
   		<result property="approvalDate" 	column="APPROVAL_DATE"/>
-  		<result property="spaceStatus" 		column="SPACE_STATUS"/>
+  		<result property="approvalDate" 	column="APPROVAL_DATE"/>
+  		<result property="hostEmail" 		column="HOST_EMAIL"/>
   		<association property="spaceImg" 	javaType="SpaceImg">
   			<result property="spaceFileRename" column="SPACE_FILERENAME"/>
   		</association>

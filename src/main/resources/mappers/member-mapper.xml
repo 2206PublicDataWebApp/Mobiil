@@ -83,7 +83,7 @@
   	<!-- 호스트 -->
   	<insert id="insertHost">
 		  INSERT INTO HOST_TBL VALUES(#{hostEmail}, #{hostPwd}, #{hostName}, #{hostPhone}, #{companyName}, #{companyRegNum}, 
-		  #{accountName}, #{accountHolder}, #{accountNumber}, #{regPhotoName}, #{regPhotoRename}, #{regPhotoPath}, DEFAULT, DEFAULT, DEFAULT)
+		  #{accountName}, #{accountHolder}, #{accountNumber}, #{regPhotoName}, #{regPhotoRename}, #{regPhotoPath}, DEFAULT, DEFAULT, DEFAULT, #{companyName})
 	 </insert>
   
   	<select id="selectLoginhOne" resultType="Host">

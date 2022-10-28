@@ -77,7 +77,12 @@
 							<a href="/member/myInfo.kh">마이페이지</a>
 						</li>
 						<li>
+						<c:if test="${!empty loginUser }">
 							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')">마이채팅</a>
+						</c:if>
+						<c:if test="${!empty loginHost}">
+							<a href= "#" onclick="chatWindow('${loginHost.memberNick }')">마이채팅</a>
+						</c:if>
 						</li>
 						<li>
 							<a href="/member/logout.kh">로그아웃</a>

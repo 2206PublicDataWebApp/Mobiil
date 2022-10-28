@@ -23,8 +23,9 @@
 	
 	<select id="selectUnRead" resultType="_int">
 		SELECT COUNT(*) FROM CHAT_TBL
-		WHERE refRoomNo = #{refRoomNo}
-			AND read_chk = 'N'
+		WHERE refRoomNo = #{param.refRoomNo}
+			AND read_chk = 'N' 
+			AND sender != #{param.memberNick}
 	</select>
 	
 	<update id="updateChatRead">
