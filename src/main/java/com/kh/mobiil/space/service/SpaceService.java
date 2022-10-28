@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
+import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
@@ -31,5 +32,11 @@ public interface SpaceService {
 	List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds);
 
 	int registerReservation(Reservation rsv);
+
+	int checkHeart(Integer spaceNo, String memberEmail);
+
+	int insertHeart(Heart heart);
+
+	int deleteHeart(Heart heart);
 
 }

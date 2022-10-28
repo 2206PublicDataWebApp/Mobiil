@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <title>Mobiil</title>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=163c926f2747f3a404b998b190a36731"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=163c926f2747f3a404b998b190a36731&libraries=services"></script>
 
 <!-- fullcalendar CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
@@ -60,13 +59,16 @@ function openChatRoom(createUser, withUser) {
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <div>
 <h1>${space.spaceName }</h1>
+<br>
+<img class='heartImg' style='cursor:pointer;'/>
 </div>
 <div>
 ${space.spaceComent }
 ${iList[0].spaceFileRename }
 ${iList[1].spaceFileRename }
 </div>
-<div id="map" style="width:500px;height:400px;"></div>
+${space.address}
+<div id="map" style="width:450px;height:300px;"></div>
 
 <br><br><br><br><br>
 <div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
@@ -121,27 +123,110 @@ ${iList[1].spaceFileRename }
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		$.ajax({
+			url: '/space/checkHeart.kh',
+			data: { "memberEmail":"${loginUser.memberEmail}", "spaceNo":'${spaceNo}' },
+			type: 'GET',
+			success: function(result){
+				if(result != 0){
+					$('.heartImg').attr('src','');
+					$('.heartImg').attr('src','../../../resources/images/heartson.png');
+				}else{
+					$('.heartImg').attr('src','');
+					$('.heartImg').attr('src','../../../resources/images/heartsoff.png');
+				}
+			},
+			error: function(){
+				alert("통신 실패");
+			}
+		});
+		
+		$('.heartImg').on('click', function(){
+			$.ajax({
+				url: '/space/checkHeart.kh',
+				data: { "memberEmail":"${loginUser.memberEmail}", "spaceNo":'${spaceNo}' },
+				type: 'GET',
+				success: function(result){
+					if(result != 0){
+						$.ajax({
+							url: '/space/deleteHeart.kh',
+							type: 'GET',
+							data: { "memberEmail":"${loginUser.memberEmail}", "spaceNo":'${spaceNo}' },
+							success: function(result){
+								if(result != 0){
+									$('.heartImg').attr('src','');
+									$('.heartImg').attr('src','../../../resources/images/heartsoff.png');
+								}else{
+									$('.heartImg').attr('src','');
+									$('.heartImg').attr('src','../../../resources/images/heartson.png');
+								}
+							},
+							error: function(){
+								alert("통신 실패");
+							}
+						});
+					}else{
+						$.ajax({
+							url: '/space/heart.kh',
+							type: 'GET',
+							data: { "memberEmail":"${loginUser.memberEmail}", "spaceNo":'${spaceNo}', "spaceName":'${space.spaceName }', "spaceFileRename":'${iList[0].spaceFileRename }' },
+							success: function(result){
+								if(result != 0){
+									$('.heartImg').attr('src','');
+									$('.heartImg').attr('src','../../../resources/images/heartson.png');
+								}else{
+									$('.heartImg').attr('src','');
+									$('.heartImg').attr('src','../../../resources/images/heartsoff.png');
+								}
+							},
+							error: function(){
+								alert("통신 실패");
+							}
+						});
+					}
+				},
+				error: function(){
+					alert("통신 실패");
+				}
+			});
+		})
+	});
 
-
-	
-	/* // 카카오 지도
-	var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
-	var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표간 변환 서비스 객체 생성
-	var callback = function(result, status) {
-	    if (status === kakao.maps.services.Status.OK) {
-	        console.log(result);
-	    }
-	};
-	geocoder.addressSearch(${space.address}, callback);
-	mapOption = { 
+	// 카카오 지도
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
-    };
+    };  
 
-	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-	var map = new kakao.maps.Map(mapContainer, mapOption);  */
-	 
-	// fullcalender
+	// 지도 생성   
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	// 주소-좌표 변환 객체 생성
+	var geocoder = new kakao.maps.services.Geocoder();
+	// 주소로 좌표를 검색
+	geocoder.addressSearch('${space.address}', function(result, status) { // ${space.address} -> 공간 주소
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	        // 결과값 마커 표시
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	        // 인포윈도우로 장소에 대한 설명
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+'${space.spaceName}'+'</div>'
+	        });
+	        infowindow.open(map, marker);
+	
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
+	
+	
+	// fullCalendar
 	var sDate = "";
 	var price = "";
 	var end = "";
