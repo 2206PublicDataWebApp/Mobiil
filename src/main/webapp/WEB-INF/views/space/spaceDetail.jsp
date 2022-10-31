@@ -120,7 +120,27 @@ ${space.address}
 		<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅하기'>
 	</c:if>
 <input type="button" value="결제하기" onclick="payment()">
+
+<br><br><br>
+
+
+<table align="center" width="500" border="1" id="rtb">
+	<thead>
+		<tr>
+			<td colspan="4"><b id="rCount"></b></td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class='reviewArea'></tr>
+		<tr></tr>
+	</tbody>
+</table>
+
+${loginHost.hostEmail }
+${hostEmail }
+
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
+
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -297,9 +317,68 @@ ${space.address}
 		})
 	}
 	
-	// 채팅 이동
-	function chatting(){
-		location.href = "";
+	getReviewList();
+	function getReviewList(){
+		var spaceNo = '${spaceNo}';
+		$.ajax({
+			url:'/space/reviewList.kh',
+			data:{"spaceNo" : spaceNo},
+			type: 'get',
+			success : function(rList){
+				var $tableBody = $("#rtb tbody");
+				$tableBody.html("");
+				$("#rCount").text("리뷰(" + rList.length + ")");
+				if(rList != null){
+					for(var i in rList){
+						var $tr = $('<tr>');
+						var $rWriter = $("<td colspan='2'>").text(rList[i].reviewWriter);
+						var $rContent = $("<tr style='height:200px;'>").append($("<td colspan='4'>").text(rList[i].reviewContents));
+						var $rUpdateDate = $("<td colspna='2'>").text(rList[i].rUpdateDate);
+						var $button = $("<tr>").append($("<td colspan='4'>").append("<a href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>"));
+						$tableBody.append($tr);
+						$tr.append($rWriter);
+						$tr.append($rUpdateDate);
+						$tr.after($rContent);
+						if('${loginHost.hostEmail }' == '${hostEmail }'){
+							$rContent.after($button);
+						}
+					}
+				}
+			},
+			error : function(){
+				alert("ajax 통신 실패");
+			}
+		})
+	}
+	
+	
+	function insertReplyView(obj, reviewNo){
+		if($("#insertTr").length == 0){
+		event.preventDefault();
+		$tr = $("<tr id='insertTr'>");
+		$tr.append("<td colspan='4'><input type='text' id='insertReply'><input type='button' onclick='insertReply(this, "+reviewNo+")');' value='등록'></td>");
+/* 		$tr.append("<button onclick='insertReply(this, "+reviewNo+")');'>등록</button>"); */
+		$(obj).parent().parent().after($tr);			
+		} else{
+			$("#insertTr").remove();
+		}
+	}
+	
+	function insertReply(obj, reviewNo){
+		var replyContents = $("#insertReply").val();
+		$.ajax({
+			url:"/space/insertReply.kh",
+			data:{"reviewNo":reviewNo, "replyContents": replyContents, "replyWriter":'${loginHost.companyName }', "hostEmail":'${loginHost.hostEmail }'},
+			type:"post",
+			success:function(result){
+				if(result > 0){
+					alert("성공");
+				}
+				},
+			error: function(){
+				alert("실패");
+			}
+		})
 	}
 	
 	// 시작시간 > 끝시간 선택시 option 리셋 유효성 검사

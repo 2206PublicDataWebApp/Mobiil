@@ -35,6 +35,12 @@
 	
 	<dependencies>
 	
+<!-- coolSMS 문자전송 -->
+<dependency>
+    <groupId>net.nurigo</groupId>
+    <artifactId>javaSDK</artifactId>
+    <version>2.2</version>
+</dependency>
 <!-- 	메일 센더 -->
 		<dependency>
 			<groupId>javax.mail</groupId>

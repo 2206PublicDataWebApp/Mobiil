@@ -7,7 +7,9 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Heart;
+import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
@@ -109,6 +111,24 @@ public class SpaceStoreLogic implements SpaceStore{
 	@Override
 	public int deleteHeart(SqlSessionTemplate session, Heart heart) {
 		int result = session.delete("SpaceMapper.deleteHeart", heart);
+		return result;
+	}
+
+	@Override
+	public Reservation selectRsv(SqlSessionTemplate session, String reservationNo) {
+		Reservation rsv = session.selectOne("SpaceMapper.selectResevation", reservationNo);
+		return rsv;
+	}
+
+	@Override
+	public List<Review> selectReview(SqlSessionTemplate session, Integer spaceNo) {
+		List<Review> rList = session.selectList("SpaceMapper.selectReview", spaceNo);
+		return rList;
+	}
+
+	@Override
+	public int insertReply(SqlSessionTemplate session, HostReply hostReply) {
+		int result = session.insert("SpaceMapper.insertReply", hostReply);
 		return result;
 	}
 
