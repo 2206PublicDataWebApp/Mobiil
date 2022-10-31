@@ -79,7 +79,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Reservation printOneByNo(Integer reservationNo) {
+	public Reservation printOneByNo(String reservationNo) {
 		Reservation reservation = mStore.selectOneByNo(session, reservationNo);
 		return reservation;
 	}

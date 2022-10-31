@@ -33,7 +33,7 @@ public interface MemberStore {
 	
 	public List<Reservation> selectAllReserve(SqlSession session, String memberEmail, int currentPage, int reserveLimit); // 결제 내역
 	
-	public Reservation selectOneByNo(SqlSession session, Integer reservationNo); // 결제 상세 내역
+	public Reservation selectOneByNo(SqlSession session, String reservationNo); // 결제 상세 내역
 	
 	// 호스트
 	

@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.review.service.ReviewService;
+import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Space;
 
 @Controller
 public class ReviewController {
@@ -31,17 +33,26 @@ public class ReviewController {
 	
 	// 리뷰 등록 화면
 	@RequestMapping(value="/review/writeView.kh", method=RequestMethod.GET)
-	public String reviewWriteView() {
-		return "review/reviewWrite";
+	public ModelAndView reviewWriteView(ModelAndView mv, @RequestParam(value="spaceNo") Integer spaceNo) {
+		Space space = rService.printSpace(spaceNo);
+		Reservation reservation = rService.printReservation(spaceNo);
+		mv.addObject("reservation", reservation);
+		mv.addObject("spaceNo", spaceNo);
+		mv.addObject("space", space);
+		mv.setViewName("/review/reviewWrite");
+		return mv;
 	}
 	
 	// 리뷰 등록
 	@RequestMapping(value="/review/register.kh", method=RequestMethod.POST)
-	public ModelAndView registReview(ModelAndView mv, @ModelAttribute Review review, 
+	public ModelAndView registReview(ModelAndView mv, @ModelAttribute Review review,
+			@ModelAttribute Reservation reservation,
 			@RequestParam(value="uploadFile", required=false) List<MultipartFile> uploadFile, 
 			MultipartHttpServletRequest mRequest, HttpServletRequest request) {
 		try {
-			int result = rService.registerReview(review);	
+			int result = rService.registerReview(review);
+			int result2 = rService.updateRevStatus(reservation);
+
 			int imgNo = 1;
 			ReviewImg reviewImg = null;
 			for(MultipartFile mf : uploadFile) {
@@ -63,7 +74,7 @@ public class ReviewController {
 					reviewImg.setReviewFilePath(reviewFilePath);
 					imgNo += 1;
 				}
-				int result2 = rService.registerReviewImg(reviewImg);
+				int result3 = rService.registerReviewImg(reviewImg);
 				mv.setViewName("redirect:/payment/list.kh");
 			}
 		}catch (Exception e) {
@@ -76,11 +87,15 @@ public class ReviewController {
 	
 	// 리뷰 상세조회
 	@RequestMapping(value="/review/detail.kh", method=RequestMethod.GET)
-		public ModelAndView reviewDetailView(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo, HttpSession session) {
+		public ModelAndView reviewDetailView(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo, 
+				@RequestParam("page") Integer page, HttpSession session) {
 		try {
 			Review review = rService.printOneByNo(reviewNo);
-			session.setAttribute("reviewNo", review.getReviewNo());
+			List<ReviewImg> rList = rService.printReviewImg(reviewNo);
+			mv.addObject("reviewNo", reviewNo);
+			mv.addObject("rList", rList);
 			mv.addObject("review", review);
+			mv.addObject("page", page);
 			mv.setViewName("review/detailView");
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString());
@@ -89,21 +104,93 @@ public class ReviewController {
 		return mv;
 	}
 	
-	// 리뷰 수정
+	// 리뷰 수정화면
+	@RequestMapping(value="/review/modifyView.kh", method=RequestMethod.GET)
+	public ModelAndView reviewModifyView(
+			ModelAndView mv
+		    ,@RequestParam("reviewNo") Integer reviewNo
+		    ,@RequestParam("page") int page) {
+		try {
+			Review review = rService.printOneByNo(reviewNo);
+			mv.addObject("review", review);
+			mv.addObject("page", page);
+			mv.setViewName("review/reviewModify");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString());
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
 	
+	}
+	
+	
+	// 리뷰 수정
+	@RequestMapping(value="/review/modify.kh", method=RequestMethod.POST)
+	public ModelAndView reviewModify(
+			@ModelAttribute Review review,
+			ModelAndView mv, 
+			@RequestParam(value="reloadFile") List<MultipartFile> reloadFile,
+			@RequestParam("reviewImgNo") int[] reviewNoArr,
+			@RequestParam("reviewFileRename") String[] reviewFileRenameArr,
+			HttpServletRequest request) {
+		int num = 0;
+		ReviewImg reviewImg = null;
+		int result = rService.reviewModify(review);
+		
+		try {
+			for(MultipartFile mf : reloadFile ) {
+				String reviewFileName = mf.getOriginalFilename();
+				if(!reviewFileName.equals("")) {
+					String root = request.getSession().getServletContext().getRealPath("resources");
+					String savePath = root + "\\reviewFiles";
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					
+					String rFileRename = reviewFileRenameArr[num];
+					File file = new File(savePath + "\\" + rFileRename);
+					if(file.exists()) {
+						file.delete();
+					}
+					
+					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis()))+ num + "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+					file = new File(savePath);
+					mf.transferTo(new File(savePath+"\\"+reviewFileRename));
+					String reviewFilePath = savePath+"\\"+reviewFileRename;
+					reviewImg = new ReviewImg();
+					reviewImg.setReviewFileName(reviewFileName);
+					reviewImg.setReviewFileRename(reviewFileRename);
+					reviewImg.setReviewFilePath(reviewFilePath);
+					int imgNo = reviewNoArr[num];
+					reviewImg.setReviewImgNo(imgNo);
+					num += 1;
+				}
+					int result2 = rService.reviewImgModify(reviewImg);
+					mv.setViewName("redirect:/payment/list.kh");
+				}
+			} catch (Exception e) {
+
+			}
+			return mv;
+		}
+
 	// 리뷰 삭제
 	@RequestMapping(value="/review/remove.kh", method = RequestMethod.GET)
-	public String reviewRemove(HttpSession session, Model model, @RequestParam("reservationNo") Integer reservationNo) { 
+	public ModelAndView reviewRemove(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo,
+			@ModelAttribute Reservation reservation, HttpServletRequest request) { 
 	try {
-		int reviewNo = (int)session.getAttribute("reviewNo");
 		int result = rService.removeReview(reviewNo);
+		int result2 = rService.updateRevStatusN(reservation);
 		if(result > 0) {
-			session.removeAttribute("reviewNo");
-		}
-		return "redirect:/payment/detail.kh?reservationNo="+reservationNo;
+			request.setAttribute("msg", "리뷰가 삭제되었습니다.");
+			request.setAttribute("url", "/payment/list.kh");	
+			mv.setViewName("common/alert");
+			}
+		return mv;
 	} catch (Exception e) {
-		model.addAttribute("msg", e.toString());
-		return "common/errorPage";
+		mv.addObject("msg", e.toString());
+		mv.setViewName("common/errorPage");
 	}
+	return mv;
+
 }
+	
 }

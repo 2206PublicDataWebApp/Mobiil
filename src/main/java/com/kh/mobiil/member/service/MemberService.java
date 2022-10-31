@@ -30,7 +30,7 @@ public interface MemberService {
 	
 	public List<Reservation> printAllReserve(String memberEmail, int currentPage, int reserveLimit); // 마이페이지 -> 결제 내역 조회
 	
-	public Reservation printOneByNo(Integer reservationNo); // 마이페이지 -> 결제 상세 내역
+	public Reservation printOneByNo(String reservationNo); // 마이페이지 -> 결제 상세 내역
 
 	// 호스트
 	

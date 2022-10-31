@@ -38,7 +38,6 @@
 	
     </style>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>
@@ -54,15 +53,12 @@
         </div>
 </div>
         <br><br><br>
-	<form name="review_form" action="/review/register.kh" method="post" enctype="multipart/form-data" >
-	<input type="hidden" name="memberEmail" value="${loginUser.memberEmail}">
-	<input type="hidden" name="spaceNo" value="${spaceNo}">
-	<input type="hidden" name="reservationNo" value="${reservation.reservationNo}">
-	
+	<form name="review_modify" action="/review/modify.kh" method="post" enctype="multipart/form-data" >
+	<input type="hidden" name="reviewImgNo" value="${review.reviewImgNo}">
 	<table border="1" class="tb">
 		<tr>
 			<th class="title" width="100">공간명</th>
-			<td><input type="text" class="input" id="" name="spaceName" value="${space.spaceName}" readonly></td>
+			<td><input type="text" class="input" id="" name="spaceName" value="${review.spaceName}" readonly></td>
 		</tr>	
 		<tr>
 			<th class="title" width="">작성자</th>
@@ -70,23 +66,24 @@
 		</tr>
 		<tr>
 			<th class="title" width="">내용</th>
-			<td><textarea cols="85" rows="10" style="border:none" name="reviewContents" placeholder="리뷰를 입력하세요" required></textarea></td>
+			<td><textarea cols="85" rows="10" style="border:none" name="reviewContents" required>${review.reviewContents}</textarea></td>
 		</tr>	
  		<tr class="add">
 			<th class="title" width="">사진첨부</th>
 			<td>
 				<input multiple="multiple" type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png">
+<!-- 				<a>사진name</a> -->
 				<input type="button" value="추가" onclick="addFile();">
 				<input type="button" value="삭제" onclick="delFile();">
-<!-- 				<img id="preview" style="width:150px; height:150px; display: none;" >  미리보기 -->
+<!-- 				<img id="preview" style="width:150px; height:150px; display: none;" > -->
 			</td>
 		</tr>	
 		<tr>
 			<td colspan="2">
 			<div align="right">
-				<button type="submit" class="btn btn-info">등록</button>
-				<button type="reset" class="btn btn-danger">초기화</button>
-				<button type="button" onclick="location.href='javascript:history.go(-1)';" class="btn btn-secondary">이전 페이지로</button>
+				<button type="submit" class="btn btn-info">수정 완료</button>
+				<button type="button" onclick="location.href='/payment/list.kh';" class="btn btn-secondary">목록으로</button>
+				<button type="button" onclick="location.href='javascript:history.go(-1)';" class="btn btn-danger">이전 페이지로</button>
 			</div>
 			</td>
 		</tr>
@@ -96,8 +93,8 @@
  	var maxFile = 1;
  	
 	function addFile() {
-		if(maxFile >= 3) {
-	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
+		if(maxFile >= 5) {
+	 	      alert("이미지 업로드 최대 개수는 5개입니다.");
 	 	      return;
 		}else{ 
 			$("input").last().after("<input type = 'file'>");
@@ -111,21 +108,7 @@
 			$("input").last().remove();
 		}
 	} 
-	
-// 	$(document).ready(function() {
-// 		$(".file").on("change", handleImgFileSelect);
-// 	})
-	
-// 		function handleImgFileSelect(e){
-// 			var files = e.target.files;
-// 			var reader = new FileReader();
-// 			reader.onload = function(e){
-// 				$("#preview").attr("src", e.target.result);
-// 				$("#preview").css("display", "block");
-// 			}
-// 			reader.readAsDataURL(files[0]);
 
-// 		}
 	</script>
 	<br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>
