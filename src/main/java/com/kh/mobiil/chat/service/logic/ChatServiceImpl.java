@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.mobiil.chat.domain.Chat;
 import com.kh.mobiil.chat.domain.ChatRoom;
+import com.kh.mobiil.chat.domain.ChatSearchResult;
 import com.kh.mobiil.chat.service.ChatService;
 import com.kh.mobiil.chat.store.ChatStore;
 
@@ -40,14 +41,12 @@ public class ChatServiceImpl implements ChatService {
 	}
 	@Override
 	public List<Chat> chatLog(int roomNo) {
-		int result = cStore.updateChatRead(roomNo, session); // read 업데이트
 		List<Chat> cLog = cStore.selectChatLog(roomNo, session);
 		return cLog;
 	}
 	@Override
 	public Chat chatNewOne(int roomNo) {
 		Chat cOne = cStore.selectOneNew(roomNo, session);
-	//	int result = cStore.updateChatRead(roomNo, session); // read 업데이트
 		return cOne;
 	}
 	@Override
@@ -63,6 +62,16 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public int disableRoom(int roomNo) {
 		int result = cStore.disableRoom(roomNo, session);
+		return result;
+	}
+	@Override
+	public List<ChatSearchResult> searchSpace(String searchValue) {
+		List<ChatSearchResult> sList = cStore.selectSearchResult(searchValue, session);
+		return sList;
+	}
+	@Override
+	public int updateChatRead(int roomNo, String memberNick) {
+		int result = cStore.updateChatRead(roomNo,memberNick, session);
 		return result;
 	}
 

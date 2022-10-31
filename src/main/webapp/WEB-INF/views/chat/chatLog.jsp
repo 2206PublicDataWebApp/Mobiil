@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +32,22 @@ position: fixed;
   z-index: 3;
 }
 
+#search{
+display: block;
+}
+
+#searchValue{
+display: none;
+}
+#sButton{
+display:none;
+}
+
+#searchArea{
+   width: 100%;
+  position: fixed;
+  bottom: 70px;
+    }
 
 #chatMsg{
 display: block;
@@ -39,7 +57,7 @@ display: block;
    width: 100%;
   height: 70px;
   position: fixed;
-  bottom: 5px;
+  bottom: 1px;
     }
 
 #chatLogArea{
@@ -75,45 +93,173 @@ padding-top : 1px;
 padding-bottom : 1px;
 font-size: 20px
 }
+
+a{
+	text-decoration : none;
+	color : orange;
+}
 </style>
 </head>
 <body>
 
 <%--  <span id="header" align='center'><h1>myChat</h1> <a href='/chat/chatWindow.kh?memberNick=${memberNick }'>리스트로</a></q></span> --%>
-<span id="header" align='center'><h1>myChat</h1> <a href= "javascript:void(0)" onclick = "clearRoom();">리스트로</a> <a href= "javascript:void(0)" onclick = "disableRoom();">채팅방 나가기</a></span>
+<span id="header" align='center'><h1>myChat</h1> <a href= "javascript:void(0)" onclick = "clearRoom();">리스트로</a>
+<c:if test="${roomStatus ne 'N' }">
+<a href= "javascript:void(0)" onclick = "disableRoom();">채팅방 나가기</a>
+</c:if>
+</span>
 
 <br>
+
+
+
 	<!--  채팅 로그 --> 
 <div id='chatLogArea'>
 	<table align = 'center'  width='90%'  id='chatlog'>
 	
 	</table>
 </div>
+
+<!-- 공간 검색 -->
+<div id="searchArea">
+	<table id="showSearch" align='center' width='90%'>
+		<tr>
+<c:if test="${roomStatus eq 'N' }">
+		<td>   
+			<button type='button' class='btn btn-light'  >space</button>
+		</td>
+</c:if>
+
+<c:if test="${roomStatus ne 'N' }">
+		<td>   
+			<button type='button' class='btn btn-light' onclick="showSearch();"  >space</button>
+		</td>
+</c:if>
+		<td>
+			<textarea class = 'form-control' rows='1' cols='80' name='searchValue' id='searchValue'></textarea>
+		</td>
+		<td  id='buttonArea'>   
+			<button type='button' class='btn btn-light' onclick="search()" id='sButton'>search</button>
+		</td>
+		</tr>
+	</table>
+</div>
 	
 <!-- 	메세지전송 -->
-<div id="chatMsgArea">
+	<div id="chatMsgArea">
 	<table align='center' width='90%' id="chatMsg" >
+<c:if test="${roomStatus eq 'N' }">
+		<tr >
+		<td  >
+			<textarea class = 'form-control' rows='1' cols='100' name='chat' id='chat' readonly="readonly"> 채팅이 종료되었습니다</textarea>
+		</td>
+		
+		<td  id='buttonArea'>   
+			<button type='button' class='btn btn-light' >SEND</button>
+		</td>
+	
+		</tr>
+</c:if>
+
+<c:if test="${roomStatus ne 'N' }">
 		<tr >
 		<td  >
 			<textarea class = 'form-control' rows='1' cols='100' name='chat' id='chat'></textarea>
 		</td>
+		
 		<td  id='buttonArea'>   
 			<button type='button' class='btn btn-light' onclick="cSubmit()">SEND</button>
 		</td>
+	
 		</tr>
+</c:if>
 	</table>
 	<span><br></span>
-</div>
+	</div>
+
+
+
 
 <script type="text/javascript">
 var roomNo = "${roomNo}";
 var memberNick = "${memberNick}";
-var hostEmail = "${hostEmail}"
 var $chatlog = $("#chatlog");
 
 getChatLog(roomNo, memberNick);
 //getChatNewLog();
 setInterval(getChatNewLog, 500);
+
+// 장소 검색
+function search() {
+	var searchValue =  $("#searchValue").val();
+	var sender = memberNick
+	$.ajax({
+		url:"/chat/searchSpace.kh",
+		data:{searchValue :searchValue},
+		type: "get",
+		success: function(data) {
+			console.log(data.length);
+			// data에는 리스트가 들어있음
+			// 3개까지만 꺼내서 url하이퍼 링크 건 리스트 반환 //
+			// 검색결과가 없으면 검색결과가 없습니다 출력
+			var chatArr = new Array();
+			var chat = "#" + searchValue + " 검색결과" + "<br>" ;
+			var tail = "<br>더 많은 공간 검색은<br><a target='_blank' href='/space/spaceList.kh'> ==> </a>"
+			if(data.length != 0){
+				if(data.length > 2){
+					for(var i = 0; i < 3; i++){
+						chatArr[i] = "<a target='_blank' href='/space/spaceDetail.kh?spaceNo=" + data[i].spaceNo + "'>찜순위 "+	(i + 1) +"위: "+ data[i].spaceName + "</a><br>"
+						chat = chat + chatArr[i];
+					}
+				}else if(data.length < 3){
+					for(var i = 0; i < data.length; i++){
+						chatArr[i] = "<a target='_blank' href='/space/spaceDetail.kh?spaceNo=" + data[i].spaceNo + "'>찜순위 "+	(i + 1) +"위: "+ data[i].spaceName + "</a><br>"
+						chat = chat + chatArr[i];
+					}
+				}
+			}else if(data.length == 0){
+				chat = chat + "검색 결과가 없습니다." 
+			}
+			$.ajax({
+				url: "/chat/registerChat.kh",
+				data: {"sender" : sender,
+						"refRoomNo" : roomNo,
+						"chat" : chat + tail
+				},
+				type: "get",
+				success: function(data) {
+					if(data == "success"){
+						$("#chat").val(""); // 밸류 초기화
+					}else{
+						alert("chat 등록 실패!");
+					}
+				},
+				error: function() {
+					console.log("서버 처리 실패")
+				}
+			})
+			$("#searchValue").val("");
+			showSearch();
+		},
+		error: function() {
+			console.log("서버 처리 실패")
+		}
+	})
+}
+// 서치버튼 여닫기
+function showSearch() {
+	var $sButton =  $("#sButton");
+	var display = $("#searchValue").css('display');
+	
+	if(display == 'none'){
+		$("#searchValue").css('display', 'block')
+		$("#sButton").css('display','block')
+	}
+	if(display == 'block'){
+		$("#searchValue").css('display', 'none')
+		$("#sButton").css('display','none')
+	}
+}
 
 // 목록으로 돌아가면서 인터벌 클리어
 function clearRoom() {
@@ -178,7 +324,8 @@ function cSubmit() {
 	function getChatLog(roomNo, memberNick) {
  		$.ajax({
  			url: "/chat/chatLog.kh",
- 			data: {roomNo: roomNo},
+ 			data: {roomNo: roomNo,
+ 				memberNick:memberNick},
  			type: "get",
  			success: function(data) {// 여기에 sender 피아식별해서 왼오 가를 수 있도록 세팅
  			for(var i = 0; i < data.length; i++){
@@ -206,7 +353,8 @@ function cSubmit() {
 	function getChatNewLog() {
  		$.ajax({
  			url: "/chat/chatNewOne.kh",
- 			data: {roomNo: roomNo},
+ 			data: {roomNo: roomNo
+ 				,memberNick:memberNick},
  			type: "get",
  			success: function(data) {// 여기에 sender 피아식별해서 왼오 가를 수 있도록 세팅
  			//	var hiddenNo = $("#hiddenNo").last().val();

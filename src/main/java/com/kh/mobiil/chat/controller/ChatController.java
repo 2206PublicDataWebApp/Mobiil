@@ -19,9 +19,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.mobiil.chat.domain.Chat;
 import com.kh.mobiil.chat.domain.ChatRoom;
+import com.kh.mobiil.chat.domain.ChatSearchResult;
 import com.kh.mobiil.chat.service.ChatService;
 import com.kh.mobiil.mail.controller.MailController;
 import com.kh.mobiil.mail.domain.MailInfo;
+import com.kh.mobiil.space.domain.Space;
+import com.kh.mobiil.space.service.SpaceService;
 
 @Controller
 public class ChatController {
@@ -29,24 +32,17 @@ public class ChatController {
 	@Autowired
 	private ChatService cService;
 	
-	// 채팅방 리스트 띄우기 + 언리드 카운트 띄우기 + 채팅방 비활성화 이후 3일 지나면 채팅방 안보이게 함
+	// 채팅방 리스트 띄우기 + 언리드 카운트 띄우기 +(채팅방 비활성화 이후 그날 자정 폭파)
 	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
 	public ModelAndView showChatList(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
 		
 		//memberNick은 로그인한사람의 memberNick임
 		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
-		// refRoomNo랑 언리드 read_ckh 확인해서 출력해야함
 		
+		// refRoomNo랑 언리드 read_ckh 확인해서 출력
 		for(int i = 0; i < cList.size() ; i++) {
 			int refRoomNo = cList.get(i).getRoomNo();
-			// 상대방의 닉네임을 넣어줘야함
-			String other = "";
-			if(memberNick != cList.get(i).getCreateUser()) { // 만든사람이 로그인한사람이랑 다르면
-				other = cList.get(i).getCreateUser();
-			}else { // 만든사람이 로그인한사람이랑 같으면
-				other = cList.get(i).getWithUser();
-			}
-			int unReadCount = cService.unReadCount(refRoomNo, other);
+			int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
 			cList.get(i).setUnReadCount(unReadCount);
 		}
 		Date timeNow = new Date(System.currentTimeMillis());
@@ -58,14 +54,36 @@ public class ChatController {
 		return mv;
 	}
 	
+	
+//	// 메뉴바 언리드카운트
+//		@RequestMapping(value="/", method = RequestMethod.GET)
+//		public ModelAndView showTotalUnread(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
+//			
+//			//memberNick은 로그인한사람의 memberNick임
+//			List<ChatRoom> cList = cService.listByMemberNick(memberNick);
+//			int TotalUnread = 0;
+//			// refRoomNo랑 언리드 read_ckh 확인해서 출력
+//			for(int i = 0; i < cList.size() ; i++) {
+//				int refRoomNo = cList.get(i).getRoomNo();
+//				int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
+//				cList.get(i).setUnReadCount(unReadCount);
+//				TotalUnread =+ unReadCount;
+//			}
+//			mv.addObject("TotalUnread", TotalUnread);
+//			mv.addObject("cList", cList);
+//			mv.setViewName("/common/menubar");
+//			return mv;
+//		}
+	
+	
 	// 채팅방 띄우기
 	@RequestMapping(value="/chat/chatRoom.kh")
 	public ModelAndView showChatRoom(@RequestParam(value = "memberNick", required = false) String memberNick,
-									@RequestParam(value = "hostEmail", required = false) String hostEmail,
 									@RequestParam("roomNo") int roomNo,
+									@RequestParam(value = "roomStatus", required = false ) String roomStatus,
 									ModelAndView mv) {
 		mv.addObject("memberNick", memberNick);
-		mv.addObject("hostEmail", hostEmail);
+		mv.addObject("roomStatus", roomStatus);
 		mv.addObject("roomNo", roomNo);
 		mv.setViewName("/chat/chatLog");
 		return mv;
@@ -107,8 +125,10 @@ public class ChatController {
 	// 채팅 로그 조회하기
 	@ResponseBody
 	@RequestMapping(value="/chat/chatLog.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
-	public String chatLog(@RequestParam("roomNo") int roomNo) {
-		List<Chat> cLog = cService.chatLog(roomNo);
+	public String chatLog(@RequestParam("roomNo") int roomNo,
+							@RequestParam("memberNick") String memberNick) {
+		List<Chat> cLog = cService.chatLog(roomNo); 
+		int result = cService.updateChatRead(roomNo, memberNick); // 읽은거
 		Gson gson = new GsonBuilder().setDateFormat("MM-dd HH:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
 		return gson.toJson(cLog);
 	}
@@ -118,11 +138,12 @@ public class ChatController {
 	// 최신 하나만 조회하기
 	@ResponseBody
 	@RequestMapping(value = "/chat/chatNewOne.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
-	public String chatNewOne(@RequestParam("roomNo") int roomNo) {
+	public String chatNewOne(@RequestParam("roomNo") int roomNo,
+			@RequestParam("memberNick") String memberNick) {
 		JSONObject jsonObj = new JSONObject(); // json 객체 생성 ( {} 생성 완료 ) // 비어있는 상태임
-		Gson gson = new GsonBuilder().setDateFormat("MM-dd hh:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
+		Gson gson = new GsonBuilder().setDateFormat("MM-dd HH:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
 		Chat cOne = cService.chatNewOne(roomNo);
-
+		int result = cService.updateChatRead(roomNo, memberNick); // 읽은거 // 최신하나 조회할때는 창 켜져있으니까 계속 업데이트하면되지않나
 		if(cOne != null) {
 			jsonObj.put("chatNo",cOne.getChatNo());
 			jsonObj.put("refRoomNo", cOne.getRefRoomNo());
@@ -147,20 +168,16 @@ public class ChatController {
 			return "fail";
 		}
 	}
-//	@ResponseBody
-//	@RequestMapping(value = "chat/askMail.kh")
-//	public String askMail(@RequestParam("roomNo") int roomNO) {
-//		MailController mailSender = new MailController();
-//		MailInfo info = new MailInfo();
-//		info.setRecipient(recipient); // 수신자 조회해서 넣기
-//		info.setSubject(subject); // 게목 정해주기
-//		info.setText(text); // 내용에 재활성화 버튼 넣어서 보내기
-//		int mailResult = mailSender.mailSender(info);	// 메일 보내는 메소드 (성공시 1반환)
-//		return null;
-//
-//	}
-	
-	
+
+	//공간검색
+	@ResponseBody
+	@RequestMapping(value = "/chat/searchSpace.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String searchSpace(@RequestParam("searchValue") String searchValue) { // gson으로 돌려주기
+		Gson gson = new Gson();
+		List<ChatSearchResult> sList = cService.searchSpace(searchValue);
+		return gson.toJson(sList);
+		
+	}
 
 
 }

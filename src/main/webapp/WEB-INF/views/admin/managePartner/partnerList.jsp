@@ -52,7 +52,7 @@
 		<td align='center'>
 		<ul class="pagination justify-content-center">
 			<c:if test="${paging.currentPage != 1 }">
-			<li class="page-item"><a class="page-link" href='/partner/${urlVal }.kh?page=${paging.currentPage - 1 }'>이전</a>
+			<li class="page-item"><a class="page-link" href='/admin/partner/${urlVal }.kh?page=${paging.currentPage - 1 }'>이전</a>
 			</li>
 			</c:if>
 			
@@ -61,13 +61,13 @@
 				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
 				</c:if>
 				<c:if test="${paging.currentPage ne p}">
-				<li class="page-item"><a class="page-link"  href="/partner/${urlVal }.kh?page=${p }">${p }</a>
+				<li class="page-item"><a class="page-link"  href="/admin/partner/${urlVal }.kh?page=${p }">${p }</a>
 				</li>
 				</c:if>
 			</c:forEach>
 			
 			<c:if test="${paging.currentPage <paging.maxPage }">
-			<li class="page-item"><a class="page-link"  href='/partner/${urlVal }.kh?page=${paging.currentPage + 1 }'>다음</a>
+			<li class="page-item"><a class="page-link"  href='/admin/partner/${urlVal }.kh?page=${paging.currentPage + 1 }'>다음</a>
 			</li>
 			</c:if>
 		</ul>

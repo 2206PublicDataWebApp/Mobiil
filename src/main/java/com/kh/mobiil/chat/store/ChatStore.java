@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.mobiil.chat.domain.Chat;
 import com.kh.mobiil.chat.domain.ChatRoom;
+import com.kh.mobiil.chat.domain.ChatSearchResult;
 
 public interface ChatStore {
 
@@ -19,7 +20,7 @@ public interface ChatStore {
 
 	public List<Chat> selectChatLog(int roomNo, SqlSessionTemplate session);
 
-	public int updateChatRead(int roomNo, SqlSessionTemplate session);
+	public int updateChatRead(int roomNo, String memberNick, SqlSessionTemplate session);
 
 	public Chat selectOneNew(int roomNo, SqlSessionTemplate session);
 
@@ -28,6 +29,8 @@ public interface ChatStore {
 	public int selectUnRead(int refRoomNo, String memberNick, SqlSessionTemplate session);
 
 	public int disableRoom(int roomNo, SqlSessionTemplate session);
+
+	public List<ChatSearchResult> selectSearchResult(String searchValue, SqlSessionTemplate session);
 
 
 }

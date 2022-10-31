@@ -34,13 +34,48 @@ public class PartnerController {
 	@Autowired
 	private MailController mailSender;
 	
+	
+	// 서비스페이지 파트너 검색
+	@RequestMapping(value = "partner/search.kh", method = RequestMethod.GET)
+	public ModelAndView boardSearchList(ModelAndView mv, @RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchArea") String searchArea, @RequestParam("searchValue") String searchValue,
+			@RequestParam(value = "page", required = false) Integer page) {
+
+		try {
+			//----------------------검색 조건
+			SearchPartner sp = new SearchPartner("service", searchArea, searchCondition, searchValue); // 서비스에서 검색조건 지정
+			
+			//----------------------페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = pService.getTotalCount(sp); // 서비스에서 검색할 때는 승인안된 파트너는 출력x
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			System.out.println(totalCount);
+			//-------------------- 리스트 출력
+			List<Partner> pList = pService.printAllPartner(sp,rowBounds); // 검색 조건, rowBounds(끊어서 가져오게)
+			
+			//-------------------- view세팅
+			mv.addObject("pList", pList).addObject("paging", paging).addObject("urlVal", "search").addObject("sp", sp);
+			mv.setViewName("/partner/partnerList");
+			return mv;
+
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+
+		return mv;
+	}
+	
+	
 	//파트너 리스트(서비스 측)
 	@RequestMapping(value = "/partner/list.kh", method = RequestMethod.GET)
 	public ModelAndView partnerList(ModelAndView mv
 			,@RequestParam(value = "page", required = false) Integer page, HttpServletRequest request) {
 		
 		//----------------------검색 조건
-		SearchPartner sp = new SearchPartner("service"); // 서비스에서 검색하는 걸로 지정
+		SearchPartner sp = new SearchPartner("service", "", "", ""); // 서비스에서 검색하는 걸로 지정
 		
 		//----------------------페이징
 		int currentPage = (page != null) ? page : 1;
@@ -66,7 +101,7 @@ public class PartnerController {
 			,@RequestParam(value = "page", required = false) Integer page, HttpServletRequest request) {
 		
 		//----------------------검색 조건
-		SearchPartner sp = new SearchPartner("admin"); // 관리자에서 검색하는 걸로 지정
+		SearchPartner sp = new SearchPartner("admin", "", "", ""); // 관리자에서 검색하는 걸로 지정
 		
 		//----------------------페이징
 		int currentPage = (page != null) ? page : 1;
@@ -210,7 +245,7 @@ public class PartnerController {
 			mv.addObject("myPartnerInfo", myPartnerInfo);
 			mv.setViewName("/partner/myPartnerInfo");
 		}else {
-			mv.setViewName("common/error");
+			mv.setViewName("/common/error");
 		}
 		return mv;
 	}
@@ -258,7 +293,7 @@ public class PartnerController {
 		
 		int result = pService.registerPartner(partner);
 		if(result > 0) {
-			mv.setViewName("/partner/partnerList");
+			mv.setViewName("redirect:/partner/list.kh");
 		}else {
 			mv.setViewName("/common/error");
 		}

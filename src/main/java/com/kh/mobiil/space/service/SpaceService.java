@@ -31,5 +31,7 @@ public interface SpaceService {
 	List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds);
 
 	int registerReservation(Reservation rsv);
+	
+	
 
 }
