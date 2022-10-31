@@ -67,10 +67,16 @@ public class HostServiceImpl implements HostService{
 
 	@Override
 	public List<Space> spaceList(RowBounds rowBounds) {
-		List<Space> sList = hStore.spaceList(session, rowBounds);
+		List<Space> sList = hStore.spaceList(session, rowBounds );
 		return sList;
 	}
-
+	
+	@Override
+	public List<Space> spaceListByhostEmail(RowBounds rowBounds, String hostEmail) {
+		List<Space> sList = hStore.spaceListByhostEmail(session, rowBounds, hostEmail );
+		return sList;
+	}
+	
 	@Override
 	public Space spaceByNo(Integer spaceNo) {
 		Space space = hStore.spaceByNo(session, spaceNo);
@@ -120,8 +126,8 @@ public class HostServiceImpl implements HostService{
 	}
 
 	@Override
-	public List<Reservation> rListByDate(Date date1, Date date2) {
-		List<Reservation> rList = hStore.rListByDate(session, date1, date2);
+	public List<Reservation> rListByDate(Date date1, Date date2, String hostEmail1) {
+		List<Reservation> rList = hStore.rListByDate(session, date1, date2, hostEmail1);
 		return rList;
 	}
 
@@ -139,6 +145,12 @@ public class HostServiceImpl implements HostService{
 	@Override
 	public int approveSpace(int spaceNo) {
 		int result = hStore.approveSpace(session, spaceNo);
+		return result;
+	}
+
+	@Override
+	public int sendMail(int spaceNo) {
+		int result = hStore.sendMail(session, spaceNo);
 		return result;
 	}
 

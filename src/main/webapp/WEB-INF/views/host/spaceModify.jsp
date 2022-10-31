@@ -114,7 +114,7 @@
 					<tr>
 						<td colspan='2' align="center">
 						<button class="button1" type="submit">공간 업로드</button>
-						<button class="button2" type="reset">취소</button>
+						<button class="button2" type="reset" onclick="location.href='/host/spaceList.mobiil'">취소</button>
 						</td>
 					</tr>
 				</table>
@@ -122,21 +122,6 @@
 		</form>
 	</div>
 <script>
-	// 사진 추가
-	function addFile(){
-		var number = 2;
-		var trTag = $(".fileTr");
-		$(trTag).children('td').eq(1).append("<br><input multiple='multiple' type='file' name='uploadFile' />");
-		number = number + 1;
-	}
-	// 사진 삭제
-	function removeFile(){
-		var trTag = $(".fileTr");
-	 	if($(trTag).children('td').eq(1).children('input').length > 1) {
-		 	$(trTag).children('td').eq(1).children('input:last').remove();
-		 	$(trTag).children('td').eq(1).children('br:last').remove();
-		} 
-	}
 	// 주소 검색
     function sample6_execDaumPostcode() {
         new daum.Postcode({

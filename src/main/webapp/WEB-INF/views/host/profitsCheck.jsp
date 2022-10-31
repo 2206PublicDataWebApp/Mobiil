@@ -58,7 +58,7 @@
 		<div id="div2">
 			<span>조회기간 :</span> 
 			<input type="date" name="date1"> ~ <input type="date" name="date2">
-			<button type="submit" class="button">조회하기</button>
+			<button type="submit" class="btn btn-default">조회하기</button>
 		</div>
 
 		<div id="div3" align="center">
