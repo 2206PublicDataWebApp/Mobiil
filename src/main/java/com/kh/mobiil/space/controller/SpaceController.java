@@ -270,7 +270,8 @@ public class SpaceController {
 					
 					int result = sService.registerReservation(rsv);
 					if(result > 0) {
-						mv.setViewName("redirect:/space/reservationInfo.kh");
+						mv.addObject("rsv", rsv);
+						mv.setViewName("space/reservationInfo");
 					}else {
 					}
 //				System.out.println(pmDate+" "+rsvDate);
