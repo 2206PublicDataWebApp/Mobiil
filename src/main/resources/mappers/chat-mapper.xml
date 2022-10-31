@@ -23,15 +23,16 @@
 	
 	<select id="selectUnRead" resultType="_int">
 		SELECT COUNT(*) FROM CHAT_TBL
-		WHERE refRoomNo = #{param.refRoomNo}
+		WHERE refRoomNo = #{refRoomNo}
+			AND sender != #{memberNick}
 			AND read_chk = 'N' 
-			AND sender != #{param.memberNick}
 	</select>
 	
 	<update id="updateChatRead">
 		UPDATE CHAT_TBL
 		SET read_chk = 'Y'
-		WHERE refRoomNo = #{roomNo}
+		WHERE refRoomNo = #{refRoomNo} 
+			AND sender != #{memberNick}
 	</update>
 	
 	<select id="selectOneNew" resultType="Chat">
@@ -41,5 +42,17 @@
 		ORDER BY 1 desc
 		]]>
 	</select>
-
+	
+  	<resultMap type="ChatSearchResult" 		id="ChatSearchResultMap">
+  		<id 	property="spaceNo" 			column="SPACE_NO"/>
+  		<result property="spaceName"		column="SPACE_NAME"/>	
+  		<result property="heartCount" 		column="HEART_COUNT"/>
+	</resultMap>
+	
+	<select id="selectSearchResult" resultMap="ChatSearchResultMap">
+		SELECT SPACE_NO, COUNT(*) AS HEART_COUNT, SPACE_NAME FROM HEART_TBL 
+		WHERE (SPACE_NAME LIKE '%'||#{searchValue}||'%') 
+		GROUP BY SPACE_NO, SPACE_NAME
+		ORDER BY HEART_COUNT DESC
+	</select>
 </mapper>

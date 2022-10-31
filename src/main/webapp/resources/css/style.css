@@ -950,10 +950,15 @@ input[type=email]:focus, input[type=password]:focus, input[type=text]:focus, inp
 }
 .product-item .product-thumb {
   position: relative;
+ justify-content: center;
+   height: 300px
 }
 .product-item .product-thumb img {
-  width: 100%;
-  height: auto;
+object-fit: scale-down;
+  height: 100%;
+/*   width: auto; */
+  align:center;
+/*   margin : 0; */
 }
 .product-item .product-thumb .bage {
   position: absolute;

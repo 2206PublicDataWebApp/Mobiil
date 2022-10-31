@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.mobiil.chat.domain.Chat;
 import com.kh.mobiil.chat.domain.ChatRoom;
+import com.kh.mobiil.chat.domain.ChatSearchResult;
+import com.kh.mobiil.chat.domain.UnreadInfo;
 import com.kh.mobiil.chat.store.ChatStore;
 
 @Repository
@@ -44,8 +46,9 @@ public class ChatStoreLogic implements ChatStore{
 	}
 
 	@Override
-	public int updateChatRead(int roomNo, SqlSessionTemplate session) {
-		int result = session.update("chatMapper.updateChatRead", roomNo);
+	public int updateChatRead(int roomNo, String memberNick, SqlSessionTemplate session) {
+		UnreadInfo unreadInfo = new UnreadInfo(memberNick, roomNo);
+		int result = session.update("chatMapper.updateChatRead", unreadInfo);
 		return result;
 	}
 
@@ -63,9 +66,8 @@ public class ChatStoreLogic implements ChatStore{
 
 	@Override
 	public int selectUnRead(int refRoomNo, String memberNick, SqlSessionTemplate session) {
-		HashMap<Integer, String> param = new HashMap<Integer, String>();
-		param.put(refRoomNo, memberNick);
-		int result = session.selectOne("chatMapper.selectUnRead", param);
+		UnreadInfo unreadInfo = new UnreadInfo(memberNick, refRoomNo);
+		int result = session.selectOne("chatMapper.selectUnRead", unreadInfo);
 		return result;
 	}
 
@@ -73,6 +75,12 @@ public class ChatStoreLogic implements ChatStore{
 	public int disableRoom(int roomNo, SqlSessionTemplate session) {
 		int result = session.update("chatRoomMapper.disableRoom", roomNo);
 		return result;
+	}
+
+	@Override
+	public List<ChatSearchResult> selectSearchResult(String searchValue, SqlSessionTemplate session) {
+		List<ChatSearchResult> sList = session.selectList("chatMapper.selectSearchResult", searchValue);
+		return sList;
 	}
 	
 }

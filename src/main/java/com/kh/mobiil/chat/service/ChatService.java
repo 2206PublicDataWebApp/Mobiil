@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.mobiil.chat.domain.Chat;
 import com.kh.mobiil.chat.domain.ChatRoom;
+import com.kh.mobiil.chat.domain.ChatSearchResult;
 
 public interface ChatService {
 
@@ -24,6 +25,11 @@ public interface ChatService {
 	public int unReadCount(int refRoomNo, String memberNick);
 
 	public int disableRoom(int roomNo);
+
+	// 채팅방에서 공간검색하기 
+	public List<ChatSearchResult> searchSpace(String searchValue);
+
+	public int updateChatRead(int roomNo, String memberNick);
 
 
 }

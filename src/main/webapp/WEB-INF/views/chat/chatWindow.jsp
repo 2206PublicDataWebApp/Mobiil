@@ -124,22 +124,40 @@ color:black;
 		</c:if>
 		
 		<c:if test="${(chatRoom.roomStatus eq 'N') and (chatRoom.listDeleteDate < today)}">
+		<c:if test="${!empty loginUser.memberNick }"> 
 			<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
-				<li>				
-					<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 3일 후 채팅방이 삭제됩니다.</span>
-					<button type='button' onclick='ask()'>재활성화 요청</button>
-				</li>
+				<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
+					<li>				
+						<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+					</li>
+				</a>
 			</c:if>
 		
 			<c:if test="${chatRoom.createUser ne loginUser.memberNick }">
-				<li>				
-					<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 3일 후 채팅방이 삭제됩니다.</span>
-					<button type='button' onclick='ask(${chatRoom.roomNo})'>재활성화 요청</button>
-				</li>
+				<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
+					<li>				
+						<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+					</li>
+				</a>
 			</c:if>
 		</c:if>
-		<c:if test="${(chatRoom.roomStatus eq 'N') and (chatRoom.listDeleteDate >= today)}">
+		</c:if>
+		<c:if test="${!empty loginHost.memberNick }"> 
+			<c:if test="${chatRoom.createUser eq loginHost.memberNick }">
+				<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
+					<li>				
+						<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+					</li>
+				</a>
+			</c:if>
 		
+			<c:if test="${chatRoom.createUser ne loginHost.memberNick }">
+				<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
+					<li>				
+						<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+					</li>
+				</a>
+			</c:if>
 		</c:if>
 		
 		
@@ -154,25 +172,9 @@ color:black;
 </div>
 
 <script type="text/javascript">
-	function ask(roomNo) { // 재활성화 요청 누르면 메일로 재활성화 요청 링크를 보냄 그거 누르면 수락-->업데이트
-		$.ajax({
-			url: "chat/askMail.kh",
-			data: {roomNo: roomNo}, //
-			type: "get",
-			success: function(data) {
-				if(data == success){
-					alert("활성화 메일 요청 성공")
-				}else{
-					alert("활성화 메일 요청 실패")
-				}
-			},
-			error: function() {
-				console.log("실패")
-			},
-			
-		})
-		
-	}
+	setTimeout(function(){
+	location.reload();
+	},3000); // 3초에 한번 리로드	
 </script>
 
 

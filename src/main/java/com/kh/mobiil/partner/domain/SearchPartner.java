@@ -7,11 +7,11 @@ public class SearchPartner {
 	private String searchValue; // 검색어
 	
 	
-	public SearchPartner(String searchByWho, String searchArea, String searchCondirion, String searchValue) {
+	public SearchPartner(String searchByWho, String searchArea, String searchCondition, String searchValue) {
 		super();
 		this.searchByWho = searchByWho;
 		this.searchArea = searchArea;
-		this.searchCondition = searchCondirion;
+		this.searchCondition = searchCondition;
 		this.searchValue = searchValue;
 	}
 	

@@ -78,10 +78,10 @@
 						</li>
 						<li>
 						<c:if test="${!empty loginUser }">
-							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')">마이채팅</a>
+							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')">마이채팅 (${TotalUnread })</a>
 						</c:if>
 						<c:if test="${!empty loginHost}">
-							<a href= "#" onclick="chatWindow('${loginHost.memberNick }')">마이채팅</a>
+							<a href= "#" onclick="chatWindow('${loginHost.memberNick }')">마이채팅 (${TotalUnread })</a>
 						</c:if>
 						</li>
 						<li>

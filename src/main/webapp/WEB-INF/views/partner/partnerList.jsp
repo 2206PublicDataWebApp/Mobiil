@@ -22,7 +22,7 @@
 	<c:forEach items='${pList }' var='partner'>
 	<div class="col-md-4">
 			<div class="product-item">
-				<div class="product-thumb">
+				<div class="product-thumb" >
 					<span class="bage">${partner.area }</span><!-- 필요없으면 떼면 됨 -->
 					<img class="img-responsive" src="/resources/images/partner/${partner.profileRename } " alt="파트너 얼굴" /><!-- 이미지 불러올때 경로 잘 설정하기 -->
 					<div class="preview-meta">
@@ -63,22 +63,22 @@
 		<td align='center'>
 		<ul class="pagination justify-content-center">
 			<c:if test="${paging.currentPage != 1 }">
-			<li class="page-item"><a class="page-link" href='/partner/${urlVal }.kh?page=${paging.currentPage - 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>이전</a>
+			<li class="page-item"><a class="page-link" href='/partner/${urlVal }.kh?page=${paging.currentPage - 1 }&searchArea=${sp.searchArea }&searchCondition=${sp.searchCondition }&searchValue=${sp.searchValue }'>이전</a>
 			</li>
 			</c:if>
 			
 			<c:forEach var='p' begin="${paging.startNavi }" end="${paging.endNavi }">
 				<c:if test="${paging.currentPage eq p}">
-				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
+					<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
 				</c:if>
 				<c:if test="${paging.currentPage ne p}">
-				<li class="page-item"><a class="page-link"  href="/partner/${urlVal }.kh?page=${p }&searchCondition=${searchCondition }&searchValue=${searchValue }">${p }</a>
+					<li class="page-item"><a class="page-link"  href="/partner/${urlVal }.kh?page=${p }&searchArea=${sp.searchArea }&searchCondition=${sp.searchCondition }&searchValue=${sp.searchValue }">${p }</a>
 				</li>
 				</c:if>
 			</c:forEach>
 			
 			<c:if test="${paging.currentPage <paging.maxPage }">
-			<li class="page-item"><a class="page-link"  href='/partner/${urlVal }.kh?page=${paging.currentPage + 1 }&searchCondition=${searchCondition }&searchValue=${searchValue }'>다음</a>
+			<li class="page-item"><a class="page-link"  href='/partner/${urlVal }.kh?page=${paging.currentPage + 1 }&searchArea=${sp.searchArea }&searchCondition=${sp.searchCondition }&searchValue=${sp.searchValue }'>다음</a>
 			</li>
 			</c:if>
 		</ul>
@@ -99,6 +99,7 @@
 							<option <c:if test="${search.searchCondition eq 'instrument'}">selected</c:if> value="instrument">악기</option>
 						</select>
 						<select class="form-select" name="searchArea" >
+							<option <c:if test="${search.searchArea eq '서울'}">selected</c:if> value="서울">서울</option>
 							<option <c:if test="${search.searchArea eq '강북'}">selected</c:if> value="강북">강북</option>
 							<option <c:if test="${search.searchArea eq '강남'}">selected</c:if> value="강남">강남</option>
 							<option <c:if test="${search.searchArea eq '강동'}">selected</c:if> value="강동">강동</option>
