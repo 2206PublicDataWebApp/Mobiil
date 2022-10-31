@@ -32,7 +32,7 @@ public class ChatController {
 	@Autowired
 	private ChatService cService;
 	
-	// 채팅방 리스트 띄우기 + 언리드 카운트 띄우기 +(채팅방 비활성화 이후 그날 자정 폭파)
+	// 채팅방 리스트 띄우기 + 언리드 카운트 띄우기
 	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
 	public ModelAndView showChatList(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
 		
@@ -55,26 +55,24 @@ public class ChatController {
 	}
 	
 	
-//	// 메뉴바 언리드카운트
-//		@RequestMapping(value="/", method = RequestMethod.GET)
-//		public ModelAndView showTotalUnread(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
-//			
-//			//memberNick은 로그인한사람의 memberNick임
-//			List<ChatRoom> cList = cService.listByMemberNick(memberNick);
-//			int TotalUnread = 0;
-//			// refRoomNo랑 언리드 read_ckh 확인해서 출력
-//			for(int i = 0; i < cList.size() ; i++) {
-//				int refRoomNo = cList.get(i).getRoomNo();
-//				int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
-//				cList.get(i).setUnReadCount(unReadCount);
-//				TotalUnread =+ unReadCount;
-//			}
-//			mv.addObject("TotalUnread", TotalUnread);
-//			mv.addObject("cList", cList);
-//			mv.setViewName("/common/menubar");
-//			return mv;
-//		}
-	
+	// 메뉴바 언리드카운트
+	@ResponseBody
+	@RequestMapping(value="/chat/getTotalUnread.kh", method = RequestMethod.GET, produces = "text/plian;charset=utf-8" )
+	public String getTotalUnread(@RequestParam(value = "memberNick") String memberNick) {
+		//memberNick은 로그인한사람의 memberNick임
+		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
+		int TotalUnread = 0;
+		// refRoomNo랑 언리드 read_ckh 확인해서 출력
+		for(int i = 0; i < cList.size() ; i++) {
+			int refRoomNo = cList.get(i).getRoomNo();
+			int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
+			cList.get(i).setUnReadCount(unReadCount);
+			TotalUnread  = TotalUnread + unReadCount;
+		}
+		String result = String.valueOf(TotalUnread);
+		return result;
+	}
+
 	
 	// 채팅방 띄우기
 	@RequestMapping(value="/chat/chatRoom.kh")
@@ -157,7 +155,7 @@ public class ChatController {
 		return gson.toJson(jsonObj);
 	}
 	
-	//채팅방 비활성화(채팅 나가기) 
+	//채팅방 비활성화(채팅 나가기) 채팅방은 비활성화 이후 그날 자정 폭파
 	@ResponseBody
 	@RequestMapping(value = "/chat/disableChatRoom.kh")
 	public String disableChatRoom(@RequestParam("roomNo") int roomNo) {
@@ -176,7 +174,6 @@ public class ChatController {
 		Gson gson = new Gson();
 		List<ChatSearchResult> sList = cService.searchSpace(searchValue);
 		return gson.toJson(sList);
-		
 	}
 
 

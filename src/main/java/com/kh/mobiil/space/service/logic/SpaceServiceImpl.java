@@ -82,6 +82,18 @@ public class SpaceServiceImpl implements SpaceService{
 		return result;
 	}
 
+	@Override
+	public int getAreaCount(String area) {
+		int result = sStore.selectAreaCount(area, session);
+		return result;
+	}
+
+	@Override
+	public List<Space> printAllSpace() {
+		List<Space> sList = sStore.selectAllSpace(session);
+		return sList;
+	}
+
 
 
 	

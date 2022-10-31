@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mobiil.chat.domain.ChatRoom;
+import com.kh.mobiil.chat.service.ChatService;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
@@ -61,6 +63,9 @@ public class MemberController {
 		return "member/login";
 	}
 	
+	@Autowired
+	private ChatService cService;
+	
 	@RequestMapping(value = "/member/login.kh", method=RequestMethod.POST) // 로그인
 	public ModelAndView memberLogin(@ModelAttribute Member member, ModelAndView mv, HttpServletRequest request) {
 		try {
@@ -93,6 +98,7 @@ public class MemberController {
 		return mv;
 	}
 	
+
 	@RequestMapping(value="/member/myInfo.kh", method=RequestMethod.GET) // 마이페이지(My 정보화면)
 	public ModelAndView showMyPage(ModelAndView mv, HttpServletRequest request) {
 		try {

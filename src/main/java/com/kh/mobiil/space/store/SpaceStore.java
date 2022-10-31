@@ -22,5 +22,8 @@ public interface SpaceStore {
 	List<Space> selectByArea(SqlSessionTemplate session, String area, RowBounds rowBounds);
 	List<Space> selectByPrice(SqlSessionTemplate session, Integer minNum, Integer maxNum, RowBounds rowBounds);
 	int insertReservation(SqlSessionTemplate session, Reservation rsv);
+	int selectAreaCount(String area, SqlSessionTemplate session);
+	// 모든 스페이스 리스트
+	List<Space> selectAllSpace(SqlSessionTemplate session);
 	
 }

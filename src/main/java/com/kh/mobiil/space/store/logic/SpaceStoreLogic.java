@@ -90,6 +90,19 @@ public class SpaceStoreLogic implements SpaceStore{
 		return result;
 	}
 
+	@Override
+	public int selectAreaCount(String area, SqlSessionTemplate session) {
+		int result = session.selectOne("SpaceMapper.selectAreaCount", area);
+		return result;
+	}
+
+	//지도에 전부 출력할라고 만든 메소드
+	@Override
+	public List<Space> selectAllSpace(SqlSessionTemplate session) {
+		List<Space> sList = session.selectList("SpaceMapper.selectAllSpaceForMap");
+		return sList;
+	}
+
 
 
 	

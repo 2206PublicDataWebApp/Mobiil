@@ -63,7 +63,7 @@ color:black;
 </style>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>채팅방</title>
+<title>채팅방 리스트</title>
 
 
 
@@ -123,12 +123,12 @@ color:black;
 			
 		</c:if>
 		
-		<c:if test="${(chatRoom.roomStatus eq 'N') and (chatRoom.listDeleteDate < today)}">
+		<c:if test="${(chatRoom.roomStatus eq 'N')}">
 		<c:if test="${!empty loginUser.memberNick }"> 
 			<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
 				<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
 					<li>				
-						<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+						<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 금일 자정 채팅방이 삭제됩니다.</span>
 					</li>
 				</a>
 			</c:if>
@@ -136,17 +136,16 @@ color:black;
 			<c:if test="${chatRoom.createUser ne loginUser.memberNick }">
 				<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
 					<li>				
-						<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+						<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 금일 자정 채팅방이 삭제됩니다.</span>
 					</li>
 				</a>
 			</c:if>
-		</c:if>
 		</c:if>
 		<c:if test="${!empty loginHost.memberNick }"> 
 			<c:if test="${chatRoom.createUser eq loginHost.memberNick }">
 				<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
 					<li>				
-						<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+						<span>	${chatRoom.withUser }와의 채팅이 종료되었습니다. 금일 자정 채팅방이 삭제됩니다.</span>
 					</li>
 				</a>
 			</c:if>
@@ -154,12 +153,13 @@ color:black;
 			<c:if test="${chatRoom.createUser ne loginHost.memberNick }">
 				<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}&roomStatus=${chatRoom.roomStatus}">
 					<li>				
-						<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 1일 후 채팅방이 삭제됩니다.</span>
+						<span>	${chatRoom.createUser }와의 채팅이 종료되었습니다. 금일 자정 채팅방이 삭제됩니다.</span>
 					</li>
 				</a>
 			</c:if>
 		</c:if>
 		
+		</c:if>
 		
 </c:forEach>
 			</ul>
