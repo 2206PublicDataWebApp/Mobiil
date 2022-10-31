@@ -154,6 +154,14 @@ public class MemberController {
 		return mv;
 	}
 
+	// 비번 찾기
+	
+	
+	
+	
+	
+	
+	
 	@ResponseBody
 	@RequestMapping(value="/member/checkEmail.kh", method=RequestMethod.GET)
 	public String checkEmail(@RequestParam("memberEmail") String memberEmail) {
@@ -242,11 +250,9 @@ public class MemberController {
 	// 결제내역 상세조회
 	@RequestMapping(value="/payment/detail.kh", method=RequestMethod.GET)
 	public ModelAndView paymentDetailView(
-			ModelAndView mv, @RequestParam("reservationNo") Integer reservationNo, @RequestParam("page") Integer page, 
-			HttpSession session) {
+			ModelAndView mv, @RequestParam("reservationNo") String reservationNo, @RequestParam("page") Integer page) {
 		try {
 			Reservation reservation = mService.printOneByNo(reservationNo);
-			session.setAttribute("reservationNo", reservation.getReservationNo());
 			mv.addObject("reservation", reservation);
 			mv.addObject("page", page);
 			mv.setViewName("member/paymentDetail");

@@ -46,7 +46,7 @@ public interface HostService {
 
 	int reservationRemove(String reservationNo);
 
-	List<Reservation> rListByDate(Date date1, Date date2);
+	List<Reservation> rListByDate(Date date1, Date date2, String hostEmail1);
 
 	
 	//////////어드민 대시보드 숫자뽑는 메소드들//////
@@ -54,4 +54,8 @@ public interface HostService {
 	List<Reservation> regervationList();
 
 	int approveSpace(int spaceNo);
+
+	int sendMail(int spaceNo);
+
+	List<Space> spaceListByhostEmail(RowBounds rowBounds, String hostEmail);
 }

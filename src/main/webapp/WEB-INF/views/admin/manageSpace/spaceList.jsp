@@ -32,8 +32,8 @@
 						<td > ${space.spaceNo }</td>
 						<td > <a href='/space/detail.kh?spaceNo=${space.spaceNo } '>${space.spaceName }</a></td>
 						<td > 
-						<c:if test='${space.approval eq "N"}'><b style = "color:red"> ${space.approval}1</b></c:if>
-						<c:if test='${space.approval eq "Y"}'>${space.approval}1</c:if>
+						<c:if test='${space.approval eq "N"}'><b style = "color:red"> ${space.approval}</b></c:if>
+						<c:if test='${space.approval eq "Y"}'>${space.approval}</c:if>
 						</td>
 						<td > ${space.approvalDate }</td>
 						<td > ${space.rejectMailChk }</td>

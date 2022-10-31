@@ -43,11 +43,22 @@
   		<result property="reviewStatus" 			column="REV_STATUS"/>
   		<result property="revStart" 				column="REV_START"/>
   		<result property="revEnd" 					column="REV_END"/>
-  		</resultMap>
+  	</resultMap>
+  	<resultMap type="Heart" 					id="HeartResultMap">
+  		<result property="spaceNo" 					column="SPACE_NO"/>
+  		<result property="memberEmail" 				column="MEMBER_EMAIL"/>
+  	</resultMap>
   	<insert id="insertReservation">
   		INSERT INTO RESERVATION_TBL
   		VALUES(#{reservationNo},#{memberEmail},#{hostEmail},#{spaceNo},#{spaceName},#{spaceAddress},#{price},#{reservationDate},#{memberName},#{memberPhone},#{paymentDate},DEFAULT,DEFAULT,#{revStart},#{revEnd})
   	</insert>
+  	<insert id="insertHeart">
+  		INSERT INTO HEART_TBL
+  		VALUES(#{memberEmail},#{spaceNo},#{spaceName},#{spaceFileRename})
+  	</insert>
+  	<delete id="deleteHeart">
+  		DELETE FROM HEART_TBL WHERE MEMBER_EMAIL=#{memberEmail} AND SPACE_NO=#{spaceNo}
+  	</delete>
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM SPACE_TBL
 		<where>
@@ -121,6 +132,10 @@
 				SPACE_AREA LIKE '강북'
 			</if>
 		</where>
+	</select>
+	<select id="checkHeart" resultType="_int">
+		SELECT COUNT(*) FROM HEART_TBL 
+		WHERE MEMBER_EMAIL=#{memberEmail} AND SPACE_NO=#{spaceNo}
 	</select>
 	<select id="checkTime" resultType="_int">
 		<![CDATA[SELECT COUNT(*) FROM RESERVATION_TBL

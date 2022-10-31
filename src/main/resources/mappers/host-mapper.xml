@@ -31,9 +31,11 @@
   		<result property="spaceComent" 				column="SPACE_COMENT"/>
   		<result property="spaceArea" 				column="SPACE_AREA"/>
   		<result property="spacePrice" 				column="SPACE_PRICE"/>
-  		<result property="approval" 				column="SPACE_PRICE"/>
+  		<result property="approval" 				column="approval"/>
   		<result property="approvalDate" 			column="APPROVAL_DATE"/>
   		<result property="spaceStatus" 				column="SPACE_STATUS"/>
+  		<result property="hostEmail" 				column="HOST_EMAIL"/>
+  		<result property="rejectMailChk" 			column="REJECTMAILCHK"/>
   		</resultMap>
   	
   		<resultMap type="SpaceImg" 					id="SpaceImgResultMap">
@@ -117,7 +119,7 @@
 	  <!-- 정산 확인_조회기간 예약 리스트 불러오기 -->
 	  <select id="rListByDate" resultMap="ReservationResultMap">
 	  	SELECT * FROM RESERVATION_TBL
-	  	WHERE RESERV_DATE BETWEEN #{date1} AND #{date2}
+	  	WHERE HOST_EMAIL = #{hostEmail} AND RESERV_STATUS = 'Y' AND  RESERV_DATE BETWEEN #{date1} AND #{date2} 
 	  </select>
 
 	  <!-- 공간 업로드 -->
@@ -141,6 +143,13 @@
 	  <select id="spaceList" resultMap="SpaceResultMap">
 	  	SELECT * FROM SPACE_TBL
 	  	WHERE SPACE_STATUS = 'Y'
+	  	ORDER BY 1 DESC
+	  </select>
+	  
+	  <!-- 공간 리스트 By hostEmail  -->
+	  <select id="spaceListByhostEmail" resultMap="SpaceResultMap">
+	  	SELECT * FROM SPACE_TBL
+	  	WHERE HOST_EMAIL = #{hostEmail} AND SPACE_STATUS = 'Y'
 	  	ORDER BY 1 DESC
 	  </select>
 	  
@@ -189,6 +198,13 @@
   	 	UPDATE SPACE_TBL
   	 	SET APPROVAL = 'Y', APPROVAL_DATE = SYSDATE
   	 	WHERE SPACE_NO = #{spaceNo}
+  	 </update>
+  	 
+  	 <!-- 공간 승인 거절 메일 -->
+  	 <update id="sendMail">
+  	 	UPDATE SPACE_TBL
+		SET REJECTMAILCHK = 'Y'
+		WHERE SPACE_NO = #{spaceNo}
   	 </update>
   	 
   </mapper>

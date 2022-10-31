@@ -29,7 +29,7 @@
 			  	<textarea class="form-control" id="mailtext" name ='mailtext' rows="3" >승인 거절 사유:</textarea>
 			</div>
 			<div class="mb-3">
-				<input type='hidden' id="partnerNo" value='${rejectedPartner.spaceNo }'>
+				<input type='hidden' id="spaceNo" value='${rejectedPartner.spaceNo }'>
 				<input type='button' id="sendMail" onclick = "sendRejectMail();"value = "전송">
 				<input type='reset' value='취소'>
 			</div>
@@ -40,7 +40,7 @@
 <script type="text/javascript">
 
 	function sendRejectMail() {
-		var partnerNo = $("#spaceNo").val();
+		var spaceNo = $("#spaceNo").val();
 		var recipient = $("#recipient").val();
 		var subject = $("#subject").val();
 		var text = $("#mailtext").val();

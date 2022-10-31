@@ -76,7 +76,7 @@ public class MemberStoreLogic implements MemberStore{
 	}
 	
 	@Override
-	public Reservation selectOneByNo(SqlSession session, Integer reservationNo) {
+	public Reservation selectOneByNo(SqlSession session, String reservationNo) {
 		Reservation reservation = session.selectOne("MemberMapper.selectOneByNo", reservationNo);
 		return reservation;
 	}

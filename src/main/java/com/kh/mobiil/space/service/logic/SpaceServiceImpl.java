@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
@@ -92,6 +93,24 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<Space> printAllSpace() {
 		List<Space> sList = sStore.selectAllSpace(session);
 		return sList;
+	}
+		
+	@Override
+	public int checkHeart(Integer spaceNo, String memberEmail) {
+		int result = sStore.checkHeart(session, spaceNo, memberEmail);
+		return result;
+	}
+
+	@Override
+	public int insertHeart(Heart heart) {
+		int result = sStore.insertHeart(session, heart);
+		return result;
+	}
+
+	@Override
+	public int deleteHeart(Heart heart) {
+		int result = sStore.deleteHeart(session, heart);
+		return result;
 	}
 
 

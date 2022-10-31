@@ -9,17 +9,16 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.mobiil.host.controller.HostController;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.host.service.HostService;
 import com.kh.mobiil.partner.domain.Page;
+import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
@@ -81,6 +80,42 @@ public class SpaceController {
 		}
 		return mv;
 	}
+	
+	// 찜 여부 체크
+	@ResponseBody
+	@RequestMapping(value="/space/checkHeart.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public int checkHeart(@RequestParam(value="memberEmail") String memberEmail
+			, @RequestParam(value="spaceNo") Integer spaceNo) {
+		int result = sService.checkHeart(spaceNo, memberEmail);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/space/heart.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public int insetHeart(@RequestParam(value="memberEmail") String memberEmail
+			, @RequestParam(value="spaceNo") Integer spaceNo
+			, @RequestParam(value="spaceName") String spaceName
+			, @RequestParam(value="spaceFileRename") String spaceFileRename
+			, Heart heart) {
+		heart.setMemberEmail(memberEmail);
+		heart.setSpaceNo(spaceNo);
+		heart.setSpaceName(spaceName);
+		heart.setSpaceFileRename(spaceFileRename);
+		int result = sService.insertHeart(heart);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/space/deleteHeart.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public int deleteHeart(@RequestParam(value="memberEmail") String memberEmail
+			, @RequestParam(value="spaceNo") Integer spaceNo
+			, Heart heart) {
+		heart.setMemberEmail(memberEmail);
+		heart.setSpaceNo(spaceNo);
+		int result = sService.deleteHeart(heart);
+		return result;
+	}
+	
 	
 	// 공간 검색
 	@RequestMapping(value="/space/spaceSearch.kh", method=RequestMethod.GET)
@@ -235,7 +270,8 @@ public class SpaceController {
 					
 					int result = sService.registerReservation(rsv);
 					if(result > 0) {
-						mv.setViewName("redirect:/space/reservationInfo.kh");
+						mv.addObject("rsv", rsv);
+						mv.setViewName("space/reservationInfo");
 					}else {
 					}
 //				System.out.println(pmDate+" "+rsvDate);

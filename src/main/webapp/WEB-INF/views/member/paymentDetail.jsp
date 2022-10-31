@@ -55,13 +55,13 @@
 			<tr>
 				<th width="150" class="th" rowspan="5">예약 정보</th>
 				<td width="150" class="td">공간명</td>
-				<td width="300"><a href="">${reservation.spaceName}</a></td>
+				<td width="300"><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>${reservation.spaceName}</b></a></td>
 				<td width="100">
 					<c:if test="${reservation.reviewStatus eq 'Y'}">
-						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}';" class="btn btn-info">내 리뷰 조회</button>
+						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&page=${page}';" class="btn btn-info">내 리뷰 조회</button>
 					</c:if> 
 					<c:if test="${reservation.reviewStatus eq 'N'}">
-						<button type="button" onclick="location.href='/review/writeView.kh?spaceNo=${reservation.spaceNo}';"  class="btn btn-info">리뷰 작성</button>
+<%-- 						<button type="button" onclick="location.href='/review/writeView.kh?reservationNo=${reservation.reservationNo}&page=${page}';" class="btn btn-info">리뷰 작성</button> --%>
 					</c:if></td>
 				<td width="100">
 					<button type="button" onclick="" class="btn btn-danger">예약 취소</button>
@@ -77,7 +77,7 @@
 			<tr>
 				<!-- <td></td> -->
 				<td class="td">시간</td>
-				<td>${reservation.revStart}~ ${reservation.revEnd}</td>
+				<td>${reservation.revStart} ~ ${reservation.revEnd}</td>
 				<td></td>
 				<td></td>
 			</tr>
