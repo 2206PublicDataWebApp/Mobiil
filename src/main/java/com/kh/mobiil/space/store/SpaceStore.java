@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
@@ -22,5 +23,8 @@ public interface SpaceStore {
 	List<Space> selectByArea(SqlSessionTemplate session, String area, RowBounds rowBounds);
 	List<Space> selectByPrice(SqlSessionTemplate session, Integer minNum, Integer maxNum, RowBounds rowBounds);
 	int insertReservation(SqlSessionTemplate session, Reservation rsv);
+	int checkHeart(SqlSessionTemplate session, Integer spaceNo, String memberEmail);
+	int insertHeart(SqlSessionTemplate session, Heart heart);
+	int deleteHeart(SqlSessionTemplate session, Heart heart);
 	
 }

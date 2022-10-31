@@ -81,7 +81,7 @@ function requestPay() {
             			"reservDate" : rsp.custom_data.reservDate, "revStart" : rsp.custom_data.revStart,
             			"revEnd" : rsp.custom_data.revEnd},
 				success : function(data){
-					console.log(data);
+					location.href='/space/reservationInfo.kh';
 				},
 				error : function(){
 					alert("통신 실패");

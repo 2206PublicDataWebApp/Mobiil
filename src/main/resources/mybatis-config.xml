@@ -22,6 +22,7 @@
 		<typeAlias type="com.kh.mobiil.review.domain.Review"  	  alias="Review"/>
 		<typeAlias type="com.kh.mobiil.review.domain.ReviewImg" alias="ReviewImg"/>
 		<typeAlias type="com.kh.mobiil.chat.domain.ChatSearchResult" alias="ChatSearchResult"/>
+		<typeAlias type="com.kh.mobiil.space.domain.Heart" 		alias="Heart"/>
 		
 
 	</typeAliases>
