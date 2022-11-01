@@ -78,22 +78,24 @@
 		WHERE HOSTEMAIL = #{hostEmail}
 	  </update>
 	  
-	  <!-- 예약 확인용 예약 조회  -->
-	  <select id="reservationCkList" resultMap="ReservationResultMap">
-	  	SELECT * FROM RESERVATION_TBL
-	  	WHERE RESERV_STATUS = 'Y'
-	  </select>
-
 	  <!-- 예약 갯수 확인 -->
 	  <select id="getRegervationTotalCount" resultType="_int">
  		SELECT COUNT(*) FROM RESERVATION_TBL
+ 		WHERE HOST_EMAIL = #{hostEmail} AND RESERV_STATUS = 'Y'
 	  </select>
 	 
 	  <!-- 예약 리스트 조회 -->
 	  <select id="regervationList" resultMap="ReservationResultMap">
  		SELECT * FROM RESERVATION_TBL 
- 		WHERE RESERV_STATUS = 'Y'
+ 		WHERE HOST_EMAIL = #{hostEmail} AND RESERV_STATUS = 'Y'
  		ORDER BY 1 DESC
+	  </select>
+	  
+	  <!-- 예약 확인용 예약 조회 -->
+	  <select id="regervationListByHostemail" resultMap="ReservationResultMap">
+	  	SELECT * FROM RESERVATION_TBL 
+ 		WHERE HOST_EMAIL = #{hostEmail} AND RESERV_STATUS = 'Y'
+ 	    AND EXTRACT(MONTH FROM RESERV_DATE) = #{monthValue}
 	  </select>
 	  
 	  <!-- 예약 번호로 예약 정보 가져오기 -->
@@ -137,6 +139,7 @@
   	  <!-- 공간 갯수 확인 -->
   	  <select id="getSpaceTotalCount" resultType="_int">
   	  	SELECT COUNT(*) FROM SPACE_TBL
+  	  	WHERE SPACE_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
   	  </select>
   
   	  <!-- 공간 리스트 -->

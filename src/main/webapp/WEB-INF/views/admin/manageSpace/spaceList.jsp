@@ -63,7 +63,7 @@
 			</c:forEach>
 			
 			<c:if test="${paging.currentPage <paging.maxPage }">
-			<li class="page-item"><a class="page-link"  href='/partner/${urlVal }.kh?page=${paging.currentPage + 1 }'>다음</a>
+			<li class="page-item"><a class="page-link"  href='/host/${urlVal }.kh?page=${paging.currentPage + 1 }'>다음</a>
 			</li>
 			</c:if>
 		</ul>

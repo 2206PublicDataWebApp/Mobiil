@@ -48,7 +48,7 @@ table, td, th {
 		<h2>예약 리스트</h2>
 		<br>
 		<hr>
-		<table border='1'>
+		<table border='1' style="width: 1000px;">
 			<tr>
 				<td>예약번호</td>
 				<td>예약자</td>
@@ -63,8 +63,8 @@ table, td, th {
 					<td>${reservation.reservationNo }</td>
 					<td>${reservation.memberName }</td>
 					<td>${reservation.reservationDate }</td>
-					<td>${reservation.revStart }</td>
-					<td>${reservation.revEnd }</td>
+					<td>${reservation.revStart }시</td>
+					<td>${reservation.revEnd }시</td>
 					<td><button type="button" class="button1" onclick="location.href='/host/reservationModifyView.mobiil?reservationNo=${reservation.reservationNo}'">수정</button></td>
 					<td><button type="button" class="button2" onclick="location.href='/host/reservationRemove.mobiil?reservationNo=${reservation.reservationNo}'">삭제</button></td>
 				</tr>
@@ -72,16 +72,21 @@ table, td, th {
 			<tr>
 				<td height="30" colspan="6" align="center">
 					<ul class="pagination">
-						<li><c:if test="${currentPage ne 1 }">
+						<li>
+						<c:if test="${currentPage ne 1 }">
 								<a href="/host/registList.mobiil?page=${currentPage - 1}">이전</a>
-							</c:if></li>
-						<li><c:forEach var="page" begin="${startNavi }"
-								end="${endNavi }">
+							</c:if>
+						</li>
+						<li>
+						<c:forEach var="page" begin="${startNavi }" end="${endNavi }">
 								<a href="/host/registList.mobiil?page=${page }">${page }</a>
-							</c:forEach></li>
-						<li><c:if test="${currentPage ne maxPage}">
+						</c:forEach>
+						</li>
+						<li>
+						<c:if test="${currentPage ne maxPage}">
 								<a href="/host/registList.mobiil?page=${currentPage + 1 }">다음</a>
-							</c:if></li>
+						</c:if>
+						</li>
 					</ul>
 				</td>
 			</tr>

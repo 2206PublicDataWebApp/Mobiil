@@ -11,6 +11,8 @@
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
+	<input type="hidden"  id="mVal" value="${monthValue }">
+	${monthValue}
 	<div class="calendar"> 
     <div class="header">
       <div class="year-month"></div>  <!-- 월 표시 -->
@@ -39,7 +41,7 @@
 	  <c:forEach items="${rList}" var="reservation">
 		var rDate = '${reservation.reservationDate}'
 		document.getElementById(rDate).innerHTML  += '"예약자 : '+'${reservation.memberName}"' + "<br>"
-													+ ' "예약시간 : ' + '${reservation.revStart}시' + '~' + '${reservation.revEnd}시"' + "<br>"; // span 태그 내부에 예약자 성함 넣기
+													+ ' "예약시간 : ' + '${reservation.revStart}시' + '~' + '${reservation.revEnd}시"' + "<br>"; // span 태그 내부에 예약자 정보 넣기
 	  </c:forEach>
   }
   </script>

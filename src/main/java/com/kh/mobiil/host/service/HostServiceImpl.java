@@ -36,16 +36,11 @@ public class HostServiceImpl implements HostService{
 	}
 
 	@Override
-	public int getRegervationTotalCount() {
-		int result = hStore.getRegervationTotalCount(session);
+	public int getRegervationTotalCount(String hostEmail) {
+		int result = hStore.getRegervationTotalCount(session, hostEmail);
 		return result;
 	}
 
-	@Override
-	public List<Reservation> regervationList(int currentPage, int limit) {
-		List<Reservation> rList = hStore.regervationList(session, currentPage, limit);
-		return rList;
-	}
 	
 	@Override
 	public int insertSpace(Space space) {
@@ -72,8 +67,8 @@ public class HostServiceImpl implements HostService{
 	}
 	
 	@Override
-	public List<Space> spaceListByhostEmail(RowBounds rowBounds, String hostEmail) {
-		List<Space> sList = hStore.spaceListByhostEmail(session, rowBounds, hostEmail );
+	public List<Space> spaceListByhostEmail(int currentPage, int boardLimit, String hostEmail1) {
+		List<Space> sList = hStore.spaceListByhostEmail(session, currentPage, boardLimit, hostEmail1);
 		return sList;
 	}
 	
@@ -108,6 +103,12 @@ public class HostServiceImpl implements HostService{
 	}
 
 	@Override
+	public List<Reservation> regervationListByHostemail(String hostEmail, int monthValue) {
+		List<Reservation> rList = hStore.regervationListByHostemail(session, hostEmail, monthValue);
+		return rList;
+	}
+	
+	@Override
 	public Reservation regervationByNo(String reservationNo) {
 		Reservation regervation = hStore.regervationByNo(session, reservationNo);
 		return regervation;
@@ -136,11 +137,6 @@ public class HostServiceImpl implements HostService{
 		int result = hStore.selectHostCount(session);
 		return result;
 	}
-	@Override	
-	public List<Reservation> regervationList() {
-		List<Reservation> rList = hStore.regervationList(session);
-		return rList;
-	}
 
 	@Override
 	public int approveSpace(int spaceNo) {
@@ -152,6 +148,12 @@ public class HostServiceImpl implements HostService{
 	public int sendMail(int spaceNo) {
 		int result = hStore.sendMail(session, spaceNo);
 		return result;
+	}
+
+	@Override
+	public List<Reservation> regervationList(int currentPage, int imit, String hostEmail) {
+		List<Reservation> rList = hStore.regervationList(session, currentPage, imit, hostEmail);
+		return rList;
 	}
 
 }
