@@ -18,7 +18,7 @@ float: left;}
 </head>
 <body>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8e046b2f013965924b2b6bf64a16385&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8e046b2f013965924b2b6bf64a16385&libraries=services"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <jsp:include page="../../views/common/admin-top.jsp"></jsp:include>
@@ -28,10 +28,9 @@ float: left;}
 		<div class="row">
 		<jsp:include page="../../views/common/admin-left-sidebar.jsp"></jsp:include>
 			<div class="col-md-10">
-				<canvas id="memberAmount" width='300px' height='300px'></canvas>
-				<canvas id="partnerAmount" width='300px'  height='300px' ></canvas>
-				<canvas id="areaAmount" width='300px'  height='300px' ></canvas>
-				<br>		<br>		<br>		<br>
+				<canvas id="memberAmount" width='300vw' height='300vh'></canvas>
+				<canvas id="partnerAmount" width='300vw'  height='300vh' ></canvas>
+				<canvas id="areaAmount" width='300vw'  height='300vh' ></canvas>
 				<h2> 공간 전체 지도 </h2>
 				<div id="map" style="width:100%; height:400px;"></div>
 				<br>		<br>		<br>		<br>
@@ -57,11 +56,10 @@ center: new kakao.maps.LatLng(37.566381 , 126.977717), //지도의 중심좌표.
 level: 9 //지도의 레벨(확대, 축소 정도)
 };
 var map = new kakao.maps.Map(container, options); //컨테이너에 옵션을 담은 맵 생성
-
+var positionYX;
 
 
 // 인포윈도우(주소 + 상호 표기 + 해당상세페이지 연결)
-
 // 우리 공간 지도 그리기
 function printAllSpace() {
 	$.ajax({
@@ -69,28 +67,35 @@ function printAllSpace() {
 		type:"get",
 		success: function(data) { // data는 공간리스트
 			for(i = 0; i < data.length; i++){ // 리스트 돌면서 콜백으로 위지지정, 생성, 마커꽂음
-				space = data[i]
-				console.log(space);
-				geocoder.addressSearch(data[i].address, addressCallback); 
-			}
-		},
+				if(data[i].spaceStatus =='Y'){
+					var infoContents = '<div style="padding:5px;">Y일때 '+data[i].spaceNo+'<br><a href="#" style="color:blue" target="_blank">길찾기</a></div>'
+				}else{
+					var infoContents= '<div style="padding:5px;">N일때 <br><a href="#" style="color:blue" target="_blank">길찾기</a></div>'
+				}
+				geocoder.addressSearch(data[i].address, function(result, status) { // data는 공간리스트
+					console.log(infoContents)
+				    if (status === kakao.maps.services.Status.OK) {
+				     	var markerPosition = new kakao.maps.LatLng(result[0].y,result[0].x); // 마커 위치 지정
+				     	var marker = new kakao.maps.Marker({ 
+				     	    position: markerPosition // 마커 생성
+				    	});
+				     	var infowindow = new kakao.maps.InfoWindow({
+				     	    map: map, // 인포윈도우가 표시될 지도
+				     	    position : markerPosition, 
+				     	    content : infoContents
+				     	});
+				     	marker.setMap(map); // 마커 꽂기
+				     	infowindow.open(map, marker); // 인포윈도 꽂기
+				    }
+				}); 
+				
+				}
+			},
 		error: function() {
 			console.log("에러")
 		}
 	})
 	
-}
-
-//불러온 주소로 마커생성
-var addressCallback = function(result, status) { // data는 공간리스트
-	console.log(space)
-    if (status === kakao.maps.services.Status.OK) {
-     	var markerPosition = new kakao.maps.LatLng(result[0].y,result[0].x); // 마커 위치 지정
-     	var marker = new kakao.maps.Marker({ 
-     	    position: markerPosition // 마커 생성
-     	});
-     	marker.setMap(map); // 마커 꽂기
-    }
 }
 
 
@@ -104,20 +109,15 @@ var addressCallback = function(result, status) { // data는 공간리스트
 	const pChart = document.getElementById('partnerAmount').getContext('2d');
 	const weeklyChart = document.getElementById('weeklyChart').getContext('2d');
 	const aChart = document.getElementById('areaAmount').getContext('2d');
+	
 	printAllSpace();
 	drawMemberAmount();
 	drawPartnerAmount();
 	drawWeeklyChart();
 	drawAreaChart();
 	
-	function refreshChart() {
-		printAllSpace();
- 		drawMemberAmount();
- 		drawPartnerAmount();
- 		drawWeeklyChart();
- 		drawAreaChart();
- 	}
-	setInterval("refreshChart()", 300000); //5분에 한번 갱신
+	setTimeout('location.reload()',1000*5*60)
+
 	
 	//공간 지역분포(파이)
 	function drawAreaChart() {
