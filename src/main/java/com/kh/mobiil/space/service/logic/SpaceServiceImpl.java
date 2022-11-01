@@ -7,7 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Heart;
+import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
@@ -110,6 +112,24 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public int deleteHeart(Heart heart) {
 		int result = sStore.deleteHeart(session, heart);
+		return result;
+	}
+
+	@Override
+	public Reservation printRsv(String reservationNo) {
+		Reservation rsv = sStore.selectRsv(session, reservationNo);
+		return rsv;
+	}
+
+	@Override
+	public List<Review> printReview(Integer spaceNo) {
+		List<Review> rList = sStore.selectReview(session, spaceNo);
+		return rList;
+	}
+
+	@Override
+	public int insertReply(HostReply hostReply) {
+		int result = sStore.insertReply(session, hostReply);
 		return result;
 	}
 

@@ -2,27 +2,37 @@ package com.kh.mobiil.space.controller;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.host.service.HostService;
 import com.kh.mobiil.partner.domain.Page;
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Heart;
+import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.service.SpaceService;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Controller
 public class SpaceController {
@@ -70,6 +80,7 @@ public class SpaceController {
 			List<SpaceImg> iList = sService.printImg(spaceNo);
 			session.setAttribute("spaceNo", space.getSpaceNo());
 			session.setAttribute("spaceName", space.getSpaceName());
+			session.setAttribute("hostEmail", space.getHostEmail());
 			mv.addObject("space", space);
 			mv.addObject("iList", iList);
 			mv.addObject("memberNick", memberNick);
@@ -231,9 +242,9 @@ public class SpaceController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/space/paymentResult.kh", method=RequestMethod.GET)
-	public ModelAndView registerReservation(ModelAndView mv
-			, Reservation rsv
+	@RequestMapping(value="/space/paymentResult.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public String registerReservation(
+			Reservation rsv
 			, @RequestParam(value="reservNo") String reservNo
 			, @RequestParam(value="price") Integer price
 			, @RequestParam(value="paymentDate") String paymentDate
@@ -244,6 +255,7 @@ public class SpaceController {
 			, @RequestParam(value="reservDate") String reservDate
 			, @RequestParam(value="revStart") Integer revStart
 			, @RequestParam(value="revEnd") Integer revEnd) {
+		JSONObject obj = new JSONObject();
 			try {
 					SimpleDateFormat format = new SimpleDateFormat("yyyy. MM. dd.");
 					SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -269,23 +281,70 @@ public class SpaceController {
 					rsv.setRevEnd(revEnd);
 					
 					int result = sService.registerReservation(rsv);
+					
 					if(result > 0) {
-						mv.addObject("rsv", rsv);
-						mv.setViewName("space/reservationInfo");
+						obj.put("reservationNo", rsv.getReservationNo());
+						String api_key = "NCSYNTZGVXTRPQ73";
+						String api_secret = "3VGV1DFPGXT9VJIVNRAQCLZOKALJDTT6";
+						Message coolsms = new Message(api_key, api_secret);
+						HashMap<String, String> set = new HashMap<String, String>();
+						set.put("to", "01067462778"); //memberPhone
+						set.put("from", "01067462778"); // 발신번호
+						set.put("text", "[Mobiil]"+rsvDate+" "+revStart+"시~"+revEnd+"시 예약이 완료되었습니다."); // 문자내용
+						set.put("type", "SMS"); // 문자 타입
+						set.put("app_version", "test app 1.2");
+						try {
+							JSONObject rs = coolsms.send(set); // 보내기&전송결과받기
+							System.out.println(rs.toString());
+						} catch (CoolsmsException e) {
+							System.out.println(e.getMessage());
+							System.out.println(e.getCode());
+						}
 					}else {
 					}
-//				System.out.println(pmDate+" "+rsvDate);
 			} catch (Exception e) {
-				// TODO: handle exception
-				mv.addObject("msg", e.toString()).setViewName("common/errorPage");
 			}
-		return mv;
+		return obj.toString();
 	}
 	@RequestMapping(value="/space/reservationInfo.kh", method=RequestMethod.GET)
-	public String reservationInfo() {
-		return "space/reservationInfo";
+	public ModelAndView reservationInfo(String reservationNo, ModelAndView mv) {
+		try {
+			Reservation rsv = sService.printRsv(reservationNo);
+			mv.addObject("rsv", rsv);
+			mv.setViewName("space/reservationInfo");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/space/reviewList.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public String spaceReviewList(Integer spaceNo) {
+		List<Review> rList = sService.printReview(spaceNo);
+		
+		if(!rList.isEmpty()) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // 데이터포맷 지정
+			return gson.toJson(rList);
+		}
+		return null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/space/insertReply.kh", produces="application/json;charset=utf-8", method=RequestMethod.POST)
+	public int insertReply(@RequestParam(value="reviewNo") int reviewNo
+			,@RequestParam(value="replyWriter") String replyWriter
+			,@RequestParam(value="replyContents") String replyContents
+			,@RequestParam(value="hostEmail") String hostEmail
+			,HostReply hostReply) {
+		hostReply.setReplyWriter(replyWriter);
+		hostReply.setReplyContents(replyContents);
+		hostReply.setHostEmail(hostEmail);
+		hostReply.setReviewNo(reviewNo);
+		int result = sService.insertReply(hostReply);
+		return result;
+		
+	}
 	// 예약날짜 및 시간 유효성 체크
 	@ResponseBody
 	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)
