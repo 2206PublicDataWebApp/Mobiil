@@ -43,7 +43,7 @@
 		<div id="div" align="center">
 		<h2>공간 리스트</h2><br>
 		<hr>
-				<table>
+				<table style="width: 1000px;">
 						<tr>
 							<td>공간번호</td>
 							<td style="width: 2000px;">공간명</td>

@@ -218,12 +218,24 @@ public class HostController {
 	 * @return
 	 */
 	@RequestMapping(value = "/host/reservationCheck.mobiil", method = RequestMethod.GET)
-	public ModelAndView checkedRegister(ModelAndView mv) {
+	public ModelAndView checkedRegister(
+			ModelAndView mv
+			, Integer monthValue
+			, HttpServletRequest request) {
 		// 예약 리스트 필요함
 		// 일자에 맞춰 달력 id에 넣어줘야됨
-		List<Reservation> rList = hService.regervationList();
+		
+		HttpSession session = request.getSession();
+		Host host = (Host)session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		mv.addObject("monthValue", monthValue);
+		mv.setViewName("host/menuBar");
+		List<Reservation> rList = hService.regervationListByHostemail(hostEmail, monthValue);
+		System.out.println(monthValue);
+		System.out.println(rList);
 		try {
 			if (!rList.isEmpty()) {
+				mv.addObject("monthValue", monthValue);
 				mv.addObject("rList", rList);
 				mv.setViewName("host/reservationCheck");
 			}
@@ -242,10 +254,16 @@ public class HostController {
 	 * @return
 	 */
 	@RequestMapping(value = "/host/registList.mobiil", method = RequestMethod.GET)
-	public ModelAndView registeList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page) {
+	public ModelAndView registeList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		Host host = (Host)session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		
 		///////////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = hService.getRegervationTotalCount();
+		int totalCount = hService.getRegervationTotalCount(hostEmail);
+		System.out.println(totalCount);
 		int boardLimit = 10;
 		int naviLimit = 5;
 		int maxPage;
@@ -258,7 +276,9 @@ public class HostController {
 			endNavi = maxPage;
 		}
 		////////////////////////////////////////////////////////////
-		List<Reservation> rList = hService.regervationList(currentPage, boardLimit);
+		
+		List<Reservation> rList = hService.regervationList(currentPage, boardLimit, hostEmail);
+		System.out.println(rList);
 		try {
 			if (!rList.isEmpty()) {
 				mv.addObject("currentPage", currentPage);
@@ -414,28 +434,40 @@ public class HostController {
 	 * @return
 	 */
 	@RequestMapping(value = "/host/spaceList.mobiil", method = RequestMethod.GET)
-	public ModelAndView spaceList(ModelAndView mv, HttpServletRequest request,
-			@RequestParam(value = "page", required = false) Integer page) {
+	public ModelAndView spaceList(ModelAndView mv, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
 
 		HttpSession session = request.getSession();
 		Host host = (Host)session.getAttribute("loginHost");
 		String hostEmail1 = host.getHostEmail();
-		// ----------------------페이징
+		
+		///////////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = hService.getSpaceTotalCount();
+		int boardLimit = 10;
 		int naviLimit = 5;
-		int boardLimit = 9;
-		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
-		RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
-
-		// -------------------- 리스트 출력
-		List<Space> sList = hService.spaceListByhostEmail(rowBounds, hostEmail1);
-
-		// -------------------- view세팅
-		mv.addObject("paging", paging);
-		mv.addObject("sList", sList);
-		mv.setViewName("host/spaceList_host");
-
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if (maxPage < endNavi) {
+		endNavi = maxPage;
+		}
+		////////////////////////////////////////////////////////////
+		
+		List<Space> sList = hService.spaceListByhostEmail(currentPage, boardLimit, hostEmail1);
+		try {
+			if (!sList.isEmpty()) {
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi);
+				mv.addObject("sList", sList);
+				mv.setViewName("host/spaceList_host");
+			}
+		} catch (Exception e) {
+		}
 		return mv;
 	}
 
@@ -533,7 +565,7 @@ public class HostController {
 
 		// ----------------------페이징
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = hService.getSpaceTotalCount(); // 관리자에서 검색할 때는 승인안된 파트너는 출력o
+		int totalCount = hService.getSpaceTotalCount(); // 관리자에서 검색할 때는 승인안된 공간은 출력o
 		int naviLimit = 5;
 		int boardLimit = 10;
 		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);

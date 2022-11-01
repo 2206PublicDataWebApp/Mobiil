@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -31,16 +33,16 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public int getRegervationTotalCount(SqlSession session) {
-		int result = session.selectOne("HostMapper.getRegervationTotalCount");
+	public int getRegervationTotalCount(SqlSession session, String hostEmail) {
+		int result = session.selectOne("HostMapper.getRegervationTotalCount", hostEmail);
 		return result;
 	}
 
 	@Override
-	public List<Reservation> regervationList(SqlSession session, int currentPage, int limit) {
+	public List<Reservation> regervationList(SqlSession session, int currentPage, int limit, String hostEmail) {
 		int offset = (currentPage-1)*limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		List<Reservation> rList = session.selectList("HostMapper.regervationList", null, rowBounds);
+		List<Reservation> rList = session.selectList("HostMapper.regervationList", hostEmail, rowBounds);
 		return rList;
 	}
 	
@@ -69,11 +71,10 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public List<Space> spaceListByhostEmail(SqlSession session, RowBounds rowBounds, String hostEmail) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("hostEmail", hostEmail);
-		map.put("rowBounds", rowBounds);
-		List<Space> sList = session.selectList("HostMapper.spaceListByhostEmail", map);
+	public List<Space> spaceListByhostEmail(SqlSession session, int currentPage, int boardLimit, String hostEmail1) {
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBounds = new RowBounds(offset, boardLimit);
+		List<Space> sList = session.selectList("HostMapper.spaceListByhostEmail", hostEmail1, rowBounds);
 		return sList;
 	}
 	
@@ -142,12 +143,6 @@ public class HostStoreImpl implements HostStore{
 	}	
 	
 	@Override
-	public List<Reservation> regervationList(SqlSession session) {
-		List<Reservation> rList = session.selectList("HostMapper.reservationCkList");
-		return rList;
-	}
-
-	@Override
 	public int approveSpace(SqlSession session, int spaceNo) {
 		int result = session.update("HostMapper.approveSpace", spaceNo);
 		return result;
@@ -157,6 +152,15 @@ public class HostStoreImpl implements HostStore{
 	public int sendMail(SqlSession session, int spaceNo) {
 		int result = session.update("HostMapper.sendMail", spaceNo);
 		return result;
+	}
+
+	@Override
+	public List<Reservation> regervationListByHostemail(SqlSession session, String hostEmail, int monthValue) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("hostEmail", hostEmail);
+		map.put("monthValue", monthValue);
+		List<Reservation> rList = session.selectList("HostMapper.regervationListByHostemail", map);
+		return rList;
 	}
 
 }

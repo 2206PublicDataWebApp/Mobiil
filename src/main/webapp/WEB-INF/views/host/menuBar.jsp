@@ -47,7 +47,7 @@
 				<a class="function" href="/host/hostModifyView.mobiil">정보 수정</a>
 			</li>
 			<li>
-				<a class="function" href="/host/reservationCheck.mobiil">예약 확인</a><br><br>
+				<a class="function" href="/host/reservationCheck.mobiil?monthValue=${monthValue}">예약 확인</a><br><br>
 			</li>
 			<li>
 				<a class="function" href="/host/registList.mobiil">예약 리스트</a>
@@ -59,7 +59,7 @@
 				<a class="function" href="/host/spaceInsertView.mobiil">공간 업로드</a><br><br>
 			</li>
 			<li>
-				<a class="function" href="/host/spaceList.mobiil" onclick="">공간 리스트</a>
+				<a class="function" href="/host/spaceList.mobiil">공간 리스트</a>
 			</li>
 		</ul>
 	</div>

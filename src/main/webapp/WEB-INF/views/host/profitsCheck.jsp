@@ -62,7 +62,7 @@
 		</div>
 
 		<div id="div3" align="center">
-			<table border='1' align="center" id="table">
+			<table border='1' align="center" id="table" style="width: 1000px;">
 				<tr>
 					<td>예약번호</td>
 					<td>예약자</td>

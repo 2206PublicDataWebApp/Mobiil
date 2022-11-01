@@ -19,9 +19,9 @@ public interface HostStore {
 	
 	int hostModify(SqlSession session, Host host);
 
-	int getRegervationTotalCount(SqlSession session);
+	int getRegervationTotalCount(SqlSession session, String hostEmail);
 
-	List<Reservation> regervationList(SqlSession session, int currentPage, int limit);
+	List<Reservation> regervationList(SqlSession session, int currentPage, int limit, String hostEmail);
 	
 	int insertSpace(SqlSession session, Space space);
 
@@ -51,12 +51,12 @@ public interface HostStore {
 
 	int selectHostCount(SqlSession session);
 	
-	List<Reservation> regervationList(SqlSession session);
-
 	int approveSpace(SqlSession session, int spaceNo);
 
 	int sendMail(SqlSession session, int spaceNo);
 
-	List<Space> spaceListByhostEmail(SqlSession session, RowBounds rowBounds, String hostEmail);
+	List<Space> spaceListByhostEmail(SqlSession session, int currentPage, int boardLimit, String hostEmail1);
+
+	List<Reservation> regervationListByHostemail(SqlSession session, String hostEmail, int monthValue);
 
 }

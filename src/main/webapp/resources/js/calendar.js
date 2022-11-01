@@ -1,4 +1,5 @@
-let date = new Date();
+const mVal = document.querySelector("#mVal").value;
+let date = new Date(2022,mVal-1);
 
 const renderCalender = () => {
   const viewYear = date.getFullYear();
@@ -61,13 +62,15 @@ const renderCalender = () => {
 renderCalender();
 
 const prevMonth = () => {
-  date.setMonth(date.getMonth() - 1);
-  renderCalender();
+  const monthValue = date.getMonth();
+  date.setMonth(monthValue);
+  location.href = "/host/reservationCheck.mobiil?monthValue="+monthValue;
 };
 
 const nextMonth = () => {
-  date.setMonth(date.getMonth() + 1);
-  renderCalender();
+  const monthValue = date.getMonth() + 2;
+  date.setMonth(monthValue);
+  location.href = "/host/reservationCheck.mobiil?monthValue="+monthValue;
 };
 
 const goToday = () => {

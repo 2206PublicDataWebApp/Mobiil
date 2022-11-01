@@ -18,9 +18,9 @@ public interface HostService {
 	
 	int hostModify(Host host);
 
-	int getRegervationTotalCount();
+	int getRegervationTotalCount(String hostEmail);
 
-	List<Reservation> regervationList(int currentPage, int imit);
+	List<Reservation> regervationList(int currentPage, int imit, String hostEmail);
 	
 	int insertSpace(Space space);
 
@@ -51,11 +51,13 @@ public interface HostService {
 	
 	//////////어드민 대시보드 숫자뽑는 메소드들//////
 	int getHostCount();
-	List<Reservation> regervationList();
 
 	int approveSpace(int spaceNo);
 
 	int sendMail(int spaceNo);
 
-	List<Space> spaceListByhostEmail(RowBounds rowBounds, String hostEmail);
+	List<Space> spaceListByhostEmail(int currentPage, int boardLimit, String hostEmail1);
+
+	List<Reservation> regervationListByHostemail(String hostEmail, int monthValue);
+
 }

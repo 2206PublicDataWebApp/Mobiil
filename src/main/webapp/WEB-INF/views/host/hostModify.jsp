@@ -121,7 +121,7 @@
 					<td>
 						<input type="hidden" value="" name="regPhotoRename">
 						<label for="file"><div class="btn-upload">사업자 등록증 첨부</div></label>
-						<input type="file" class="file" id="file" name="reloadFile">
+						<input type="file" class="file" id="file" name="reloadFile" style=" display: none">
 					</td>
 				</tr>
 				<tr>
