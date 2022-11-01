@@ -40,6 +40,8 @@ public interface MemberService {
 
 	public int checkDupHostEmail(String hostEmail); // 이메일 중복 체크
 
+	// 비밀번호 찾기 후 변경
+	public int modifyPwd(Member member);
 
 
 	// 어드민 대시보드
@@ -50,6 +52,8 @@ public interface MemberService {
 
 
 	public int getDailyNewHost(int dayBefore); // 일일 호스트 가입자
+
+
 
 
 

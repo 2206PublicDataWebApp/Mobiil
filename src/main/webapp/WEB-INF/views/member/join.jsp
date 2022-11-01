@@ -96,6 +96,7 @@
 				<label>비밀번호 확인</label><input type="password" class="input" id="pwd2" name="memberPwd2" placeholder="영문자/숫자/특수문자 포함, 6자~20자"><br> 
 				<label>닉네임</label>
 				<input type="text" class="input" id="nick" name="memberNick" placeholder="특수문자 제외, 2자~8자" oninput = "checkNick()" >
+				<br>
 				<span class="nick_ok">사용 가능한 닉네임이에요 :)</span>
 				<span class="nick_already">이미 사용중인 닉네임이에요 :(</span>
 				<br> 
@@ -178,6 +179,11 @@
         }
         
         var inputCode = $(".mail_check_input").val();
+        if (inputCode == "") {
+        	alert("인증번호를 입력하세요.");
+    		return false;
+        }
+        
 		if (inputCode != "" || code != "") {
 			if (inputCode != code) {
 				alert("올바른 인증번호를 입력하세요.");

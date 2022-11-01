@@ -72,14 +72,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Space printSpace(Integer spaceNo) {
-		Space space = rStore.selectSpace(session, spaceNo);
-		return space;
-	}
-
-	@Override
-	public Reservation printReservation(Integer spaceNo) {
-		Reservation reservation = rStore.selectReservation(session, spaceNo);
+	public Reservation printReservation(String reservationNo) {
+		Reservation reservation = rStore.selectReservation(session, reservationNo);
 		return reservation;
 	}
 

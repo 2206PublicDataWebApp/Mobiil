@@ -57,12 +57,12 @@
 	<form name="review_form" action="/review/register.kh" method="post" enctype="multipart/form-data" >
 	<input type="hidden" name="memberEmail" value="${loginUser.memberEmail}">
 	<input type="hidden" name="spaceNo" value="${spaceNo}">
-	<input type="hidden" name="reservationNo" value="${reservation.reservationNo}">
+	<input type="hidden" name="reservationNo" value="${reservationNo}">
 	
 	<table border="1" class="tb">
 		<tr>
 			<th class="title" width="100">공간명</th>
-			<td><input type="text" class="input" id="" name="spaceName" value="${space.spaceName}" readonly></td>
+			<td><input type="text" class="input" id="" name="spaceName" value="${reservation.spaceName}" readonly></td>
 		</tr>	
 		<tr>
 			<th class="title" width="">작성자</th>

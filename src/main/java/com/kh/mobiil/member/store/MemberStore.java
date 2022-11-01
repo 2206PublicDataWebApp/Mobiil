@@ -43,6 +43,8 @@ public interface MemberStore {
 
 	public int checkDupHostEmail(SqlSession session, String hostEmail); // 이메일 중복 체크
 
+	// 비밀번호 찾기 후 변경
+	public int updatePwd(SqlSession session, Member member);
 
 	////어드민 대시보드
 	public int selectMemberCount(SqlSessionTemplate session);

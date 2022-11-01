@@ -25,11 +25,10 @@ public interface ReviewService {
 
 	public Review printOneByNo(Integer reviewNo);
 
-	public Space printSpace(Integer spaceNo);
-
-	public Reservation printReservation(Integer spaceNo);
+	public Reservation printReservation(String reservationNo);
 
 	public int updateRevStatusN(Reservation reservation);
+
 
 
 

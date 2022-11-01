@@ -93,8 +93,8 @@
  	var maxFile = 1;
  	
 	function addFile() {
-		if(maxFile >= 5) {
-	 	      alert("이미지 업로드 최대 개수는 5개입니다.");
+		if(maxFile >= 3) {
+	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
 	 	      return;
 		}else{ 
 			$("input").last().after("<input type = 'file'>");

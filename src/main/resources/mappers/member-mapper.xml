@@ -77,6 +77,10 @@
 		WHERE RESERV_NO = #{reservationNo} AND RESERV_STATUS = 'Y'
   	</select>
   	
+	<update id="updatePwd">
+	UPDATE MEMBER_TBL SET memberPwd = #{memberPwd} WHERE memberEmail = #{memberEmail}
+	</update>
+  	
   	<!-- 호스트 -->
   	<insert id="insertHost">
 		  INSERT INTO HOST_TBL VALUES(#{hostEmail}, #{hostPwd}, #{hostName}, #{hostPhone}, #{companyName}, #{companyRegNum}, 

@@ -33,6 +33,10 @@ import com.kh.mobiil.space.domain.Reservation;
 public class MemberController {
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+    private JavaMailSender mailSender;
+	
 
 	@RequestMapping(value = "/member/joinView.kh", method=RequestMethod.GET) // 회원가입 페이지
 	public String memberJoinView(Model model) {
@@ -148,14 +152,59 @@ public class MemberController {
 		return mv;
 	}
 
-	// 비번 찾기
+	// 비밀번호 찾기 화면
+	@RequestMapping(value="login/findPwdView.kh", method=RequestMethod.GET)
+	public String findPwdView() {
+		return "login/findPwd";
+	}
+	
+	// 비밀번호 변경 화면
+		@RequestMapping(value="login/modifyPwd.kh", method=RequestMethod.GET)
+		public String modifyPwd() {
+			return "login/modifyPwd";
+		}
 	
 	
+	// 비밀번호 찾기
+	@ResponseBody
+	@RequestMapping(value="/findPwd", produces = "text/plain;charset=utf-8", method = RequestMethod.GET)
+	public String findPwd(String memberEmail) throws Exception{
+		
+		Random random = new Random();
+		int checkNum = random.nextInt(888888)+111111;
+
+		// 이메일 보내기
+		String setFrom = "kh_mobiil@naver.com";
+		String toEmail = memberEmail;
+		String title = "모빌 비밀번호 변경을 위한 인증번호 이메일 입니다.";
+		String content = "안녕하세요." + "<br><br>"
+							+"비밀번호 변경을 위해,<br>"
+							+"아래 인증번호를 인증번호 확인란에 기입하여 주세요.<br><br>"
+							+"인증 번호: " + "<b>" + checkNum + "</b>" + "<br><br>"
+							+"감사합니다."+ "<br>"
+							+ "Mobiil팀 드림.";
+		
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+            helper.setFrom(setFrom, "모빌");
+            helper.setTo(toEmail);
+            helper.setSubject(title);
+            helper.setText(content,true);
+            mailSender.send(message);
+            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        String num = Integer.toString(checkNum);
+        return num;
+
+		}
 	
-	
-	
-	
-	
+//	// 비밀번호 DB 업데이트
+//	@RequestMapping(value = "/login/modifyPwd.kh", method = RequestMethod.POST)
+//	
+
 	@ResponseBody
 	@RequestMapping(value="/member/checkEmail.kh", method=RequestMethod.GET)
 	public String checkEmail(@RequestParam("memberEmail") String memberEmail) {
@@ -169,9 +218,6 @@ public class MemberController {
 		int result = mService.checkDupNick(memberNick);
 		return result+"";
 	}
-	
-	@Autowired
-    private JavaMailSender mailSender;
 	
 	@ResponseBody
 	@RequestMapping(value="/mailCheck", produces = "text/plain;charset=utf-8", method = RequestMethod.GET)

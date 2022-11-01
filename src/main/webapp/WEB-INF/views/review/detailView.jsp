@@ -58,7 +58,7 @@
 <div class="table-responsive">
 	<input type="hidden" name="reviewNo" value="${reviewNo}">
 	<table align="center" width="500" border="1" class="table table-bordered">
-<%-- 		${reservation.reservationNo},${reservationNo},${reviewNo},${spaceNo} --%>
+		${reservation.reservationNo},${reservationNo},${reviewNo},${spaceNo}
 		<tr>
 			<td id="cl" align="center" width="150">공간명</td>
 			<td>${review.spaceName}</td>

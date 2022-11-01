@@ -27,11 +27,10 @@ public interface ReviewStore {
 
 	public Review selectOneByNo(SqlSession session, Integer reviewNo);
 
-	public Space selectSpace(SqlSession session, Integer spaceNo);
-
-	public Reservation selectReservation(SqlSession session, Integer spaceNo);
+	public Reservation selectReservation(SqlSession session, String reservationNo);
 
 	public int updateRevStatusN(SqlSession session, Reservation reservation);
+
 
 
 

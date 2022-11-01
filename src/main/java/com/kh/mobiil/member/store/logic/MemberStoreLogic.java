@@ -101,6 +101,13 @@ public class MemberStoreLogic implements MemberStore{
 		return result;
 	}
 	
+	// 비밀번호 찾기 후 변경
+	@Override
+	public int updatePwd(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updatePwd", member);
+		return result;
+	}
+
 	
 	////////어드민 대시보드
 

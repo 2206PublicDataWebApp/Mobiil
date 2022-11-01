@@ -103,6 +103,13 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.checkDupHostEmail(session, hostEmail);
 		return result;
 	}
+	
+	// 비밀번호 변경
+	@Override
+	public int modifyPwd(Member member) {
+		int result = mStore.updatePwd(session, member);
+		return result;
+	}
 
 	/////////////어드민 대시보드
 	@Override

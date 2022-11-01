@@ -59,15 +59,22 @@
 		</association>
 	</resultMap>
 
+
+	<select id="selectReservation" resultMap="ReservationResultMap"> <!-- 리뷰 작성 화면에 공간명 불러오기 -->
+		SELECT SPACE_TITLE FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo}
+	</select>
+	
 	<insert id="insertReview"> <!-- 리뷰 업로드 -->
-		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{spaceNo},
-		#{reviewImgNo},
-		#{memberEmail}, #{reviewContents}, #{reviewWriter},
-		DEFAULT, DEFAULT, DEFAULT)
+		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{spaceNo},#{reviewImgNo},
+		#{memberEmail}, #{reviewContents}, #{reviewWriter},DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 
 	<update id="updateRevStatus"> <!-- 리뷰 등록 시 reservation의 리뷰 상태 Y로 업데이트 -->
 		UPDATE RESERVATION_TBL SET REV_STATUS = 'Y' WHERE RESERV_NO = #{reservationNo}
+	</update>
+
+	<update id="updateRevStatusN"> <!-- 리뷰 삭제 시 reservation의 리뷰 상태 N으로 업데이트 -->
+		UPDATE RESERVATION_TBL SET REV_STATUS = 'N' WHERE RESERV_NO = #{reservationNo}
 	</update>
 
 	<insert id="insertReviewImg"> <!-- 리뷰 이미지 업로드 -->
@@ -107,14 +114,6 @@
 		REVIEW_TBL.SPACE_NO = SPACE_TBL.SPACE_NO
 		WHERE REVIEW_NO = #{reviewNo}
 		AND R_STATUS = 'Y'
-	</select>
-
-	<select id="selectSpace" resultMap="SpaceResultMap"> <!-- 리뷰 작성 페이지에 공간명 불러오기 -->
-		SELECT SPACE_NAME FROM SPACE_TBL WHERE SPACE_NO = #{spaceNo}
-	</select>
-
-	<select id="selectReservation" resultMap="ReservationResultMap"> <!-- 리뷰 작성 페이지에 예약번호 불러오기 -->
-		SELECT RESERV_NO FROM RESERVATION_TBL WHERE SPACE_NO = #{spaceNo}
 	</select>
 
 </mapper>

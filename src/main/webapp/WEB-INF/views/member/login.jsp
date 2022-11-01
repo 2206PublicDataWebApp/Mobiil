@@ -42,17 +42,56 @@
                     <input style="margin-top: 10px;" type="checkbox" name="" id=""> 자동 로그인
                 </span>
                 <span>
-                    <a href="">비밀번호 찾기</a>
+                    <a href="/login/findPwdView.kh">비밀번호 찾기</a>
                 </span>
             </div>
 
             <br>
             <div><button type="submit" class="button">로그인 하기</button></div>
-            카카오 로그인
+            <a href="javascript:void(0)">
+            	<button type="button" class="button" onclick="kakaoLogin();">카카오 로그인</button>
+            </a>
+            
+           
         </form>
         <span>아직 모빌 회원이 아니신가요?</span>
         <span><a href="/member/joinView.kh"><b>회원가입</b></a></span>
     </div>
+ 
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script>
+  //카카오로그인
+//   function kakaoLogin() {
+
+//     $.ajax({
+//         url: '/login/getKakaoAuthUrl',
+//         type: 'get',
+//         async: false,
+//         dataType: 'text',
+//         success: function (res) {
+//             location.href = res;
+//         }
+//     });
+
+//   }
+
+//   $(document).ready(function() {
+
+//       var kakaoInfo = '${kakaoInfo}';
+
+//       if(kakaoInfo != ""){
+//           var data = JSON.parse(kakaoInfo);
+
+//           alert("카카오로그인 성공 \n accessToken : " + data['accessToken']);
+//           alert(
+//           "user : \n" + "email : "
+//           + data['email']  
+//           + "\n nickname : " 
+//           + data['nickname']);
+//       }
+//   });  
+
+  </script>
        <br><br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

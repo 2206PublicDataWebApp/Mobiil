@@ -61,7 +61,7 @@
 						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&page=${currentPage }';" class="btn btn-info">내 리뷰 조회</button>
 					</c:if>
 					<c:if test="${reservation.reviewStatus eq 'N'}">
-<%-- 						<button type="button" onclick="location.href='/review/writeView.kh?reservationNo=${reservation.reservationNo}&page=${currentPage }';" class="btn btn-info">리뷰 작성</button> --%>
+						<button type="button" onclick="location.href='/review/writeView.kh?reservationNo=${reservation.reservationNo}&page=${currentPage }';" class="btn btn-info">리뷰 작성</button>
 					</c:if>
 				</td>
 			</tr>

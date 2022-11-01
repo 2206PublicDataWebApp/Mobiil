@@ -33,12 +33,11 @@ public class ReviewController {
 	
 	// 리뷰 등록 화면
 	@RequestMapping(value="/review/writeView.kh", method=RequestMethod.GET)
-	public ModelAndView reviewWriteView(ModelAndView mv, @RequestParam(value="spaceNo") Integer spaceNo) {
-		Space space = rService.printSpace(spaceNo);
-		Reservation reservation = rService.printReservation(spaceNo);
+	public ModelAndView reviewWriteView(ModelAndView mv,
+			@RequestParam(value="reservationNo") String reservationNo) {
+		Reservation reservation = rService.printReservation(reservationNo);
 		mv.addObject("reservation", reservation);
-		mv.addObject("spaceNo", spaceNo);
-		mv.addObject("space", space);
+		mv.addObject("reservationNo", reservationNo);
 		mv.setViewName("/review/reviewWrite");
 		return mv;
 	}
@@ -87,7 +86,8 @@ public class ReviewController {
 	
 	// 리뷰 상세조회
 	@RequestMapping(value="/review/detail.kh", method=RequestMethod.GET)
-		public ModelAndView reviewDetailView(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo, 
+		public ModelAndView reviewDetailView(ModelAndView mv,
+				@RequestParam("reviewNo") Integer reviewNo, 
 				@RequestParam("page") Integer page, HttpSession session) {
 		try {
 			Review review = rService.printOneByNo(reviewNo);
@@ -175,7 +175,7 @@ public class ReviewController {
 	// 리뷰 삭제
 	@RequestMapping(value="/review/remove.kh", method = RequestMethod.GET)
 	public ModelAndView reviewRemove(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo,
-			@ModelAttribute Reservation reservation, HttpServletRequest request) { 
+			@ModelAttribute Reservation reservation, HttpServletRequest request, HttpSession session) { 
 	try {
 		int result = rService.removeReview(reviewNo);
 		int result2 = rService.updateRevStatusN(reservation);

@@ -64,14 +64,8 @@ public class ReviewStoreLogic implements ReviewStore{
 	}
 
 	@Override
-	public Space selectSpace(SqlSession session, Integer spaceNo) {
-		Space space = session.selectOne("ReviewMapper.selectSpace", spaceNo);
-		return space;
-	}
-
-	@Override
-	public Reservation selectReservation(SqlSession session, Integer spaceNo) {
-		Reservation reservation = session.selectOne("ReviewMapper.selectReservation", spaceNo);
+	public Reservation selectReservation(SqlSession session, String reservationNo) {
+		Reservation reservation = session.selectOne("ReviewMapper.selectReservation", reservationNo);
 		return reservation;
 	}
 
