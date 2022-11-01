@@ -26,12 +26,12 @@
 	
 	<insert id="insertRoom">
 		INSERT INTO CHATROOM_TBL VALUES(
-		SEQ_ROOMNO.NEXTVAL, #{createUser}, #{withUser}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+		SEQ_ROOMNO.NEXTVAL, #{createUser}, #{withUser}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
 	<update id="disableRoom">
 		UPDATE CHATROOM_TBL
-		SET roomStatus = 'N', disableDate = SYSDATE, listDeleteDate = SYSDATE + 3
+		SET roomStatus = 'N', disableDate = SYSDATE
 		WHERE roomNo = #{roomNo}
 	</update>
 	

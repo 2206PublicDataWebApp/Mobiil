@@ -186,7 +186,6 @@ var memberNick = "${memberNick}";
 var $chatlog = $("#chatlog");
 
 getChatLog(roomNo, memberNick);
-//getChatNewLog();
 setInterval(getChatNewLog, 500);
 
 // 장소 검색

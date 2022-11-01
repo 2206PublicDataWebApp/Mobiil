@@ -92,6 +92,19 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
+	public int selectAreaCount(String area, SqlSessionTemplate session) {
+		int result = session.selectOne("SpaceMapper.selectAreaCount", area);
+		return result;
+	}
+
+	//지도에 전부 출력할라고 만든 메소드
+	@Override
+	public List<Space> selectAllSpace(SqlSessionTemplate session) {
+		List<Space> sList = session.selectList("SpaceMapper.selectAllSpaceForMap");
+		return sList;
+	}
+	
+	@Override
 	public int checkHeart(SqlSessionTemplate session, Integer spaceNo, String memberEmail) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("spaceNo",spaceNo);

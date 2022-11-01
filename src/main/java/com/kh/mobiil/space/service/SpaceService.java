@@ -32,6 +32,12 @@ public interface SpaceService {
 	List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds);
 
 	int registerReservation(Reservation rsv);
+
+	// 지역 카운트
+	int getAreaCount(String area);
+
+	// 모든 공간 리스트
+	List<Space> printAllSpace();
 	
 	
 

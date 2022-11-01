@@ -143,4 +143,14 @@
 		AND REV_START < #{end} 
 		AND REV_END > #{start}]]>
 	</select>
+	
+	<select id="selectAreaCount" resultType="_int">
+		SELECT count(*) AS COUNT FROM SPACE_TBL
+		WHERE SPACE_AREA LIKE #{area}
+	</select>
+	
+	<select id="selectAllSpaceForMap" resultMap="SpaceResultMap">
+		SELECT SPACE_NO, SPACE_NAME, SPACE_ADDRESS, SPACE_STATUS FROM SPACE_TBL
+		ORDER BY 1
+	</select>
 </mapper>

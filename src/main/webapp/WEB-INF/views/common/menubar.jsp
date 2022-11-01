@@ -41,6 +41,7 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="/resources/css/style.css">
   <!-- 제이쿼리 -->
+  <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 </head>
 <body>
@@ -78,10 +79,11 @@
 						</li>
 						<li>
 						<c:if test="${!empty loginUser }">
-							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')">마이채팅 (${TotalUnread })</a>
+							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')" id='myChat'></a>
+						
 						</c:if>
 						<c:if test="${!empty loginHost}">
-							<a href= "#" onclick="chatWindow('${loginHost.memberNick }')">마이채팅 (${TotalUnread })</a>
+							<a href= "#" onclick="chatWindow('${loginHost.memberNick }')"  id='myChat'></a>
 						</c:if>
 						</li>
 						<li>
@@ -109,13 +111,13 @@
 
 					<!-- Home -->
 					<li>
-						<a href="#">Home</a>
+						<a href="/">Home</a>
 					</li>
 					<li>
-						<a href="#">Partner</a>
+						<a href="/partner/list.kh">Partner</a>
 					</li>
 					<li>
-						<a href="#">Space</a>
+						<a href="/space/spaceList.kh">Space</a>
 					</li>		
 				</ul>
 			</div>			
@@ -125,8 +127,32 @@
 
 
 <script type="text/javascript">
+
+
+getTotalUnread();
+
 function chatWindow(memberNick) {
 	window.open('/chat/chatWindow.kh?memberNick='+memberNick+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
+}
+
+function  getTotalUnread() {
+	if("${loginHost.memberNick }" !=  ""){
+		var memberNick = "${loginHost.memberNick }";
+	}
+	if("${loginUser.memberNick }" != ""){
+		var memberNick = "${loginUser.memberNick }";
+	}
+	$.ajax({
+		url:"/chat/getTotalUnread.kh",
+		data:{memberNick :memberNick},
+		type: "get",
+		success: function(data) {
+			$("#myChat").text("마이채팅(" + data + ")");
+		},
+		error: function() {
+			console.log("에러")
+		}
+	})
 }
 </script>
  
