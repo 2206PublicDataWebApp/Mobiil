@@ -37,39 +37,33 @@
 						</td>
 						<td > ${space.approvalDate }</td>
 						<td > ${space.rejectMailChk }</td>
-						
 					</tr>
 					</c:forEach>
+					
+					<tr>
+				<td height="30" colspan="6" align="center">
+					<ul class="pagination">
+						<li>
+						<c:if test="${currentPage ne 1 }">
+								<a href="/admin/space/list.kh?page=${currentPage - 1}">이전</a>
+							</c:if>
+						</li>
+						<li>
+						<c:forEach var="page" begin="${startNavi }" end="${endNavi }">
+								<a href="/admin/space/list.kh?page=${page }">${page }</a>
+						</c:forEach>
+						</li>
+						<li>
+						<c:if test="${currentPage ne maxPage}">
+								<a href="/admin/space/list.kh?page=${currentPage + 1 }">다음</a>
+						</c:if>
+						</li>
+					</ul>
+				</td>
+			</tr>
 				</table>
 				
-				<!-- 페이징 -->
-		<table align="center" class="table col-10 table-borderless" width="100%">
-		<tr align='center' height="20">
-		<td align='center'>
-		<ul class="pagination justify-content-center">
-			<c:if test="${paging.currentPage != 1 }">
-			<li class="page-item"><a class="page-link" href='/partner/${urlVal }.kh?page=${paging.currentPage - 1 }'>이전</a>
-			</li>
-			</c:if>
-			
-			<c:forEach var='p' begin="${paging.startNavi }" end="${paging.endNavi }">
-				<c:if test="${paging.currentPage eq p}">
-				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
-				</c:if>
-				<c:if test="${paging.currentPage ne p}">
-				<li class="page-item"><a class="page-link"  href="/partner/${urlVal }.kh?page=${p }">${p }</a>
-				</li>
-				</c:if>
-			</c:forEach>
-			
-			<c:if test="${paging.currentPage <paging.maxPage }">
-			<li class="page-item"><a class="page-link"  href='/host/${urlVal }.kh?page=${paging.currentPage + 1 }'>다음</a>
-			</li>
-			</c:if>
-		</ul>
-		</td>
-		</tr>
-	</table>
+	
 			</div>		
 		</div>
 	</div>

@@ -237,12 +237,12 @@ public class HostController {
 			if (!rList.isEmpty()) {
 				mv.addObject("monthValue", monthValue);
 				mv.addObject("rList", rList);
-				mv.setViewName("host/reservationCheck");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
 			mv.setViewName("commom/errorPage");
 		}
+		mv.setViewName("host/reservationCheck");
 		return mv;
 	}
 
@@ -442,7 +442,7 @@ public class HostController {
 		
 		///////////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = hService.getSpaceTotalCount();
+		int totalCount = hService.getSpaceTotalCount(hostEmail1);
 		int boardLimit = 10;
 		int naviLimit = 5;
 		int maxPage;
@@ -563,20 +563,35 @@ public class HostController {
 		// ----------------------검색 조건
 		SearchPartner sp = new SearchPartner("admin"); // 관리자에서 검색하는 걸로 지정
 
-		// ----------------------페이징
+		///////////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = hService.getSpaceTotalCount(); // 관리자에서 검색할 때는 승인안된 공간은 출력o
-		int naviLimit = 5;
+		int totalCount = hService.getSpaceTotalCount();
+		System.out.println(totalCount);
 		int boardLimit = 10;
-		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
-		RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if (maxPage < endNavi) {
+		endNavi = maxPage;
+		}
+		////////////////////////////////////////////////////////////
 
-		// -------------------- 리스트 출력
-		List<Space> sList = hService.spaceList(rowBounds); // 검색 조건, rowBounds(끊어서 가져오게)
-
-		// -------------------- view세팅
-		mv.addObject("sList", sList).addObject("paging", paging).addObject("urlVal", "list");
-		mv.setViewName("/admin/manageSpace/spaceList");
+		List<Space> sList = hService.spaceList(currentPage, boardLimit ); 
+		try {
+			if (!sList.isEmpty()) {
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi);
+				mv.addObject("sList", sList);
+				mv.setViewName("admin/manageSpace/spaceList");
+			}
+		} catch (Exception e) {
+		}
 		return mv;
 	}
 

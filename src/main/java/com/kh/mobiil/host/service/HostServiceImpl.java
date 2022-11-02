@@ -55,14 +55,14 @@ public class HostServiceImpl implements HostService{
 	}
 
 	@Override
-	public int getSpaceTotalCount() {
-		int result = hStore.getSpaceTotalCount(session);
+	public int getSpaceTotalCount(String hostEmail) {
+		int result = hStore.getSpaceTotalCount(session, hostEmail);
 		return result;
 	}
 
 	@Override
-	public List<Space> spaceList(RowBounds rowBounds) {
-		List<Space> sList = hStore.spaceList(session, rowBounds );
+	public List<Space> spaceList(int currentPage, int boardLimit) {
+		List<Space> sList = hStore.spaceList(session, currentPage, boardLimit );
 		return sList;
 	}
 	
@@ -154,6 +154,12 @@ public class HostServiceImpl implements HostService{
 	public List<Reservation> regervationList(int currentPage, int imit, String hostEmail) {
 		List<Reservation> rList = hStore.regervationList(session, currentPage, imit, hostEmail);
 		return rList;
+	}
+
+	@Override
+	public int getSpaceTotalCount() {
+		int result = hStore.getSpaceTotalCount(session);
+		return result;
 	}
 
 }

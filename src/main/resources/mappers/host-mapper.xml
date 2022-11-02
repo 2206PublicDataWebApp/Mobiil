@@ -142,7 +142,13 @@
   	  	WHERE SPACE_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
   	  </select>
   
-  	  <!-- 공간 리스트 -->
+  	 <!-- 공간 갯수 확인_관리자 페이지 -->
+  	  <select id="getSpaceTotalCount_Admin" resultType="_int">
+  	  	SELECT COUNT(*) FROM SPACE_TBL
+  	  	WHERE SPACE_STATUS = 'Y'
+  	  </select>
+  	  
+  	  <!-- 공간 리스트_관리자 페이지 -->
 	  <select id="spaceList" resultMap="SpaceResultMap">
 	  	SELECT * FROM SPACE_TBL
 	  	WHERE SPACE_STATUS = 'Y'

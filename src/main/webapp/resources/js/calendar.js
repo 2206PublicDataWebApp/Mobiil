@@ -4,8 +4,12 @@ let date = new Date(2022,mVal-1);
 const renderCalender = () => {
   const viewYear = date.getFullYear();
   const viewMonth = date.getMonth();
+  let sMonth = Number(date.getMonth())+1;
+  if(sMonth < 10) {
+  	sMonth = '0'+sMonth;
+  }
 
-  document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
+  document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth+1}월`;
 
   const prevLast = new Date(viewYear, viewMonth, 0);	 	// 지난달
   const thisLast = new Date(viewYear, viewMonth + 1, 0);	// 이번달
@@ -17,7 +21,7 @@ const renderCalender = () => {
   const TLDay = thisLast.getDay();		// 이번달 마지막 요일
 
   const prevDates = [];
-  const thisDates = [...Array(TLDate + 1).keys()].slice(1);
+  const thisDates = [...Array(TLDate + 1).keys()].slice(0);
   const nextDates = [];
 
   if (PLDay !== 6) {
@@ -36,14 +40,15 @@ const renderCalender = () => {
 
   dates.forEach((date, i) => {
     const condition = i >= firstDateIndex && i < lastDateIndex + 1 ? 'this' : 'other';
-	  if(date < 10){
-			dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
-	    		    <span id=${viewYear + "-" + (viewMonth+1) + "-" + "0" +date}> </span></div>`;
-		}else{
-			dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
-	    		    <span id=${viewYear + "-" + (viewMonth+1) + "-" +date}> </span></div>`;
-		}	
-	  });
+    
+		  if(date < 10){
+					dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
+			    		    <span id=${viewYear + "-" + (sMonth) + "-" + "0" +date}> </span></div>`;
+				}else{
+					dates[i] = `<div class="date"><span class=${condition}>${date}</span><br>
+			    		    <span id=${viewYear + "-" + (sMonth) + "-" +date}> </span></div>`;
+				}	
+			  });
 	    
 
   document.querySelector('.dates').innerHTML = dates.join('');

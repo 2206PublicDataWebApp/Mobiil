@@ -26,7 +26,7 @@ public interface HostService {
 
 	int insertSpaceImg(SpaceImg spaceImg);
 
-	int getSpaceTotalCount();
+	int getSpaceTotalCount(String hostEmail);
 
 	Space spaceByNo(Integer spaceNo);
 
@@ -38,7 +38,7 @@ public interface HostService {
 
 	int spaceRemove(Integer spaceNo);
 
-	List<Space> spaceList(RowBounds rowBounds);
+	List<Space> spaceList(int currentPage, int boardLimit);
 
 	Reservation regervationByNo(String reservationNo);
 
@@ -59,5 +59,7 @@ public interface HostService {
 	List<Space> spaceListByhostEmail(int currentPage, int boardLimit, String hostEmail1);
 
 	List<Reservation> regervationListByHostemail(String hostEmail, int monthValue);
+
+	int getSpaceTotalCount();
 
 }

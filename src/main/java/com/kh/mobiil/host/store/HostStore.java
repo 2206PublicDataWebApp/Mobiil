@@ -27,9 +27,9 @@ public interface HostStore {
 
 	int insertSpaceImg(SqlSession session, SpaceImg spaceImg);
 
-	int getSpaceTotalCount(SqlSession session);
+	int getSpaceTotalCount(SqlSession session, String hostEmail);
 
-	List<Space> spaceList(SqlSession session, RowBounds rowBounds);
+	List<Space> spaceList(SqlSession session, int currentPage, int boardLimit);
 
 	Space spaceByNo(SqlSession session, Integer spaceNo);
 
@@ -58,5 +58,7 @@ public interface HostStore {
 	List<Space> spaceListByhostEmail(SqlSession session, int currentPage, int boardLimit, String hostEmail1);
 
 	List<Reservation> regervationListByHostemail(SqlSession session, String hostEmail, int monthValue);
+
+	int getSpaceTotalCount(SqlSession session);
 
 }
