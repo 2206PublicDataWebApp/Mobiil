@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <title>개인회원 비밀번호 찾기</title>
+    <title>기업회원 비밀번호 찾기</title>
     <style>
     	#input{
     		width : 200px;
@@ -47,7 +47,7 @@
 <jsp:include page="../common/menubar.jsp"></jsp:include>
 
     <div class="pwdfind">
-        <h1>개인회원 비밀번호 찾기</h1>
+        <h1>기업회원 비밀번호 찾기</h1>
         <br><br><br>
         <form name="email" action="/" method="post">
             <input type="text" class="input" id="email" name="email" placeholder="이메일" oninput = "checkEmail()" >
@@ -72,7 +72,7 @@
 					<div class="mail_check_input_box" id="mail_check_input_box_false">
 						<button type="button" class="button" onclick="modifyPwd();">비밀번호 변경하러 가기</button>
 					</div>
-			</div>
+			</div>		
         </form>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -104,7 +104,7 @@
 			}
 		}
 		
-		location.href = "/login/modifyPwdView.kh?memberEmail="+email.val();
+		location.href = "/login/modifyHostPwdView.kh?hostEmail="+email.val();
     }
 	
 	
@@ -112,8 +112,8 @@
         var emailValue = $('#email').val();
         
         $.ajax({
-        	url : "/member/checkMemberEmail.kh",
-            data: { "memberEmail" : emailValue },
+        	url : "/member/checkHostEmail.kh",
+            data: { "hostEmail" : emailValue },
             type: "get",
             success : function(result){
                 if(result == 0){ // 회원 정보에 존재하지 않는 이메일
@@ -152,8 +152,8 @@
 		
 		$.ajax({
 			type:"get",
-			url : "/findPwd",
-			data : {memberEmail : email},
+			url : "/findHostPwd",
+			data : {hostEmail : email},
 			success : function(data){ // 인증번호를 가져옴
     			alert("인증번호가 발송되었습니다. 메일함을 확인해주세요.");
 				checkBox.attr("disabled", false); // 인증번호 입력 가능

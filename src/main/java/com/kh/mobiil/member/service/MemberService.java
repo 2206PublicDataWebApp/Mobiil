@@ -22,7 +22,11 @@ public interface MemberService {
 	
 	public int removeMember(String memberEmail); // 회원 탈퇴
 	
-	public int checkDupEmail(String memberEmail); // 이메일 중복 체크
+	public int checkDupEmail(String memberEmail); // 회원가입 시 이메일 중복 체크(개인+기업)
+	
+	public int checkMemDupEmail(String memberEmail); // 비밀번호 변경 시 이메일 존재 체크(개인)
+
+	public int checkHostDupEmail(String hostEmail); // 비밀번호 변경 시 이메일 존재 체크(기업)
 
 	public int checkDupNick(String memberNick); // 닉네임 중복 체크
 	
@@ -54,13 +58,7 @@ public interface MemberService {
 	public int getDailyNewHost(int dayBefore); // 일일 호스트 가입자
 
 
+	public int modifyHostPwd(Host host);
 
-
-
-
-
-	
-
-	
 
 }

@@ -59,6 +59,14 @@
   		SELECT COUNT(*) FROM MEMBER_TBL WHERE memberNick = #{memberNick} AND mStatus = 'Y'
   	</select>
   	
+  	<select id="checkMemDupEmail" resultType="_int"> <!-- 비밀번호 변경 시 이메일 존재 체크(개인) -->
+  		SELECT COUNT(*) FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND mStatus = 'Y'
+  	</select>
+  	
+  	<select id="checkHostDupEmail" resultType="_int"> <!-- 비밀번호 변경 시 이메일 존재 체크(기업) -->
+  		SELECT COUNT(*) FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hStatus = 'Y'
+  	</select>
+  	
   	<select id="selectTotalCount" resultType="_int"> <!-- 결제내역 갯수-->
   		SELECT COUNT(*) FROM RESERVATION_TBL
   	</select>
@@ -81,6 +89,10 @@
 	UPDATE MEMBER_TBL SET memberPwd = #{memberPwd} WHERE memberEmail = #{memberEmail}
 	</update>
   	
+  	<update id="updateHostPwd">
+	UPDATE HOST_TBL SET hostPwd= #{hostPwd} WHERE hostEmail = #{hostEmail}
+	</update>
+	
   	<!-- 호스트 -->
   	<insert id="insertHost">
 		  INSERT INTO HOST_TBL VALUES(#{hostEmail}, #{hostPwd}, #{hostName}, #{hostPhone}, #{companyName}, #{companyRegNum}, 

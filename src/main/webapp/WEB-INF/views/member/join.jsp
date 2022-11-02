@@ -80,7 +80,6 @@
 				<br>
 				<span class="email_ok">사용 가능한 이메일이에요 :)</span>
 				<span class="email_already">이미 사용중인 이메일이에요 :(</span>
-				
 				<div class="form-inline mb-3">
 					<div class="mail_check_input_box" id="mail_check_input_box_false">
 						<input type="text" class="mail_check_input form-control col-8" disabled="disabled">
@@ -126,29 +125,29 @@
 
         var nameCheck = /^[가-힣]{2,}$/;
         if (!nameCheck.test(name.value)) {
-        alert("이름은 한글 2글자 이상 입력하세요.");
-        name.focus();
-        return false;
-        }
+	        alert("이름은 한글 2글자 이상 입력하세요.");
+	        name.focus();
+        	return false;
+   		}
 
         if(phone.value == "") {
-        alert("전화번호를 입력하세요.");
-        phone.focus();
-        return false;
-        }
+	        alert("전화번호를 입력하세요.");
+	        phone.focus();
+	        return false;
+       	}
         
         var phoneCheck = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
         if (!phoneCheck.test(phone.value)) {
             alert("올바른 형식의 전화번호를 입력하세요.");
             phone.focus();
             return false;
-            }
+        }
         
         var emailCheck = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
         if (!emailCheck.test(email.value)) {
-        alert("올바른 형식의 이메일을 입력하세요.");
-        email.focus();
-        return false;
+	        alert("올바른 형식의 이메일을 입력하세요.");
+	        email.focus();
+	        return false;
         }
 	 	
         if(pwd.value == "") {
@@ -159,9 +158,9 @@
         
         var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,20}$/;
 	 	if (!pwdCheck.test(pwd.value)) {
-	            alert("비밀번호는 영문자+숫자+특수문자 조합으로 6~20자리 사용해야 합니다.");
-	            pwd.focus();
-	            return false;
+            alert("비밀번호는 영문자+숫자+특수문자 조합으로 6~20자리 사용해야 합니다.");
+            pwd.focus();
+            return false;
 	    }
 
         if (pwd2.value !== pwd.value) {
@@ -173,9 +172,9 @@
 
         var nickCheck = /^[a-zA-Z0-9가-힣]{2,8}$/;
         if (!nickCheck.test(nick.value)) {
-        alert("닉네임은 특수문자를 제외한 2~8자리로 입력하세요.");
-        nick.focus();
-        return false;
+	        alert("닉네임은 특수문자를 제외한 2~8자리로 입력하세요.");
+	        nick.focus();
+	        return false;
         }
         
         var inputCode = $(".mail_check_input").val();
@@ -206,16 +205,18 @@
                     if(result == 0){ // 사용 가능 이메일
                         $('.email_ok').css("display","inline-block"); 
                         $('.email_already').css("display", "none");
+                        $('#mail_check_button').css("display", "inline-block");
                     } else { // 이미 존재하는 이메일
                         $('.email_already').css("display","inline-block");
                         $('.email_ok').css("display", "none");
+                        $('#mail_check_button').css("display", "none");
                     }
                 },
                 error:function(){
                     alert("에러입니다");
                 }
             });
-            };
+          };
             
             function checkNick(){
                 var nickValue = $('#nick').val();
@@ -237,21 +238,8 @@
                         alert("에러입니다");
                     }
                 });
-                };
-                
-                
-//                 $("#mail_check_button").on("click", function(){
-//                 	var emailCheck = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-//             		if($('#email').val().length == 0){
-//             			alert("이메일을 입력해주세요.");
-//             			$('#email').focus();
-//             			return false;
-//             		}else if(!emailCheck.test($('#email').val())){
-//             			alert("잘못된 이메일 형식입니다.");
-//             			$('#email').focus();
-//             			return false;
-//             		}
-//                 });
+              };
+
                 
                 
         		//인증번호 코드

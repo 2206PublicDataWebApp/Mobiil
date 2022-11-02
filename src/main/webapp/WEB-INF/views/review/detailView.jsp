@@ -71,7 +71,6 @@
 			<td id="cl" align="center" width="150">내용</td>
 			<td>${review.reviewContents}</td>
 		</tr>
-		<c:if test="${rList[0].reviewFileRename ne null}">
 		<tr>
 			<td id="cl" align="center" width="150">첨부파일</td>
 			<td>
@@ -80,7 +79,6 @@
 				<img alt="본문이미지3" src="/resources/reviewFiles/${rList[2].reviewFileRename }" width="200" height="200">
 			</td>
 		</tr>
-		</c:if>
 		<tr>
 			<td colspan="2" align="center">
 				<button onclick="" class="btn btn-info">공간 페이지의 리뷰 보러가기</button>

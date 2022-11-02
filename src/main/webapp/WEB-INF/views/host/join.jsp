@@ -61,6 +61,15 @@
                 <input type="email" class="input" id="email" name="hostEmail" oninput = "checkEmail()" >
                 <span class="email_ok">사용 가능한 이메일이에요 :)</span>
 				<span class="email_already">이미 사용중인 이메일이에요 :(</span>
+				<div class="form-inline mb-3">
+					<div class="mail_check_input_box" id="mail_check_input_box_false">
+						<input type="text" class="mail_check_input form-control col-8" disabled="disabled">
+						<button type="button" id="mail_check_button" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
+					</div>
+				</div>
+				<!-- 인증번호 확인 -->
+				<div class="auth-success" id="auth-success">인증번호가 일치합니다.</div>
+				<div class="auth-fail" id="auth-fail">인증번호가 일치하지 않습니다.</div>	
 				<br>
                 <label>비밀번호</label><input type="password" class="input" id="pwd" name="hostPwd" placeholder="문자/숫자/기호 포함, 6자~20자"><br>
                 <label>비밀번호 확인</label><input type="password" class="input" id="pwd2" name="hostPwd2" placeholder="문자/숫자/기호 포함, 6자~20자" ><br><br>
@@ -224,16 +233,74 @@
                   if(result == 0){ // 사용 가능 이메일
                       $('.email_ok').css("display","inline-block"); 
                       $('.email_already').css("display", "none");
+                      $('#mail_check_button').css("display", "inline-block");
                   } else { // 이미 존재하는 이메일
                       $('.email_already').css("display","inline-block");
                       $('.email_ok').css("display", "none");
+                      $('#mail_check_button').css("display", "none");
                   }
               },
               error:function(){
                   alert("에러입니다");
               }
           });
-          };
+        };
+          
+      //인증번호 코드
+		
+		$("#auth-success").hide();
+		$("#auth-fail").hide();
+
+		var checkCode = false;
+
+		//인증번호를 저장할 변수
+		var code = "";
+		
+		//인증번호 이메일 전송
+		$("#mail_check_button").on("click", function(e){
+			e.preventDefault();
+			var email = $("#email").val();
+			var checkBox = $(".mail_check_input");
+			
+			$.ajax({
+				type:"get",
+				url : "/hostMailCheck",
+				data : {hostEmail : email},
+				success : function(data){ // 인증번호를 가져옴
+        			alert("인증번호가 발송되었습니다. 메일함을 확인해주세요.");
+					checkBox.attr("disabled", false); // 인증번호 입력 가능
+					checkBox.val(''); // 기존에 값이 있었으면 지워줌
+					$("#auth-success").hide();
+					$("#auth-fail").hide();
+					checkCode = false;
+					code = data; // 인증번호를 변수에 저장
+				},
+				error : function(data) {
+        			alert("인증번호 발송 실패");
+				}
+			});
+		});
+		
+		//인증코드 입력 시 동일성 확인
+		$(".mail_check_input").keyup(function() {
+			var inputCode = $(".mail_check_input").val();
+			if (inputCode != "" || code != "") {
+				if (inputCode == code) {
+					$("#auth-success").show();
+					$("#auth-success").css('color','green');
+					$("#auth-fail").hide();
+					$(".mail_check_input").attr("disabled", true); //인증번호 입력 멈춤
+					checkCode = true;
+				} else {
+					$("#auth-success").hide();
+					$("#auth-fail").show();
+					$("#auth-fail").css('color','red');
+
+					checkCode = false;
+				}
+			}
+		});
+          
       </script>
       
   <br><br><br><br><br><br>

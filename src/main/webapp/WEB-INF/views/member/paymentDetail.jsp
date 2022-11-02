@@ -56,22 +56,18 @@
 				<th width="150" class="th" rowspan="5">예약 정보</th>
 				<td width="150" class="td">공간명</td>
 				<td width="300"><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>${reservation.spaceName}</b></a></td>
-				<td width="100">
+				<td width="150">
 					<c:if test="${reservation.reviewStatus eq 'Y'}">
 						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&page=${page}';" class="btn btn-info">내 리뷰 조회</button>
 					</c:if> 
 					<c:if test="${reservation.reviewStatus eq 'N'}">
 						<button type="button" onclick="location.href='/review/writeView.kh?reservationNo=${reservation.reservationNo}&page=${page}';" class="btn btn-info">리뷰 작성</button>
 					</c:if></td>
-				<td width="100">
-					<button type="button" onclick="" class="btn btn-danger">예약 취소</button>
-				</td>
 			</tr>
 			<tr>
 				<!-- <td></td> -->
 				<td class="td">날짜</td>
 				<td>${reservation.reservationDate}</td>
-				<td></td>
 				<td></td>
 			</tr>
 			<tr>
@@ -79,13 +75,11 @@
 				<td class="td">시간</td>
 				<td>${reservation.revStart} ~ ${reservation.revEnd}</td>
 				<td></td>
-				<td></td>
 			</tr>
 			<tr>
 				<!-- <td></td> -->
 				<td class="td">사용료</td>
 				<td>${reservation.price}</td>
-				<td></td>
 				<td></td>
 			</tr>
 			<tr id="border">
@@ -93,13 +87,11 @@
 				<td class="td">예약번호</td>
 				<td>${reservation.reservationNo}</td>
 				<td></td>
-				<td></td>
 			</tr>
 			<tr>
 				<th class="th" rowspan="2">예약 정보</th>
 				<td class="td">이름</td>
 				<td>${reservation.memberName}</td>
-				<td></td>
 				<td></td>
 			</tr>
 			<tr id="border">
@@ -107,12 +99,10 @@
 				<td class="td">연락처</td>
 				<td>${reservation.memberPhone}</td>
 				<td></td>
-				<td></td>
 			</tr>
 			<tr>
 				<th class="th" rowspan="3">결제 정보</th>
 				<td class="td">결제 방법</td>
-				<td></td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -121,16 +111,16 @@
 				<td class="td">결제 금액</td>
 				<td>${reservation.price}</td>
 				<td></td>
-				<td></td>
 			</tr>
 			<tr>
 				<!-- <td></td> -->
 				<td class="td">결제 일시</td>
 				<td>${reservation.paymentDate}</td>
 				<td></td>
-				<td></td>
 			</tr>
 		</table>
+		<br>
+		<span><b>* 예약 취소는 호스트에게 문의해주세요. *</b></span>
 <br><br><br>
 		<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

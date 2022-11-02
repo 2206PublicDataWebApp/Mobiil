@@ -45,6 +45,13 @@ public interface MemberStore {
 
 	// 비밀번호 찾기 후 변경
 	public int updatePwd(SqlSession session, Member member);
+	
+	public int checkMemDupEmail(SqlSession session, String memberEmail); // 비밀번호 변경 시 이메일 존재 체크(개인)
+
+	public int checkHostDupEmail(SqlSession session, String hostEmail); // 비밀번호 변경 시 이메일 존재 체크(기업)
+
+	public int updateHostPwd(SqlSession session, Host host);
+
 
 	////어드민 대시보드
 	public int selectMemberCount(SqlSessionTemplate session);

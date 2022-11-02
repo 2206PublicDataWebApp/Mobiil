@@ -110,6 +110,24 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.updatePwd(session, member);
 		return result;
 	}
+	@Override
+	public int checkMemDupEmail(String memberEmail) {
+		int result = mStore.checkMemDupEmail(session, memberEmail);
+		return result;
+	}
+
+	@Override
+	public int checkHostDupEmail(String hostEmail) {
+		int result = mStore.checkHostDupEmail(session, hostEmail);
+		return result;
+	}
+
+	@Override
+	public int modifyHostPwd(Host host) {
+		int result = mStore.updateHostPwd(session, host);
+		return result;
+	}
+
 
 	/////////////어드민 대시보드
 	@Override
