@@ -18,6 +18,11 @@ import com.kh.mobiil.mail.domain.MailInfo;
 @Controller
 public class MailController {
 	
+	/**메일보내기
+	 * 
+	 * @param info
+	 * @return
+	 */
 	public int mailSender(MailInfo info) {
         
         Properties p = System.getProperties();

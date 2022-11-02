@@ -46,17 +46,13 @@ float: left;}
 <script type="text/javascript">
 var geocoder = new kakao.maps.services.Geocoder(); // 지오코더 서비스 
 
-
-
-
 // 지도 기본
 var container = document.getElementById('map'); //지도를 담을 영역의 DOM 
 var options = { //지도를 생성할 때 필요한 기본 옵션
-center: new kakao.maps.LatLng(37.566381 , 126.977717), //지도의 중심좌표.
-level: 9 //지도의 레벨(확대, 축소 정도)
+	center: new kakao.maps.LatLng(37.566381 , 126.977717), //지도의 중심좌표.
+	level: 9 //지도의 레벨(확대, 축소 정도)
 };
 var map = new kakao.maps.Map(container, options); //컨테이너에 옵션을 담은 맵 생성
-var positionYX;
 
 
 // 인포윈도우(주소 + 상호 표기 + 해당상세페이지 연결)
@@ -67,28 +63,32 @@ function printAllSpace() {
 		type:"get",
 		success: function(data) { // data는 공간리스트
 			for(i = 0; i < data.length; i++){ // 리스트 돌면서 콜백으로 위지지정, 생성, 마커꽂음
-				if(data[i].spaceStatus =='Y'){
-					var infoContents = '<div style="padding:5px;">Y일때 '+data[i].spaceNo+'<br><a href="#" style="color:blue" target="_blank">길찾기</a></div>'
-				}else{
-					var infoContents= '<div style="padding:5px;">N일때 <br><a href="#" style="color:blue" target="_blank">길찾기</a></div>'
-				}
-				geocoder.addressSearch(data[i].address, function(result, status) { // data는 공간리스트
-					console.log(infoContents)
-				    if (status === kakao.maps.services.Status.OK) {
-				     	var markerPosition = new kakao.maps.LatLng(result[0].y,result[0].x); // 마커 위치 지정
-				     	var marker = new kakao.maps.Marker({ 
-				     	    position: markerPosition // 마커 생성
-				    	});
-				     	var infowindow = new kakao.maps.InfoWindow({
-				     	    map: map, // 인포윈도우가 표시될 지도
-				     	    position : markerPosition, 
-				     	    content : infoContents
-				     	});
-				     	marker.setMap(map); // 마커 꽂기
-				     	infowindow.open(map, marker); // 인포윈도 꽂기
-				    }
-				}); 
+				let infoContents = "";
+				var markerPosition = "";
+				var marker = "";
+				var approval = data[i].approval;
 				
+				if(approval == 'Y'){
+					infoContents = '<div style="padding:5px; text-align:center;"><a href="/space/spaceDetail.kh?spaceNo='+data[i].spaceNo+'" style="color:blue;text-align:center" target="_blank">'+data[i].spaceName+'</a></div>'
+				}else if(approval == 'N'){
+					infoContents = '<div style="padding:5px;"><span style="color: red;">'+data[i].spaceName+'</span></div>'
+				}
+				
+				geocoder.addressSearch(data[i].address, function(result, status) { // data는 공간리스트
+				    if (status === kakao.maps.services.Status.OK) {
+				    	markerPosition = new kakao.maps.LatLng(result[0].y,result[0].x); // 마커 위치 지정
+				     	marker = new kakao.maps.Marker({ 
+					     	map : map,
+					     	position: markerPosition // 마커 생성
+				     	});
+					}; 
+					var infowindow = new kakao.maps.InfoWindow({
+			     		map : map,
+				     	position: markerPosition,
+			    		});
+			     		infowindow.open(map, marker); // 인포윈도 꽂기
+						infowindow.setContent(infoContents);
+					})   
 				}
 			},
 		error: function() {
@@ -148,7 +148,7 @@ function printAllSpace() {
 						  responsive: false,
 					      maintainAspectRatio: true, //true 하게 되면 캔버스 width,height에 따라 리사이징된다.
 					      title: {
-					            text: '공가 지역 현황',
+					            text: '공간 지역 현황',
 					    	 	display: true,
 					    		fontColor: 'black',
 					    		fontSize: 20,
@@ -343,7 +343,6 @@ function printAllSpace() {
 			url: "/admin/dashboard/partner.kh",
 			type:"get",
 			success: function(partner) {
-				console.log(partner);
 				const partnerChart = new Chart(pChart, {
 					type: 'pie',
 					data:{

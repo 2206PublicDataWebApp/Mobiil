@@ -1,6 +1,6 @@
 package com.kh.mobiil.chat.domain;
 
-public class ChatSearchResult {
+public class ChatSearchResult { // 채팅중 검색결과 담는 vo
 	
 	private int spaceNo;
 	private String spaceName;

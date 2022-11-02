@@ -33,7 +33,7 @@ public class BannerServiceImpl implements BannerService{
 
 	@Override
 	public int renewBanner(Banner banner) {
-		int result = bStore.updateBanner(session, banner);
+		int result = bStore.renewBanner(session, banner);
 		return result;
 	}
 
@@ -48,6 +48,19 @@ public class BannerServiceImpl implements BannerService{
 		Banner oneBanner = bStore.selectOneBanner(session, i);
 		return oneBanner;
 	}
+
+	@Override
+	public int updateContents(Banner banner) {
+		int result = bStore.updateContents(session, banner);
+		return result;
+	}
+
+	@Override
+	public int updateImage(Banner banner) {
+		int result = bStore.updateImage(session, banner);
+		return result;
+	}
+
 
 	
 	

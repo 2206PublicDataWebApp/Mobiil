@@ -7,6 +7,7 @@ public class Banner {
 	private String bannerFileName;
 	private String bannerRename;
 	private String bannerMsg;
+	private String bannerLink;
 	private String writer;
 	public int getBannerNo() {
 		return bannerNo;
@@ -38,6 +39,12 @@ public class Banner {
 	public void setBannerMsg(String bannerMsg) {
 		this.bannerMsg = bannerMsg;
 	}
+	public String getBannerLink() {
+		return bannerLink;
+	}
+	public void setBannerLink(String bannerLink) {
+		this.bannerLink = bannerLink;
+	}
 	public String getWriter() {
 		return writer;
 	}
@@ -47,8 +54,10 @@ public class Banner {
 	@Override
 	public String toString() {
 		return "Banner [bannerNo=" + bannerNo + ", bannerPath=" + bannerPath + ", bannerFileName=" + bannerFileName
-				+ ", bannerRename=" + bannerRename + ", bannerMsg=" + bannerMsg + ", writer=" + writer + "]";
+				+ ", bannerRename=" + bannerRename + ", bannerMsg=" + bannerMsg + ", bannerLink=" + bannerLink
+				+ ", writer=" + writer + "]";
 	}
+	
 	
 	 
 	 
