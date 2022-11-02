@@ -44,10 +44,6 @@
   		<result property="revStart" 				column="REV_START"/>
   		<result property="revEnd" 					column="REV_END"/>
   	</resultMap>
-  	<resultMap type="Heart" 					id="HeartResultMap">
-  		<result property="spaceNo" 					column="SPACE_NO"/>
-  		<result property="memberEmail" 				column="MEMBER_EMAIL"/>
-  	</resultMap>
   	<resultMap type="Review" id="ReviewResultMap">
 		<id property="reviewNo" column="REVIEW_NO" />
 		<result property="spaceNo" column="SPACE_NO" />
@@ -69,6 +65,13 @@
 		<result property="createDate" column="CREATE_DATE"/>
 		<result property="updateDate" column="UPDATE_DATE"/>
 	</resultMap>
+	<resultMap type="ReviewImg" id="ReviewImgResultMap">
+		<id property="reviewImgNo" column="REVIEW_IMG_NO" />
+		<result property="reviewNo" column="REVIEW_NO" />
+		<result property="reviewFileName" column="REVIEW_FILENAME" />
+		<result property="reviewFileRename" column="REVIEW_FILERENAME" />
+		<result property="reviewFilePath" column="REVIEW_FILEPATH" />
+	</resultMap>
   	<insert id="insertReservation">
   		INSERT INTO RESERVATION_TBL
   		VALUES(#{reservationNo},#{memberEmail},#{hostEmail},#{spaceNo},#{spaceName},#{spaceAddress},#{price},#{reservationDate},#{memberName},#{memberPhone},#{paymentDate},DEFAULT,DEFAULT,#{revStart},#{revEnd})
@@ -87,37 +90,133 @@
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM SPACE_TBL
 		<where>
-			<if test="searchValue.toString() != ''">
-				SPACE_NAME LIKE '%'||#{searchValue}||'%'
-				OR SPACE_AREA LIKE '%'||#{searchValue}||'%'
+			<if test="searchArea.toString() != '서울'">
+				<if test="searchValue.toString() !=''">
+					SPACE_NAME LIKE '%'||#{searchValue}||'%'
+					AND SPACE_AREA = #{searchArea}				
+				</if>
 			</if>
-			<if test="area.toString() == '전체'">
-				SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
+			<if test="searchArea.toString() == '서울'">
+				<if test="searchValue.toString() !=''">
+					SPACE_NAME LIKE '%'||#{searchValue}||'%'
+				</if>
 			</if>
-			<if test="area.toString() == '강동'">
-				SPACE_AREA LIKE '강동'
+			<if test="searchArea.toString() == '서울'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
+				</if>
 			</if>
-			<if test="area.toString() == '강서'">
-				SPACE_AREA LIKE '강서'
+			<if test="searchArea.toString() == '강동'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강동'
+				</if>
 			</if>
-			<if test="area.toString() == '강남'">
-				SPACE_AREA LIKE '강남'
+			<if test="searchArea.toString() == '강서'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강서'
+				</if>
 			</if>
-			<if test="area.toString() == '강북'">
-				SPACE_AREA LIKE '강북'
+			<if test="searchArea.toString() == '강남'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강남'
+				</if>
+			</if>
+			<if test="searchArea.toString() == '강북'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강북'
+				</if>
+			</if>
+		</where>
+	</select>
+	<select id="selectAllByValue" resultMap="SpaceResultMap">
+		SELECT * FROM SPACE_TBL
+		<where>
+			<if test="searchArea.toString() != '서울'">
+				<if test="searchValue.toString() !=''">
+					SPACE_NAME LIKE '%'||#{searchValue}||'%'
+					AND SPACE_AREA = #{searchArea}				
+				</if>
+			</if>
+			<if test="searchArea.toString() == '서울'">
+				<if test="searchValue.toString() !=''">
+					SPACE_NAME LIKE '%'||#{searchValue}||'%'
+				</if>
+			</if>
+			<if test="searchArea.toString() == '서울'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
+				</if>
+			</if>
+			<if test="searchArea.toString() == '강동'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강동'
+				</if>
+			</if>
+			<if test="searchArea.toString() == '강서'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강서'
+				</if>
+			</if>
+			<if test="searchArea.toString() == '강남'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강남'
+				</if>
+			</if>
+			<if test="searchArea.toString() == '강북'">
+				<if test="searchValue.toString() ==''">
+					SPACE_AREA LIKE '강북'
+				</if>
 			</if>
 		</where>
 	</select>
 	<select id="selectPriceCount"  resultType="_int">
-		<![CDATA[SELECT COUNT(*) FROM SPACE_TBL
-		WHERE #{minNum} <= TO_NUMBER(SPACE_PRICE) AND TO_NUMBER(SPACE_PRICE) <= #{maxNum}]]>
+		SELECT COUNT(*) FROM SPACE_TBL
+		WHERE <![CDATA[ #{minNum} <= TO_NUMBER(SPACE_PRICE) AND TO_NUMBER(SPACE_PRICE) <= #{maxNum}]]>
+		<if test="minNum == 0">
+			ORDER BY TO_NUMBER(SPACE_PRICE) DESC
+		</if>
+		<if test="maxNum == 999999999">
+			ORDER BY TO_NUMBER(SPACE_PRICE) ASC
+		</if>
 	</select>
+	<select id="selectByArea" resultMap="SpaceResultMap">
+		SELECT * FROM SPACE_TBL
+		<where>
+			<if test="searchArea.toString() != '서울'">
+					SPACE_AREA = #{searchArea}
+			</if>
+			<if test="searchArea.toString() == '서울'">
+				SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
+			</if>
+		</where>
+	</select>
+	
 	<select id="selectAllSpace" resultMap="SpaceResultMap">
-		SELECT SPACE_TBL.SPACE_NO, SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_FILERENAME
-		FROM SPACE_TBL LEFT OUTER JOIN SPACE_IMG
-		ON SPACE_TBL.SPACE_NO = SPACE_IMG.SPACE_NO 
-		<!-- WHERE SPACE_STATUS = 'Y' -->
-		GROUP BY SPACE_TBL.SPACE_NO, SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_FILERENAME
+		SELECT ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, MAX(SI.SPACE_FILERENAME)
+		FROM SPACE_TBL ST
+        LEFT OUTER JOIN SPACE_IMG SI
+		ON ST.SPACE_NO = SI.SPACE_NO
+        WHERE ST.SPACE_STATUS = 'Y' 
+		GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, APPROVAL_DATE
+		ORDER BY APPROVAL_DATE DESC
+	</select>
+	<select id="heartSortDesc" resultMap="SpaceResultMap">
+		SELECT ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, MAX(SI.SPACE_FILERENAME)
+		FROM SPACE_TBL ST
+        LEFT OUTER JOIN SPACE_IMG SI
+		ON ST.SPACE_NO = SI.SPACE_NO
+        WHERE ST.SPACE_STATUS = 'Y'
+        GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE
+        ORDER BY (SELECT COUNT(*) FROM HEART_TBL HT WHERE ST.SPACE_NO = HT.SPACE_NO GROUP BY HT.SPACE_NO) DESC NULLS LAST
+	</select>
+	<select id="ReviewSortDesc" resultMap="SpaceResultMap">
+		SELECT ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, MAX(SI.SPACE_FILERENAME)
+		FROM SPACE_TBL ST
+        LEFT OUTER JOIN SPACE_IMG SI
+		ON ST.SPACE_NO = SI.SPACE_NO
+        WHERE ST.SPACE_STATUS = 'Y'
+        GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE
+        ORDER BY (SELECT COUNT(*) FROM REVIEW_TBL RT WHERE ST.SPACE_NO = RT.SPACE_NO GROUP BY RT.SPACE_NO) DESC NULLS LAST
 	</select>
 	<select id="selectImg" resultMap="SpaceImgResultMap">
 		SELECT * FROM SPACE_IMG WHERE SPACE_NO = #{spaceNo}
@@ -125,39 +224,18 @@
 	<select id="selectOneByNo" resultMap="SpaceResultMap">
 		SELECT * FROM SPACE_TBL WHERE SPACE_NO = #{spaceNo}
 	</select>
-	<select id="selectAllByValue" resultMap="SpaceResultMap">
-		SELECT * FROM SPACE_TBL
-		<where>
-			<if test="searchValue.toString() != ''">
-				SPACE_NAME LIKE '%'||#{searchValue}||'%'
-				OR SPACE_AREA LIKE '%'||#{searchValue}||'%'
-			</if>
-		</where>
-	</select>
+	
 	<select id="selectByPrice" resultMap="SpaceResultMap">
-		<![CDATA[SELECT * FROM SPACE_TBL
-		WHERE #{minNum} <= TO_NUMBER(SPACE_PRICE) AND TO_NUMBER(SPACE_PRICE) <= #{maxNum}]]>
-	</select>
-	<select id="selectByArea" resultMap="SpaceResultMap">
 		SELECT * FROM SPACE_TBL
-		<where>
-			<if test="area.toString() == '전체'">
-				SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
-			</if>
-			<if test="area.toString() == '강동'">
-				SPACE_AREA LIKE '강동'
-			</if>
-			<if test="area.toString() == '강서'">
-				SPACE_AREA LIKE '강서'
-			</if>
-			<if test="area.toString() == '강남'">
-				SPACE_AREA LIKE '강남'
-			</if>
-			<if test="area.toString() == '강북'">
-				SPACE_AREA LIKE '강북'
-			</if>
-		</where>
+		WHERE <![CDATA[ #{minNum} <= TO_NUMBER(SPACE_PRICE) AND TO_NUMBER(SPACE_PRICE) <= #{maxNum}]]>
+		<if test="minNum == 0">
+			ORDER BY TO_NUMBER(SPACE_PRICE) DESC
+		</if>
+		<if test="maxNum == 999999999">
+			ORDER BY TO_NUMBER(SPACE_PRICE) ASC
+		</if>
 	</select>
+	
 	<select id="selectResevation" resultMap="ReservationResultMap">
 		SELECT * FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo}
 	</select>
@@ -179,9 +257,11 @@
 	</select>
 	<select id="selectAreaCount" resultType="_int">
 		SELECT count(*) AS COUNT FROM SPACE_TBL
-		WHERE SPACE_AREA LIKE #{area}
+		WHERE SPACE_AREA LIKE #{searchArea}
 	</select>
-	
+	<select id="selectReviewImg" resultMap="ReviewImgResultMap">
+		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
+	</select>
 	<select id="selectAllSpaceForMap" resultMap="SpaceResultMap">
 		SELECT SPACE_NO, SPACE_NAME, SPACE_ADDRESS, SPACE_STATUS, APPROVAL FROM SPACE_TBL
 		ORDER BY 1

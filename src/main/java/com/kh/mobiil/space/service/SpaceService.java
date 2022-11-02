@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import com.kh.mobiil.review.domain.Review;
+import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
@@ -17,7 +18,7 @@ public interface SpaceService {
 	int checkTime(String start, String end, String reservDate);
 
 	// 리스트 게시물 전체 개수
-	int getTotalCount(String area, String searchValue);
+	int getTotalCount(String searchArea, String searchValue);
 	
 	int getPriceCount(Integer minNum, Integer maxNum);
 
@@ -27,16 +28,16 @@ public interface SpaceService {
 
 	List<SpaceImg> printImg(Integer spaceNo);
 
-	List<Space> printAllByValue(String searchValue, RowBounds rowBounds);
+	List<Space> printAllByValue(String searchArea, String searchValue, RowBounds rowBounds);
 
-	List<Space> printByArea(String area, RowBounds rowBounds);
+	List<Space> printByArea(String searchArea, RowBounds rowBounds);
 
 	List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds);
 
 	int registerReservation(Reservation rsv);
 
 	// 지역 카운트
-	int getAreaCount(String area);
+	int getAreaCount(String searchArea);
 
 	// 모든 공간 리스트
 	List<Space> printAllSpace();
@@ -56,6 +57,12 @@ public interface SpaceService {
 	int insertReply(HostReply hostReply);
 
 	List<HostReply> printReply(int reviewNo);
+
+	List<ReviewImg> printReviewImg(Integer reviewNo);
+
+	List<Space> printHeartDesc(RowBounds rowBounds);
+
+	List<Space> printRivewDesc(RowBounds rowBounds);
 
 
 }

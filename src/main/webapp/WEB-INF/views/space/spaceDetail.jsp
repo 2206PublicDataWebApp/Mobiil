@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mobiil</title>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=163c926f2747f3a404b998b190a36731&libraries=services"></script>
 
@@ -57,23 +56,24 @@ function openChatRoom(createUser, withUser) {
 </script>
 
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
-<div>
+<div class="container">
+
 <h1>${space.spaceName }</h1>
-<br>
-<img class='heartImg' style='cursor:pointer;'/>
-</div>
-<div>
+<br><br>
+<div class='spaceComent' style='width:600px;display:inline-block;align:left;'>
 ${space.spaceComent }
 ${iList[0].spaceFileRename }
 ${iList[1].spaceFileRename }
 </div>
-${space.address}
-<div id="map" style="width:450px;height:300px;"></div>
 
-<br><br><br><br><br>
+
+<div class='reservDiv' style='display:inline-block;text-align:right;float:right;'>
+<div style='text-align:right; '><img class='heartImg' style='cursor:pointer;'/></div>
+<br>
 <div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
-<br><br><br><br><br>
-<select id="startTime" onchange="check();">
+<br>
+<div class='time' style='text-align:center;'>
+<select id="startTime" onchange="check();" style='margin-right:10px;' class='commonSelect'>
 <option value="시작">시작</option>
 <option value="9">9시</option>
 <option value="10">10시</option>
@@ -91,7 +91,7 @@ ${space.address}
 <option value="22">22시</option>
 <option value="23">23시</option>
 </select>
-<select id="endTime" onchange="check();">
+<select id="endTime" onchange="check();" style='margin-left:10px;' class='commonSelect'>
 <option value="끝">끝</option>
 <option value="10">10시</option>
 <option value="11">11시</option>
@@ -109,20 +109,27 @@ ${space.address}
 <option value="23">23시</option>
 <option value="24">24시</option>
 </select>
-
-<span class='sum'>
-
-</span>
+<br>
+<br>
+<span class='sum' style='font-weight:bold;font-size:20px;text-align:center;'></span>
+<br>
+<br>
+</div>
+<div class='payAndchat' style='text-align:center;'>
 	<c:if test='${!empty loginUser.memberNick }'>
-		<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${memberNick }');" value='채팅하기'>
+		<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${memberNick }');" value='채팅하기' style='margin-right:5px;' class='btn'>
 	</c:if>
 	<c:if test='${!empty loginHost.hostEmail }'>
-		<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅하기'>
+		<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅하기' style='margin-right:5px;' class='btn'>
 	</c:if>
-<input type="button" value="결제하기" onclick="payment()">
+<input type="button" value="결제하기" onclick="payment()" style='margin-left:5px;' class='btn'>
+</div>
+</div>
 
-<br><br><br>
-
+<br><br><br><br><br><br>
+<span>${space.address}</span>
+<div id="map" style="width:450px;height:300px;"></div>
+<br><br><br><br><br><br>
 
 <table align="center" width="500px" border="1" id="rtb">
 	<thead>
@@ -138,7 +145,7 @@ ${space.address}
 
 ${loginHost.hostEmail }
 ${hostEmail }
-
+</div>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
 
@@ -339,6 +346,16 @@ ${hostEmail }
 						$tr.append($rWriter);
 						$tr.append($rUpdateDate);
 						$tr.after($rContent);
+						$.ajax({
+							url:'/space/imgList.kh',
+							type:'get',
+							data:{"reviewNo":rList[i].reviewNo},
+							success:function(riList){
+								$rContent.append($("<td>").append("<img src='#' alt='reviewImg'>"));
+							},
+							error:function(){
+							}
+						})
 						if('${loginHost.hostEmail }' == '${hostEmail }'){
 							$rContent.after($button);
 						}

@@ -24,6 +24,7 @@ import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.host.service.HostService;
 import com.kh.mobiil.partner.domain.Page;
 import com.kh.mobiil.review.domain.Review;
+import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
@@ -64,6 +65,52 @@ public class SpaceController {
 		}
 		mv.setViewName("space/spaceList");
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/space/heartDesc.kh", method=RequestMethod.GET)
+	public ModelAndView heartSortView(
+			ModelAndView mv
+			,@RequestParam(value="page", required=false) Integer page) {
+		// 페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = sService.getTotalCount("","");
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			
+			List<Space> sList = sService.printHeartDesc(rowBounds);
+			if(!sList.isEmpty()) {
+				mv.addObject("urlVal", "heartDesc");
+				mv.addObject("paging", paging);
+				mv.addObject("sList", sList);
+			}
+			mv.setViewName("space/spaceList");
+			return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/space/reviewDesc.kh", method=RequestMethod.GET)
+	public ModelAndView reviewSortView(
+			ModelAndView mv
+			,@RequestParam(value="page", required=false) Integer page) {
+		// 페이징
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = sService.getTotalCount("","");
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			
+			List<Space> sList = sService.printRivewDesc(rowBounds);
+			if(!sList.isEmpty()) {
+				mv.addObject("urlVal", "heartDesc");
+				mv.addObject("paging", paging);
+				mv.addObject("sList", sList);
+			}
+			mv.setViewName("space/spaceList");
+			return mv;
 	}
 	
 	// 공간 상세 조회
@@ -132,24 +179,26 @@ public class SpaceController {
 	@RequestMapping(value="/space/spaceSearch.kh", method=RequestMethod.GET)
 	public ModelAndView spaceSearchList(
 			ModelAndView mv
+			, @RequestParam("searchArea") String searchArea
 			, @RequestParam("searchValue") String searchValue
 			, @RequestParam(value="page", required=false) Integer page) {
 		try {
 			// 페이징
 			int currentPage = (page != null) ? page : 1;
-			int totalCount = sService.getTotalCount("",searchValue);
+			int totalCount = sService.getTotalCount(searchArea,searchValue);
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
 			
-			List<Space> sList = sService.printAllByValue(searchValue, rowBounds);
+			List<Space> sList = sService.printAllByValue(searchArea, searchValue, rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("sList", sList);
 			}else {
 				mv.addObject("sList", null);
 			}
 			mv.addObject("urlVal", "spaceSearch");
+			mv.addObject("searchArea", searchArea);
 			mv.addObject("searchValue", searchValue);
 			mv.addObject("paging", paging);
 			mv.setViewName("space/spaceList");
@@ -163,25 +212,25 @@ public class SpaceController {
 	@RequestMapping(value="/space/spaceArea.kh", method=RequestMethod.GET)
 	public ModelAndView spaceAreaList(
 			ModelAndView mv
-			, @RequestParam("area") String area
+			, @RequestParam("searchArea") String searchArea
 			, @RequestParam(value="page", required=false) Integer page) {
 		try {
 			// 페이징
 			int currentPage = (page != null) ? page : 1;
-			int totalCount = sService.getTotalCount(area,"");
+			int totalCount = sService.getTotalCount(searchArea,"");
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
 			
-			List<Space> sList = sService.printByArea(area, rowBounds);
+			List<Space> sList = sService.printByArea(searchArea, rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("sList", sList);
 			}else {
 				mv.addObject("sList", null);
 			}
 			mv.addObject("urlVal", "spaceArea");
-			mv.addObject("area", area);
+			mv.addObject("searchArea", searchArea);
 			mv.addObject("paging", paging);
 			mv.setViewName("space/spaceList");
 		} catch (Exception e) {
@@ -194,10 +243,16 @@ public class SpaceController {
 	@RequestMapping(value="/space/spacePrice.kh", method=RequestMethod.GET)
 	public ModelAndView spacePriceList(
 			ModelAndView mv
-			, @RequestParam("minNum") Integer minNum
-			, @RequestParam("maxNum") Integer maxNum
+			, @RequestParam(value="minNum", required=false) Integer minNum
+			, @RequestParam(value="maxNum", required=false) Integer maxNum
 			, @RequestParam(value="page", required=false) Integer page) {
 		try {
+			if(minNum == null) {
+				minNum = 0;
+			}
+			if(maxNum == null) {
+				maxNum = 999999999;
+			}
 			// 페이징
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = sService.getPriceCount(minNum,maxNum);
@@ -222,6 +277,29 @@ public class SpaceController {
 		}
 		return mv;
 	}
+	
+//	@RequestMapping(value="/space/heartDesc.kh", method=RequestMethod.GET)
+//	public ModelAndView heartDescView(
+//			ModelAndView mv
+//			,@RequestParam(value="page", required=false) Integer page) {
+//		// 페이징
+//		int currentPage = (page != null) ? page : 1;
+//		int totalCount = sService.getTotalCount("","");
+//		int naviLimit = 5;
+//		int boardLimit = 9;
+//		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+//		RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+//		
+//		List<Space> sList = sService.printSpace(rowBounds);
+//		if(!sList.isEmpty()) {
+//			mv.addObject("urlVal", "spaceList");
+//			mv.addObject("paging", paging);
+//			mv.addObject("sList", sList);
+//		}
+//		mv.setViewName("space/spaceList");
+//		return mv;
+//	}
+	
 	@RequestMapping(value="/space/payment.kh", method=RequestMethod.GET)
 	public ModelAndView payment( ModelAndView mv
 			, @RequestParam(value="sDate") Date sDate
@@ -344,6 +422,13 @@ public class SpaceController {
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/space/imgList.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public String reviewImgList(@RequestParam(value="reviewNo") Integer reviewNo) {
+		List<ReviewImg> riList = sService.printReviewImg(reviewNo);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		return gson.toJson(riList);
+	}
 	@ResponseBody
 	@RequestMapping(value="/space/replyList.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public String spaceReplyList(@RequestParam(value="reviewNo") Integer reviewNo) {
