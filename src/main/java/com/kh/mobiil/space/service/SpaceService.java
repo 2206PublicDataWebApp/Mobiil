@@ -55,5 +55,7 @@ public interface SpaceService {
 
 	int insertReply(HostReply hostReply);
 
+	List<HostReply> printReply(int reviewNo);
+
 
 }

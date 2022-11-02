@@ -145,9 +145,11 @@ public class SpaceStoreLogic implements SpaceStore{
 		return result;
 	}
 
-
-
-	
+	@Override
+	public List<HostReply> selectReply(SqlSessionTemplate session, int reviewNo) {
+		List<HostReply> hrList = session.selectList("SpaceMapper.selectReply", reviewNo);
+		return hrList;
+	}
 
 	
 

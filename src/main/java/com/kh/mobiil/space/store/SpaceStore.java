@@ -34,5 +34,6 @@ public interface SpaceStore {
 	Reservation selectRsv(SqlSessionTemplate session, String reservationNo);
 	List<Review> selectReview(SqlSessionTemplate session, Integer spaceNo);
 	int insertReply(SqlSessionTemplate session, HostReply hostReply);
+	List<HostReply> selectReply(SqlSessionTemplate session, int reviewNo);
 	
 }

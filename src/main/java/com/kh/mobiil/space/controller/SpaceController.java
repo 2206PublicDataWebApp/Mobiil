@@ -322,9 +322,8 @@ public class SpaceController {
 	@RequestMapping(value="/space/reviewList.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public String spaceReviewList(Integer spaceNo) {
 		List<Review> rList = sService.printReview(spaceNo);
-		
 		if(!rList.isEmpty()) {
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); // 데이터포맷 지정
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			return gson.toJson(rList);
 		}
 		return null;
@@ -343,8 +342,19 @@ public class SpaceController {
 		hostReply.setReviewNo(reviewNo);
 		int result = sService.insertReply(hostReply);
 		return result;
-		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/space/replyList.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
+	public String spaceReplyList(@RequestParam(value="reviewNo") Integer reviewNo) {
+		List<HostReply> hrList = sService.printReply(reviewNo);
+		if(!hrList.isEmpty()) {
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			return gson.toJson(hrList);
+		}
+		return null;
+	}
+	
 	// 예약날짜 및 시간 유효성 체크
 	@ResponseBody
 	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)

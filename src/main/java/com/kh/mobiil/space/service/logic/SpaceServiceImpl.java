@@ -133,8 +133,12 @@ public class SpaceServiceImpl implements SpaceService{
 		return result;
 	}
 
+	@Override
+	public List<HostReply> printReply(int reviewNo) {
+		List<HostReply> hrList = sStore.selectReply(session, reviewNo);
+		return hrList;
+	}
 
 
-	
 	
 }

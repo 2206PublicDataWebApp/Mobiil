@@ -79,7 +79,7 @@
   	</insert>
   	<insert id="insertReply">
   		INSERT INTO HOSTREPLY_TBL
-  		VALUES(SEQ_REPLY_NO.NAXTVAL, #{reviewNo}, #{hostEmail}, #{replyWriter}, #{replyContents}, SYSDATE, SYSDATE)
+  		VALUES(SEQ_REPLY_NO.NEXTVAL, #{reviewNo}, #{hostEmail}, #{replyWriter}, #{replyContents}, SYSDATE, SYSDATE)
   	</insert>
   	<delete id="deleteHeart">
   		DELETE FROM HEART_TBL WHERE MEMBER_EMAIL=#{memberEmail} AND SPACE_NO=#{spaceNo}
@@ -174,7 +174,9 @@
 		AND REV_START < #{end} 
 		AND REV_END > #{start}]]>
 	</select>
-	
+	<select id="selectReply" resultMap="HostReplyResultMap">
+		SELECT * FROM HOSTREPLY_TBL WHERE REVIEW_NO = #{reviewNo}
+	</select>
 	<select id="selectAreaCount" resultType="_int">
 		SELECT count(*) AS COUNT FROM SPACE_TBL
 		WHERE SPACE_AREA LIKE #{area}

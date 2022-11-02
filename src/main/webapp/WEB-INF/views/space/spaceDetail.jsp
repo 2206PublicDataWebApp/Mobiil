@@ -124,7 +124,7 @@ ${space.address}
 <br><br><br>
 
 
-<table align="center" width="500" border="1" id="rtb">
+<table align="center" width="500px" border="1" id="rtb">
 	<thead>
 		<tr>
 			<td colspan="4"><b id="rCount"></b></td>
@@ -342,6 +342,23 @@ ${hostEmail }
 						if('${loginHost.hostEmail }' == '${hostEmail }'){
 							$rContent.after($button);
 						}
+						$.ajax({
+							url:'/space/replyList.kh',
+							type:'get',
+							data:{"reviewNo":rList[i].reviewNo},
+							success:function(hrList){
+								for(var j in hrList){
+								var $htr = $('<tr id="hostReplyList" style="padding-left:50px;">');
+								var $hrWriter = $("<td colspan='2'>").text(hrList[j].replyWriter);
+								var $hrUpdateDate = $("<td colspna='2'>").text(hrList[j].updateDate);
+								var $hrContent = $("<tr style='height:200px;'>").append($("<td colspan='4'>").text(hrList[j].replyContents));
+								$htr.append($hrWriter);
+								$htr.append($hrUpdateDate);
+								$button.after($htr);
+								$htr.after($hrContent);
+								}
+							}
+						})
 					}
 				}
 			},
@@ -356,8 +373,7 @@ ${hostEmail }
 		if($("#insertTr").length == 0){
 		event.preventDefault();
 		$tr = $("<tr id='insertTr'>");
-		$tr.append("<td colspan='4'><input type='text' id='insertReply'><input type='button' onclick='insertReply(this, "+reviewNo+")');' value='등록'></td>");
-/* 		$tr.append("<button onclick='insertReply(this, "+reviewNo+")');'>등록</button>"); */
+		$tr.append("<td colspan='4'><input type='text' id='insertReply'><a href='javascript:void(0);' onclick='insertReply(this, "+reviewNo+")');'>등록</a></td>");
 		$(obj).parent().parent().after($tr);			
 		} else{
 			$("#insertTr").remove();
@@ -371,9 +387,11 @@ ${hostEmail }
 			data:{"reviewNo":reviewNo, "replyContents": replyContents, "replyWriter":'${loginHost.companyName }', "hostEmail":'${loginHost.hostEmail }'},
 			type:"post",
 			success:function(result){
-				if(result > 0){
-					alert("성공");
-				}
+					if(result>0){
+						$("#insertReply").val('');
+						event.preventDefault();
+						getReviewList();
+					}
 				},
 			error: function(){
 				alert("실패");
