@@ -21,4 +21,11 @@ public interface BannerService  {
 	// 실제하는 배너만 출력하도록 하나씩 부름
 	public Banner printOneBanenr(int i);
 
+	// 배너 내용 업데이트
+	public int updateContents(Banner banner);
+
+	//배너 이미지 업데이트
+	public int updateImage(Banner banner);
+	
+
 }

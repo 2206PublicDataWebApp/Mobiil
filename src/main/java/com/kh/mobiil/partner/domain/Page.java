@@ -1,9 +1,6 @@
 package com.kh.mobiil.partner.domain;
 
-
-	
 	public class Page{
-		
 		private int currentPage;
 		private int totalCount;
 		private int naviLimit;
@@ -12,7 +9,6 @@ package com.kh.mobiil.partner.domain;
 		private int endNavi;
 		private int boardLimit;
 		private int offset;
-		
 		
 		public Page(int currentPage, int totalCount, int naviLimit, int boardLimit) {
 			// 현재페이지, 검색조건 토탈카운트, 내비리밋, 보드리밋 넘겨주면 계산해서 각 변수에 저장!
@@ -31,7 +27,6 @@ package com.kh.mobiil.partner.domain;
 				endNavi = maxPage;
 			}
 		}
-		
 		
 		public int getCurrentPage() {
 			return currentPage;

@@ -3,7 +3,6 @@ package com.kh.mobiil.chat.domain;
 import java.sql.Timestamp;
 
 public class Chat {
-
 	
 	private int chatNo;
 	private int refRoomNo;

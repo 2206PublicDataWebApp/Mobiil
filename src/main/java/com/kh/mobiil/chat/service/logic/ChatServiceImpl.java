@@ -19,6 +19,12 @@ public class ChatServiceImpl implements ChatService {
 	private ChatStore cStore;
 	@Autowired
 	private SqlSessionTemplate session;
+	
+	@Override
+	public List<ChatRoom> listByMemberNick(String memberNick) {
+		List<ChatRoom> cList = cStore.selectChatRoom(memberNick, session);
+		return cList;
+	}
 	@Override
 	public ChatRoom findByUsers(ChatRoom roomInfo) {
 		ChatRoom chatRoom  = cStore.selectOneRoom(roomInfo, session);
@@ -30,9 +36,9 @@ public class ChatServiceImpl implements ChatService {
 		return result;
 	}
 	@Override
-	public List<ChatRoom> listByMemberNick(String memberNick) {
-		List<ChatRoom> cList = cStore.selectChatRoom(memberNick, session);
-		return cList;
+	public List<Chat> chatLog(int roomNo) {
+		List<Chat> cLog = cStore.selectChatLog(roomNo, session);
+		return cLog;
 	}
 	@Override
 	public int registerChat(Chat chat) {
@@ -40,19 +46,14 @@ public class ChatServiceImpl implements ChatService {
 		return result;
 	}
 	@Override
-	public List<Chat> chatLog(int roomNo) {
-		List<Chat> cLog = cStore.selectChatLog(roomNo, session);
-		return cLog;
+	public List<ChatSearchResult> searchSpace(String searchValue) {
+		List<ChatSearchResult> sList = cStore.selectSearchResult(searchValue, session);
+		return sList;
 	}
 	@Override
 	public Chat chatNewOne(int roomNo) {
 		Chat cOne = cStore.selectOneNew(roomNo, session);
 		return cOne;
-	}
-	@Override
-	public int getDailyNewRoom(int dayBefore) {
-		int result = cStore.selectDailyNewRoom(dayBefore, session);
-		return result;
 	}
 	@Override
 	public int unReadCount(int refRoomNo, String memberNick) {
@@ -65,13 +66,13 @@ public class ChatServiceImpl implements ChatService {
 		return result;
 	}
 	@Override
-	public List<ChatSearchResult> searchSpace(String searchValue) {
-		List<ChatSearchResult> sList = cStore.selectSearchResult(searchValue, session);
-		return sList;
-	}
-	@Override
 	public int updateChatRead(int roomNo, String memberNick) {
 		int result = cStore.updateChatRead(roomNo,memberNick, session);
+		return result;
+	}
+	@Override
+	public int getDailyNewRoom(int dayBefore) {
+		int result = cStore.selectDailyNewRoom(dayBefore, session);
 		return result;
 	}
 

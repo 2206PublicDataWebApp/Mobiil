@@ -30,7 +30,9 @@ public class HomeController {
 	public ModelAndView home(Locale locale
 			, ModelAndView mv) {
 		
-		// 실재하는 배너만 출력
+		/**
+		 *  실재하는 배너만 출력
+		 */
 		ArrayList<Banner> bList = new ArrayList<Banner>();
 		for(int i = 1; i < 6; i++) {
 			Banner oneBanner = bService.printOneBanenr(i);

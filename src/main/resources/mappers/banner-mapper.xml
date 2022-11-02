@@ -4,21 +4,32 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bannerMapper">
-
-
-	
 	
 	<insert id="insertBanner">
-	INSERT INTO BANNER_TBL
-	VALUES (#{bannerNo}, #{bannerPath}, #{bannerFileName}, #{bannerRename}, #{bannerMsg},'관리자')
+		INSERT INTO BANNER_TBL
+		VALUES (#{bannerNo}, #{bannerPath}, #{bannerFileName}, #{bannerRename}, #{bannerMsg},'관리자',#{bannerLink})
 	</insert>
 
-	<update id="updateBanner">
+	<update id="deleteBanner">
 		UPDATE BANNER_TBL
 		SET 	bannerPath = #{bannerPath}, 
 				bannerFileName = #{bannerFileName}, bannerRename=#{bannerRename},
-				bannerMsg = #{bannerMsg}
+				bannerMsg = #{bannerMsg}, bannerLink = #{bannerLink}
 		WHERE bannerNo = #{bannerNo}
+	</update>
+	
+	<update id="updateContents">
+		UPDATE BANNER_TBL
+		SET 	bannerMsg = #{bannerMsg}, bannerLink = #{bannerLink}
+		WHERE 	bannerNo = #{bannerNo}
+	</update>
+	
+	<update id="updateImage">
+		UPDATE BANNER_TBL
+		SET 	bannerPath = #{bannerPath}, 
+				bannerFileName = #{bannerFileName}, bannerRename=#{bannerRename}
+		WHERE bannerNo = #{bannerNo}
+	
 	</update>
 	
 	<select id="selectAllBanner" resultType="Banner">

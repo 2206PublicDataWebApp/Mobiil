@@ -5,6 +5,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatRoomMapper">
 
+	<insert id="insertRoom">
+		INSERT INTO CHATROOM_TBL VALUES(
+		SEQ_ROOMNO.NEXTVAL, #{createUser}, #{withUser}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	<update id="disableRoom">
+		UPDATE CHATROOM_TBL
+		SET roomStatus = 'N', disableDate = SYSDATE
+		WHERE roomNo = #{roomNo}
+	</update>
+	
 	<select id="selectOneRoom" resultType="ChatRoom">
 		SELECT * FROM CHATROOM_TBL
 		WHERE (createUser = #{createUser} AND withUser = #{withUser})
@@ -23,20 +34,5 @@
 		SELECT count(*) FROM CHATROOM_TBL
 		WHERE TO_CHAR(CAST(createDate AS DATE)) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD'))
 	</select>
-	
-	<insert id="insertRoom">
-		INSERT INTO CHATROOM_TBL VALUES(
-		SEQ_ROOMNO.NEXTVAL, #{createUser}, #{withUser}, DEFAULT, DEFAULT, DEFAULT)
-	</insert>
-	
-	<update id="disableRoom">
-		UPDATE CHATROOM_TBL
-		SET roomStatus = 'N', disableDate = SYSDATE
-		WHERE roomNo = #{roomNo}
-	</update>
-	
-	
-	
-	
 
 </mapper>

@@ -32,7 +32,9 @@ public class ChatController {
 	@Autowired
 	private ChatService cService;
 	
-	// 채팅방 리스트 띄우기 + 언리드 카운트 띄우기
+	/**
+	 * 채팅방 리스트 띄우기 + 언리드 카운트 띄우기
+	 */
 	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
 	public ModelAndView showChatList(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
 		
@@ -45,17 +47,17 @@ public class ChatController {
 			int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
 			cList.get(i).setUnReadCount(unReadCount);
 		}
-		Date timeNow = new Date(System.currentTimeMillis());
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy/MM/dd"); 
-		String today = simpleDateFormat.format(timeNow); 
-		mv.addObject("today", today);
 		mv.addObject("cList", cList);
 		mv.setViewName("/chat/chatWindow");
 		return mv;
 	}
 	
 	
-	// 메뉴바 언리드카운트
+	/** 메뉴바 언리드카운트
+	 * 
+	 * @param memberNick
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/chat/getTotalUnread.kh", method = RequestMethod.GET, produces = "text/plian;charset=utf-8" )
 	public String getTotalUnread(@RequestParam(value = "memberNick") String memberNick) {
@@ -74,7 +76,14 @@ public class ChatController {
 	}
 
 	
-	// 채팅방 띄우기
+	/**
+	 *  채팅방 띄우기
+	 * @param memberNick
+	 * @param roomNo
+	 * @param roomStatus
+	 * @param mv
+	 * @return
+	 */
 	@RequestMapping(value="/chat/chatRoom.kh")
 	public ModelAndView showChatRoom(@RequestParam(value = "memberNick", required = false) String memberNick,
 									@RequestParam("roomNo") int roomNo,
@@ -89,8 +98,11 @@ public class ChatController {
 	}
 	
 	
-	
-	// 채팅방 만들기
+	/**
+	 *  채팅방 만들기
+	 * @param roomInfo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/chat/createChatRoom.kh", method = RequestMethod.GET)
 	public String createChatRoom(@ModelAttribute ChatRoom roomInfo) {
@@ -108,7 +120,11 @@ public class ChatController {
 		}
 	}
 	
-	// 채팅 보내기
+	/**
+	 *  채팅 보내기
+	 * @param chat
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/chat/registerChat.kh", method = RequestMethod.GET)
 	public String registerChat(@ModelAttribute Chat chat) {
@@ -120,7 +136,12 @@ public class ChatController {
 		}
 	}
 	
-	// 채팅 로그 조회하기
+	/**
+	 * 채팅 로그 조회하기
+	 * @param roomNo
+	 * @param memberNick
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/chat/chatLog.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
 	public String chatLog(@RequestParam("roomNo") int roomNo,
@@ -133,7 +154,12 @@ public class ChatController {
 
 
 
-	// 최신 하나만 조회하기
+	/**
+	 * 최신 하나만 조회하기
+	 * @param roomNo
+	 * @param memberNick
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/chat/chatNewOne.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
 	public String chatNewOne(@RequestParam("roomNo") int roomNo,
@@ -155,7 +181,11 @@ public class ChatController {
 		return gson.toJson(jsonObj);
 	}
 	
-	//채팅방 비활성화(채팅 나가기) 채팅방은 비활성화 이후 그날 자정 폭파
+	/**
+	 * 채팅방 비활성화(채팅 나가기) 채팅방은 비활성화 이후 그날 자정 폭파
+	 * @param roomNo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/chat/disableChatRoom.kh")
 	public String disableChatRoom(@RequestParam("roomNo") int roomNo) {
@@ -167,7 +197,11 @@ public class ChatController {
 		}
 	}
 
-	//공간검색
+	/**
+	 * 공간검색
+	 * @param searchValue
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/chat/searchSpace.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String searchSpace(@RequestParam("searchValue") String searchValue) { // gson으로 돌려주기

@@ -45,47 +45,56 @@ public class DashboardController {
 	@Autowired
 	private SpaceService sService;
 	
-
+	
+	/** 관리자페이지
+	 * 
+	 * @param mv
+	 * @return
+	 */
 	@RequestMapping(value="/admin/dashboard.kh")
 	public ModelAndView showDashboard(ModelAndView mv) {
 		mv.setViewName("/admin/dashBoard");
 		return mv;
 	}
 	
-	// 공간 전체 지도
+	/** 공간 전체 지도
+	 * 
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/admin/dashboard/spaceMap.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String drawSpaceMap() {
 		Gson gson = new Gson();
 		List<Space> sList = sService.printAllSpace();
-		
 		return gson.toJson(sList);
-		
 	}
 	
-	
-	// AREA 지역 분포
-		@ResponseBody
-		@RequestMapping(value="/admin/dashboard/area.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-		public String drawAreaChart() {
-			// 동서남북
-			int east = sService.getAreaCount("강동");
-			int west = sService.getAreaCount("강서");
-			int south = sService.getAreaCount("강남");
-			int north = sService.getAreaCount("강북");
+	/** AREA 지역 분포
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/admin/dashboard/area.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String drawAreaChart() {
+		// 동서남북
+		int east = sService.getAreaCount("강동");
+		int west = sService.getAreaCount("강서");
+		int south = sService.getAreaCount("강남");
+		int north = sService.getAreaCount("강북");
 
-			JSONObject obj = new JSONObject();
-			// 파이차트 그리기
-			obj.put("east", east);
-			obj.put("west", west);
-			obj.put("south", south);
-			obj.put("north", north);
-			return obj.toJSONString();
-		}
-		
+		JSONObject obj = new JSONObject();
+		// 파이차트 그리기
+		obj.put("east", east);
+		obj.put("west", west);
+		obj.put("south", south);
+		obj.put("north", north);
+		return obj.toJSONString();
+	}
 	
-	
-	// 기업회원+개인회원
+	/** 기업회원+개인회원
+	 * 
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/admin/dashboard/member.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String drawMemberChart() {
@@ -104,7 +113,10 @@ public class DashboardController {
 		return obj.toJSONString();
 	}
 	
-	// 일반회원 수 + 파트너 수 
+	/** 일반회원 수 + 파트너 수 
+	 * 
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/admin/dashboard/partner.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String drawPartnerChart() {
@@ -130,7 +142,10 @@ public class DashboardController {
 	}
 	
 
-	// 일주일간 채팅방 신규 룸 생성량 + 신규 가입자수
+	/** 일주일간 채팅방 신규 룸 생성량 + 신규 가입자수
+	 * 
+	 * @return
+	 */
 		@ResponseBody
 		@RequestMapping(value="/admin/dashboard/weekly.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 		public String drawWeekly() {

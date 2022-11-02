@@ -147,7 +147,7 @@ function  getTotalUnread() {
 		data:{memberNick :memberNick},
 		type: "get",
 		success: function(data) {
-			$("#myChat").text("마이채팅(" + data + ")");
+			$("#myChat").text("마이채팅 (" + data + ")");
 		},
 		error: function() {
 			console.log("에러")

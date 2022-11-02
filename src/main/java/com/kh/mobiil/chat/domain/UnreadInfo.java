@@ -4,7 +4,6 @@ public class UnreadInfo {
 	private String memberNick;
 	private int refRoomNo;
 	
-	
 	public UnreadInfo(String memberNick, int refRoomNo) {
 		super();
 		this.memberNick = memberNick;

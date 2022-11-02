@@ -24,8 +24,8 @@ public class BannerStoreLogic implements BannerStore{
 	}
 
 	@Override
-	public int updateBanner(SqlSessionTemplate session, Banner banner) {
-		int result = session.update("bannerMapper.updateBanner", banner);
+	public int renewBanner(SqlSessionTemplate session, Banner banner) {
+		int result = session.update("bannerMapper.deleteBanner", banner);
 		return result;
 	}
 
@@ -41,4 +41,15 @@ public class BannerStoreLogic implements BannerStore{
 		return oneBanner;
 	}
 
+	@Override
+	public int updateContents(SqlSessionTemplate session, Banner banner) {
+		int result = session.update("bannerMapper.updateContents", banner);
+		return result;
+	}
+
+	@Override
+	public int updateImage(SqlSessionTemplate session, Banner banner) {
+		int result = session.update("bannerMapper.updateImage", banner);
+		return result;
+	}
 }
