@@ -73,9 +73,9 @@
 		UPDATE RESERVATION_TBL SET REV_STATUS = 'Y' WHERE RESERV_NO = #{reservationNo}
 	</update>
 
-	<update id="updateRevStatusN"> <!-- 리뷰 삭제 시 reservation의 리뷰 상태 N으로 업데이트 -->
-		UPDATE RESERVATION_TBL SET REV_STATUS = 'N' WHERE RESERV_NO = #{reservationNo}
-	</update>
+<!-- 	<update id="updateRevStatusN"> 리뷰 삭제 시 reservation의 리뷰 상태 N으로 업데이트 -->
+<!-- 		UPDATE RESERVATION_TBL SET REV_STATUS = 'N' WHERE RESERV_NO = #{reservationNo} -->
+<!-- 	</update> -->
 
 	<insert id="insertReviewImg"> <!-- 리뷰 이미지 업로드 -->
 		INSERT INTO REVIEW_IMG VALUES(SEQ_REVIEW_IMG_NO.NEXTVAL,
@@ -88,17 +88,17 @@
 		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
 	</select>
 	
-	<update id="reviewModify"> <!-- 리뷰 수정 -->
-		UPDATE REVIEW_TBL SET SPACE_NO = #{spaceNo}, REVIEW_IMG_NO = #{reviewImgNo}, MEMBER_EMAIL = #{memberEmail}, 
-		REVIEW_CONTENTS = #{reviewContents}, REVIEW_WRITER = #{reviewWriter}
-		WHERE REVIEW_NO = #{reviewNo}
-	</update>
+<!-- 	<update id="reviewModify"> 리뷰 수정 -->
+<!-- 		UPDATE REVIEW_TBL SET SPACE_NO = #{spaceNo}, REVIEW_IMG_NO = #{reviewImgNo}, MEMBER_EMAIL = #{memberEmail},  -->
+<!-- 		REVIEW_CONTENTS = #{reviewContents}, REVIEW_WRITER = #{reviewWriter} -->
+<!-- 		WHERE REVIEW_NO = #{reviewNo} -->
+<!-- 	</update> -->
 
-	<update id="reviewImgModify"> <!-- 리뷰 사진 수정 -->
-		UPDATE REVIEW_IMG
-		SET REVIEW_FILENAME = #{reviewFileName}, REVIEW_FILERENAME = #{reviewFileRename}, REVIEW_FILEPATH = #{reviewFilePath}
-  	 	WHERE REVIEW_IMG_NO = #{reviewImgNo}
-	</update>
+<!-- 	<update id="reviewImgModify"> 리뷰 사진 수정 -->
+<!-- 		UPDATE REVIEW_IMG -->
+<!-- 		SET REVIEW_FILENAME = #{reviewFileName}, REVIEW_FILERENAME = #{reviewFileRename}, REVIEW_FILEPATH = #{reviewFilePath} -->
+<!--   	 	WHERE REVIEW_IMG_NO = #{reviewImgNo} -->
+<!-- 	</update> -->
 	
 	<update id="deleteReview"> <!-- 리뷰 삭제 -->
 		UPDATE REVIEW_TBL SET R_STATUS = 'N' WHERE REVIEW_NO = #{reviewNo}

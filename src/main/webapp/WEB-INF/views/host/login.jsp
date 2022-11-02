@@ -42,7 +42,7 @@
                     <input style="margin-top: 10px;" type="checkbox" name="" id=""> 자동 로그인
                 </span>
                 <span>
-                    <a href="/login/findPwdView.kh">비밀번호 찾기</a>
+                    <a href="/login/findHostPwdView.kh">비밀번호 찾기</a>
                 </span>
             </div>
             

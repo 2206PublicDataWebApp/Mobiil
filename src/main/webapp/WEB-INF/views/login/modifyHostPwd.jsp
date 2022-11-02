@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>개인회원 비밀번호 변경</title>
+<title>기업회원 비밀번호 변경</title>
 <style>
 .modPwd {
 	text-align: center;
@@ -45,13 +45,13 @@
 	<jsp:include page="../common/menubar.jsp"></jsp:include>
 
 	<div class="modPwd">
-		<h1>개인회원 비밀번호 변경</h1>
+		<h1>기업회원 비밀번호 변경</h1>
 		<br>
 		<div class="required">
-			<form id="password-modify" name="" action="/login/modifyPwd.kh" method="post">
-				<input type="hidden" name="memberEmail" value="${memberEmail }">
-				<label>비밀번호</label><input type="password" class="input" id="pwd" name="memberPwd" placeholder="영문자/숫자/특수문자 포함, 6자~20자"><br>
-				<label>비밀번호 확인</label><input type="password" class="input" id="pwd2" name="memberPwd2" placeholder="영문자/숫자/특수문자 포함, 6자~20자"><br>
+			<form id="password-modify" name="" action="/login/modifyHostPwd.kh" method="post">
+				<input type="hidden" name="hostEmail" value="${hostEmail}">
+				<label>비밀번호</label><input type="password" class="input" id="pwd" name="hostPwd" placeholder="영문자/숫자/특수문자 포함, 6자~20자"><br>
+				<label>비밀번호 확인</label><input type="password" class="input" id="pwd2" name="hostPwd2" placeholder="영문자/숫자/특수문자 포함, 6자~20자"><br>
 				<button type="submit" class="button" onclick="modifyPwd();">비밀번호 변경하기</button>
 			</form>
 		</div>

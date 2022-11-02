@@ -108,6 +108,24 @@ public class MemberStoreLogic implements MemberStore{
 		return result;
 	}
 
+	@Override // 비밀번호 변경 시 이메일 존재 체크(개인)
+	public int checkMemDupEmail(SqlSession session, String memberEmail) {
+		int result = session.selectOne("MemberMapper.checkMemDupEmail", memberEmail); 
+		return result;
+	}
+
+	@Override // 비밀번호 변경 시 이메일 존재 체크(기업)
+	public int checkHostDupEmail(SqlSession session, String hostEmail) {
+		int result = session.selectOne("MemberMapper.checkHostDupEmail", hostEmail);
+		return result;
+	}
+
+	@Override
+	public int updateHostPwd(SqlSession session, Host host) {
+		int result = session.update("MemberMapper.updateHostPwd", host);
+		return result;
+	}
+
 	
 	////////어드민 대시보드
 
