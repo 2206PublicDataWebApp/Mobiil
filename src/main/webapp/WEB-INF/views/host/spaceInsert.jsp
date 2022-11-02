@@ -70,10 +70,6 @@
 		    color: #fff;
   }
 }
-
-	#uploadFile {
-	  display: none;
-	}
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -113,7 +109,6 @@
 					<td>
 						<button type="button" class="btn btn-default" onclick="addFile();">+</button>
 						<button type="button" class="btn btn-default" onclick="removeFile();">-</button>
-						<label for="uploadFile"><div class="btn-upload">파일첨부</div></label>
 						<input multiple="multiple" type="file" id="uploadFile" name="uploadFile">
 					</td>
 				</tr>

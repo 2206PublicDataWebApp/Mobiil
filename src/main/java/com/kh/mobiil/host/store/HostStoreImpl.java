@@ -59,14 +59,16 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public int getSpaceTotalCount(SqlSession session) {
-		int result = session.selectOne("HostMapper.getSpaceTotalCount");
+	public int getSpaceTotalCount(SqlSession session, String hostEmail) {
+		int result = session.selectOne("HostMapper.getSpaceTotalCount", hostEmail);
 		return result;
 	}
 
 	@Override
-	public List<Space> spaceList(SqlSession session, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("HostMapper.spaceList", rowBounds);
+	public List<Space> spaceList(SqlSession session,int currentPage, int boardLimit) {
+		int offset = (currentPage-1)*boardLimit;
+		RowBounds rowBound = new RowBounds(offset, boardLimit);
+		List<Space> sList = session.selectList("HostMapper.spaceList", null, rowBound);
 		return sList;
 	}
 
@@ -161,6 +163,12 @@ public class HostStoreImpl implements HostStore{
 		map.put("monthValue", monthValue);
 		List<Reservation> rList = session.selectList("HostMapper.regervationListByHostemail", map);
 		return rList;
+	}
+
+	@Override
+	public int getSpaceTotalCount(SqlSession session) {
+		int result = session.selectOne("HostMapper.getSpaceTotalCount_Admin");
+		return result;
 	}
 
 }

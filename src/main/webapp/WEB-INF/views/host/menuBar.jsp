@@ -47,7 +47,7 @@
 				<a class="function" href="/host/hostModifyView.mobiil">정보 수정</a>
 			</li>
 			<li>
-				<a class="function" href="/host/reservationCheck.mobiil?monthValue=${monthValue}">예약 확인</a><br><br>
+				<a class="function" href="javascript:void(0)" onclick="reservationCheck();">예약 확인</a><br><br>
 			</li>
 			<li>
 				<a class="function" href="/host/registList.mobiil">예약 리스트</a>
@@ -64,6 +64,11 @@
 		</ul>
 	</div>
 	<script>
+		function reservationCheck() {
+			var monthValue = 10;
+			location.href="/host/reservationCheck.mobiil?monthValue="+monthValue;
+		}
+	
 		function getProfitsCheck() {
 			var today = new Date();
 			var year = today.getFullYear();    // 년도

@@ -12,7 +12,7 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
 	<input type="hidden"  id="mVal" value="${monthValue }">
-	${monthValue}
+	
 	<div class="calendar"> 
     <div class="header">
       <div class="year-month"></div>  <!-- 월 표시 -->
