@@ -43,22 +43,21 @@
 			<th class="th" width="200">예약번호</th>
 			<th class="th" width="200">결제일자</th>
 			<th class="th" width="300">공간명</th>
-			<th class="th" width="200">예약 일시</th>
+			<th class="th" width="200">예약일자</th>
 			<th class="th" width="200">결제금액</th>
 			<th class="th" width="100">리뷰</th>
 		</tr>
 		<c:if test="${!empty rList}">
 		<c:forEach items="${rList }" var="reservation" varStatus="i">
-			<tr>
 				<td>${i.count}</td>
 				<td><a href="/payment/detail.kh?reservationNo=${reservation.reservationNo}&page=${currentPage }"><b>${reservation.reservationNo}<b></a></td>
 				<td>${reservation.paymentDate}</td>
 				<td><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>${reservation.spaceName}<b></a></td>
 				<td>${reservation.reservationDate}</td>
-				<td>${reservation.price}</td>
+				<td>${reservation.price}원</td>
 				<td>
 					<c:if test="${reservation.reviewStatus eq 'Y'}">
-						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&page=${currentPage }';" class="btn btn-info">내 리뷰 조회</button>
+						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&reservationNo=${reservation.reservationNo}&page=${currentPage }';" class="btn btn-info">내 리뷰 조회</button>
 					</c:if>
 					<c:if test="${reservation.reviewStatus eq 'N'}">
 						<button type="button" onclick="location.href='/review/writeView.kh?reservationNo=${reservation.reservationNo}&page=${currentPage }';" class="btn btn-info">리뷰 작성</button>

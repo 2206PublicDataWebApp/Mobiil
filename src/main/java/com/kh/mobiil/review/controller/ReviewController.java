@@ -87,11 +87,13 @@ public class ReviewController {
 	// 리뷰 상세조회
 	@RequestMapping(value="/review/detail.kh", method=RequestMethod.GET)
 		public ModelAndView reviewDetailView(ModelAndView mv,
+				@RequestParam("reservationNo") String reservationNo, 
 				@RequestParam("reviewNo") Integer reviewNo, 
 				@RequestParam("page") Integer page, HttpSession session) {
 		try {
 			Review review = rService.printOneByNo(reviewNo);
 			List<ReviewImg> rList = rService.printReviewImg(reviewNo);
+			mv.addObject("reservationNo", reservationNo);
 			mv.addObject("reviewNo", reviewNo);
 			mv.addObject("rList", rList);
 			mv.addObject("review", review);
@@ -112,6 +114,9 @@ public class ReviewController {
 		    ,@RequestParam("page") int page) {
 		try {
 			Review review = rService.printOneByNo(reviewNo);
+			List<ReviewImg> reviewImg = rService.printImgByNo(reviewNo);
+			mv.addObject("reviewNo", reviewNo);
+			mv.addObject("reviewImg", reviewImg);
 			mv.addObject("review", review);
 			mv.addObject("page", page);
 			mv.setViewName("review/reviewModify");
@@ -175,10 +180,11 @@ public class ReviewController {
 	// 리뷰 삭제
 	@RequestMapping(value="/review/remove.kh", method = RequestMethod.GET)
 	public ModelAndView reviewRemove(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo,
-			@ModelAttribute Reservation reservation, HttpServletRequest request, HttpSession session) { 
+			@RequestParam("reservationNo") String reservationNo, HttpServletRequest request, HttpSession session) { 
 	try {
 		int result = rService.removeReview(reviewNo);
-		int result2 = rService.updateRevStatusN(reservation);
+		int result2 = rService.updateRevStatusN(reservationNo);
+		mv.addObject("reservationNo", reservationNo);
 		if(result > 0) {
 			request.setAttribute("msg", "리뷰가 삭제되었습니다.");
 			request.setAttribute("url", "/payment/list.kh");	

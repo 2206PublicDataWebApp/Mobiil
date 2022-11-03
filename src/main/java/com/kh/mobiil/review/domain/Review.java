@@ -5,7 +5,6 @@ import java.sql.Date;
 public class Review {
 	private int reviewNo;
 	private int spaceNo;
-	private int reviewImgNo;
 	private String memberEmail;
 	private String reviewContents;
 	private String reviewWriter;
@@ -30,14 +29,6 @@ public class Review {
 
 	public void setSpaceNo(int spaceNo) {
 		this.spaceNo = spaceNo;
-	}
-
-	public int getReviewImgNo() {
-		return reviewImgNo;
-	}
-
-	public void setReviewImgNo(int reviewImgNo) {
-		this.reviewImgNo = reviewImgNo;
 	}
 
 	public String getMemberEmail() {
@@ -98,11 +89,12 @@ public class Review {
 
 	@Override
 	public String toString() {
-		return "Review [reviewNo=" + reviewNo + ", spaceNo=" + spaceNo + ", reviewImgNo=" + reviewImgNo
-				+ ", memberEmail=" + memberEmail + ", reviewContents=" + reviewContents + ", reviewWriter="
-				+ reviewWriter + ", rCreateDate=" + rCreateDate + ", rUpdateDate=" + rUpdateDate + ", rStatus="
-				+ rStatus + ", spaceName=" + spaceName + "]";
+		return "Review [reviewNo=" + reviewNo + ", spaceNo=" + spaceNo + ", memberEmail=" + memberEmail
+				+ ", reviewContents=" + reviewContents + ", reviewWriter=" + reviewWriter + ", rCreateDate="
+				+ rCreateDate + ", rUpdateDate=" + rUpdateDate + ", rStatus=" + rStatus + ", spaceName=" + spaceName
+				+ "]";
 	}
 
+	
 	
 }

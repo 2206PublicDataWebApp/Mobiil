@@ -27,7 +27,9 @@ public interface ReviewService {
 
 	public Reservation printReservation(String reservationNo);
 
-	public int updateRevStatusN(Reservation reservation);
+	public int updateRevStatusN(String reservationNo);
+
+	public List<ReviewImg> printImgByNo(Integer reviewNo);
 
 
 

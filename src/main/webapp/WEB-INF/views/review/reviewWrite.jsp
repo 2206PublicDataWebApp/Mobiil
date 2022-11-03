@@ -56,7 +56,7 @@
         <br><br><br>
 	<form name="review_form" action="/review/register.kh" method="post" enctype="multipart/form-data" >
 	<input type="hidden" name="memberEmail" value="${loginUser.memberEmail}">
-	<input type="hidden" name="spaceNo" value="${spaceNo}">
+	<input type="hidden" name="spaceNo" value="${reservation.spaceNo}">
 	<input type="hidden" name="reservationNo" value="${reservationNo}">
 	
 	<table border="1" class="tb">
@@ -100,7 +100,7 @@
 	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
 	 	      return;
 		}else{ 
-			$("input").last().after("<input type = 'file'>");
+			$("input").last().after("<input multiple='multiple' type='file' name='uploadFile' accept='.jpg, .jpeg, .png'>");
 			 maxFile ++;
 		}
 	}

@@ -29,7 +29,7 @@ public interface MemberStore {
 
 	public int checkDupNick(SqlSession session, String memberNick); // 닉네임 중복 체크
 
-	public int selectTotalCount(SqlSession session); // 결제 내역
+	public int selectTotalCount(SqlSession session, String memberEmail); // 결제 내역
 	
 	public List<Reservation> selectAllReserve(SqlSession session, String memberEmail, int currentPage, int reserveLimit); // 결제 내역
 	

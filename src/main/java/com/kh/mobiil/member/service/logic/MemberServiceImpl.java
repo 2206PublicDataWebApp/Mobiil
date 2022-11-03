@@ -1,11 +1,22 @@
 package com.kh.mobiil.member.service.logic;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
@@ -67,8 +78,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int getTotalCount() {
-		int totalCount = mStore.selectTotalCount(session);
+	public int getTotalCount(String memberEmail) {
+		int totalCount = mStore.selectTotalCount(session, memberEmail);
 		return totalCount;
 	}
 
@@ -147,7 +158,5 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.selecHostDaily(dayBefore, session);
 		return result;
 	}
-
-
 	
 }

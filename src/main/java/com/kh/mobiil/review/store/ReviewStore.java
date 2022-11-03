@@ -29,7 +29,9 @@ public interface ReviewStore {
 
 	public Reservation selectReservation(SqlSession session, String reservationNo);
 
-	public int updateRevStatusN(SqlSession session, Reservation reservation);
+	public int updateRevStatusN(SqlSession session, String reservationNo);
+
+	public List<ReviewImg> selectImgByNo(SqlSession session, Integer reviewNo);
 
 
 
