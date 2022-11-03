@@ -62,8 +62,8 @@ public class MemberStoreLogic implements MemberStore{
 	}
 	
 	@Override
-	public int selectTotalCount(SqlSession session) { // 결제 내역
-		int result = session.selectOne("MemberMapper.selectTotalCount");
+	public int selectTotalCount(SqlSession session, String memberEmail) { // 결제 내역
+		int result = session.selectOne("MemberMapper.selectTotalCount", memberEmail);
 		return result;
 	}
 

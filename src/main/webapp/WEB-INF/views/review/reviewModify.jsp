@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리뷰 작성</title>
+<title>리뷰 수정</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  <style>
          .header {
@@ -54,7 +55,7 @@
 </div>
         <br><br><br>
 	<form name="review_modify" action="/review/modify.kh" method="post" enctype="multipart/form-data" >
-	<input type="hidden" name="reviewImgNo" value="${review.reviewImgNo}">
+	<input type="hidden" name="reviewNo" value="${reviewNo}">
 	<table border="1" class="tb">
 		<tr>
 			<th class="title" width="100">공간명</th>
@@ -71,7 +72,11 @@
  		<tr class="add">
 			<th class="title" width="">사진첨부</th>
 			<td>
-				<input multiple="multiple" type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png">
+			<c:forEach items="${reviewImg}" var="rImg">
+				<input type="hidden" value="${rImg.reviewImgNo}" name="reviewImgNo">
+				<input type="hidden" value="${rImg.reviewFileRename}" name="reviewFileRename">
+			</c:forEach>
+				<input multiple="multiple" type="file" class="file" name="reloadFile" accept=".jpg, .jpeg, .png">
 <!-- 				<a>사진name</a> -->
 				<input type="button" value="추가" onclick="addFile();">
 				<input type="button" value="삭제" onclick="delFile();">
@@ -97,7 +102,7 @@
 	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
 	 	      return;
 		}else{ 
-			$("input").last().after("<input type = 'file'>");
+			$("input").last().after("<input multiple='multiple' type='file' name='uploadFile' accept='.jpg, .jpeg, .png'>");
 			 maxFile ++;
 		}
 	}

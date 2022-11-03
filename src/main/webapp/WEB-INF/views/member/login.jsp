@@ -48,8 +48,9 @@
 
             <br>
             <div><button type="submit" class="button">로그인 하기</button></div>
-            <a href="javascript:void(0)">
-            	<button type="button" class="button" onclick="kakaoLogin();">카카오 로그인</button>
+            <a href="https://kauth.kakao.com/oauth/authorize?client_id=c61c3ed34bcf022b1aa5f4a4d4826902&redirect_uri=http://localhost:9454/member/kakaoLogin.kh&response_type=code">
+				<img src="/resources/icon/kakao_login_large_wide.png" style="height:50px;" >
+<!--             	<button type="button" class="button" onclick="kakaoLogin();">카카오 로그인</button> -->
             </a>
             
            

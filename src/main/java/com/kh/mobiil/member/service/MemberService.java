@@ -1,10 +1,12 @@
 package com.kh.mobiil.member.service;
 
+
+import java.util.HashMap;
 import java.util.List;
+
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
-import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 
 public interface MemberService {
@@ -30,7 +32,7 @@ public interface MemberService {
 
 	public int checkDupNick(String memberNick); // 닉네임 중복 체크
 	
-	public int getTotalCount(); // 마이페이지 -> 결제 내역 조회
+	public int getTotalCount(String memberEmail); // 마이페이지 -> 결제 내역 조회
 	
 	public List<Reservation> printAllReserve(String memberEmail, int currentPage, int reserveLimit); // 마이페이지 -> 결제 내역 조회
 	

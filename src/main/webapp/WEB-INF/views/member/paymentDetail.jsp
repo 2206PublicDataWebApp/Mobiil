@@ -58,7 +58,7 @@
 				<td width="300"><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>${reservation.spaceName}</b></a></td>
 				<td width="150">
 					<c:if test="${reservation.reviewStatus eq 'Y'}">
-						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&page=${page}';" class="btn btn-info">내 리뷰 조회</button>
+						<button type="button" onclick="location.href='/review/detail.kh?reviewNo=${reservation.reviewNo}&reservationNo=${reservation.reservationNo}&page=${page}';" class="btn btn-info">내 리뷰 조회</button>
 					</c:if> 
 					<c:if test="${reservation.reviewStatus eq 'N'}">
 						<button type="button" onclick="location.href='/review/writeView.kh?reservationNo=${reservation.reservationNo}&page=${page}';" class="btn btn-info">리뷰 작성</button>
@@ -73,13 +73,13 @@
 			<tr>
 				<!-- <td></td> -->
 				<td class="td">시간</td>
-				<td>${reservation.revStart} ~ ${reservation.revEnd}</td>
+				<td>${reservation.revStart}시 ~ ${reservation.revEnd}시</td>
 				<td></td>
 			</tr>
 			<tr>
 				<!-- <td></td> -->
 				<td class="td">사용료</td>
-				<td>${reservation.price}</td>
+				<td>${reservation.price}원</td>
 				<td></td>
 			</tr>
 			<tr id="border">
@@ -109,7 +109,7 @@
 			<tr>
 				<!-- <td></td> -->
 				<td class="td">결제 금액</td>
-				<td>${reservation.price}</td>
+				<td>${reservation.price}원</td>
 				<td></td>
 			</tr>
 			<tr>

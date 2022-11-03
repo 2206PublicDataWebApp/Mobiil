@@ -70,9 +70,15 @@ public class ReviewStoreLogic implements ReviewStore{
 	}
 
 	@Override
-	public int updateRevStatusN(SqlSession session, Reservation reservation) {
-		int result = session.update("ReviewMapper.updateRevStatusN", reservation);
+	public int updateRevStatusN(SqlSession session, String reservationNo) {
+		int result = session.update("ReviewMapper.updateRevStatusN", reservationNo);
 		return result;
+	}
+
+	@Override
+	public List<ReviewImg> selectImgByNo(SqlSession session, Integer reviewNo) {
+		List<ReviewImg> reviewImg = session.selectList("ReviewMapper.selectImgByNo", reviewNo);
+		return reviewImg;
 	}
 
 	}

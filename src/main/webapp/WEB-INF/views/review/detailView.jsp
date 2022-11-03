@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,8 +58,8 @@
 <div class="container">
 <div class="table-responsive">
 	<input type="hidden" name="reviewNo" value="${reviewNo}">
+	<input type="hidden" name="reservationNo" value="${reservationNo}">
 	<table align="center" width="500" border="1" class="table table-bordered">
-		${reservation.reservationNo},${reservationNo},${reviewNo},${spaceNo}
 		<tr>
 			<td id="cl" align="center" width="150">공간명</td>
 			<td>${review.spaceName}</td>
@@ -73,6 +74,7 @@
 		</tr>
 		<tr>
 			<td id="cl" align="center" width="150">첨부파일</td>
+<%-- 			<c:forEach items="${rList}" var="Img"> --%>
 			<td>
 		 		<img alt="본문이미지1" src="/resources/reviewFiles/${rList[0].reviewFileRename }" width="200" height="200">
 		 		<img alt="본문이미지2" src="/resources/reviewFiles/${rList[1].reviewFileRename }" width="200" height="200">
@@ -83,18 +85,17 @@
 			<td colspan="2" align="center">
 				<button onclick="" class="btn btn-info">공간 페이지의 리뷰 보러가기</button>
 				<button onclick="location.href='/review/modifyView.kh?reviewNo=${review.reviewNo }&page=${page}';" class="btn btn-info">수정</button>
-				<button onclick="location.href='/review/remove.kh?reviewNo=${review.reviewNo}';" class="btn btn-danger" >삭제</button>
+				<button onclick="reviewRemove()" href="/review/remove.kh?reviewNo=${review.reviewNo}&reservationNo=${reservationNo}" class="btn btn-danger" >삭제</button>
 		</tr>
 	</table>
 </div>
-</div>	
+</div>
 <script>
-// 		function reviewRemove(page) {
-// 			event.preventDefault(); // 하이퍼링크 이동 방지
-// 			if(confirm("작성하신 리뷰를 정말 삭제하시겠습니까?")) {
-// 				location.href="/review/remove.kh";
-// 			}
-// 		}
+		function reviewRemove() {
+			if(confirm("작성하신 리뷰를 정말 삭제하시겠습니까?")) {
+				location.href="/review/remove.kh?reviewNo=${review.reviewNo}&reservationNo=${reservationNo}";
+			}
+		}
 </script>
 	<br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>

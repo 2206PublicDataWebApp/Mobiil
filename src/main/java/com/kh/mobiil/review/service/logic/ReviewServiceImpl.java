@@ -78,10 +78,17 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int updateRevStatusN(Reservation reservation) {
-		int result = rStore.updateRevStatusN(session, reservation);
+	public int updateRevStatusN(String reservationNo) {
+		int result = rStore.updateRevStatusN(session, reservationNo);
 		return result;
 	}
+
+	@Override
+	public List<ReviewImg> printImgByNo(Integer reviewNo) {
+		List<ReviewImg> reviewImg = rStore.selectImgByNo(session, reviewNo);
+		return reviewImg;
+	}
+
 
 
 

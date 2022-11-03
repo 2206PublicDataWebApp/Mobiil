@@ -67,8 +67,8 @@
   		SELECT COUNT(*) FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hStatus = 'Y'
   	</select>
   	
-  	<select id="selectTotalCount" resultType="_int"> <!-- 결제내역 갯수-->
-  		SELECT COUNT(*) FROM RESERVATION_TBL
+  	<select id="selectTotalCount" resultType="_int"> <!-- 결제내역 페이징 갯수-->
+  		SELECT COUNT(*) FROM RESERVATION_TBL WHERE MEMBER_EMAIL = #{memberEmail} AND RESERV_STATUS = 'Y'
   	</select>
   	
   	<select id="selectAllReserve" resultMap="ReservationResultMap"> <!-- 결제내역-->

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -181,6 +182,30 @@ public class MemberController {
 		return mv;
 	}
 
+	
+	
+	/**
+	 * 카카오 로그인
+	 * @param code
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="member/kakaoLogin.kh", method = RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code) throws Exception {
+		System.out.println("#########" + code);
+		
+//		String access_Token = mService.getAccessToken(code);
+//		System.out.println("###access_Token#### : " + access_Token);
+//		
+//		HashMap<String, Object> userInfo = mService.getUserInfo(access_Token);
+//		System.out.println("###access_Token#### : " + access_Token);
+//		System.out.println("###nickname#### : " + userInfo.get("nickname"));
+//		System.out.println("###email#### : " + userInfo.get("email"));
+		
+		return "member/login";
+	}
+	
+	
 	/**
 	 * 마이페이지(My 정보 화면)
 	 * 
@@ -360,7 +385,7 @@ public class MemberController {
 		Member member = (Member) session.getAttribute("loginUser");
 		String memberEmail = member.getMemberEmail();
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = mService.getTotalCount();
+		int totalCount = mService.getTotalCount(memberEmail);
 		int reserveLimit = 10;
 		int naviLimit = 5;
 		int maxPage;
