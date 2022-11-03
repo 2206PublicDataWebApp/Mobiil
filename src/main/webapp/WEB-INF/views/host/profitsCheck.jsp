@@ -52,7 +52,7 @@
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
 	<form action="/host/profitsCheck.kh" method="get">
 		<div id="div1">
-			<h3>총 판매 금액 : <span id="total"></span></h3>
+			<h3>총 판매 금액 : <span id="total">${priceSum}</span></h3>
 		</div>
 
 		<div id="div2">
@@ -81,12 +81,33 @@
 						<td>${reservation.price }</td>
 					<tr>
 				</c:forEach>
+				<tr>
+					<td height="30" colspan="6" align="center">
+						<ul class="pagination">
+							<li>
+								<c:if test="${currentPage ne 1 }">
+									<a href="/host/profitsCheck.kh?page=${currentPage - 1}&date1=${date1}&date2=${date2}">이전</a>
+								</c:if>
+							</li>
+							<li>
+								<c:forEach var="page" begin="${startNavi }" end="${endNavi }">
+									<a href="/host/profitsCheck.kh?page=${page }&date1=${date1}&date2=${date2}">${page }</a>
+								</c:forEach>
+							</li>
+							<li>
+								<c:if test="${currentPage ne maxPage}">
+									<a href="/host/profitsCheck.kh?page=${currentPage + 1 }&date1=${date1}&date2=${date2}">다음</a>
+								</c:if>
+							</li>
+					    </ul>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</form>
 	
 	<script>
-	$(document).ready(function(){
+	/* $(document).ready(function(){	// 보여지는 페이징만 합계를 구하기 때문에 사용하지 않음.
 		var rowCnt = 0;
 		var col6 = 5;		// 여섯번째 col index
 		var col6Sum = 0;	// 여섯번째 col sum
@@ -107,10 +128,9 @@
 		rowCnt++;
 	});
 	$("#total").text(col6Sum);
-	});
-	
+	}); */
 	</script>
-	<br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>	
 </body>
 </html>

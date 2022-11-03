@@ -129,12 +129,14 @@ public class HostStoreImpl implements HostStore{
 	}
 
 	@Override
-	public List<Reservation> rListByDate(SqlSession session, Date date1, Date date2, String hostEmail) {
+	public List<Reservation> rListByDate(SqlSession session, int currentPage, int boardLimit, Date date1, Date date2, String hostEmail) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("date1", date1);
 		map.put("date2", date2);
 		map.put("hostEmail", hostEmail);
-		List<Reservation> rList = session.selectList("HostMapper.rListByDate", map);
+		int offset = (currentPage-1) * boardLimit;
+		RowBounds rowbounds = new RowBounds(offset, boardLimit);
+		List<Reservation> rList = session.selectList("HostMapper.rListByDate", map, rowbounds);
 		return rList;
 	}
 
@@ -168,6 +170,22 @@ public class HostStoreImpl implements HostStore{
 	@Override
 	public int getSpaceTotalCount(SqlSession session) {
 		int result = session.selectOne("HostMapper.getSpaceTotalCount_Admin");
+		return result;
+	}
+
+	@Override
+	public int getRegervationTotalCountByDate(SqlSession session, Date date1, Date date2, String hostEmail) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("date1", date1);
+		map.put("date2", date2);
+		map.put("hostEmail", hostEmail);
+		int result = session.selectOne("HostMapper.getRegervationTotalCountByDate",map);
+		return result;
+	}
+
+	@Override
+	public int priceSumByHostemail(SqlSession session, String hostEmail) {
+		int result = session.selectOne("HostMapper.priceSumByHostemail", hostEmail);
 		return result;
 	}
 

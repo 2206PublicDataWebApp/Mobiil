@@ -47,7 +47,7 @@ public interface HostStore {
 
 	int reservationRemove(SqlSession session, String reservationNo);
 
-	List<Reservation> rListByDate(SqlSession session, Date date1, Date date2, String hostEmail);
+	List<Reservation> rListByDate(SqlSession session, int currentPage, int boardLimit, Date date1, Date date2, String hostEmail);
 
 	int selectHostCount(SqlSession session);
 	
@@ -60,5 +60,9 @@ public interface HostStore {
 	List<Reservation> regervationListByHostemail(SqlSession session, String hostEmail, int monthValue);
 
 	int getSpaceTotalCount(SqlSession session);
+
+	int getRegervationTotalCountByDate(SqlSession session, Date date1, Date date2, String hostEmail);
+
+	int priceSumByHostemail(SqlSession session, String hostEmail);
 
 }

@@ -350,22 +350,44 @@ public class HostController {
 	 * @return
 	 */
 	@RequestMapping(value = "/host/profitsCheck.kh", method = RequestMethod.GET)
-	public ModelAndView profitsCheck(
-			ModelAndView mv, 
-			@RequestParam("date1") String d1,
-			@RequestParam("date2") String d2,
-			HttpServletRequest request
-			) {
-		try {
+	public ModelAndView profitsCheck(ModelAndView mv, @RequestParam("date1") String d1, @RequestParam("date2") String d2, HttpServletRequest request, @RequestParam(value = "page", required = false) Integer page) {
+	
 			HttpSession session = request.getSession();
 			Host host = (Host)session.getAttribute("loginHost");
-			String hostEmail1 = host.getHostEmail();
+			String hostEmail = host.getHostEmail();
+		try {
 			java.sql.Date date1 = java.sql.Date.valueOf(d1); // String -> Date
 			java.sql.Date date2 = java.sql.Date.valueOf(d2); // String -> Date
-			List<Reservation> rList = hService.rListByDate(date1, date2, hostEmail1);
+			
+			///////////////////////////////////////////////////////////
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = hService.getRegervationTotalCountByDate(date1, date2, hostEmail);
+			int boardLimit = 10;
+			int naviLimit = 5;
+			int maxPage;
+			int startNavi;
+			int endNavi;
+			maxPage = (int) ((double) totalCount / boardLimit + 0.9);
+			startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+			endNavi = startNavi + naviLimit - 1;
+			if (maxPage < endNavi) {
+			endNavi = maxPage;
+			}
+			////////////////////////////////////////////////////////////
+			List<Reservation> rList = hService.rListByDate(currentPage, boardLimit, date1, date2, hostEmail);
+			int priceSum = hService.priceSumByHostemail(hostEmail);
+			System.out.println(priceSum);
+			System.out.println(rList);
 			if (!rList.isEmpty()) {
+				mv.addObject("currentPage", currentPage);
+				mv.addObject("maxPage", maxPage);
+				mv.addObject("startNavi", startNavi);
+				mv.addObject("endNavi", endNavi);
+				mv.addObject("date1", date1);
+				mv.addObject("date2", date2);
+				mv.addObject("priceSum", priceSum);
 				mv.addObject("rList", rList);
-				mv.setViewName("host/profitsCheck"); // redirect ??
+				mv.setViewName("host/profitsCheck"); 
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
