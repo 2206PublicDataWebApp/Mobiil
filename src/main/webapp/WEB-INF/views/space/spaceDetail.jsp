@@ -344,23 +344,20 @@ ${iList[1].spaceFileRename }
 						$tr.append($rWriter);
 						$rWriter.append($rUpdateDate);
 						$tr.after($rContent);
-						
 						$.ajax({
 							url:'/space/imgList.kh',
 							type:'get',
 							data:{"reviewNo":rList[i].reviewNo},
 							success:function(riList){
 								$tr.after($("<a>").append("<img src='#' alt='reviewImg'>"));
-								if('${loginHost.hostEmail }' == '${hostEmail }'){
+								if('${loginHost.hostEmail }' == '${hostEmail }' && riList != null){
 									$rContent.after($button);
 								}
 							},
 							error:function(){
 							}
 						});
-						if('${loginHost.hostEmail }' == '${hostEmail }'){
-							$rContent.after($button);
-						}
+						
 						$.ajax({	
 							url:'/space/replyList.kh',
 							type:'get',
@@ -368,19 +365,21 @@ ${iList[1].spaceFileRename }
 							success:function(hrList){
 								for(var j in hrList){
 								var $rNo = $('.'+hrList[j].reviewNo);
-								
-								if('${loginHost.hostEmail }' == '${hostEmail }'){
-									$rNo.after($button);
-								}
-								console.log(hrList[j].reviewNo);
 								var $htr = $('<tr id="hostReplyList" style="text-align:right;padding-top:10px;">');
 								var $hrWriter = $("<td colspan='2' style='border-top: 1px solid #EDEDED;padding-bottom:10px;'>").text(hrList[j].replyWriter);
 								var $hrUpdateDate = $("<td colspan='2' style='text-align:left;padding-left:20px;border-top: 1px solid #EDEDED;padding-bottom:10px;'>").text(hrList[j].updateDate);
 								var $hrContent = $("<tr style='height:200px;text-align:right;'>").append($("<td colspan='4'>").text(hrList[j].replyContents));
-								$rNo.after($htr);
-								$htr.append($hrWriter);
-								$htr.append($hrUpdateDate);
-								$htr.after($hrContent);
+								var $button = $("<tr>").append($("<td colspan='4'>").append("<a href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>"));
+								if('${loginHost.hostEmail }' == '${hostEmail }' && hrList != null){
+									$rNo.after($button);
+									$button.after($htr);
+									$htr.append($hrWriter);
+									$htr.append($hrUpdateDate);
+									$htr.after($hrContent);
+								} else{
+									$rNo.after($button);
+								}
+								
 								}
 							}
 						});
@@ -401,7 +400,7 @@ ${iList[1].spaceFileRename }
 		if($("#insertTr").length == 0){
 		event.preventDefault();
 		$tr = $("<tr id='insertTr'>");
-		$tr.append("<td colspan='4'><textarea id='insertReply' style='height:50px;border-width:1px;width:70%;resize:none;'></textarea><a style='margin-left:10px;' href='javascript:void(0);' onclick='insertReply(this, "+reviewNo+")');'>등록</a></td>");
+		$tr.append("<td colspan='4' style='word-break: break-all;'><textarea id='insertReply' style='height:50px;border-width:1px;width:70%;resize:none;'></textarea><br/><a style='margin-left:10px;' href='javascript:void(0);' onclick='insertReply(this, "+reviewNo+")');'>등록</a></td>");
 		$(obj).parent().parent().after($tr);			
 		} else{
 			$("#insertTr").remove();
