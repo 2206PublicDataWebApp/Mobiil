@@ -21,7 +21,7 @@ const renderCalender = () => {
   const TLDay = thisLast.getDay();		// 이번달 마지막 요일
 
   const prevDates = [];
-  const thisDates = [...Array(TLDate + 1).keys()].slice(0);
+  const thisDates = [...Array(TLDate + 1).keys()].slice(1);
   const nextDates = [];
 
   if (PLDay !== 6) {

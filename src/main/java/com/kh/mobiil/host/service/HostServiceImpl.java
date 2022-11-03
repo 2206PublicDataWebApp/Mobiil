@@ -127,8 +127,8 @@ public class HostServiceImpl implements HostService{
 	}
 
 	@Override
-	public List<Reservation> rListByDate(Date date1, Date date2, String hostEmail1) {
-		List<Reservation> rList = hStore.rListByDate(session, date1, date2, hostEmail1);
+	public List<Reservation> rListByDate(int currentPage, int boardLimit, Date date1, Date date2, String hostEmail1) {
+		List<Reservation> rList = hStore.rListByDate(session, currentPage, boardLimit, date1, date2, hostEmail1);
 		return rList;
 	}
 
@@ -159,6 +159,18 @@ public class HostServiceImpl implements HostService{
 	@Override
 	public int getSpaceTotalCount() {
 		int result = hStore.getSpaceTotalCount(session);
+		return result;
+	}
+
+	@Override
+	public int getRegervationTotalCountByDate(Date date1, Date date2, String hostEmail) {
+		int result = hStore.getRegervationTotalCountByDate(session, date1, date2, hostEmail);
+		return result;
+	}
+
+	@Override
+	public int priceSumByHostemail(String hostEmail) {
+		int result = hStore.priceSumByHostemail(session, hostEmail);
 		return result;
 	}
 
