@@ -60,10 +60,17 @@ input[type=text]{
 	<div class="col-md-4">
 			<div class="product-item">
 				<div class="product-thumb">
-					<a class="spaceImg" href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }">
-						<img class="img-responsive" src="../../../resources/spaceuploadFiles/${space.spaceImg.spaceFileRename }" alt="product-img">
-					</a>
+					<img class="img-responsive" src="../../../resources/spaceuploadFiles/${space.spaceImg.spaceFileRename }" alt="product-img">
 					<span class="bage">${space.spaceArea }</span>
+					<div class="preview-meta">
+						<ul>
+							<li>
+								<span  data-toggle="modal" data-target="#product-modal">
+									<a href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }" ><i class="tf-ion-ios-search-strong"></i></a>
+								</span>
+							</li>
+						</ul>
+                     </div>
 				</div>
 			<div class="product-content">
 					<h4><a href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }">${space.spaceName }</a></h4>

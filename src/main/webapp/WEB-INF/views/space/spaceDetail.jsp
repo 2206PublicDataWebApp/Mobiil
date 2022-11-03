@@ -108,8 +108,8 @@ ${iList[1].spaceFileRename }
 <option value="22">22시</option>
 <option value="23">23시</option>
 <option value="24">24시</option>
-<span class='sum' style='font-weight:bold;font-size:20px;text-align:center;'></span>
 </select>
+<span class='sum' style='font-weight:bold;font-size:20px;text-align:center;'></span>
 <input type="button" value="결제하기" onclick="payment()" style='margin-left:5px;text-align:right;' class='btn'>
 </div>
 <br>
@@ -131,10 +131,10 @@ ${iList[1].spaceFileRename }
 <div id="map" style="width:450px;height:300px;"></div>
 <br><br><br><br><br><br>
 
-<table align="center" width="500px" border="1" id="rtb">
+<table align="left" width="700px" id="rtb">
 	<thead>
 		<tr>
-			<td colspan="4"><b id="rCount"></b></td>
+			<td colspan="4" style='height:70px;font-size:20px;'><b id="rCount"></b></td>
 		</tr>
 	</thead>
 	<tbody>
@@ -143,8 +143,6 @@ ${iList[1].spaceFileRename }
 	</tbody>
 </table>
 
-${loginHost.hostEmail }
-${hostEmail }
 </div>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
@@ -338,44 +336,57 @@ ${hostEmail }
 				if(rList != null){
 					for(var i in rList){
 						var $tr = $('<tr>');
-						var $rWriter = $("<td colspan='2'>").text(rList[i].reviewWriter);
-						var $rContent = $("<tr style='height:200px;'>").append($("<td colspan='4'>").text(rList[i].reviewContents));
-						var $rUpdateDate = $("<td colspna='2'>").text(rList[i].rUpdateDate);
+						var $rWriter = $("<td colspan='3' class='reviewWriter' style='border-top: 1px solid #EDEDED;'>").text(rList[i].reviewWriter);
+						var $rContent = $("<tr style='height:150px;' class='"+rList[i].reviewNo+"'>").append($("<td colspan='4'>").text(rList[i].reviewContents));
+						var $rUpdateDate = $("<span style='margin-left:20px;'>").text(rList[i].rUpdateDate);
 						var $button = $("<tr>").append($("<td colspan='4'>").append("<a href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>"));
 						$tableBody.append($tr);
 						$tr.append($rWriter);
-						$tr.append($rUpdateDate);
+						$rWriter.append($rUpdateDate);
 						$tr.after($rContent);
+						
 						$.ajax({
 							url:'/space/imgList.kh',
 							type:'get',
 							data:{"reviewNo":rList[i].reviewNo},
 							success:function(riList){
-								$rContent.append($("<td>").append("<img src='#' alt='reviewImg'>"));
+								$tr.after($("<a>").append("<img src='#' alt='reviewImg'>"));
 								if('${loginHost.hostEmail }' == '${hostEmail }'){
 									$rContent.after($button);
 								}
 							},
 							error:function(){
 							}
-						})
-						$.ajax({
+						});
+						if('${loginHost.hostEmail }' == '${hostEmail }'){
+							$rContent.after($button);
+						}
+						$.ajax({	
 							url:'/space/replyList.kh',
 							type:'get',
 							data:{"reviewNo":rList[i].reviewNo},
 							success:function(hrList){
 								for(var j in hrList){
-								var $htr = $('<tr id="hostReplyList" style="padding-left:50px;">');
-								var $hrWriter = $("<td colspan='2'>").text(hrList[j].replyWriter);
-								var $hrUpdateDate = $("<td colspna='2'>").text(hrList[j].updateDate);
-								var $hrContent = $("<tr style='height:200px;'>").append($("<td colspan='4'>").text(hrList[j].replyContents));
+								var $rNo = $('.'+hrList[j].reviewNo);
+								
+								if('${loginHost.hostEmail }' == '${hostEmail }'){
+									$rNo.after($button);
+								}
+								console.log(hrList[j].reviewNo);
+								var $htr = $('<tr id="hostReplyList" style="text-align:right;padding-top:10px;">');
+								var $hrWriter = $("<td colspan='2' style='border-top: 1px solid #EDEDED;padding-bottom:10px;'>").text(hrList[j].replyWriter);
+								var $hrUpdateDate = $("<td colspan='2' style='text-align:left;padding-left:20px;border-top: 1px solid #EDEDED;padding-bottom:10px;'>").text(hrList[j].updateDate);
+								var $hrContent = $("<tr style='height:200px;text-align:right;'>").append($("<td colspan='4'>").text(hrList[j].replyContents));
+								$rNo.after($htr);
 								$htr.append($hrWriter);
 								$htr.append($hrUpdateDate);
-								$rContent.after($htr);
 								$htr.after($hrContent);
 								}
 							}
-						})
+						});
+						
+						
+						
 					}
 				}
 			},
@@ -390,7 +401,7 @@ ${hostEmail }
 		if($("#insertTr").length == 0){
 		event.preventDefault();
 		$tr = $("<tr id='insertTr'>");
-		$tr.append("<td colspan='4'><input type='text' id='insertReply'><a href='javascript:void(0);' onclick='insertReply(this, "+reviewNo+")');'>등록</a></td>");
+		$tr.append("<td colspan='4'><textarea id='insertReply' style='height:50px;border-width:1px;width:70%;resize:none;'></textarea><a style='margin-left:10px;' href='javascript:void(0);' onclick='insertReply(this, "+reviewNo+")');'>등록</a></td>");
 		$(obj).parent().parent().after($tr);			
 		} else{
 			$("#insertTr").remove();
@@ -399,6 +410,7 @@ ${hostEmail }
 	
 	function insertReply(obj, reviewNo){
 		var replyContents = $("#insertReply").val();
+		replyContents = replyContents.replace(/(?:\r\n|\r|\n)/g, '<br>');
 		$.ajax({
 			url:"/space/insertReply.kh",
 			data:{"reviewNo":reviewNo, "replyContents": replyContents, "replyWriter":'${loginHost.companyName }', "hostEmail":'${loginHost.hostEmail }'},

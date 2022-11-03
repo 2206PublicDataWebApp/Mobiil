@@ -12,22 +12,24 @@
 </head>
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
-
-<h1>예약이 완료되었습니다.</h1>
-
-<h2>예약 정보</h2>
-<div>
-${rsv.spaceName }
-이용료 : ${rsv.price } 원
-날짜 : ${rsv.reservationDate }
-시간 : ${rsv.revStart }시 ~ ${rsv.revEnd }시
-사용료 : ${rsv.memberName }
-예약자 이름 : ${rsv.memberName }
-예약자 전화번호 : ${rsv.memberPhone }
+<div class="container" style="text-align:center;">
+<div style='margin-bottom:50px;text-align:center;display:inline-block;float:center;'>
+<h1 style='margin-top:80px;margin-bottom:50px;'>결제 및 예약이 완료되었습니다.</h1>
+<hr>
+<h2 style='margin-top:50px;margin-bottom:50px;'>예약 정보</h2>
+<div style='display:inline-block;float:center;text-align:center;border:1px solid #000;padding:55px;'>
+<h4 style='text-align:left;margin-bottom:15px;'><b>공간명</b> : ${rsv.spaceName }</h4>
+<h4 style='text-align:left;margin-bottom:15px;'><b>날짜</b> : ${rsv.reservationDate }</h4>
+<h4 style='text-align:left;margin-bottom:15px;'><b>시간</b> : ${rsv.revStart }시 ~ ${rsv.revEnd }시</h4>
+<h4 style='text-align:left;margin-bottom:15px;'><b>이용료</b> : ${rsv.price }원</h4>
+<h4 style='text-align:left;margin-bottom:15px;'><b>예약자 이름</b> : ${rsv.memberName }</h4>
+<h4 style='text-align:left;margin-bottom:45px;'><b>예약자 전화번호</b> : ${rsv.memberPhone }</h4>
+<input type="button" onclick="history();" value="결제내역 확인" class="btn-main" style="padding-left:20px;padding-right:20px;margin-right:20px;">
+<input type="button" onclick="main();" value="메인으로 가기" class="btn-main" style="padding-left:20px;padding-right:20px;">
 </div>
-<input type="button" onclick="history();" value="결제내역 확인">
-<input type="button" onclick="main();" value="메인으로 가기">
-
+</div>
+</div>
+<br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 function history(){

@@ -278,28 +278,6 @@ public class SpaceController {
 		return mv;
 	}
 	
-//	@RequestMapping(value="/space/heartDesc.kh", method=RequestMethod.GET)
-//	public ModelAndView heartDescView(
-//			ModelAndView mv
-//			,@RequestParam(value="page", required=false) Integer page) {
-//		// 페이징
-//		int currentPage = (page != null) ? page : 1;
-//		int totalCount = sService.getTotalCount("","");
-//		int naviLimit = 5;
-//		int boardLimit = 9;
-//		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
-//		RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
-//		
-//		List<Space> sList = sService.printSpace(rowBounds);
-//		if(!sList.isEmpty()) {
-//			mv.addObject("urlVal", "spaceList");
-//			mv.addObject("paging", paging);
-//			mv.addObject("sList", sList);
-//		}
-//		mv.setViewName("space/spaceList");
-//		return mv;
-//	}
-	
 	@RequestMapping(value="/space/payment.kh", method=RequestMethod.GET)
 	public ModelAndView payment( ModelAndView mv
 			, @RequestParam(value="sDate") Date sDate
@@ -366,8 +344,8 @@ public class SpaceController {
 						String api_secret = "3VGV1DFPGXT9VJIVNRAQCLZOKALJDTT6";
 						Message coolsms = new Message(api_key, api_secret);
 						HashMap<String, String> set = new HashMap<String, String>();
-						set.put("to", "01067462778"); //memberPhone
-						set.put("from", "01067462778"); // 발신번호
+						set.put("to", memberPhone); //memberPhone
+						set.put("from", ""); // 발신번호
 						set.put("text", "[Mobiil]"+rsvDate+" "+revStart+"시~"+revEnd+"시 예약이 완료되었습니다."); // 문자내용
 						set.put("type", "SMS"); // 문자 타입
 						set.put("app_version", "test app 1.2");

@@ -7,28 +7,44 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <!-- iamport -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
+<style type="text/css">
+input[type=text]{
+	border-width:1px;
+}
+</style>
 </head>
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
-
-<div>
-<h2>예약정보</h2>
-공간명 : ${spaceName }
-날짜 : ${sDate }
-시간 : ${start }시 ~ ${end }시
-사용료 : ${price }
+<div class="container" style="text-align:center;">
+<div style='margin-bottom:50px;text-align:center;display:inline-block;float:center;'>
+<h2 style='margin-top:80px;margin-bottom:50px;'>예약정보</h2>
+<div style='display:inline-block;float:center;text-align:center;border:1px solid #000;padding:55px;'>
+<h4 style='text-align:left;margin-bottom:10px;'><b>공간명</b> : ${spaceName }</h4>
+<h4 style='text-align:left;margin-bottom:10px;'><b>날짜　</b> : ${sDate }</h4>
+<h4 style='text-align:left;margin-bottom:10px;'><b>시간　</b> : ${start }시 ~ ${end }시</h4>
+<h4 style='text-align:left;'><b>사용료</b> : ${price }원</h4>
 </div>
-<div>
-<h2>예약자 정보</h2>
-<input type="checkbox" name="checkbox" id="checkbox" value="checkbox">내 정보 불러오기
-이름 : <input type="text" id="memberName" class="memberName">
-연락처 : <input type="text" id="memberPhone" class="memberPhone">
 </div>
+<hr>
+<div style='margin-bottom:80px;text-align:center;display:inline-block;float:center;'>
+<h2 style='margin-top:50px;margin-bottom:50px;'>예약자 정보</h2>
+<div style='display:inline-block;float:center;text-align:center;'>
+<input type="checkbox" name="checkbox" id="checkbox" value="checkbox" style="margin-bottom:10px;margin-left:100px;">내 정보 불러오기
+<br>
+이름　　 : <input type="text" id="memberName" class="memberName" style="height:24px;margin-bottom:10px;">
+<br>
+전화번호 : <input type="text" id="memberPhone" class="memberPhone" style="height:24px;margin-bottom:10px;">
+<br><br>
 <input type="radio" name="paymethod" value="card"> 신용카드
 <input type="radio" name="paymethod" value="trans"> 실시간 계좌이체
 <input type="radio" name="paymethod" value= "kakaopay"> 카카오페이
-<input type="button" value="결제하기" onclick="requestPay();">
+<br><br><br>
+<input type="button" value="뒤로가기" onclick="back();" class="btn-main" style="padding-left:20px;padding-right:20px;margin-right:20px;">
+<input type="button" value="결제하기" onclick="requestPay();" class="btn-main" style="padding-left:20px;padding-right:20px;">
+</div>
+</div>
+</div>
+<br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 <script>
 
@@ -93,7 +109,9 @@ function requestPay() {
     });
   }
   
-
+function back(){
+	location.href='javascript:history.back()';
+}
 </script>
 </body>
 </html>
