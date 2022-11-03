@@ -50,8 +50,8 @@ public class PartnerStoreLogic implements PartnerStore{
 	}
 
 	@Override
-	public int updatePartnerInfo(Partner partner, SqlSessionTemplate session) {
-		int result = session.update("partnerMapper.updatePartnerInfo", partner);
+	public int updatePartnerContents(Partner partner, SqlSessionTemplate session) {
+		int result = session.update("partnerMapper.updatePartnerContents", partner);
 		return result;
 	}
 
@@ -76,6 +76,18 @@ public class PartnerStoreLogic implements PartnerStore{
 	@Override
 	public int selectNotApprovedPartnerCount(SqlSessionTemplate session) {
 		int result = session.selectOne("partnerMapper.selectNotApprovedPartnerCount");
+		return result;
+	}
+
+	@Override
+	public Partner selectOnePartnerByMemberNick(String memberNick, SqlSessionTemplate session) {
+		Partner pOne = session.selectOne("partnerMapper.selectOneByMemberNick", memberNick);
+		return pOne;
+	}
+
+	@Override
+	public int updatePartnerImage(Partner partner, SqlSessionTemplate session) {
+		int result = session.update("partnerMapper.updatePartnerImage", partner);
 		return result;
 	}
 

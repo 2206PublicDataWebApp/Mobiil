@@ -20,43 +20,54 @@
 		<div class="row">
 		<jsp:include page="../../../views/common/admin-left-sidebar.jsp"></jsp:include>
 			<div class="col-md-10">
-			<h1 align="center">배너 관리</h1>
-		
-		
+				<table align="center" class="table col-10 mb-3">
+					<thead align='center'>
+						<tr>
+						<td>#</td>
+						<td>배너 이미지</td>
+						<td>메세지</td>
+						<td>URL주소</td>
+						<td>작성자</td>
+						<td></td>
+						</tr>
+					
+					</thead>
 	<c:forEach items="${bList }" var="banner" >
 		<c:if test="${empty banner.bannerFileName}">
-			<form action="/admin/banner/register.kh" method="post" enctype="multipart/form-data">
+			<form action="/admin/banner/register.kh" method="post" enctype="multipart/form-data" id="bannerForm">
 		</c:if>
 		<c:if test="${not empty banner.bannerFileName}">
-			<form action="/admin/banner/updateContents.kh" method="post" enctype="multipart/form-data">
+			<form action="/admin/banner/updateContents.kh" method="post" enctype="multipart/form-data" id="bannerForm">
 		</c:if>
-				<table align="center" class="table col-10 mb-3">
+					<tbody>
 					<tr>
-						<td width='5%'> ${banner.bannerNo }</td>
-						<td width='30%'>
+						<td > ${banner.bannerNo }</td>
+						<td align='center' width = '100px'>
 						<c:if test="${not empty banner.bannerFileName}">
-							<img alt="본문이미지" src="/resources/images/slider/${banner.bannerRename }" width = '50%'>
-							<br><input type = 'button' value='배너이미지 변경' onclick ='changeImageWindow(${banner.bannerNo})'>
+							<img alt="본문이미지" src="/resources/images/slider/${banner.bannerRename }" width = '100px'>
+							<br><input type = 'button' class='btn' value='배너이미지 변경' onclick ='changeImageWindow(${banner.bannerNo})'>
 						</c:if>
 						<c:if test="${empty banner.bannerFileName}">
-							<br>저장된 배너가 없습니다.
-							<br><input type="file" name="uploadFile" src="/resources/images/slider/${banner.bannerRename }">
+							<img id="preview" width='150px'/>
+							<br><input type="file" name="uploadFile" id="uploadFile" onchange="readURL(this);" required="required">
 						</c:if>
 						</td>
-						<td width='30%'><input type="text" name="bannerMsg" value="${banner.bannerMsg }"> </td>
-						<td width='30%'><input type="text" name="bannerLink" value="${banner.bannerLink }"> </td>
+						<td ><input type="text" name="bannerMsg" class = "form-control"  value="${banner.bannerMsg }" required="required"> </td>
+						<td ><input type="text" name="bannerLink" class = "form-control" value="${banner.bannerLink }" required="required"> </td>
+						<td ><input type="text" name="writer" class = "form-control"  value = "관리자" required="required"></td>
 						<c:if test="${empty banner.bannerFileName}">
-						<td width='5%'><input type="submit" value="저장" class="btn btn-primary"></td>
+							<td><input type="submit" value="저장" class="btn btn-primary" "></td>
 						</c:if>
 						<c:if test="${not empty banner.bannerFileName}">
-							<td width='5%' ><input type="submit" value="저장" class="btn btn-primary" ></td>
-							<td width='5%'><input type="button" value="삭제" class="btn btn-danger" onclick = 'removeBanner(${banner.bannerNo})'></td>
+							<td  ><input type="submit" value="저장" class="btn btn-primary"  ">
+							<input type="button" value="삭제" class="btn btn-danger" onclick = 'removeBanner(${banner.bannerNo})'></td>
 						</c:if>
 					</tr>
-				</table>
+					</tbody>
 				<input type="hidden" name="bannerNo" value='${banner.bannerNo }' >
 			</form>
 		</c:forEach>
+				</table>
 		
 		
 			</div>		
@@ -66,7 +77,15 @@
 
 <script type="text/javascript">
 function changeImageWindow(bannerNo) {
-	window.open('/admin/banner/imageRegister.kh?bannerNo='+bannerNo+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no')
+	window.open('/admin/banner/imageRegister.kh?bannerNo='+bannerNo+'', 'window', 'width=500, height=600, menubar=no, status=no, toolbar=no')
+}
+
+function bSubmit() {
+	if(confirm("저장하시겠습니까?")){
+		return $("#bannerForm").submit();	
+	}else{
+		return false;
+	}
 }
 
 function removeBanner(bannerNo) {
@@ -88,6 +107,19 @@ function removeBanner(bannerNo) {
 		})
 	}
 }
+
+function readURL(input) { // 파일 미리보기
+	  if (input.files && input.files[0]) {
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('preview').src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+	  } else {
+	    document.getElementById('preview').src = "";
+	  }
+	}
+
 
 </script>
 

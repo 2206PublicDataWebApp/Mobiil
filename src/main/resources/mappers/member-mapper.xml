@@ -130,5 +130,6 @@
 		WHERE (TO_CHAR(enrollDate) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD')))
 				AND (hStatus = 'Y')
 	</select>
+	
   	
   </mapper>

@@ -11,9 +11,7 @@
 
 <html>
 <head>
- 
-
-
+<title>Mobiil</title>
 </head>
 
 <body id="body">
@@ -28,7 +26,7 @@
         <div class="col-lg-8 text-center">
 	      <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">광고</p>
           <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">${banner.bannerMsg }</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="#">Shop Now</a>
+          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="${banner.bannerLink }">Shop Now</a>
         </div>
       </div>
     </div>
@@ -49,7 +47,12 @@
 			</div>
 			<div class="col-md-6">
 				<div class="category-box category-box-2">
+					<c:if test="${not empty loginUser or not empty loginHost  }">
 					<a href="/partner/list.kh">
+					</c:if>
+					<c:if test="${empty loginUser and empty loginHost  }">
+					<a href="#" onclick="showAlert()">
+					</c:if>
 						<img src="/resources/images/board/category/category-1.jpg" alt="" />
 						<div class="content">
 							<h3>파트너</h3>
@@ -99,13 +102,16 @@
     <script src="/resources/plugins/slick/slick.min.js"></script>
     <script src="/resources/plugins/slick/slick-animation.min.js"></script>
 
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
-    <script type="text/javascript" src="/resources/plugins/google-map/gmap.js"></script>
-
     <!-- Main Js File -->
     <script src="/resources/js/script.js"></script>
+    <script type="text/javascript">
+    	function showAlert() {
+    		alert("로그인 후 이용해주세요.")
+    		location.href="/home/login.kh";
+			
+		}
     
+    </script>
 
 
   </body>

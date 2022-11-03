@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.validator.Msg;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,10 @@ import com.kh.mobiil.chat.domain.ChatSearchResult;
 import com.kh.mobiil.chat.service.ChatService;
 import com.kh.mobiil.mail.controller.MailController;
 import com.kh.mobiil.mail.domain.MailInfo;
+import com.kh.mobiil.member.domain.Member;
+import com.kh.mobiil.member.service.MemberService;
+import com.kh.mobiil.partner.domain.Partner;
+import com.kh.mobiil.partner.service.PartnerService;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.service.SpaceService;
 
@@ -32,9 +37,15 @@ public class ChatController {
 	@Autowired
 	private ChatService cService;
 	
-	/**
-	 * 채팅방 리스트 띄우기 + 언리드 카운트 띄우기
-	 */
+	@Autowired
+	private PartnerService pService;
+	
+	 /**채팅방 리스트 띄우기 + 언리드 카운트 띄우기
+	  * 
+	  * @param memberNick
+	  * @param mv
+	  * @return
+	  */
 	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
 	public ModelAndView showChatList(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
 		
@@ -51,6 +62,23 @@ public class ChatController {
 		mv.setViewName("/chat/chatWindow");
 		return mv;
 	}
+	
+	/**프사 보여주기
+	 * 
+	 * @param memberNick
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/chat/getProfile", method = RequestMethod.GET)
+	public String getProfile(@RequestParam("memberNick") String memberNick) {
+		Partner pOne = pService.printOnePartner(memberNick); 
+		if(pOne.getProfileRename() != null) {
+			return pOne.getProfileRename();
+		}else {
+			return "fail";
+		}
+	}
+	
 	
 	
 	/** 메뉴바 언리드카운트
@@ -106,17 +134,22 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value="/chat/createChatRoom.kh", method = RequestMethod.GET)
 	public String createChatRoom(@ModelAttribute ChatRoom roomInfo) {
-		
-		ChatRoom chatRoom = cService.findByUsers(roomInfo);
-		if(chatRoom != null) { // user두명으로 조회시 채팅방이 이미 있는 경우
-			return "already"; // 존재 하는 방임을 알림
-		}else { // user두명으로 조회시 채팅방이 없는 경우
-			int result = cService.registerChatRoom(roomInfo); // 채팅방 생성
-			if(result > 0) { //생성 성공시 채팅방 정보 불러오기
-				return "success";
-			}else {
-				return "fail";
+		Partner partner = pService.printOnePartner(roomInfo.getCreateUser());
+		if (!partner.getApproval().equals("N")) {
+			ChatRoom chatRoom = cService.findByUsers(roomInfo);
+			if (chatRoom != null) { // user두명으로 조회시 채팅방이 이미 있는 경우
+				return "already"; // 존재 하는 방임을 알림
+			} else { // user두명으로 조회시 채팅방이 없는 경우
+				int result = cService.registerChatRoom(roomInfo); // 채팅방 생성
+				if (result > 0) { // 생성 성공시 채팅방 정보 불러오기
+					return "success";
+				} else {
+					return "fail";
+				}
 			}
+
+		}else {
+			return "needRegist";
 		}
 	}
 	
@@ -209,6 +242,4 @@ public class ChatController {
 		List<ChatSearchResult> sList = cService.searchSpace(searchValue);
 		return gson.toJson(sList);
 	}
-
-
 }

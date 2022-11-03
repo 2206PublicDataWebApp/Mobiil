@@ -20,7 +20,8 @@
 	
 	<update id="updateContents">
 		UPDATE BANNER_TBL
-		SET 	bannerMsg = #{bannerMsg}, bannerLink = #{bannerLink}
+		SET 	bannerMsg = #{bannerMsg}, bannerLink = #{bannerLink},
+				writer = #{writer}
 		WHERE 	bannerNo = #{bannerNo}
 	</update>
 	

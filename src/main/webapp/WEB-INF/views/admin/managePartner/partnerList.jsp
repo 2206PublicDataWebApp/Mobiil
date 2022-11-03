@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>파트너 관리</title>
 </head>
 <body>
 <jsp:include page="../../../views/common/admin-top.jsp"></jsp:include>
@@ -20,7 +20,7 @@
 				<table align="center" class="table col-10 mb-3">
 					
 					<tr>
-						<td > 번호</td>
+						<td > 파트너#</td>
 						<td > 닉네임</td>
 						<td > 제목</td>
 						<td > 승인여부</td>

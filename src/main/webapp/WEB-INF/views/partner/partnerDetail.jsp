@@ -7,7 +7,7 @@
 <head>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-<title>파트너 디테일</title>
+<title>Mobiil Partner</title>
 </head>
 <body>
 	<body id="body">
@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="content">
-					<h1 class="page-name">${partner.memberNick }의 정보</h1>
+					<h1 class="page-name">${partner.memberNick } 파트너님!</h1>
 				</div>
 			</div>
 		</div>
@@ -39,51 +39,43 @@
 	</c:if>
 	
 	<c:if test='${!empty partner }'>
-		<table align="center" class="table col-10">
+		<table align="center" class="table col-10 " style=" border:none;">
+			<tr  style=" border:none;">
+				<td colspan = '4'  align = 'center'><h2>${partner.title }</h2> </td>
 			<tr>
-				<td  class="col-2" scope="col" align='center'>썸네일</td>
-				<td><img src = "/resources/images/partner/${partner.profileRename }" width="300px"></td>
+			<tr>
+				<td colspan = '2' rowspan='3' align = 'center'><img src = "/resources/images/partner/${partner.profileRename }" width="300px"></td>
 				
-			</tr>
+				<td  align='center'>작성자</td>
+				<td><span>${partner.memberNick } </span></td>
+			
 			<tr>
-				<td  class="col-2" scope="col" align='center'>제목</td>
-				<td>${partner.title } </td>
-			<tr>
-				<td class="col-2" scope="col" align='center'>작성자</td>
-				<td>${partner.memberNick }</td>
-			</tr>
-			<tr>
-				<td  class="col-2" scope="col" align='center'>지역</td>
+				<td  align='center'>지역</td>
 				<td>${partner.area }</td>
 			</tr>
 			<tr>
-				<td  class="col-2" scope="col" align='center'>악기</td>
+				<td  align='center'>악기</td>
 				<td>${partner.instrument }</td>
 			</tr>
 			<tr>
-				<td  class="col-2" scope="col" align='center' >내용</td>
-				<td> ${partner.contents } </td>
+				<td  colspan='4' > ${partner.contents } </td>
 			</tr>
 			<tr>
-				<td  class="col-2" scope="col" align='center' >승인일</td>
-				<td> ${partner.approvalDate } </td>
+				<td colspan='4' align ='right' style="color:red"> 승인:  ${partner.approvalDate }</td>
 			</tr>
+		
 			<tr>
-			<td colspan='2' align='right'>
+			<td colspan='4' align='right'>
 				<c:if test='${!empty loginUser.memberNick }'>
-					<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${partner.memberNick }');" value='채팅하기'>
+					<input type="button" class = 'btn btn-primary' onclick="openChatRoom('${loginUser.memberNick}', '${partner.memberNick }');" value='채팅하기'>
 				</c:if>
-				<c:if test='${!empty loginHost.companyName }'>
-					<input type="button" onclick="openChatRoom('${loginHost.companyName}', '${partner.memberNick }');" value='채팅하기'>
+				<c:if test='${!empty loginHost.memberNick }'>
+					<input type="button" class = 'btn btn-primary'  onclick="openChatRoom('${loginHost.memberNick}', '${partner.memberNick }');" value='채팅하기'>
 				</c:if>
-			</td>
-			</tr>
-			<tr>
-			<td colspan='2' align='right'>
-				<input type="button" onclick="history.back(-1);" value='이전으로'>
+				<input type="button"  class = 'btn btn btn-secondary'onclick="history.back(-1);" value='이전으로'>
 			<c:if test='${loginUser.memberNick eq "관리자" }'>
-				<input type="button" onclick="approve(${partner.partnerNo}, '${partner.approval }');" value='승인'>
-				<input type="button" onclick="location.href='/admin/rejectMail.kh?partnerNo=${partner.partnerNo}';" value='거부'>
+				<input type="button"  class="btn btn-success" onclick="approve(${partner.partnerNo}, '${partner.approval }');" value='승인'>
+				<input type="button" class="btn btn-danger" onclick="location.href='/admin/rejectMail.kh?partnerNo=${partner.partnerNo}';" value='거부'>
 			</c:if>
 			</td>
 			</tr>
@@ -121,29 +113,33 @@
 	}
 	
 	function openChatRoom(createUser, withUser) {
-		$.ajax({
-			url:"/chat/createChatRoom.kh",
-			tyep: "get",
-			data: {createUser: createUser,
-					withUser:withUser},
-			success:
-				function(data) {
-				console.log(data);
-					if(data == "already"){
-						alert("이미 생성된 채팅방입니다");
-						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
-					}else if(data == "success"){
-						alert("채팅이 시작됩니다.");
-						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=800, height=700, menubar=no, status=no, toolbar=no');
-					}else{
-						alert("생성에 실패했습니다.");
-					}
-				},
-			error:
-				function() {
-					alert("에러")
-				},
-		})
+		if(confirm("채팅을 시작하시겠습니까?")){
+			$.ajax({
+				url:"/chat/createChatRoom.kh",
+				tyep: "get",
+				data: {createUser: createUser,
+						withUser:withUser},
+				success:
+					function(data) {
+						if(data == "already"){
+							alert("이미 생성된 채팅방입니다");
+							window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
+						}else if(data == "success"){
+							alert("채팅이 시작됩니다.");
+							window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
+						}else if(data == "needRegist"){
+							alert("파트너 등록이 필요합니다");
+							location.href = "/member/myInfo.kh"
+						}else{
+							alert("실패")
+						}
+					},
+				error:
+					function() {
+						alert("에러")
+					},
+			})
+		}
 	}
 	
 </script>

@@ -7,7 +7,7 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
-<title>파트너 디테일</title>
+<title>Mobiil Partner</title>
 </head>
 <body>
 	<body id="body">
@@ -33,45 +33,42 @@
 	<c:if test='${empty myPartnerInfo }'>
 		<table align="center" class="table col-10">
 			<tr>
-				<td>등록된 정보가 없습니다.</td>
+				<td><h2>등록된 정보가 없습니다.</h2></td>
 			</tr>
 			<tr>
-				<td><button type='button' onclick="location.href='/partner/registerView.kh'">등록하기</button></td>
+				<td align = 'right'><button type='button' class = 'btn btn-primary' onclick="location.href='/partner/registerView.kh'">등록하기</button></td>
 			</tr>
 		</table>
 	</c:if>
+	
 	<c:if test='${!empty myPartnerInfo }'>
 		<table align="center" class="table col-10">
+			<tr  style=" border:none;">
+				<td colspan = '4'  align = 'center'><h2>${myPartnerInfo.title }</h2> </td>
 			<tr>
-				<td  class="col-2" scope="col" align='center'>썸네일</td>
-				<td><img src = "/resources/images/partner/${myPartnerInfo.profileRename }" width="300px"></td>
+			<tr>
+				<td colspan = '2' rowspan='3' align = 'center'><img src = "/resources/images/partner/${myPartnerInfo.profileRename }" width="300px"></td>
 				
-			</tr>
+				<td  align='center'>작성자</td>
+				<td><span>${myPartnerInfo.memberNick } </span></td>
+			
 			<tr>
-				<td  class="col-2" scope="col" align='center'>제목</td>
-				<td>${myPartnerInfo.title } </td>
-			<tr>
-				<td class="col-2" scope="col" align='center'>작성자</td>
-				<td>${myPartnerInfo.memberNick }</td>
-			</tr>
-			<tr>
-				<td  class="col-2" scope="col" align='center'>지역</td>
+				<td  align='center'>지역</td>
 				<td>${myPartnerInfo.area }</td>
 			</tr>
 			<tr>
-				<td  class="col-2" scope="col" align='center'>악기</td>
+				<td  align='center'>악기</td>
 				<td>${myPartnerInfo.instrument }</td>
 			</tr>
 			<tr>
-				<td  class="col-2" scope="col" align='center' >내용</td>
-				<td> ${myPartnerInfo.instrument } </td>
+				<td  colspan='4' > ${myPartnerInfo.contents } </td>
 			</tr>
 			<tr>
-				<td  class="col-2" scope="col" align='center' >승인일</td>
-				<td> ${myPartnerInfo.approvalDate } </td>
+				<td colspan='4' align ='right' style="color:red"> 승인:  ${myPartnerInfo.approvalDate }</td>
 			</tr>
+		
 			<tr>
-			<td colspan='2' align='right'>
+			<td colspan='4' align='right'>
 				<input type="button" value="수정하기" class='btn btn-dark' onclick="location.href='/partner/modify.kh?partnerNo=${myPartnerInfo.partnerNo}'">
 				<input type="button" value="삭제하기" class='btn btn-dark' onclick='deletePartner(${myPartnerInfo.partnerNo});'">
 				

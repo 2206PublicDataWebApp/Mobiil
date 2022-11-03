@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.mobiil.banner.domain.Banner;
 import com.kh.mobiil.mail.controller.MailController;
 import com.kh.mobiil.mail.domain.MailInfo;
 import com.kh.mobiil.partner.domain.Page;
@@ -261,7 +262,7 @@ public class PartnerController {
 		
 		int result = pService.registerPartner(partner);
 		if(result > 0) {
-			mv.setViewName("redirect:/partner/list.kh");
+			mv.setViewName("redirect:/partner/myPartnerInfo.kh?memberEmail="+partner.getMemberEmail());
 		}else {
 			mv.setViewName("/common/error");
 		}
@@ -285,8 +286,42 @@ public class PartnerController {
 		return mv;
 	}
 
+	
+	/**
+	 *  파트너 내용 수정
+	 * @param banner
+	 * @return
+	 */
+	@RequestMapping("/partner/modifyPartner.kh")
+	public String modifyPartnerContents(@ModelAttribute Partner partner) {
+		int result = pService.updatePartnerContents(partner);
+		Partner pOne = pService.findByPartnerNo(partner.getPartnerNo());
+		if(result > 0) {
+			return "redirect:/partner/myPartnerInfo.kh?memberEmail="+pOne.getMemberEmail();
+		}else {
+			return "common/errorPage";
+		}
+	}
 
-	/** 내 파트너정보 수정하기
+	/**
+	 * 파트너정보 이미지 수정 뷰
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/partner/imageRegister.kh", method = RequestMethod.GET)
+	public ModelAndView  showChangePartnerImage(
+			@RequestParam("partnerNo") int partnerNo
+			,ModelAndView mv) {
+		Partner partner = pService.findByPartnerNo(partnerNo);
+		mv.addObject("partner", partner);
+		mv.setViewName("partner/partnerImageRegister");
+		return mv;
+	}
+	
+	
+	
+	
+	/** 파트너 이미지 업데이트
 	 * 
 	 * @param mv
 	 * @param partner
@@ -294,48 +329,46 @@ public class PartnerController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/partner/modifyPartner.kh", method = RequestMethod.POST)
-	public ModelAndView modifyPartner(ModelAndView mv
+	@ResponseBody
+	@RequestMapping(value="/partner/updateImage.kh", method = RequestMethod.POST)
+	public String modifyPartnerImage(ModelAndView mv
 			,@ModelAttribute Partner partner
-			,@RequestParam(value = "uploadFile", required = true) MultipartFile uploadFile
-			, HttpServletRequest request) {
-		
-		// 썸네일 업로드
-				String root = request.getSession().getServletContext().getRealPath("resources");
-				String savePath = root + "\\images\\partner"; // 저장경로 지정
-				String profileFileName = uploadFile.getOriginalFilename();
-				try {
-					if (!profileFileName.equals("")) {
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-						File file = new File(savePath);
-						String profileRename = sdf.format(new Date(System.currentTimeMillis())) + "."
-								+ profileFileName.substring(profileFileName.lastIndexOf(".") + 1);// .다음부터 끝까지 잘라서 반환
-						if (!file.exists()) {
-							file.mkdir(); // 경로 폴더가 없으면 폴더 생성
-						}
-						uploadFile.transferTo(new File(savePath + "\\" + profileRename));
-						String profilePath = savePath + "\\" + profileRename;// 절대경로
-						
-						partner.setProfileFileName(profileFileName);
-						partner.setProfileRename(profileRename);
-						partner.setProfilePath(profilePath);
+			,@RequestParam(value = "uploadFile", required = false) 
+							MultipartFile uploadFile
+			, HttpServletRequest request) { // resources 경로 가져오려고
+			
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\images\\partner"; // 저장경로 지정
+			String profileFileName = uploadFile.getOriginalFilename();
+			
+			try {
+				if (!profileFileName.equals("")) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					File file = new File(savePath);
+					String profileRename = sdf.format(new Date(System.currentTimeMillis())) + "."
+							+ profileFileName.substring(profileFileName.lastIndexOf(".") + 1);// .다음부터 끝까지 잘라서 반환
+					if (!file.exists()) {
+						file.mkdir(); // 경로 폴더가 없으면 폴더 생성
 					}
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-		int result = pService.modifyPartner(partner);
-		if(result > 0) {
-			Partner myPartnerInfo = partner;
-			mv.addObject("myPartnerInfo", myPartnerInfo);
-			mv.setViewName("/partner/myPartnerInfo");
-		}else {
-			mv.setViewName("/common/error");
-		}
-		return mv;
-	}
+					uploadFile.transferTo(new File(savePath + "\\" + profileRename));
+					String profilePath = savePath + "\\" + profileRename;// 절대경로
 
+					partner.setProfileFileName(profileFileName);
+					partner.setProfileRename(profileRename);
+					partner.setProfilePath(profilePath);
+				}
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		int result = pService.updateImage(partner);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 
 	/** 에이잭스로 파트너 승인하기
 	 * 
