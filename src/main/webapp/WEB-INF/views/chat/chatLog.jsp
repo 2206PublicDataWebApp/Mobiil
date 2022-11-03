@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>myChat</title>
 
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -62,7 +62,7 @@ display: block;
 
 #chatLogArea{
 margin-top: 50px;
-margin-bottom:75px;
+margin-bottom:120px;
 
 }
 
@@ -102,7 +102,6 @@ a{
 </head>
 <body>
 
-<%--  <span id="header" align='center'><h1>myChat</h1> <a href='/chat/chatWindow.kh?memberNick=${memberNick }'>리스트로</a></q></span> --%>
 <span id="header" align='center'><h1>myChat</h1> <a href= "javascript:void(0)" onclick = "clearRoom();">리스트로</a>
 <c:if test="${roomStatus ne 'N' }">
 <a href= "javascript:void(0)" onclick = "disableRoom();">채팅방 나가기</a>
@@ -203,7 +202,7 @@ function search() {
 			// 검색결과가 없으면 검색결과가 없습니다 출력
 			var chatArr = new Array();
 			var chat = "#" + searchValue + " 검색결과" + "<br>" ;
-			var tail = "<br>더 많은 공간 검색은<br><a target='_blank' href='/space/spaceList.kh'> ==> </a>"
+			var tail = "<br><a target='_blank' href='/space/spaceList.kh'>더 많은 공간 검색은==> </a>"
 			if(data.length != 0){
 				if(data.length > 2){
 					for(var i = 0; i < 3; i++){
@@ -268,6 +267,12 @@ function clearRoom() {
 
 // 채팅방 나가기
 function disableRoom() {
+	if("${loginHost.memberNick }" !=  ""){
+		var memberNick = "${loginHost.memberNick }";
+	}
+	if("${loginUser.memberNick }" != ""){
+		var memberNick = "${loginUser.memberNick }";
+	}
 	if(confirm("채팅방은 복구할 수 없습니다. 정말 나가시겠습니까?")){
 		$.ajax({
 			url: "/chat/disableChatRoom.kh",
@@ -356,7 +361,6 @@ function cSubmit() {
  				,memberNick:memberNick},
  			type: "get",
  			success: function(data) {// 여기에 sender 피아식별해서 왼오 가를 수 있도록 세팅
- 			//	var hiddenNo = $("#hiddenNo").last().val();
  			var hiddenNo = $("input").last().val();
  				//앞에 붙어있는 메세지의 no가 지금 불러온 애랑 다른경우에 붙임
  				if(data.chatNo != hiddenNo){

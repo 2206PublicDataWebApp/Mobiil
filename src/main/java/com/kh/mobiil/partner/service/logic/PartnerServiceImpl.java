@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.partner.domain.Partner;
 import com.kh.mobiil.partner.domain.SearchPartner;
 import com.kh.mobiil.partner.service.PartnerService;
@@ -57,8 +58,8 @@ public class PartnerServiceImpl implements PartnerService {
 	}
 
 	@Override
-	public int modifyPartner(Partner partner) {
-		int result = pStore.updatePartnerInfo(partner, session);
+	public int updatePartnerContents(Partner partner) {
+		int result = pStore.updatePartnerContents(partner, session);
 		return result;
 	}
 
@@ -83,6 +84,18 @@ public class PartnerServiceImpl implements PartnerService {
 	@Override
 	public int getNotApprovedPartnerCount() {
 		int result = pStore.selectNotApprovedPartnerCount(session);
+		return result;
+	}
+
+	@Override
+	public Partner printOnePartner(String memberNick) {
+		Partner pOne = pStore.selectOnePartnerByMemberNick(memberNick, session);
+		return pOne;
+	}
+
+	@Override
+	public int updateImage(Partner partner) {
+		int result = pStore.updatePartnerImage(partner, session);
 		return result;
 	}
 

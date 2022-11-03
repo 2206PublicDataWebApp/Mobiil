@@ -17,6 +17,18 @@ body{
 font-family:'Gamja Flower', cursive;
 }
 
+#header{
+display: block;
+background: black;
+position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;;
+  color: white;
+  z-index: 3;
+}
+
+
 .list{
 pading:0;
 margin-top: 50px;
@@ -63,7 +75,7 @@ color:black;
 </style>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<title>채팅방 리스트</title>
+<title>채팅 리스트</title>
 
 
 
@@ -73,7 +85,7 @@ color:black;
 
 <body>
 
-<span id="header"><h1>myChat</h1></span>
+<span id="header" align='center'><h1>myChat</h1></span>
 <div id='container'>
 <div id = "list" >
 	<table class= ''>
@@ -86,16 +98,18 @@ color:black;
 			<c:if test="${!empty loginUser.memberNick }"> 
 				<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
 						<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}" >
-					<li>				
-						<span>	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
+					<li>		
+						<img id='${chatRoom.withUser}img' src="/resources/images/ghost.png" width='10%'>	
+						<span onmouseover="showProfile('${chatRoom.withUser}')">	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
 					</li>
 						</a>
 				</c:if>
 			
 				<c:if test="${chatRoom.createUser ne loginUser.memberNick }">
 						<a href= "/chat/chatRoom.kh?memberNick=${loginUser.memberNick }&roomNo=${chatRoom.roomNo}">
-					<li>				
-						<span>	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
+					<li>	
+						<img id='${chatRoom.createUser}img' src="/resources/images/ghost.png" width='10%'>	
+						<span onmouseover="showProfile('${chatRoom.createUser}')" >	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
 					</li>
 						</a>
 				</c:if>
@@ -105,16 +119,16 @@ color:black;
 			<c:if test="${!empty loginHost.memberNick }"> 
 				<c:if test="${chatRoom.createUser eq loginHost.memberNick }">
 						<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}" >
-					<li>				
-						<span>	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
+					<li>		
+						<img id='${chatRoom.withUser}img' src="/resources/images/ghost.png" width='10%'>	
 					</li>
 						</a>
 				</c:if>
 			
 				<c:if test="${chatRoom.createUser ne loginHost.memberNick }">
 						<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}">
-					<li>				
-						<span>	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
+					<li>	
+						<img id='${chatRoom.createUser}img' src="/resources/images/ghost.png" width='10%'>	
 					</li>
 						</a>
 				</c:if>
@@ -174,7 +188,25 @@ color:black;
 <script type="text/javascript">
 	setTimeout(function(){
 	location.reload();
-	},3000); // 3초에 한번 리로드	
+	},5*60*1000); // 5분에 한번 리로드	
+
+	
+ 	function showProfile(memberNick) {
+		if(memberNick != "관리자"){
+			
+		
+			$.ajax({
+				url:"getProfile",
+				data:{memberNick: memberNick},
+				success: function(data) {
+				 $("#"+memberNick+"img").attr("src", "/resources/images/partner/"+data)
+				} ,
+				error: function() {
+					console.log("에러")
+				}
+			})
+		}
+	}	
 </script>
 
 

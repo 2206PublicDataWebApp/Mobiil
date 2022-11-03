@@ -6,15 +6,8 @@
 <html>
 <head>
 
-  <!-- 서머노트를 위해 추가해야할 부분 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="/resources/js/summernote-lite.js"></script>
-  <script src="/resources/js/summernote/lang/summernote-ko-KR.js"></script>
-  <link rel="stylesheet" href="/resources/css/summernote-lite.css">
-
 <meta charset="UTF-8">
-<title>파트너 등록</title>
+<title>파트너 정보 수정</title>
 </head>
 <body>
 	<body id="body">
@@ -38,13 +31,10 @@
 	
 		<table align="center" class="table col-10">
 			<tr>
-				<td  class="col-2" scope="col" align='center'>기존 썸네일</td>
-				<td><img src = "/resources/images/partner/${myPartnerInfo.profileRename }" width="300px"></td>
-				<td  class="col-2" scope="col" align='center'>썸네일 변경</td>
-				<td><input type="file" name="uploadFile" onchange="readURL(this);" required="required"></td>
+				<td colspan='4' align='center'><img src = "/resources/images/partner/${myPartnerInfo.profileRename }" width="300px">
+				<br><input type = 'button' value='프로필 사진 변경' onclick ='changeImageWindow(${myPartnerInfo.partnerNo})'>
+				</td>
 			<tr>
-			<td></td>
-			<td><br>미리보기: <img id="preview" width='100px'/></td>
 			</tr>
 			<tr>
 			<tr>
@@ -95,6 +85,10 @@
 
 <script type="text/javascript">
 
+function changeImageWindow(partnerNo) {
+	window.open('/partner/imageRegister.kh?partnerNo='+partnerNo+'', 'window', 'width=500, height=600, menubar=no, status=no, toolbar=no')
+}
+
 function readURL(input) { // 파일 미리보기
 	  if (input.files && input.files[0]) {
 	    var reader = new FileReader();
@@ -121,19 +115,6 @@ $('.summernote').summernote({
 	lang : "ko-KR",
 });
 
-
-function formCheck() { // null 체크
-	if(partnerForm.title.value=="") { // document 를 생략해도 됨
-        alert("제목을 입력하세요!");
-        partnerForm.title.focus();
-    	return false;
-    }else if(partnerForm.title.value==""){
-        alert("내용을 입력하세요");
-        partnerForm.title.focus();
-        return false;
-    }
-	return partnerForm.submit();
- }
 
 </script>
 

@@ -61,4 +61,6 @@ public interface MemberService {
 	public int modifyHostPwd(Host host);
 
 
+
+
 }

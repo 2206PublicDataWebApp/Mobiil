@@ -1,6 +1,6 @@
 package com.kh.mobiil.partner.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Partner {
 	private int partnerNo;

@@ -6,6 +6,7 @@
 <html>
 <head>
 </head>
+<title>Mobiil Partner</title>
 
 <body id="body">
 
@@ -29,7 +30,7 @@
 						<ul>
 							<li>
 								<span data-toggle="modal" data-target="#product-modal">
-									<a href=""><img src="/../../resources/images/chat.png"></a>
+									<a href="#" onclick="openChatRoom('${loginUser.memberNick}', '${partner.memberNick }');"><img src="/../../resources/images/chat.png"></a>
 								</span>
 							</li>
 							<li>
@@ -53,8 +54,7 @@
 	</c:if>
 	
 	<c:if test="${empty pList }">
-		<span>검색 결과가 없습니다ㅜㅜ</span>
-		<button type='button' onclick="location.href='/partner/registerView.kh'">등록하기</button>
+		<span>검색 결과가 없습니다</span>
 	</c:if>
 	
 	<!-- 페이징 -->
@@ -123,5 +123,39 @@
 
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
+
+<script type="text/javascript">
+function openChatRoom(createUser, withUser) {
+	
+	if(confirm("채팅을 시작하시겠습니까?")){
+		$.ajax({
+			url:"/chat/createChatRoom.kh",
+			tyep: "get",
+			data: {createUser: createUser,
+					withUser:withUser},
+			success:
+				function(data) {
+					if(data == "already"){
+						alert("이미 생성된 채팅방입니다");
+						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
+					}else if(data == "success"){
+						alert("채팅이 시작됩니다.");
+						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
+					}else if(data == "needRegist"){
+						alert("파트너 등록이 필요합니다");
+						location.href = "/member/myInfo.kh"
+					}else{
+						alert("실패")
+					}
+				},
+			error:
+				function() {
+					alert("에러")
+				},
+		})
+	}
+}
+
+</script>
 </body>
 </html>

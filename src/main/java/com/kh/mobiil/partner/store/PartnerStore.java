@@ -22,7 +22,7 @@ public interface PartnerStore {
 
 	public int updateApproval(int partnerNo, SqlSessionTemplate session);
 
-	public int updatePartnerInfo(Partner partner, SqlSessionTemplate session);
+	public int updatePartnerContents(Partner partner, SqlSessionTemplate session);
 
 	public int deletePartnerInfo(int partnerNo, SqlSessionTemplate session);
 
@@ -31,5 +31,9 @@ public interface PartnerStore {
 	public int selectApprovedPartnerCount(SqlSessionTemplate session);
 
 	public int selectNotApprovedPartnerCount(SqlSessionTemplate session);
+
+	public Partner selectOnePartnerByMemberNick(String memberNick, SqlSessionTemplate session);
+
+	public int updatePartnerImage(Partner partner, SqlSessionTemplate session);
 
 }

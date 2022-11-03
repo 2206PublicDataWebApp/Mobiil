@@ -1,8 +1,6 @@
 package com.kh.mobiil;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;

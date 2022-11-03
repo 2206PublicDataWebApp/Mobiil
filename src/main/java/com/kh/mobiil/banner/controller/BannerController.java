@@ -30,21 +30,7 @@ public class BannerController {
 	private BannerService bService;
 	@Autowired
 	private MailController mailSender;
-	
-	/**
-	 * 배너 이미지 수정 뷰
-	 * @param mv
-	 * @return
-	 */
-	@RequestMapping(value="/admin/banner/imageRegister.kh", method = RequestMethod.GET)
-	public ModelAndView  showChangeBanner(
-			@RequestParam("bannerNo") int bannerNo
-			,ModelAndView mv) {
-		Banner banner = bService.printOneBanenr(bannerNo);
-		mv.addObject("banner", banner);
-		mv.setViewName("admin/banner/bannerImageRegister");
-		return mv;
-	}
+
 	
 	
 	
@@ -83,6 +69,23 @@ public class BannerController {
 		}
 	}
 	
+	
+	/**
+	 * 배너 이미지 수정 뷰
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/admin/banner/imageRegister.kh", method = RequestMethod.GET)
+	public ModelAndView  showChangeBanner(
+			@RequestParam("bannerNo") int bannerNo
+			,ModelAndView mv) {
+		Banner banner = bService.printOneBanenr(bannerNo);
+		mv.addObject("banner", banner);
+		mv.setViewName("admin/banner/bannerImageRegister");
+		return mv;
+	}
+	
+	
 	/** 배너 이미지 업데이트
 	 * 
 	 * @param mv
@@ -105,25 +108,25 @@ public class BannerController {
 			String bannerFileName = uploadFile.getOriginalFilename();
 			
 			try {
-			if (!bannerFileName.equals("")) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			File file = new File(savePath);
-			String bannerRename = sdf.format(new Date(System.currentTimeMillis())) + "."
-			+ bannerFileName.substring(bannerFileName.lastIndexOf(".") + 1);// .다음부터 끝까지 잘라서 반환
-			if (!file.exists()) {
-			file.mkdir(); // 경로 폴더가 없으면 폴더 생성
-			}
-			uploadFile.transferTo(new File(savePath + "\\" + bannerRename));
-			String bannerpath = savePath + "\\" + bannerRename;// 절대경로
-			
-			banner.setBannerFileName(bannerFileName);
-			banner.setBannerRename(bannerRename);
-			banner.setBannerPath(bannerpath);
-			}
+				if (!bannerFileName.equals("")) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					File file = new File(savePath);
+					String bannerRename = sdf.format(new Date(System.currentTimeMillis())) + "."
+							+ bannerFileName.substring(bannerFileName.lastIndexOf(".") + 1);// .다음부터 끝까지 잘라서 반환
+					if (!file.exists()) {
+						file.mkdir(); // 경로 폴더가 없으면 폴더 생성
+					}
+					uploadFile.transferTo(new File(savePath + "\\" + bannerRename));
+					String bannerpath = savePath + "\\" + bannerRename;// 절대경로
+
+					banner.setBannerFileName(bannerFileName);
+					banner.setBannerRename(bannerRename);
+					banner.setBannerPath(bannerpath);
+				}
 			} catch (IllegalStateException e) {
-			e.printStackTrace();
+				e.printStackTrace();
 			} catch (IOException e) {
-			e.printStackTrace();
+				e.printStackTrace();
 			}
 		int result = bService.updateImage(banner);
 		if(result > 0) {
