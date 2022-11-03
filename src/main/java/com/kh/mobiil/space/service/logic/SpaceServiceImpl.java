@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.mobiil.review.domain.Review;
+import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
@@ -32,8 +33,8 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int getTotalCount(String area, String searchValue) {
-		int totalCount = sStore.selectTotalCount(session, area, searchValue);
+	public int getTotalCount(String searchArea, String searchValue) {
+		int totalCount = sStore.selectTotalCount(session, searchArea, searchValue);
 		return totalCount;
 	}
 
@@ -62,14 +63,14 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public List<Space> printAllByValue(String searchValue, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectAllByValue(session, searchValue, rowBounds);
+	public List<Space> printAllByValue(String searchArea, String searchValue, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectAllByValue(session, searchArea, searchValue, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> printByArea(String area, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectByArea(session, area, rowBounds);
+	public List<Space> printByArea(String searchArea, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectByArea(session, searchArea, rowBounds);
 		return sList;
 	}
 
@@ -86,8 +87,8 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int getAreaCount(String area) {
-		int result = sStore.selectAreaCount(area, session);
+	public int getAreaCount(String searchArea) {
+		int result = sStore.selectAreaCount(searchArea, session);
 		return result;
 	}
 
@@ -137,6 +138,24 @@ public class SpaceServiceImpl implements SpaceService{
 	public List<HostReply> printReply(int reviewNo) {
 		List<HostReply> hrList = sStore.selectReply(session, reviewNo);
 		return hrList;
+	}
+
+	@Override
+	public List<ReviewImg> printReviewImg(Integer reviewNo) {
+		List<ReviewImg> riList = sStore.selectReviewImg(session, reviewNo);
+		return riList;
+	}
+
+	@Override
+	public List<Space> printHeartDesc(RowBounds rowBounds) {
+		List<Space> sList = sStore.selectHeartDesc(session, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printRivewDesc(RowBounds rowBounds) {
+		List<Space> sList = sStore.selectRivewDesc(session, rowBounds);
+		return sList;
 	}
 
 

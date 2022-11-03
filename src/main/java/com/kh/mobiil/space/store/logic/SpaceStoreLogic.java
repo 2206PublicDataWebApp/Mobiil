@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mobiil.review.domain.Review;
+import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
@@ -20,9 +21,9 @@ public class SpaceStoreLogic implements SpaceStore{
 
 	// 리스트 전체 게시물 개수
 	@Override
-	public int selectTotalCount(SqlSessionTemplate session, String area, String searchValue) {
+	public int selectTotalCount(SqlSessionTemplate session, String searchArea, String searchValue) {
 		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("area", area);
+		paramMap.put("searchArea", searchArea);
 		paramMap.put("searchValue", searchValue);
 		int totalCount = session.selectOne("SpaceMapper.selectTotalCount", paramMap);
 		return totalCount;
@@ -67,14 +68,17 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
-	public List<Space> selectAllByValue(SqlSessionTemplate session, String searchValue, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.selectAllByValue", searchValue, rowBounds);
+	public List<Space> selectAllByValue(SqlSessionTemplate session, String searchArea, String searchValue, RowBounds rowBounds) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchArea", searchArea);
+		paramMap.put("searchValue", searchValue);
+		List<Space> sList = session.selectList("SpaceMapper.selectAllByValue", paramMap, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> selectByArea(SqlSessionTemplate session, String area, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.selectByArea", area, rowBounds);
+	public List<Space> selectByArea(SqlSessionTemplate session, String searchArea, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectByArea", searchArea, rowBounds);
 		return sList;
 	}
 
@@ -94,8 +98,8 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
-	public int selectAreaCount(String area, SqlSessionTemplate session) {
-		int result = session.selectOne("SpaceMapper.selectAreaCount", area);
+	public int selectAreaCount(String searchArea, SqlSessionTemplate session) {
+		int result = session.selectOne("SpaceMapper.selectAreaCount", searchArea);
 		return result;
 	}
 
@@ -149,6 +153,24 @@ public class SpaceStoreLogic implements SpaceStore{
 	public List<HostReply> selectReply(SqlSessionTemplate session, int reviewNo) {
 		List<HostReply> hrList = session.selectList("SpaceMapper.selectReply", reviewNo);
 		return hrList;
+	}
+
+	@Override
+	public List<ReviewImg> selectReviewImg(SqlSessionTemplate session, Integer reviewNo) {
+		List<ReviewImg> riList = session.selectList("SpaceMapper.selectReviewImg", reviewNo);
+		return riList;
+	}
+
+	@Override
+	public List<Space> selectHeartDesc(SqlSessionTemplate session, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.heartSortDesc", null, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectRivewDesc(SqlSessionTemplate session, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.ReviewSortDesc", null, rowBounds);
+		return sList;
 	}
 
 	
