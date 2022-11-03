@@ -14,53 +14,81 @@
 
 
 ## Features
-* AJAX실시간 채팅
-* Chart.js 관리자페이지 차트
-* SummerNote 적용 게시판
-* mailsender 메일 발송 및 임시 비밀번호 발급
-* 카카오 MAP API를 통한 지도
-* I'mport API 결제시스템
-* CoolSMS 결제 완료 문자 전송
-* 달력 API 예약일정 달력 적용
+* AJAX**실시간** 채팅
+* **Chart.js** 관리자페이지 차트
+* **SummerNote** 적용 게시판
+* **mailsender** 메일 발송 및 임시 비밀번호 발급
+* **카카오 MAP** API를 통한 지도
+* **I'mport** API 결제시스템
+* **CoolSMS** 결제 완료 문자 전송
+* **달력 API** 예약일정 달력 적용
 * 결제가 완료된 금액 정산 조회
-* 소셜 로그인 API를 사용한 소셜 로그인
+* **소셜 로그인** API를 사용한 소셜 로그인
 
 
 ## Role
-고종규 
+<details>
+<summary>고종규</summary>
+<div markdown="1">
  > 공간
  >  > 작성중
  
  > 예약
  >  > 작성 중
+</div>
+</details>
  
-김다현 
+<details>
+<summary>김다현</summary>
+<div markdown="1">
 > 공간
  >  > 작성중
  
  > 결제
  >  > 작성 중
+</div>
+</details>
+ 
 
-정슬기 
-> 파트너
- >  > 작성중
+<details>
+<summary>정슬기</summary>
+<div markdown="1">
+
++ 파트너
+  - 파트너 정보 CRUD
+  -  파트너 승인 or 거부 메일 발송
  
- > 채팅
- >  > 작성 중
++ 채팅
+  -  채팅방 CRUD
  
- > 대시보드
- >  > 작성 중
+  -  채팅로그 열람
+  -  안읽은 메세지 카운트
  
- > 배너
- >  > 작성 중
+  -  공간 검색
+  - 상대방 프로필 사진 노출
++ 대시보드
+  -  작성 중
++ 배너
+  -  작성 중
+
+</div>
+</details>
+ 
+ 
+
     
-최혜진
+<details>
+<summary>최혜진</summary>
+<div markdown="1">
+
  > 회원가입 및 로그인
  >  > 작성중
  
  > 마이페이지 및 리뷰
  >  > 작성 중
 
+</div>
+</details>
 
 ## Tech
 - Java(jdk 1.8)
