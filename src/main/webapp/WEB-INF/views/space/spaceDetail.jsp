@@ -58,7 +58,7 @@ function openChatRoom(createUser, withUser) {
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <div class="container">
 
-<h1>${space.spaceName }</h1>
+<h1 style='margin-top:80px;margin-bottom:80px;'>${space.spaceName }</h1>
 <br><br>
 <div class='spaceComent' style='width:600px;display:inline-block;align:left;'>
 ${space.spaceComent }
@@ -72,8 +72,8 @@ ${iList[1].spaceFileRename }
 <br>
 <div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
 <br>
-<div class='time' style='text-align:center;'>
-<select id="startTime" onchange="check();" style='margin-right:10px;' class='commonSelect'>
+<div class='time' style='float:left;'>
+<select id="startTime" onchange="check();" style='margin-right:5px;text-align:left;' class='commonSelect'>
 <option value="시작">시작</option>
 <option value="9">9시</option>
 <option value="10">10시</option>
@@ -91,7 +91,7 @@ ${iList[1].spaceFileRename }
 <option value="22">22시</option>
 <option value="23">23시</option>
 </select>
-<select id="endTime" onchange="check();" style='margin-left:10px;' class='commonSelect'>
+<select id="endTime" onchange="check();" style='margin-left:5px;' class='commonSelect'>
 <option value="끝">끝</option>
 <option value="10">10시</option>
 <option value="11">11시</option>
@@ -108,13 +108,14 @@ ${iList[1].spaceFileRename }
 <option value="22">22시</option>
 <option value="23">23시</option>
 <option value="24">24시</option>
-</select>
-<br>
-<br>
 <span class='sum' style='font-weight:bold;font-size:20px;text-align:center;'></span>
-<br>
-<br>
+</select>
+<input type="button" value="결제하기" onclick="payment()" style='margin-left:5px;text-align:right;' class='btn'>
 </div>
+<br>
+<br>
+<br>
+<br>
 <div class='payAndchat' style='text-align:center;'>
 	<c:if test='${!empty loginUser.memberNick }'>
 		<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${memberNick }');" value='채팅하기' style='margin-right:5px;' class='btn'>
@@ -122,7 +123,6 @@ ${iList[1].spaceFileRename }
 	<c:if test='${!empty loginHost.hostEmail }'>
 		<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅하기' style='margin-right:5px;' class='btn'>
 	</c:if>
-<input type="button" value="결제하기" onclick="payment()" style='margin-left:5px;' class='btn'>
 </div>
 </div>
 
@@ -352,13 +352,13 @@ ${hostEmail }
 							data:{"reviewNo":rList[i].reviewNo},
 							success:function(riList){
 								$rContent.append($("<td>").append("<img src='#' alt='reviewImg'>"));
+								if('${loginHost.hostEmail }' == '${hostEmail }'){
+									$rContent.after($button);
+								}
 							},
 							error:function(){
 							}
 						})
-						if('${loginHost.hostEmail }' == '${hostEmail }'){
-							$rContent.after($button);
-						}
 						$.ajax({
 							url:'/space/replyList.kh',
 							type:'get',
@@ -371,7 +371,7 @@ ${hostEmail }
 								var $hrContent = $("<tr style='height:200px;'>").append($("<td colspan='4'>").text(hrList[j].replyContents));
 								$htr.append($hrWriter);
 								$htr.append($hrUpdateDate);
-								$button.after($htr);
+								$rContent.after($htr);
 								$htr.after($hrContent);
 								}
 							}

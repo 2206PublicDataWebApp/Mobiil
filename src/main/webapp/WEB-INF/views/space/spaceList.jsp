@@ -59,8 +59,10 @@ input[type=text]{
 	<c:forEach items='${sList }' var='space'>
 	<div class="col-md-4">
 			<div class="product-item">
-				<div class="product-thumb"">
-					<a class="spaceImg" href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }"><img class="img-responsive" src="../../../resources/spaceuploadFiles/${space.spaceImg.spaceFileRename }" alt="product-img"></a>
+				<div class="product-thumb">
+					<a class="spaceImg" href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }">
+						<img class="img-responsive" src="../../../resources/spaceuploadFiles/${space.spaceImg.spaceFileRename }" alt="product-img">
+					</a>
 					<span class="bage">${space.spaceArea }</span>
 				</div>
 			<div class="product-content">
