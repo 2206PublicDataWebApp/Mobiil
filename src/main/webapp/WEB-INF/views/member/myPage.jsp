@@ -75,6 +75,7 @@
                 <label>비밀번호 확인</label><input type="password" class="input" id="pwd2"  value="${member.memberPwd }" ><br>
                 <label>전화번호</label><input type="text" class="input" id="phone" name="memberPhone" value="${member.memberPhone }" oninput="hypenTel(this)" maxlength="13"><br>
                 <br>
+                                <input type="hidden" class="input" id="nick" name="originNick" value="${member.memberNick }" ><br>
                 <div><button type="button" class="button" onclick="mypageform_check();">수정하기</button></div>
                 <br><br><br>
                 <div><a type="button" class="remove" onclick="removeMember();">회원 탈퇴하기</a></div>
@@ -97,6 +98,7 @@
     }
     
     function mypageform_check() {
+    	if(confirm("닉네임 변경시 기존 채팅과 파트너 정보가 리셋됩니다. 수정하시겠습니까?")){
         var name = document.getElementById("name");
         var email = document.getElementById("email");
         var nick = document.getElementById("nick");
@@ -159,6 +161,7 @@
         }
             
         document.mypage_form.submit();
+    	}
     }
   </script>
   

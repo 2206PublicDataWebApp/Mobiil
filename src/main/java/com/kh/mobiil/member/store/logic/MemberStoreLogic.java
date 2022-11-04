@@ -147,6 +147,12 @@ public class MemberStoreLogic implements MemberStore{
 		return result;
 	}
 
+	@Override
+	public int selectCountHostNick(String memberNick, SqlSessionTemplate session) {
+		int result = session.selectOne("MemberMapper.selectCountHostNick", memberNick);
+		return result;
+	}
+
 
 
 }

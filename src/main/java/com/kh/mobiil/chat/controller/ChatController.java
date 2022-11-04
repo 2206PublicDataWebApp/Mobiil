@@ -40,6 +40,9 @@ public class ChatController {
 	@Autowired
 	private PartnerService pService;
 	
+	@Autowired
+	private MemberService mService;
+	
 	 /**채팅방 리스트 띄우기 + 언리드 카운트 띄우기
 	  * 
 	  * @param memberNick
@@ -71,11 +74,20 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value="/chat/getProfile", method = RequestMethod.GET)
 	public String getProfile(@RequestParam("memberNick") String memberNick) {
+		int memberChk  = mService.checkDupNick(memberNick); // 이 사람이 멤버에 있는지
+		int hostChk =  mService.getCountHostNick(memberNick);    // 이 사람이 호스트에 있는지
 		Partner pOne = pService.printOnePartner(memberNick); 
-		if(pOne.getProfileRename() != null) {
+		
+		if(hostChk > 0) {
+			return "noPartner";
+		}
+
+		if(memberChk > 0 && pOne != null ) {
 			return pOne.getProfileRename();
+		}else if(pOne == null) {
+			return "noPartner";
 		}else {
-			return "fail";
+			return "noPartner";
 		}
 	}
 	
@@ -87,7 +99,7 @@ public class ChatController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/chat/getTotalUnread.kh", method = RequestMethod.GET, produces = "text/plian;charset=utf-8" )
+	@RequestMapping(value="/chat/getTotalUnread.kh", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
 	public String getTotalUnread(@RequestParam(value = "memberNick") String memberNick) {
 		//memberNick은 로그인한사람의 memberNick임
 		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
@@ -132,25 +144,48 @@ public class ChatController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/chat/createChatRoom.kh", method = RequestMethod.GET)
+	@RequestMapping(value="/chat/createChatRoom.kh", method = RequestMethod.GET, produces = "text/plain;charset=utf-8" )
 	public String createChatRoom(@ModelAttribute ChatRoom roomInfo) {
-		Partner partner = pService.printOnePartner(roomInfo.getCreateUser());
-		if (!partner.getApproval().equals("N")) {
-			ChatRoom chatRoom = cService.findByUsers(roomInfo);
-			if (chatRoom != null) { // user두명으로 조회시 채팅방이 이미 있는 경우
-				return "already"; // 존재 하는 방임을 알림
-			} else { // user두명으로 조회시 채팅방이 없는 경우
-				int result = cService.registerChatRoom(roomInfo); // 채팅방 생성
-				if (result > 0) { // 생성 성공시 채팅방 정보 불러오기
-					return "success";
-				} else {
-					return "fail";
+		int memberChk  = mService.checkDupNick(roomInfo.getCreateUser()); // 이 사람이 멤버에 있는지
+		Partner partner = pService.printOnePartner(roomInfo.getCreateUser()); // 이 사람이 파트너에 등록했는지
+		int hostChk =  mService.getCountHostNick(roomInfo.getCreateUser());    // 이 사람이 호스트에 있는지
+		int withHost =  mService.getCountHostNick(roomInfo.getWithUser()); 
+		
+		
+		if(memberChk > 0 || hostChk > 0) {// 내가 멤버혹은 호스트
+				if(roomInfo.getWithUser().equals("관리자") || withHost > 0 ) { // 채팅하고싶은 사람이 관리자 혹은 호스트다
+					ChatRoom chatRoom = cService.findByUsers(roomInfo);
+					if (chatRoom != null) { // user두명으로 조회시 채팅방이 이미 있는 경우
+						return "already"; // 존재 하는 방임을 알림
+					} else { // user두명으로 조회시 채팅방이 없는 경우
+						int result = cService.registerChatRoom(roomInfo); // 채팅방 생성
+						if (result > 0) { // 생성 성공시 채팅방 정보 불러오기
+							return "success";
+						} else {
+							return "fail";
+						}
+					}	
+				}else { // 채팅하고싶은사람이 일반유저다
+					if(partner == null ) { // 근데 내가 파트너 등록을 안했다
+						return "needRegist"; // 파트너로 등록해주세요
+					}else if(partner.getApproval().equals("N")){ // 파트너 등록은 했는데 승인이 안됏다
+						return	"needApproval"; // 파트너 승인이 필요합니다
+					}else { // 파트너 등록도 하고 승인도 됏다
+						ChatRoom chatRoom = cService.findByUsers(roomInfo);
+						if (chatRoom != null) { // user두명으로 조회시 채팅방이 이미 있는 경우
+							return "already"; // 존재 하는 방임을 알림
+						} else { // user두명으로 조회시 채팅방이 없는 경우
+							int result = cService.registerChatRoom(roomInfo); // 채팅방 생성
+							if (result > 0) { // 생성 성공시 채팅방 정보 불러오기
+								return "success";
+							} else {
+								return "fail";
+							}
+						}
+					}
 				}
-			}
-
-		}else {
-			return "needRegist";
 		}
+		return "noLogin";		
 	}
 	
 	/**

@@ -128,10 +128,11 @@
 							alert("채팅이 시작됩니다.");
 							window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
 						}else if(data == "needRegist"){
-							alert("파트너 등록이 필요합니다");
-							location.href = "/member/myInfo.kh"
+							alert("파트너만 서비스 이용이 가능합니다");
+						}else if(data == "needApproval"){
+							alert("파트너 승인이 필요합니다")
 						}else{
-							alert("실패")
+							alert("채팅방 생성 실패")
 						}
 					},
 				error:

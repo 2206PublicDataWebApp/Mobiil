@@ -30,6 +30,8 @@ import com.kh.mobiil.chat.service.ChatService;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
+import com.kh.mobiil.partner.domain.Partner;
+import com.kh.mobiil.partner.service.PartnerService;
 import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 
@@ -40,6 +42,9 @@ public class MemberController {
 
 	@Autowired
 	private ChatService cService;
+	
+	@Autowired
+	private PartnerService pService;
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -237,12 +242,26 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "/member/modify.kh", method = RequestMethod.POST)
-	public ModelAndView modifyMember(ModelAndView mv, @ModelAttribute Member member, HttpServletRequest request) {
+	public ModelAndView modifyMember(ModelAndView mv, @ModelAttribute Member member,@RequestParam("originNick") String originNick, HttpServletRequest request) {
 		try {
+			// 닉변했으면
+			if(!member.getMemberNick().equals(originNick)) {
+				// 파트너 정보가 있었으면 기존 정보 삭제
+				Partner originPartner = pService.findByEmail(member.getMemberEmail());
+				if(originPartner != null) {
+					pService.deletePartner(originPartner.getPartnerNo());
+				}
+				// 기존 채팅방 삭제
+				List<ChatRoom> cList = cService.listByMemberNick(originNick);
+				for(int i = 0; i < cList.size(); i++) {
+					cService.disableRoom(cList.get(i).getRoomNo());
+				}
+			}
+			
 			int result = mService.modifyMember(member);
 			if (result > 0) {
-				request.setAttribute("msg", "정보 수정이 완료되었습니다.");
-				request.setAttribute("url", "/member/myInfo.kh");
+				request.setAttribute("msg", "정보 수정이 완료되었습니다. 다시 로그인해주세요");
+				request.setAttribute("url", "/member/logout.kh");
 				mv.setViewName("common/alert");
 			} else {
 				mv.addObject("msg", "정보 수정에 실패하였습니다.");

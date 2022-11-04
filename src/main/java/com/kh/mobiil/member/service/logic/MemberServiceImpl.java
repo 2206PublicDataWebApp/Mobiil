@@ -158,5 +158,11 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.selecHostDaily(dayBefore, session);
 		return result;
 	}
+
+	@Override
+	public int getCountHostNick(String memberNick) {
+		int result = mStore.selectCountHostNick(memberNick, session);
+		return result;
+	}
 	
 }

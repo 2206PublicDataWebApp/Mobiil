@@ -63,6 +63,9 @@ public interface MemberStore {
 	public int selecHostDaily(int dayBefore, SqlSessionTemplate session);
 
 
+	public int selectCountHostNick(String memberNick, SqlSessionTemplate session);
+
+
 
 
 

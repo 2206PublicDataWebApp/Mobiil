@@ -45,6 +45,8 @@ public interface MemberService {
 	public Host loginHost(Host host); // 로그인
 
 	public int checkDupHostEmail(String hostEmail); // 이메일 중복 체크
+	
+	public int getCountHostNick(String memberNick); // 멤버닉으로 몇명인지 체크
 
 	// 비밀번호 찾기 후 변경
 	public int modifyPwd(Member member);

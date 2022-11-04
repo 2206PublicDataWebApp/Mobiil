@@ -313,7 +313,7 @@ function cSubmit() {
 		success: function(data) {
 			if(data == "success"){
 				$("#chat").val(""); // 밸류 초기화
-			//	getChatLog(roomNo, memberNick);
+			getChatNewLog(roomNo, memberNick);
 			}else{
 				alert("chat 등록 실패!");
 			}

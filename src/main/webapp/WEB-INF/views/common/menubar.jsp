@@ -218,6 +218,9 @@ function showAlert() {
 }
 
 function openChatRoom(createUser, withUser) {
+	console.log(createUser)
+	console.log(withUser)
+
 	if(confirm("채팅을 시작하시겠습니까?")){
 		$.ajax({
 			url:"/chat/createChatRoom.kh",

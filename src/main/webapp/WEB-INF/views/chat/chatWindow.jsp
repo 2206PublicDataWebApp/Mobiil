@@ -15,6 +15,7 @@
 
 body{
 font-family:'Gamja Flower', cursive;
+overflow: scroll;
 }
 
 #header{
@@ -44,7 +45,6 @@ ul{
 width: 100%;
     background: white;
     height: 100%;
-    overflow: auto;
     position: fixed;
     border-right: 1px grey solid;
     
@@ -121,6 +121,8 @@ color:black;
 						<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}" >
 					<li>		
 						<img id='${chatRoom.withUser}img' src="/resources/images/ghost.png" width='10%'>	
+						<span onmouseover="showProfile('${chatRoom.withUser}')">	${chatRoom.withUser }(${chatRoom.unReadCount}) </span>
+						
 					</li>
 						</a>
 				</c:if>
@@ -129,6 +131,8 @@ color:black;
 						<a href= "/chat/chatRoom.kh?memberNick=${loginHost.memberNick }&roomNo=${chatRoom.roomNo}">
 					<li>	
 						<img id='${chatRoom.createUser}img' src="/resources/images/ghost.png" width='10%'>	
+						<span onmouseover="showProfile('${chatRoom.createUser}')" >	${chatRoom.createUser }(${chatRoom.unReadCount}) </span>
+						
 					</li>
 						</a>
 				</c:if>
@@ -193,13 +197,14 @@ color:black;
 	
  	function showProfile(memberNick) {
 		if(memberNick != "관리자"){
-			
-		
 			$.ajax({
 				url:"getProfile",
 				data:{memberNick: memberNick},
 				success: function(data) {
-				 $("#"+memberNick+"img").attr("src", "/resources/images/partner/"+data)
+					console.log(data)
+					if(data != "noPartner"){
+					 $("#"+memberNick+"img").attr("src", "/resources/images/partner/"+data)
+					}
 				} ,
 				error: function() {
 					console.log("에러")

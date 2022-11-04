@@ -131,5 +131,10 @@
 				AND (hStatus = 'Y')
 	</select>
 	
+	<select id="selectCountHostNick" resultType="_int">
+		SELECT COUNT(*) FROM HOST_TBL
+		WHERE memberNick = #{memberNick}
+				AND (hStatus = 'Y')
+	</select>
   	
   </mapper>
