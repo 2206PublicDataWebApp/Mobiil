@@ -131,19 +131,12 @@ ${iList[1].spaceFileRename }
 <div id="map" style="width:450px;height:300px;"></div>
 <br><br><br><br><br><br>
 
-<table align="left" width="700px" id="rtb">
-	<thead>
-		<tr>
-			<td colspan="4" style='height:70px;font-size:20px;'><b id="rCount"></b></td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class='reviewArea'></tr>
-		<tr></tr>
-	</tbody>
-</table>
+<div style='width:700px;align:left;'><span style='font-size:24px;color:darkgreen;'><b id="rCount"></b></span></div>
+<div id="reivewBox" style='width:700px;align:left;'>
+</div>
 
 </div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 
 
@@ -168,6 +161,9 @@ ${iList[1].spaceFileRename }
 		});
 		
 		$('.heartImg').on('click', function(){
+			if(${loginUser == null}){
+				alert("개인 회원만 가능합니다.");
+			}else{
 			$.ajax({
 				url: '/space/checkHeart.kh',
 				data: { "memberEmail":"${loginUser.memberEmail}", "spaceNo":'${spaceNo}' },
@@ -215,6 +211,7 @@ ${iList[1].spaceFileRename }
 					alert("통신 실패");
 				}
 			});
+			}
 		})
 	});
 
@@ -297,29 +294,31 @@ ${iList[1].spaceFileRename }
 
 	// 결제하기 누르면 날짜 및 시간 유효성 검사
 	function payment(){
-		start = $('#startTime option:selected').val();
-		end = $('#endTime option:selected').val();
-		if(sDate == "" || start == "시작" || end == "끝"){
-			alert("날짜 혹은 시간을 확인해주세요.");
-		}
-		console.log(sDate);
-		$.ajax({
-			url : "/space/checkTime.kh",
-			data : {"start": start, "end":end, "reservDate":sDate},
-			type : "get",
-			success : function(result) {
-				
-				if(result != 0){
-					alert("예약할 수 없는 시간입니다.");
-				}else{
-					alert("예약 가능한 시간입니다.");
-					location.href = '/space/payment.kh?sDate='+sDate+'&start='+start+'&end='+end+'&price='+price;
-				}
-			},
-			error : function(){
-				alert("통신 실패");
+		if(${loginUser == null}){
+			alert("개인 회원만 가능합니다.");
+		}else{
+			start = $('#startTime option:selected').val();
+			end = $('#endTime option:selected').val();
+			if(sDate == "" || start == "시작" || end == "끝"){
+				alert("날짜 혹은 시간을 확인해주세요.");
 			}
-		})
+			$.ajax({
+				url : "/space/checkTime.kh",
+				data : {"start": start, "end":end, "reservDate":sDate},
+				type : "get",
+				success : function(result) {
+					if(result != 0){
+						alert("예약할 수 없는 시간입니다.");
+					}else{
+						location.href = '/space/payment.kh?sDate='+sDate+'&start='+start+'&end='+end+'&price='+price;
+					}
+				},
+				error : function(){
+					alert("통신 실패");
+				}
+			})
+		}
+		
 	}
 	
 	getReviewList();
@@ -330,29 +329,34 @@ ${iList[1].spaceFileRename }
 			data:{"spaceNo" : spaceNo},
 			type: 'get',
 			success : function(rList){
-				var $tableBody = $("#rtb tbody");
-				$tableBody.html("");
+				var $reivewBox = $("#reivewBox");
+				$reivewBox.html("");
 				$("#rCount").text("리뷰(" + rList.length + ")");
 				if(rList != null){
 					for(var i in rList){
-						var $tr = $('<tr>');
-						var $rWriter = $("<td colspan='3' class='reviewWriter' style='border-top: 1px solid #EDEDED;'>").text(rList[i].reviewWriter);
-						var $rContent = $("<tr style='height:150px;' class='"+rList[i].reviewNo+"'>").append($("<td colspan='4'>").text(rList[i].reviewContents));
-						var $rUpdateDate = $("<span style='margin-left:20px;'>").text(rList[i].rUpdateDate);
-						var $button = $("<tr>").append($("<td colspan='4'>").append("<a href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>"));
-						$tableBody.append($tr);
-						$tr.append($rWriter);
+						var $div = $('<div>');
+						var $hr = $('<hr>');
+						var $rWriter = $("<span class='reviewWriter' style='font-size:17px;font-weight:bold;'>").text(rList[i].reviewWriter);
+						var $rContentBox = $("<div style='margin-top:30px;margin-bottom:30px;' class='"+rList[i].reviewNo+"'>");
+						var $rContent = $("<span>").html(""+rList[i].reviewContents);
+						var $rUpdateDate = $("<span style='margin-left:20px;font-size:12px;color:lightgray;font-weight:normal;'>").text(rList[i].rUpdateDate);
+						var $button = $("<div style='padding-top:30px;'>").append("<a style='text-decoration: underline;' href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>");
+						var $rvNo = $('.'+rList[i].reviewNo);
+						$reivewBox.append($div);
+						$div.append($hr);
+						$div.append($rWriter);
 						$rWriter.append($rUpdateDate);
-						$tr.after($rContent);
+						$div.after($rContentBox);
+						$rContentBox.append($rContent);
+						if('${loginHost.hostEmail }' == '${hostEmail }'){
+							$rContentBox.append($button);
+						}
 						$.ajax({
 							url:'/space/imgList.kh',
 							type:'get',
 							data:{"reviewNo":rList[i].reviewNo},
 							success:function(riList){
-								$tr.after($("<a>").append("<img src='#' alt='reviewImg'>"));
-								if('${loginHost.hostEmail }' == '${hostEmail }' && riList != null){
-									$rContent.after($button);
-								}
+								$div.after($("<a>").append("<img src='#' alt='reviewImg'>"));
 							},
 							error:function(){
 							}
@@ -365,25 +369,21 @@ ${iList[1].spaceFileRename }
 							success:function(hrList){
 								for(var j in hrList){
 								var $rNo = $('.'+hrList[j].reviewNo);
-								var $htr = $('<tr id="hostReplyList" style="text-align:right;padding-top:10px;">');
-								var $hrWriter = $("<td colspan='2' style='border-top: 1px solid #EDEDED;padding-bottom:10px;'>").text(hrList[j].replyWriter);
-								var $hrUpdateDate = $("<td colspan='2' style='text-align:left;padding-left:20px;border-top: 1px solid #EDEDED;padding-bottom:10px;'>").text(hrList[j].updateDate);
-								var $hrContent = $("<tr style='height:200px;text-align:right;'>").append($("<td colspan='4'>").text(hrList[j].replyContents));
-								var $button = $("<tr>").append($("<td colspan='4'>").append("<a href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>"));
-								if('${loginHost.hostEmail }' == '${hostEmail }' && hrList != null){
-									$rNo.after($button);
-									$button.after($htr);
-									$htr.append($hrWriter);
-									$htr.append($hrUpdateDate);
-									$htr.after($hrContent);
-								} else{
-									$rNo.after($button);
-								}
-								
-								}
+								var $hdiv = $('<div id="hostReplyList" style="text-align:left;padding-left:50px;">');
+								var $hrWriter = $("<span style='font-size:17px;font-weight:bold;color:green;'>").text(hrList[j].replyWriter);
+								var $hrUpdateDate = $("<span style='text-align:left;padding-left:20px;font-size:12px;color:lightgray;'>").text(hrList[j].updateDate);
+								var $hrContent = $("<div style='margin-bottom:30px;margin-top:20px;text-align:left;padding-left:50px;'>").append($("<span class='mdf"+hrList[j].replyNo+"'>").html(""+hrList[j].replyContents));
+								var $modify = $("<span>").append("<a href='javascript:void(0);' onclick='modifyReplyView(this,"+hrList[j].replyNo+")'>수정</a>");
+									$rNo.after($hdiv);
+									$hdiv.append($hrWriter);
+									$hdiv.append($hrUpdateDate);
+									$hdiv.after($hrContent);
+									if('${loginHost.hostEmail }' == '${hostEmail }'){
+										$hrUpdateDate.append($modify);
+									}
+							}
 							}
 						});
-						
 						
 						
 					}
@@ -397,20 +397,24 @@ ${iList[1].spaceFileRename }
 	
 	
 	function insertReplyView(obj, reviewNo){
-		if($("#insertTr").length == 0){
+		if($("#insertReplyView").length == 0){
 		event.preventDefault();
-		$tr = $("<tr id='insertTr'>");
-		$tr.append("<td colspan='4' style='word-break: break-all;'><textarea id='insertReply' style='height:50px;border-width:1px;width:70%;resize:none;'></textarea><br/><a style='margin-left:10px;' href='javascript:void(0);' onclick='insertReply(this, "+reviewNo+")');'>등록</a></td>");
-		$(obj).parent().parent().after($tr);			
+		$div = $("<div id='insertReplyView' style='display: table;'>");
+		$div.append("<textarea id='insertReply' style='display:table-cell;vertical-align:middle;height:50px;border-width:1px;width:450px;resize:none;'></textarea><a style='padding-left:10px;display:table-cell;vertical-align:middle;' href='javascript:void(0);' onclick='insertReply(this, "+reviewNo+")');'>등록</a>");
+		$(obj).parent().parent().append($div);			
 		} else{
-			$("#insertTr").remove();
+			$("#insertReplyView").remove();
 		}
 	}
 	
 	function insertReply(obj, reviewNo){
+		if(confirm("등록하시겠습니까?")){
 		var replyContents = $("#insertReply").val();
 		replyContents = replyContents.replace(/(?:\r\n|\r|\n)/g, '<br>');
-		$.ajax({
+		if(replyContents == ''){
+			alert("내용을 입력해주세요.");
+		}else{
+			$.ajax({
 			url:"/space/insertReply.kh",
 			data:{"reviewNo":reviewNo, "replyContents": replyContents, "replyWriter":'${loginHost.companyName }', "hostEmail":'${loginHost.hostEmail }'},
 			type:"post",
@@ -425,6 +429,52 @@ ${iList[1].spaceFileRename }
 				alert("실패");
 			}
 		})
+		}
+		}else{
+			return false;
+		}
+	}
+	
+	function modifyReplyView(obj, replyNo){
+		if($("#modifyReplyView").length == 0){
+		var rText = $(".mdf"+replyNo).html();
+		rText = rText.replace(/<br\s*[\/]?>/gi, '\r\n');
+		event.preventDefault();
+		$div = $("<div id='modifyReplyView' style='display: table;'>");
+		$div.append("<textarea id='modifyReply' style='display:table-cell;vertical-align:middle;height:50px;border-width:1px;width:450px;resize:none;'></textarea><a style='padding-left:10px;display:table-cell;vertical-align:middle;' href='javascript:void(0);' onclick='modifyReply(this, "+replyNo+")');'>수정</a>");
+		$(obj).parent().parent().append($div);
+		$('#modifyReply').html(rText);
+		} else{
+			$("#modifyReplyView").remove();
+		}
+	}
+	
+	function modifyReply(obj, replyNo){
+		if(confirm("수정하시겠습니까?")){
+		var modifyContents = $('#modifyReply').val();
+		modifyContents = modifyContents.replace(/(?:\r\n|\r|\n)/g, '<br>');
+		if(modifyContents == ''){
+			alert("내용을 입력해주세요.");
+		}else{
+			$.ajax({
+				url:"/space/modifyReply.kh",
+				data:{"replyNo":replyNo, "replyContents": modifyContents},
+				type:"post",
+				success:function(result){
+						if(result>0){
+							$("#modifyReply").text('');
+							event.preventDefault();
+							getReviewList();
+						}
+					},
+				error: function(){
+					alert("실패");
+				}
+			})
+		}			
+		}else{
+			return false;
+		}
 	}
 	
 	// 시작시간 > 끝시간 선택시 option 리셋 유효성 검사

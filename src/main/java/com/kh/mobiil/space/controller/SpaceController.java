@@ -418,6 +418,15 @@ public class SpaceController {
 		return null;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/space/modifyReply.kh", method=RequestMethod.POST)
+	public int modifyReply(@ModelAttribute HostReply hostReply) {
+		
+		System.out.println(hostReply.getReplyContents());
+		int result = sService.updateReply(hostReply);
+		return result;
+	}
+	
 	// 예약날짜 및 시간 유효성 체크
 	@ResponseBody
 	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)
