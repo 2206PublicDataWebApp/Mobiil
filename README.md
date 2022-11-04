@@ -1,5 +1,5 @@
-<p align="center"><img src="https://user-images.githubusercontent.com/110793386/199643214-11f40974-fd5c-4006-aafe-bd67c60d3114.png" width = '150px'></p>
- 
+<p align="center"><img src="https://user-images.githubusercontent.com/110793386/199872240-a703eb91-b9ef-45d4-958e-7250dd120969.jpg" width = '150px'></p>
+
  
 #  Mobiil  
 
@@ -30,6 +30,7 @@
 <details>
 <summary>고종규</summary>
 <div markdown="1">
+
  > 공간
  >  > 작성중
  
@@ -41,6 +42,7 @@
 <details>
 <summary>김다현</summary>
 <div markdown="1">
+
 > 공간
  >  > 작성중
  
@@ -56,7 +58,7 @@
 
 + 파트너
   - 파트너 정보 CRUD
-  -  파트너 승인 or 거부 메일 발송
+  - 파트너 승인 or 거부 메일 발송
  
 + 채팅
   -  채팅방 CRUD
