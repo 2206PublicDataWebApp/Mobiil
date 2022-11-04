@@ -46,6 +46,9 @@
 		font-size: 15px;
 	}
 	
+	#divv{
+		margin-left : 20px;
+	}
 </style>
 
 
@@ -56,7 +59,7 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
 
-		<div id="div" align="center">
+		<div id="div" align="center" style=" margin-right: 400px;">
 		<h2>예약 정보 수정 페이지</h2><br>
 		<hr>
 		<form action="/host/reservationModify.mobiil" method="post">
@@ -96,6 +99,7 @@
 					<td id="td">금액</td>
 					<td>
 					<input type="text" id="price" class="input" name="price" size="31" value="${rOne.price }">
+					<div id="divv"></div>
 					</td>
 				</tr>
 				<tr>
@@ -108,6 +112,32 @@
 			</table>
 		</form>
 		</div>
+	<script>
+	$("#revStart").blur(function() {
+		var revStart = document.getElementById("revStart");
+		var reg = /^[0-9]{1,2}$/
+		if(!reg.test(revStart.value)){
+			alert("시간 입력이 잘못되었습니다. 1~24의 숫자를 최소 1글자 이상 2글자까지 입력 가능합니다." );
+			revStart.value = "";
+			return false;
+		}
+	});
+	
+	$("#revEnd").blur(function() {
+		var revEnd = document.getElementById("revEnd");
+		var reg = /^[0-9]{1,2}$/
+		if(!reg.test(revEnd.value)){
+			alert("시간 입력이 잘못되었습니다. 1~24의 숫자를 최소 1글자 이상 2글자까지 입력 가능합니다." );
+			revEnd.value = "";
+			return false;
+		}
+	});
+	
+	$("#price").blur(function() {
+		divv.innerHTML="차액 금액은 현장에서 환불 및 결제 됩니다.";
+		document.getElementById('divv').style.color="red";
+	});
+	</script>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>		
 </body>
 </html>

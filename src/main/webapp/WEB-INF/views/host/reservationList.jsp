@@ -44,7 +44,7 @@ table, td, th {
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
 
-	<div id="div" align="center">
+	<div id="div" align="center" style=" margin-right: 400px;">
 		<h2>예약 리스트</h2>
 		<br>
 		<hr>

@@ -71,10 +71,10 @@
 			</tr>
 			<tr>
 			<td colspan='2' align='right'>
-				<input type="button" onclick="history.back(-1);" value='이전으로'>
+				<input type="button" class=" btn btn-secondary" onclick="history.back(-1);" value='이전으로'>
 			<c:if test='${loginUser.memberNick eq "관리자" }'>
-				<input type="button" onclick="approve(${space.spaceNo}, '${space.approval }');" value='승인'>
-				<input type="button" onclick="location.href='/host/rejectMail.kh?spaceNo=${space.spaceNo}';" value='거부'>
+				<input type="button" class="btn btn-primary" onclick="approve(${space.spaceNo}, '${space.approval }');" value='승인'>
+				<input type="button" class="btn btn-danger" onclick="location.href='/host/rejectMail.kh?spaceNo=${space.spaceNo}';" value='거부'>
 			</c:if>
 			</td>
 			</tr>

@@ -55,6 +55,15 @@
 		margin: 1px 1px 10px 50px;
 		font-size: 15px;
 	}
+	
+	.findAddress{
+		board : 1px solid black;
+		background-color: rgba(0,0,0,0);
+		color : blcak;
+		padding : 5px;
+	}
+	
+	
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -69,7 +78,7 @@
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
-	<div id="div" align="center">
+	<div id="div" align="center" style=" margin-right: 400px;">
 	<h1>공간 정보 수정</h1>
 	<br><br>
 		<form action="/host/spaceModify.mobiil" method="POST" enctype="multipart/form-data">
@@ -83,7 +92,7 @@
 					<tr>
 						<td id="td">주소</td>
 						<td><input type="text" id="sample6_postcode" class="input">
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+							<input type="button" class="findAddress" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 							<input type="text" id="sample6_address" class="input" value="${sOne.address }"><br>
 							<input type="text" id="sample6_detailAddress"class="input" >
 							<input type="text" id="sample6_extraAddress"class="input" ></td>

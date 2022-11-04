@@ -40,7 +40,7 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
 
-		<div id="div" align="center">
+		<div id="div" align="center" style=" margin-right: 400px;">
 		<h2>공간 리스트</h2><br>
 		<hr>
 				<table style="width: 1000px;">

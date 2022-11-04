@@ -35,6 +35,7 @@
         
       #wapper{
       	text-align : center;
+      	margin-right : 400px;
       }
 </style>
 

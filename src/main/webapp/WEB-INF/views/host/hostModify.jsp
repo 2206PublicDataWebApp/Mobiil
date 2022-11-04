@@ -75,7 +75,7 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
 
-		<div id="div" align="center">
+		<div id="wapper" align="center" style=" margin-right: 400px;">
 		<h2>호스트 정보 수정 페이지</h2><br>
 		<hr>
 		<form action="/host/hostModify.mobiil" method="post" enctype="multipart/form-data">

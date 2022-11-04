@@ -68,8 +68,14 @@
 		  &:hover {
 		    background: rgb(77,77,77);
 		    color: #fff;
-  }
-}
+  	}
+  
+	  input[type="checkbox"] {
+	  width: 25px; 
+	  height: 25px; 
+		}
+	
+	
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -85,7 +91,7 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
 	<form action="/host/spaceInsert.mobiil" method="POST" enctype="multipart/form-data">
-		<div id="div" align="center">
+		<div id="div" align="center" style=" margin-right: 400px;">
 		<h2>공간 업로드</h2><br>
 		<hr>
 			<table >
@@ -94,10 +100,11 @@
 				</tr>
 				<tr>
 					<td id="td">공간명</td>
-					<td><input type="text" id="spaceName" class="input" name="spaceName" placeholder="공간 타이틀을 입력 해주세요." required></td>
+					<td><input type="text" id="spaceName" class="input" name="spaceName" placeholder="공간명은 한글, 영문, 숫자로 입력 가능합니다." required></td>
 				</tr>
 				<tr>
 					<td id="td">주소</td>
+					
 					<td><input type="text" id="sample6_postcode" class="input" placeholder="우편번호" required>
 						<input type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 						<input type="text" id="sample6_address" class="input" name="address" placeholder="주소" required><br>
@@ -117,12 +124,17 @@
 					<td><textarea class="summernote" id="spaceComent" name=spaceComent></textarea></td>
 				</tr>
 				<tr>
-					<td id="td">지역   </td>
-					<td><input type="text" id="spaceArea" class="input" name="spaceArea" placeholder="강북, 강남, 강서, 강동" required></td>
+					<td id="td">지역</td>
+					<td>
+					<label><input type="checkbox" name="spaceArea"  id="spaceArea1" value="강북" >강북</label>
+					<label><input type="checkbox" name="spaceArea"  id="spaceArea2" value="강남" >강남</label>
+					<label><input type="checkbox" name="spaceArea"  id="spaceArea3" value="강서" >강서</label>
+					<label><input type="checkbox" name="spaceArea"  id="spaceArea4" value="강동" >강동</label>
+					</td>
 				</tr>
 				<tr>
 					<td id="td">금액   </td>
-					<td><input type="text" id="spacePrice" class="input" name="spacePrice" placeholder="금액을 입력 해주세요." required>
+					<td><input type="text" id="spacePrice" class="input" name="spacePrice" placeholder="금액은 숫자만 입력 가능합니다." required>
 					</td>
 				</tr>
 				<tr>
@@ -136,6 +148,38 @@
 	</form>
 	
 <script>
+	$(document).on('click', "input[type='checkbox']", function(){
+	    if(this.checked) {
+	        const checkboxes = $("input[type='checkbox']");
+	        for(let i = 0; i < checkboxes.length; i++){
+	            checkboxes[i].checked = false;
+	        }
+	        this.checked = true;
+	    } else {
+	        this.checked = false;
+	    }
+	});
+
+	$("#spaceName").blur(function() {
+		var spaceName = document.getElementById("spaceName");
+		var reg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\s]+$/;
+			if(!reg.test(spaceName.value)){
+				alert("공간명은 한글, 영문, 숫자로 입력 가능합니다.");
+				spaceName.value = "";
+				return false;
+			}
+	});
+	
+	$("#spacePrice").blur(function() {
+		var spacePrice = document.getElementById("spacePrice");
+		var reg = /^[0-9]+$/;
+			if(!reg.test(spacePrice.value)){
+				alert("금액은 숫자만 입력 가능합니다.");
+				spacePrice.value = "";
+				return false;
+			}
+	});
+
 	// 사진 추가
 	function addFile(){
 		var number = 2;
