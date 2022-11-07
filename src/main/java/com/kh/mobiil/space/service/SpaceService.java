@@ -66,5 +66,7 @@ public interface SpaceService {
 
 	int updateReply(HostReply hostReply);
 
+	int deleteReply(Integer replyNo);
+
 
 }

@@ -179,6 +179,12 @@ public class SpaceStoreLogic implements SpaceStore{
 		return result;
 	}
 
+	@Override
+	public int deleteReply(SqlSessionTemplate session, Integer replyNo) {
+		int result = session.delete("SpaceMapper.deleteReply", replyNo);
+		return result;
+	}
+
 	
 
 }

@@ -62,11 +62,22 @@ function openChatRoom(createUser, withUser) {
 <br><br>
 <div class='spaceComent' style='width:600px;display:inline-block;align:left;'>
 ${space.spaceComent }
-${iList[0].spaceFileRename }
-${iList[1].spaceFileRename }
+	<c:forEach items="${iList }" var="spaceImg" begin="0" end="${spaceImg.last }">
+	<c:forTokens items="" delims=""></c:forTokens>
+
+	<div class="slider-item" style="background-image: url(/resources/spaceuploadFiles/${spaceImg.spaceFileRename });">
+	<div class="container">
+      <div class="row">
+        <div class="col-lg-8 text-center">
+	      <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">광고</p>
+          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">${banner.bannerMsg }</h1>
+          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="${banner.bannerLink }">Shop Now</a>
+        </div>
+      </div>
+    </div>
+	</div>
+	</c:forEach>
 </div>
-
-
 <div class='reservDiv' style='display:inline-block;text-align:right;float:right;'>
 <div style='text-align:right; '><img class='heartImg' style='cursor:pointer;'/></div>
 <br>
@@ -334,11 +345,13 @@ ${iList[1].spaceFileRename }
 				$("#rCount").text("리뷰(" + rList.length + ")");
 				if(rList != null){
 					for(var i in rList){
+						var reviewContents = rList[i].reviewContents;
+						reviewContents = reviewContents.replace("\r\n", '<br>');
 						var $div = $('<div>');
 						var $hr = $('<hr>');
 						var $rWriter = $("<span class='reviewWriter' style='font-size:17px;font-weight:bold;'>").text(rList[i].reviewWriter);
 						var $rContentBox = $("<div style='margin-top:30px;margin-bottom:30px;' class='"+rList[i].reviewNo+"'>");
-						var $rContent = $("<span>").html(""+rList[i].reviewContents);
+						var $rContent = $("<span>").html(""+reviewContents);
 						var $rUpdateDate = $("<span style='margin-left:20px;font-size:12px;color:lightgray;font-weight:normal;'>").text(rList[i].rUpdateDate);
 						var $button = $("<div style='padding-top:30px;'>").append("<a style='text-decoration: underline;' href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>");
 						var $rvNo = $('.'+rList[i].reviewNo);
@@ -373,7 +386,8 @@ ${iList[1].spaceFileRename }
 								var $hrWriter = $("<span style='font-size:17px;font-weight:bold;color:green;'>").text(hrList[j].replyWriter);
 								var $hrUpdateDate = $("<span style='text-align:left;padding-left:20px;font-size:12px;color:lightgray;'>").text(hrList[j].updateDate);
 								var $hrContent = $("<div style='margin-bottom:30px;margin-top:20px;text-align:left;padding-left:50px;'>").append($("<span class='mdf"+hrList[j].replyNo+"'>").html(""+hrList[j].replyContents));
-								var $modify = $("<span>").append("<a href='javascript:void(0);' onclick='modifyReplyView(this,"+hrList[j].replyNo+")'>수정</a>");
+								var $modify = $("<span>").append("<a style='margin-left:20px;font-size:13px;' href='javascript:void(0);' onclick='modifyReplyView(this,"+hrList[j].replyNo+")'>수정</a>")
+														 .append("<a style='margin-left:8px;font-size:13px;' href='javascript:void(0);' onclick='deleteReply("+hrList[j].replyNo+")'>삭제</a>");
 									$rNo.after($hdiv);
 									$hdiv.append($hrWriter);
 									$hdiv.append($hrUpdateDate);
@@ -440,12 +454,14 @@ ${iList[1].spaceFileRename }
 		var rText = $(".mdf"+replyNo).html();
 		rText = rText.replace(/<br\s*[\/]?>/gi, '\r\n');
 		event.preventDefault();
+		$(".mdf"+replyNo).css('display','none');
 		$div = $("<div id='modifyReplyView' style='display: table;'>");
-		$div.append("<textarea id='modifyReply' style='display:table-cell;vertical-align:middle;height:50px;border-width:1px;width:450px;resize:none;'></textarea><a style='padding-left:10px;display:table-cell;vertical-align:middle;' href='javascript:void(0);' onclick='modifyReply(this, "+replyNo+")');'>수정</a>");
+		$div.append("<textarea id='modifyReply' style='display:table-cell;vertical-align:middle;height:50px;border-width:1px;width:450px;resize:none;color:black;'></textarea><a style='padding-left:10px;display:table-cell;vertical-align:middle;' href='javascript:void(0);' onclick='modifyReply(this, "+replyNo+")');'>수정</a>");
 		$(obj).parent().parent().append($div);
 		$('#modifyReply').html(rText);
 		} else{
 			$("#modifyReplyView").remove();
+			$(".mdf"+replyNo).css('display','block');
 		}
 	}
 	
@@ -472,6 +488,29 @@ ${iList[1].spaceFileRename }
 				}
 			})
 		}			
+		}else{
+			return false;
+		}
+	}
+	
+	function deleteReply(replyNo){
+		if(confirm("삭제하시겠습니까?")){
+			$.ajax({
+				url: '/space/deleteReply.kh',
+				data: {'replyNo' : replyNo},
+				type: 'get',
+				success: function(result){
+					if(result == 'O'){
+						getReviewList();
+						alert("삭제되었습니다.");
+					} else{
+						alert("삭제에 실패하였습니다.");
+					}
+				},
+				error: function(){
+					alert("ajax 통신 오류");
+				}
+			})
 		}else{
 			return false;
 		}

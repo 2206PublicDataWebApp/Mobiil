@@ -87,6 +87,9 @@
   	<update id="updateReply">
   		UPDATE HOSTREPLY_TBL SET REPLY_CONTENTS = #{replyContents}, UPDATE_DATE = SYSDATE WHERE REPLY_NO = #{replyNo}
   	</update>
+  	<delete id="deleteReply">
+  		DELETE FROM HOSTREPLY_TBL WHERE REPLY_NO = #{replyNo}
+  	</delete>
   	<delete id="deleteHeart">
   		DELETE FROM HEART_TBL WHERE MEMBER_EMAIL=#{memberEmail} AND SPACE_NO=#{spaceNo}
   	</delete>

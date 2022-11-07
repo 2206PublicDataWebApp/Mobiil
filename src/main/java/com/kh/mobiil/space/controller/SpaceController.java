@@ -427,6 +427,17 @@ public class SpaceController {
 		return result;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/space/deleteReply.kh", method=RequestMethod.GET)
+	public String deleteReply(@RequestParam("replyNo") Integer replyNo) {
+		int result = sService.deleteReply(replyNo);
+		if(result > 0) {
+			return "O";
+		}else {
+			return "X";
+		}
+	}
+	
 	// 예약날짜 및 시간 유효성 체크
 	@ResponseBody
 	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)
