@@ -29,6 +29,8 @@
 					        </li>
 					        <li><a href="/admin/banner/list.kh">배너 관리</a>
 					        </li>
+					        <li><a href="/admin/calendar.kh">일정 관리</a>
+					        </li>
 					    </ul>
 					</div>
 					 <!-- End category  -->
