@@ -40,9 +40,6 @@
 	content: '* ';
 }
 
-	.email {
-	
-	}
 	.email_ok{
 	color:#008000;
 	display: none;

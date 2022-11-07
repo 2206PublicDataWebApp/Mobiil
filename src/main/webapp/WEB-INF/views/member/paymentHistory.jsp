@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제 내역</title>
+<title>결제 목록 조회</title>
  <style>
 
  		.th {
  		  text-align: center;
  		}
  		
-        .signup {
+        .paylist {
             text-align: center;
             margin-top: 50px;
         }
@@ -28,13 +28,19 @@
 <jsp:include page="../common/menubar.jsp"></jsp:include>
 <div class="paylist">
         <div class="span">
-            <span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span> 
-            <span> | </span>
-            <span onclick="location.href='#'">찜한 공간 보기</span> 
+		<c:if test="${loginUser.kakaoStatus eq 'N' }">
+			<span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span>
+		</c:if>
+		<c:if test="${loginUser.kakaoStatus eq 'Y' }">
+			<span onclick="location.href='/member/myKakaoInfo.kh'">My 정보 수정</span>
+		</c:if>	           
+			<span> | </span>
+            <span onclick="location.href='/member/mySpaceList.kh'">찜한 공간 보기</span> 
             <span> | </span> 
             <span onclick="location.href='/payment/list.kh'"><b>결제 내역 보기</b></span>
             <span> | </span> 
             <span onclick="location.href='/partner/myPartnerInfo.kh?memberEmail=${loginUser.memberEmail}'">내 파트너 정보</span>
+		</div>      
         <br><br><br>
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 	<table align="center" border="1" width="" class="table table-striped table-hover">
@@ -86,10 +92,11 @@
 		</c:if>
 		<c:if test="${empty rList }">
 			<tr>
-				<td colspan="6" align="center"><b>데이터가 존재하지 않습니다.</b></td>
+				<td colspan="7" align="center"><h4><b>결제 내역이 존재하지 않습니다.</b></h4></td>
 			</tr>
 		</c:if>
 	</table>
+	</div>
   <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

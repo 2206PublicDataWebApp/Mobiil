@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,7 +61,11 @@ public class ReviewController {
 					String root = request.getSession().getServletContext().getRealPath("resources");
 					String savePath = root + "\\reviewFiles";
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					
 					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis()))+"."+reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+					UUID uuid = UUID.randomUUID(); // 랜덤으로 reviewFileRename 명 설정하기
+					reviewFileRename = uuid.toString() + "_" + reviewFileRename; 
+					
 					File file = new File(savePath);
 					if(!file.exists()) { 
 						file.mkdir();
@@ -157,6 +162,8 @@ public class ReviewController {
 					}
 					
 					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis()))+ num + "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+					UUID uuid = UUID.randomUUID(); // 랜덤으로 reviewFileRename 명 설정하기
+					reviewFileRename = uuid.toString() + "_" + reviewFileRename; 
 					file = new File(savePath);
 					mf.transferTo(new File(savePath+"\\"+reviewFileRename));
 					String reviewFilePath = savePath+"\\"+reviewFileRename;

@@ -12,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -30,8 +31,10 @@ import com.kh.mobiil.chat.service.ChatService;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
+import com.kh.mobiil.partner.domain.Page;
 import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Space;
 
 @Controller
 public class MemberController {
@@ -83,7 +86,7 @@ public class MemberController {
 	}
 
 	/**
-	 * 회원가입 시 이메일 중복 체크(개인+기업)
+	 * 회원가입 시 이메일 중복 체크(개인+카카오회원+기업)
 	 * @param memberEmail
 	 * @return
 	 */
@@ -97,7 +100,7 @@ public class MemberController {
 	///
 	
 	/**
-	 * 회원가입 시 닉네임 중복 체크
+	 * 회원가입 시 닉네임 중복 체크(개인+카카오회원)
 	 * @param memberNick
 	 * @return
 	 */
@@ -181,28 +184,28 @@ public class MemberController {
 		}
 		return mv;
 	}
-
-	
 	
 	/**
 	 * 카카오 로그인
 	 * @param code
+	 * @param session 
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="member/kakaoLogin.kh", method = RequestMethod.GET)
-	public String kakaoLogin(@RequestParam(value = "code", required = false) String code) throws Exception {
+	@RequestMapping(value="/member/kakaoLogin.kh", method = RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Exception {
 		System.out.println("#########" + code);
 		
-//		String access_Token = mService.getAccessToken(code);
-//		System.out.println("###access_Token#### : " + access_Token);
-//		
-//		HashMap<String, Object> userInfo = mService.getUserInfo(access_Token);
-//		System.out.println("###access_Token#### : " + access_Token);
-//		System.out.println("###nickname#### : " + userInfo.get("nickname"));
-//		System.out.println("###email#### : " + userInfo.get("email"));
+		String access_Token = mService.getAccessToken(code);
+		System.out.println("###access_Token#### : " + access_Token);
 		
-		return "member/login";
+		Member loginUser = mService.getLoginUser(access_Token);
+
+		session.setAttribute("loginUser", loginUser);
+		session.setAttribute("memberEmail", loginUser.getMemberEmail());
+		session.setAttribute("memberNick", loginUser.getMemberNick());
+
+		return "redirect:/member/myKakaoInfo.kh";
 	}
 	
 	
@@ -217,17 +220,38 @@ public class MemberController {
 	public ModelAndView showMyPage(ModelAndView mv, HttpServletRequest request) {
 		try {
 			HttpSession session = request.getSession();
-			Member member = (Member) session.getAttribute("loginUser");
+			Member member = (Member)session.getAttribute("loginUser");
 			String memberEmail = member.getMemberEmail();
 			Member mOne = mService.printOneByEmail(memberEmail);
+			
 			mv.addObject("member", mOne);
 			mv.setViewName("member/myPage");
+			
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
 		}
 		return mv;
 	}
 
+	// 카카오 회원 마이 페이지(My 정보 화면)
+	@RequestMapping(value = "/member/myKakaoInfo.kh", method = RequestMethod.GET)
+	public ModelAndView showMyKakaoPage(ModelAndView mv, HttpServletRequest request) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberName = member.getMemberName();
+			Member mOne = mService.printOneByName(memberName);
+			
+			mv.addObject("member", mOne);
+			mv.setViewName("member/myKakaoPage");
+			
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	
 	/**
 	 * 회원 정보 수정
 	 * 
@@ -254,6 +278,25 @@ public class MemberController {
 		return mv;
 	}
 
+	// 카카오 회원 정보 수정
+	@RequestMapping(value = "/member/kakaoModify.kh", method = RequestMethod.POST)
+	public ModelAndView modifyKakaoMember(ModelAndView mv, @ModelAttribute Member member, HttpServletRequest request) {
+		try {
+			int result = mService.modifyKakaoMember(member);
+			if (result > 0) {
+				request.setAttribute("msg", "정보 수정이 완료되었습니다.");
+				request.setAttribute("url", "/member/myKakaoInfo.kh");
+				mv.setViewName("common/alert");
+			} else {
+				mv.addObject("msg", "정보 등록(수정)에 실패하였습니다.");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "정보 수정에 실패하였습니다.").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
 	/**
 	 * 회원 탈퇴
 	 * 
@@ -268,15 +311,9 @@ public class MemberController {
 			Member member = (Member) session.getAttribute("loginUser");
 			String memberEmail = member.getMemberEmail();
 			int result = mService.removeMember(memberEmail);
-			if (result > 0) {
 				request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
 				request.setAttribute("url", "/member/logout.kh");
 				mv.setViewName("/common/alert");
-			} else {
-				request.setAttribute("msg", "회원탈퇴에 실패하였습니다.");
-				request.setAttribute("url", "user/myPage.kh");
-				mv.setViewName("/common/alert");
-			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
 		}
@@ -685,4 +722,37 @@ public class MemberController {
 		}
 	}
 
+	
+	// 찜한 공간 리스트 조회
+	@RequestMapping(value="/member/mySpaceList.kh", method=RequestMethod.GET)
+	public ModelAndView mySpaceListView(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
+			HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberEmail = member.getMemberEmail();
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = mService.getSpaceTotalCount(memberEmail);
+		int spaceLimit = 9;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int) ((double) totalCount / spaceLimit + 0.9);
+		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if (maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		List<Space> sList = mService.printMySpace(memberEmail, currentPage, spaceLimit);
+		if (!sList.isEmpty()) {
+			mv.addObject("memberEmail", memberEmail);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.addObject("sList", sList);
+		}
+		mv.setViewName("/member/mySpace");
+
+		return mv;
+	}
 }

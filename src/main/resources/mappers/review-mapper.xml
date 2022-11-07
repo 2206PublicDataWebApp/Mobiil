@@ -14,6 +14,7 @@
 		<result property="rUpdateDate" column="R_UPDATE_DATE" />
 		<result property="rStatus" column="R_STATUS" />
 		<result property="spaceName" column="SPACE_NAME" />
+		<result property="reservationNo" column="RESERV_NO" />
 	</resultMap>
 
 	<resultMap type="ReviewImg" id="reviewImgResultMap">
@@ -69,7 +70,7 @@
 	
 	<insert id="insertReview"> <!-- 리뷰 업로드 -->
 		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{spaceNo}, 
-		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT)
+		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT, #{reservationNo})
 	</insert>
 
 	<insert id="insertReviewImg"> <!-- 리뷰 이미지 업로드 -->

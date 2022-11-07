@@ -38,20 +38,17 @@
             <input type="password" id="input" name="hostPwd" placeholder="비밀번호" required>
 
             <div>
-                <span style="padding: 1px 295px 1px 1px;">
-                    <input style="margin-top: 10px;" type="checkbox" name="" id=""> 자동 로그인
-                </span>
-                <span>
-                    <a href="/login/findHostPwdView.kh">비밀번호 찾기</a>
-                </span>
             </div>
             
             <br>
-            <div><button type="submit" class="button">로그인 하기</button></div>
+            <div><button type="submit" class="button">로그인</button></div>
         </form>
         <br>
         <span>아직 모빌 회원이 아니신가요?</span>
-        <span><a href="/host/joinView.kh">회원가입</a></span>
+        <span><a href="/host/joinView.kh"><b>회원가입</b></a></span>
+        <br><br>
+        <span>비밀번호를 잊으셨나요?</span>
+        <span><a href="/login/findHostPwdView.kh"><b>비밀번호 찾기</b></a></span>
     </div>
     
        <br><br><br><br>

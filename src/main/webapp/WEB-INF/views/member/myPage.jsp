@@ -58,7 +58,7 @@
         <div class="span">
             <span onclick="location.href='/member/myInfo.kh'"><b>My 정보 수정</b></span> 
             <span> | </span>
-            <span onclick="location.href='#'">찜한 공간 보기</span> 
+            <span onclick="location.href='/member/mySpaceList.kh'">찜한 공간 보기</span> 
             <span> | </span> 
             <span onclick="location.href='/payment/list.kh'">결제 내역 보기</span>
             <span> | </span> 

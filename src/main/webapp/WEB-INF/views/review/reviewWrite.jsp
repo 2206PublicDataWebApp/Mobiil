@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- <% pageContext.setAttribute("replaceChar", "<br>"); %>     --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +46,12 @@
 <jsp:include page="../common/menubar.jsp"></jsp:include>
 <div class="header">
         <div class="span">
-            <span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span> 
+        <c:if test="${loginUser.kakaoStatus eq 'N' }">
+			<span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span>
+		</c:if>
+		<c:if test="${loginUser.kakaoStatus eq 'Y' }">
+			<span onclick="location.href='/member/myKakaoInfo.kh'">My 정보 수정</span>
+		</c:if>	    
             <span> | </span>
             <span onclick="location.href='#'">찜한 공간 보기</span> 
             <span> | </span> 
@@ -70,7 +77,7 @@
 		</tr>
 		<tr>
 			<th class="title" width="">내용</th>
-			<td><textarea cols="85" rows="10" style="border:none" name="reviewContents" placeholder="리뷰를 입력하세요" required></textarea></td>
+			<td><textarea class="textarea" cols="85" rows="10" style="border:none" name="reviewContents" placeholder="리뷰를 입력하세요" required></textarea></td>
 		</tr>	
  		<tr class="add">
 			<th class="title" width="">사진첨부</th>
@@ -93,6 +100,7 @@
 	</table>
 	</form>
 	<script>
+
  	var maxFile = 1;
  	
 	function addFile() {
