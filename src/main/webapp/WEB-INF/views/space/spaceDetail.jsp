@@ -7,7 +7,12 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=163c926f2747f3a404b998b190a36731&libraries=services"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+/>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <!-- fullcalendar CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
@@ -21,6 +26,94 @@
   color: red;
   text-decoration: none;
 }
+.swiper {
+        width: 550px;
+        height: 400px;
+        float:left;
+      }
+
+      .swiper-slide {
+        text-align: left;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: inline-block;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: left;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: inline-block;
+        width: 550px;
+        height: 400px;
+        object-fit: fill;
+	    border-radius: 10px;
+	    cursor: pointer;
+	    transition: 0.3s;
+      }
+      .swiper {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+  /* 이미지 클릭 시, 밝기 조절 */
+  .img:hover {opacity: 0.8;}
+      .modal {
+    display: none; /* 모달창 숨겨 놓기 */
+    position: fixed; 
+    z-index: 1; /* 모달창을 제일 앞에 두기 */
+    padding-top: 100px;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto; /* 스크롤 허용 auto */
+    cursor: pointer; /* 마우스 손가락모양 */
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  /* 모달창 이미지 */
+  .modal_content {
+    margin: auto;
+    display: block;
+    width: 50%; height: auto;
+    max-width: 1000px;
+    border-radius: 10px;
+    animation-name: zoom;
+    animation-duration: 0.8s;
+  }
+  /* 모달창 애니메이션 추가 */
+  @keyframes zoom {
+    from {transform: scale(0)}
+    to {transform: scale(1)}
+  }
+  /* 닫기 버튼 꾸미기 */
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  .close:hover, .close:focus{
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .rvImg{
+  	width:70px;
+  	height:70px;
+  	cursor:pointer;
+  }
 </style>
 </head>
 
@@ -58,28 +151,26 @@ function openChatRoom(createUser, withUser) {
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <div class="container">
 
-<h1 style='margin-top:80px;margin-bottom:80px;'>${space.spaceName }</h1>
-<br><br>
-<div class='spaceComent' style='width:600px;display:inline-block;align:left;'>
-${space.spaceComent }
-	<c:forEach items="${iList }" var="spaceImg" begin="0" end="${spaceImg.last }">
-	<c:forTokens items="" delims=""></c:forTokens>
+        <div class="modal">
+		  <span class="close">&times;</span>
+		  <img class="modal_content" id="img01">
+		</div>
+<h1 style='margin-top:80px;;'>${space.spaceName }</h1>
 
-	<div class="slider-item" style="background-image: url(/resources/spaceuploadFiles/${spaceImg.spaceFileRename });">
-	<div class="container">
-      <div class="row">
-        <div class="col-lg-8 text-center">
-	      <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">광고</p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">${banner.bannerMsg }</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="${banner.bannerLink }">Shop Now</a>
-        </div>
-      </div>
-    </div>
-	</div>
-	</c:forEach>
-</div>
-<div class='reservDiv' style='display:inline-block;text-align:right;float:right;'>
 <div style='text-align:right; '><img class='heartImg' style='cursor:pointer;'/></div>
+	<!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+      	<c:forEach items="${iList }" var="spaceImg">
+        <div class="swiper-slide"><img class='img' src='../../resources/spaceuploadFiles/${spaceImg.spaceFileRename }' onclick='imgClick("${spaceImg.spaceFileRename }");'></div>
+        </c:forEach>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+<div class='reservDiv' style='display:inline-block;text-align:right;float:right;'>
 <br>
 <div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
 <br>
@@ -136,6 +227,10 @@ ${space.spaceComent }
 	</c:if>
 </div>
 </div>
+<div class='spaceComent' style='width:600px;display:inline-block;align:left;'>
+${space.spaceComent }
+
+
 
 <br><br><br><br><br><br>
 <span>${space.address}</span>
@@ -145,7 +240,7 @@ ${space.spaceComent }
 <div style='width:700px;align:left;'><span style='font-size:24px;color:darkgreen;'><b id="rCount"></b></span></div>
 <div id="reivewBox" style='width:700px;align:left;'>
 </div>
-
+</div>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
@@ -345,8 +440,9 @@ ${space.spaceComent }
 				$("#rCount").text("리뷰(" + rList.length + ")");
 				if(rList != null){
 					for(var i in rList){
+						
 						var reviewContents = rList[i].reviewContents;
-						reviewContents = reviewContents.replace("\r\n", '<br>');
+						reviewContents = reviewContents.replace(/(?:\r\n|\r|\n)/g, '<br>');
 						var $div = $('<div>');
 						var $hr = $('<hr>');
 						var $rWriter = $("<span class='reviewWriter' style='font-size:17px;font-weight:bold;'>").text(rList[i].reviewWriter);
@@ -361,19 +457,23 @@ ${space.spaceComent }
 						$rWriter.append($rUpdateDate);
 						$div.after($rContentBox);
 						$rContentBox.append($rContent);
-						if('${loginHost.hostEmail }' == '${hostEmail }'){
-							$rContentBox.append($button);
-						}
 						$.ajax({
 							url:'/space/imgList.kh',
 							type:'get',
 							data:{"reviewNo":rList[i].reviewNo},
 							success:function(riList){
-								$div.after($("<a>").append("<img src='#' alt='reviewImg'>"));
+								for(var k in riList){
+									var fileName = riList[k].reviewFileRename;
+									$rContent.after($("<a>").append("<img class='rvImg' src='../../../resources/reviewFiles/"+fileName+"' onclick='rvImgClick('"+fileName+"')' alt='reviewImg'>"));
+									
+								}
 							},
 							error:function(){
 							}
 						});
+						if('${loginHost.hostEmail }' == '${hostEmail }'){
+							$rContentBox.append($button);
+						}
 						
 						$.ajax({	
 							url:'/space/replyList.kh',
@@ -532,7 +632,39 @@ ${space.spaceComent }
 		}
 	}
 	
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      }
+    });
 	
+	    const modal = document.querySelector(".modal");
+	    const img = document.querySelector(".img");
+	    const modal_img = document.querySelector(".modal_content");
+	    const span = document.querySelector(".close");
+	    function imgClick(spaceFileRename){
+		      modal_img.src = '../../resources/spaceuploadFiles/'+spaceFileRename;
+		      modalDisplay("block");
+	    	
+	    }
+	    span.addEventListener('click', ()=>{
+	      modalDisplay("none");
+	    });
+	    modal.addEventListener('click', ()=>{
+	      modalDisplay("none");
+	    });
+	    function modalDisplay(text){
+	      modal.style.display = text;
+	    }
+	    
 	
 </script>
 </body>

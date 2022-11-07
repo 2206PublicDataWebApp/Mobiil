@@ -22,6 +22,10 @@ input[type=text]{
 .aSort{
 	margin-left: 15px;
 }
+.img-responsive{
+	width:100%;
+	height:100%;
+}
 </style>
 </head>
 
@@ -67,12 +71,12 @@ input[type=text]{
 			<div class="product-content">
 					<h4><a href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }">${space.spaceName }</a></h4>
 					<p class="price">${space.spacePrice }원</p>
+
 			</div>
 		</div>
 	</div>
 	</c:forEach>
 		<!-- 썸네일 1개당 영역 끝-->
-		
 	<!-- 페이징 -->
 		<table align="center" class="table col-10 table-borderless" width="100%">
 		<tr align='center' height="20">
