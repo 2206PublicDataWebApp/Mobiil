@@ -241,6 +241,10 @@ ${space.spaceComent }
 <div id="reivewBox" style='width:700px;align:left;'>
 </div>
 </div>
+<div class="modal2">
+		  <span class="close2">&times;</span>
+		  <img class="modal_content2" id="img02">
+		</div>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
@@ -665,7 +669,6 @@ ${space.spaceComent }
 	      modal.style.display = text;
 	    }
 	    
-	
 </script>
 </body>
 </html>

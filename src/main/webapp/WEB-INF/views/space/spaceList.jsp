@@ -45,6 +45,7 @@ input[type=text]{
 	<input type="submit" name="searchArea" value="강북" class='btn'>
 </form>
 <div style='margin-right: left;padding-top:15px;'>
+<a class='aSort' style='cursor: pointer; text-align:left;' onclick='asc()'>최신순</a>
 <a class='aSort' style='cursor: pointer; text-align:left;' onclick='heart()'>찜많은순</a>
 <a class='aSort' style='cursor: pointer; text-align:left;' onclick='review()'>리뷰많은순</a>
 </div>
@@ -144,6 +145,10 @@ input[type=text]{
 			}
 			
 		})
+	}
+	
+	function asc(){
+		location.href='/space/spaceList.kh';
 	}
 </script>
 </body>
