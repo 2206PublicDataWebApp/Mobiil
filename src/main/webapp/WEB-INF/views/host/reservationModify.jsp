@@ -49,6 +49,14 @@
 	#divv{
 		margin-left : 20px;
 	}
+	
+	.time{
+	    align: center;
+	    width: 400px;
+	    text-align: center;
+	    margin-left: 20px;
+	    height: 45px;
+	}
 </style>
 
 
@@ -86,19 +94,62 @@
 				<tr>
 					<td id="td">체크인</td>
 					<td>
-					<input type="text" id="revStart" class="input" name="revStart" size="31" value="${rOne.revStart }">
+					<%-- <input type="text" id="revStart" class="input" name="revStart" size="31" value="${rOne.revStart }"> --%>
+					<select id="revStart" name="revStart" class="time" onchange="check2();">
+						<option value="${rOne.revStart }">${rOne.revStart }</option>
+						<option value="9">9시</option>
+						<option value="10">10시</option>
+						<option value="11">11시</option>
+						<option value="12">12시</option>
+						<option value="13">13시</option>
+						<option value="14">14시</option>
+						<option value="15">15시</option>
+						<option value="16">16시</option>
+						<option value="17">17시</option>
+						<option value="18">18시</option>
+						<option value="19">19시</option>
+						<option value="20">20시</option>
+						<option value="21">21시</option>
+						<option value="22">22시</option>
+						<option value="23">23시</option>
+					</select>
 					</td>
 				</tr>
+				<br>
 				<tr>
 					<td id="td">체크아웃</td>
 					<td>
-					<input type="text" id="revEnd" class="input" name="revEnd" size="31" value="${rOne.revEnd }">
+					<%-- <input type="text" id="revEnd" class="input" name="revEnd" size="31" value="${rOne.revEnd }"> --%>
+					<select id="revEnd" name="revEnd" class="time" onchange="check();">
+						<option value="${rOne.revEnd }">${rOne.revEnd }</option>
+						<option value="9">9시</option>
+						<option value="10">10시</option>
+						<option value="11">11시</option>
+						<option value="12">12시</option>
+						<option value="13">13시</option>
+						<option value="14">14시</option>
+						<option value="15">15시</option>
+						<option value="16">16시</option>
+						<option value="17">17시</option>
+						<option value="18">18시</option>
+						<option value="19">19시</option>
+						<option value="20">20시</option>
+						<option value="21">21시</option>
+						<option value="22">22시</option>
+						<option value="23">23시</option>
+					</select>
 					</td>
 				</tr>
 				<tr>
-					<td id="td">금액</td>
+					<td id="td">변경 전 금액</td>
 					<td>
-					<input type="text" id="price" class="input" name="price" size="31" value="${rOne.price }">
+					<input type="text" id="price" class="input" name="price" size="31" value="${rOne.price }"><span id="hour"></span>
+					</td>
+				</tr>
+				<tr>
+					<td id="td">변경 후 금액</td>
+					<td>
+					<input type="text" id="price2" class="input" name="price2" size="31" value="">
 					<div id="divv"></div>
 					</td>
 				</tr>
@@ -113,6 +164,41 @@
 		</form>
 		</div>
 	<script>
+	// 시간당 금액
+	var price = ${rOne.price } / (${rOne.revEnd } - ${rOne.revStart })  ;
+	$("#hour").text("시간당 금액 : " + price+"원");
+	document.getElementById('hour').style.color="red";
+	
+	// 시간 체크
+	function check() {
+		var start = $("#revStart option:selected").val();
+		var end	= $("#revEnd option:selected").val();
+		var result = (end - start) * price;
+		if(Number(start) >= Number(end)){
+			alert("시간 설정이 잘못되었습니다.");
+			$('#revStart option:eq(0)').prop('selected', true);
+			$('#revEnd option:eq(0)').prop('selected', true);
+		}
+		if(Number(start) < Number(end)){
+			$('input[name=price2]').attr('value',result);
+			divv.innerHTML="차액 금액은 현장에서 환불 및 결제 됩니다.";
+			document.getElementById('divv').style.color="red";
+		}
+	}
+	
+	// 시간 체크
+	function check2() {
+		var start = $("#revStart option:selected").val();
+		var end	= $("#revEnd option:selected").val();
+		var result = (end - start) * price;
+		if(Number(start) >= Number(end)){
+			alert("시간 설정이 잘못되었습니다.");
+			$('#revStart option:eq(0)').prop('selected', true);
+			$('#revEnd option:eq(0)').prop('selected', true);
+		}
+	}
+	
+	
 	$("#revStart").blur(function() {
 		var revStart = document.getElementById("revStart");
 		var reg = /^[0-9]{1,2}$/
@@ -133,7 +219,7 @@
 		}
 	});
 	
-	$("#price").blur(function() {
+	$("#price2").change(function() {
 		divv.innerHTML="차액 금액은 현장에서 환불 및 결제 됩니다.";
 		document.getElementById('divv').style.color="red";
 	});

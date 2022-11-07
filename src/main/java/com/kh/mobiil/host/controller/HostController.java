@@ -306,9 +306,10 @@ public class HostController {
 	 */
 	@RequestMapping(value = "/host/reservationModify.mobiil", method = RequestMethod.POST)
 	public ModelAndView reservationModify(ModelAndView mv, @ModelAttribute Reservation reservation,
-			@RequestParam("reservationDateStr") String reservationDateStr, HttpServletRequest request) {
+			@RequestParam("reservationDateStr") String reservationDateStr, HttpServletRequest request, Space space) {
 		try {
 			reservation.setReservationDate(java.sql.Date.valueOf(reservationDateStr)); // String -> Date
+			
 			int result = hService.reservationModify(reservation);
 			if (result > 0) {
 				mv.setViewName("redirect:/host/registList.mobiil");
@@ -422,7 +423,7 @@ public class HostController {
 					String root = request.getSession().getServletContext().getRealPath("resources");
 					String savePath = root + "\\spaceuploadFiles";
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					String spaceFileRename = sdf.format(new Date(System.currentTimeMillis())) + "."
+					String spaceFileRename = sdf.format(new Date(System.currentTimeMillis())) + imgNo + "."
 							+ spaceFileName.substring(spaceFileName.lastIndexOf(".") + 1);
 					File file = new File(savePath);
 					if (!file.exists()) {
