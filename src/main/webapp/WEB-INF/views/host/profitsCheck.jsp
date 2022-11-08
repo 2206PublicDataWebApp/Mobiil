@@ -45,11 +45,17 @@
             margin: 1px 1px 10px 50px;
             font-size: 15px;
         }
+        
+        #wapper{
+        	margin-right : 200px;
+        }
 </style>
 </head>
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <jsp:include page="../host/menuBar.jsp"></jsp:include>
+
+	<div id="wapper" style=" margin-right: 420px;">
 	<form action="/host/profitsCheck.kh" method="get">
 		<div id="div1">
 			<h3>총 판매 금액 : <span id="total">${priceSum}</span></h3>
@@ -105,6 +111,7 @@
 			</table>
 		</div>
 	</form>
+	</div>
 	
 	<script>
 	/* $(document).ready(function(){	// 보여지는 페이징만 합계를 구하기 때문에 사용하지 않음.

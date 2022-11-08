@@ -65,7 +65,7 @@
   		#file {
 		  display: none;
 		}
-  		
+		
 </style>
 
 
@@ -75,7 +75,7 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
 
-		<div id="div" align="center">
+		<div id="wapper" align="center" style=" margin-right: 400px;">
 		<h2>호스트 정보 수정 페이지</h2><br>
 		<hr>
 		<form action="/host/hostModify.mobiil" method="post" enctype="multipart/form-data">
@@ -120,7 +120,7 @@
 					<td>사업자 등록증</td>
 					<td>
 						<input type="hidden" value="" name="regPhotoRename">
-						<label for="file"><div class="btn-upload">사업자 등록증 첨부</div></label>
+						<label for="file"><div class="btn-upload" style="margin-left: 20px;">사업자 등록증 첨부</div></label>
 						<input type="file" class="file" id="file" name="reloadFile" style=" display: none">
 					</td>
 				</tr>

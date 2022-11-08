@@ -165,7 +165,7 @@
 	  <select id="spaceList" resultMap="SpaceResultMap">
 	  	SELECT * FROM SPACE_TBL
 	  	WHERE SPACE_STATUS = 'Y'
-	  	ORDER BY 1 DESC
+	  	ORDER BY approval, 1 DESC
 	  </select>
 	  
 	  <!-- 공간 리스트 By hostEmail  -->
