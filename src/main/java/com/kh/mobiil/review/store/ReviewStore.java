@@ -33,6 +33,8 @@ public interface ReviewStore {
 
 	public List<ReviewImg> selectImgByNo(SqlSession session, Integer reviewNo);
 
+	public int deleteReviewImg(SqlSession session, Integer reviewNo);
+
 
 
 

@@ -62,9 +62,7 @@ public class ReviewController {
 					String savePath = root + "\\reviewFiles";
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 					
-					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis()))+"."+reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
-					UUID uuid = UUID.randomUUID(); // 랜덤으로 reviewFileRename 명 설정하기
-					reviewFileRename = uuid.toString() + "_" + reviewFileRename; 
+					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + imgNo + "."+ reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
 					
 					File file = new File(savePath);
 					if(!file.exists()) { 
@@ -145,28 +143,24 @@ public class ReviewController {
 			HttpServletRequest request) {
 		int num = 0;
 		ReviewImg reviewImg = null;
-		int result = rService.reviewModify(review);
 		
 		try {
-			for(MultipartFile mf : reloadFile ) {
+			for(MultipartFile mf : reloadFile) {
 				String reviewFileName = mf.getOriginalFilename();
-				if(!reviewFileName.equals("")) {
+				if(mf != null && !reviewFileName.equals("")) {
 					String root = request.getSession().getServletContext().getRealPath("resources");
-					String savePath = root + "\\reviewFiles";
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String savedPath = root + "\\reviewFiles";
 					
 					String rFileRename = reviewFileRenameArr[num];
-					File file = new File(savePath + "\\" + rFileRename);
+					File file = new File(savedPath + "\\" + rFileRename);
 					if(file.exists()) {
 						file.delete();
 					}
-					
-					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis()))+ num + "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
-					UUID uuid = UUID.randomUUID(); // 랜덤으로 reviewFileRename 명 설정하기
-					reviewFileRename = uuid.toString() + "_" + reviewFileRename; 
-					file = new File(savePath);
-					mf.transferTo(new File(savePath+"\\"+reviewFileRename));
-					String reviewFilePath = savePath+"\\"+reviewFileRename;
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + num + "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+					file = new File(savedPath);
+					String reviewFilePath = savedPath + "\\" + reviewFileRename;
+					mf.transferTo(new File(reviewFilePath));
 					reviewImg = new ReviewImg();
 					reviewImg.setReviewFileName(reviewFileName);
 					reviewImg.setReviewFileRename(reviewFileRename);
@@ -175,11 +169,12 @@ public class ReviewController {
 					reviewImg.setReviewImgNo(imgNo);
 					num += 1;
 				}
+					int result = rService.reviewModify(review);
 					int result2 = rService.reviewImgModify(reviewImg);
 					mv.setViewName("redirect:/payment/list.kh");
 				}
 			} catch (Exception e) {
-
+				mv.addObject("msg", e.toString()).setViewName("common/errorPage");
 			}
 			return mv;
 		}
@@ -191,6 +186,7 @@ public class ReviewController {
 	try {
 		int result = rService.removeReview(reviewNo);
 		int result2 = rService.updateRevStatusN(reservationNo);
+		int result3 = rService.removeReviewImg(reviewNo);
 		mv.addObject("reservationNo", reservationNo);
 		if(result > 0) {
 			request.setAttribute("msg", "리뷰가 삭제되었습니다.");

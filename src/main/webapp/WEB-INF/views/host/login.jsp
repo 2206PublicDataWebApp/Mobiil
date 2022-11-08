@@ -32,7 +32,7 @@
 
     <div class="login">
         <h1>기업회원 로그인</h1>
-        <br><br><br>
+        <br>
         <form name="email" action="/host/login.kh" method="post">
             <input style="margin: 1px 1px 10px 1px;" type="email" id="input" name="hostEmail" placeholder="이메일" required><br>
             <input type="password" id="input" name="hostPwd" placeholder="비밀번호" required>

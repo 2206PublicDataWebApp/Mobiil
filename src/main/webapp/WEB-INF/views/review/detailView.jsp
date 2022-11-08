@@ -81,7 +81,6 @@
 		</tr>
 		<tr>
 			<td id="cl" align="center" width="150">첨부파일</td>
-<%-- 			<c:forEach items="${rList}" var="Img"> --%>
 			<td>
 		 		<img alt="본문이미지1" src="/resources/reviewFiles/${rList[0].reviewFileRename }" width="200" height="200">
 		 		<img alt="본문이미지2" src="/resources/reviewFiles/${rList[1].reviewFileRename }" width="200" height="200">

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <% pageContext.setAttribute("replaceChar", "<br>"); %>     --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,15 +76,27 @@
 		</tr>
 		<tr>
 			<th class="title" width="">내용</th>
-			<td><textarea class="textarea" cols="85" rows="10" style="border:none" name="reviewContents" placeholder="리뷰를 입력하세요" required></textarea></td>
+			<td><textarea cols="85" rows="10" style="border:none" name="reviewContents" placeholder="리뷰를 입력하세요" required></textarea></td>
 		</tr>	
  		<tr class="add">
 			<th class="title" width="">사진첨부</th>
 			<td>
-				<input multiple="multiple" type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png">
+				<input type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png">
+<!-- 				<input type="file" class="file2" name="uploadFile" accept=".jpg, .jpeg, .png"> -->
+<!-- 				<input type="file" class="file3" name="uploadFile" accept=".jpg, .jpeg, .png"> -->
+				
 				<input type="button" value="추가" onclick="addFile();">
 				<input type="button" value="삭제" onclick="delFile();">
-<!-- 				<img id="preview" style="width:150px; height:150px; display: none;" >  미리보기 -->
+				
+				<div style="float:left; margin-right:20px;">
+				    <img id="preview" style="width:150px; height:150px; display: none;" >
+				</div>
+				<div style="float:left; margin-right:20px;">
+				    <img id="preview2" style="width:150px; height:150px; display: none;" >
+			 	</div>
+				<div style="float:left;">
+				  	<img id="preview3" style="width:150px; height:150px; display: none;" >
+				</div>
 			</td>
 		</tr>	
 		<tr>
@@ -100,7 +111,6 @@
 	</table>
 	</form>
 	<script>
-
  	var maxFile = 1;
  	
 	function addFile() {
@@ -120,20 +130,20 @@
 		}
 	} 
 	
-// 	$(document).ready(function() {
-// 		$(".file").on("change", handleImgFileSelect);
-// 	})
+	$(document).ready(function() {
+		$(".file").on("change", handleImgFileSelect);
+	})
 	
-// 		function handleImgFileSelect(e){
-// 			var files = e.target.files;
-// 			var reader = new FileReader();
-// 			reader.onload = function(e){
-// 				$("#preview").attr("src", e.target.result);
-// 				$("#preview").css("display", "block");
-// 			}
-// 			reader.readAsDataURL(files[0]);
+		function handleImgFileSelect(e){
+			var files = e.target.files;
+			var reader = new FileReader();
+			reader.onload = function(e){
+				$("#preview").attr("src", e.target.result);
+				$("#preview").css("display", "block");
+			}
+			reader.readAsDataURL(files[0]);
 
-// 		}
+		}
 	</script>
 	<br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>

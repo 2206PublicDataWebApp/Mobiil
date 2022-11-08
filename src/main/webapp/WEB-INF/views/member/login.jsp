@@ -22,7 +22,7 @@
             background-color:rgb(212, 191, 232);
             border-radius: 5px;
             border: none;
-            font-size: 18px;
+            font-size: 16px;
         }
         
     </style>
@@ -32,12 +32,12 @@
 
     <div class="login">
         <h1>개인회원 로그인</h1>
-        <br><br><br>
+        <br>
         <form action="/member/login.kh" method="post">
             <input style="margin: 1px 1px 10px 1px;" type="email" id="input" name="memberEmail" placeholder="이메일"><br>
             <input type="password" id="input" name="memberPwd" placeholder="비밀번호">
             <br><br>
-            <div><button type="submit" class="button">로그인</button></div>
+            <div><button type="submit" class="button">일반 로그인</button></div>
             <br>
             <a href="https://kauth.kakao.com/oauth/authorize?client_id=c61c3ed34bcf022b1aa5f4a4d4826902&redirect_uri=http://localhost:9454/member/kakaoLogin.kh&response_type=code">
 				<img src="/resources/icon/kakao_login_large_wide.png" style="height:50px;" >

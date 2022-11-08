@@ -109,7 +109,10 @@
   	</select>
   	
   	<select id="checkNickDuplicate" resultType="_int"> <!-- 닉네임 중복방지 -->
-  	  	SELECT COUNT(*) FROM MEMBER_TBL WHERE memberNick = #{memberNick} AND mStatus = 'Y'
+  	  	SELECT COUNT(*) FROM (
+  	  	SELECT memberNick FROM MEMBER_TBL WHERE mStatus = 'Y'
+  	  	UNION
+  	  	SELECT memberNick FROM HOST_TBL WHERE hStatus = 'Y') WHERE memberNick = #{memberNick}
   	</select>
   	
   	<select id="checkMemDupEmail" resultType="_int"> <!-- 비밀번호 변경 시 이메일 존재 체크(개인) -->
@@ -129,8 +132,6 @@
  		FROM RESERVATION_TBL
 		LEFT JOIN REVIEW_TBL ON RESERVATION_TBL.RESERV_NO = REVIEW_TBL.RESERV_NO
 		WHERE RESERVATION_TBL.MEMBER_EMAIL = #{memberEmail} AND RESERV_STATUS = 'Y' ORDER BY PAYMENT_DATE DESC, RESERV_NO
-<!-- 		SELECT * FROM RESERVATION_TBL -->
-<!-- 		WHERE MEMBER_EMAIL = #{memberEmail} AND RESERV_STATUS = 'Y' ORDER BY PAYMENT_DATE DESC, RESERV_NO -->
   	</select>
   	
   	<select id="getSpaceTotalCount" resultType="_int"> <!-- 찜한 공간 페이징 갯수 -->

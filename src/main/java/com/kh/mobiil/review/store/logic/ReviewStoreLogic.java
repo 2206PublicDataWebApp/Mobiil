@@ -81,5 +81,11 @@ public class ReviewStoreLogic implements ReviewStore{
 		return reviewImg;
 	}
 
+	@Override
+	public int deleteReviewImg(SqlSession session, Integer reviewNo) {
+		int result = session.delete("ReviewMapper.deleteReviewImg", reviewNo);
+		return result;
+	}
+
 	}
 
