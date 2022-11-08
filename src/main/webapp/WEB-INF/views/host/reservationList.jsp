@@ -52,6 +52,7 @@ table, td, th {
 			<tr>
 				<td>예약번호</td>
 				<td>예약자</td>
+				<td>결제일자</td>
 				<td>예약일자</td>
 				<td>체크인</td>
 				<td>체크아웃</td>
@@ -62,6 +63,7 @@ table, td, th {
 				<tr>
 					<td>${reservation.reservationNo }</td>
 					<td>${reservation.memberName }</td>
+					<td>${reservation.paymentDate }</td>
 					<td>${reservation.reservationDate }</td>
 					<td>${reservation.revStart }시</td>
 					<td>${reservation.revEnd }시</td>

@@ -73,8 +73,7 @@
 	  input[type="checkbox"] {
 	  width: 25px; 
 	  height: 25px; 
-		}
-	
+	}
 	
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
@@ -105,11 +104,11 @@
 				<tr>
 					<td id="td">주소</td>
 					
-					<td><input type="text" id="sample6_postcode" class="input" placeholder="우편번호" required>
-						<input type="button" class="btn btn-default" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" id="sample6_address" class="input" name="address" placeholder="주소" required><br>
-						<input type="text" id="sample6_detailAddress" class="input" placeholder="상세주소" required>
-						<input type="text" id="sample6_extraAddress" class="input" placeholder="참고항목"></td>
+					<td><input type="text" id="sample6_postcode" class="input" name="address1" placeholder="우편번호" required>
+						<input type="button" class="btn btn-default"  onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="text" id="sample6_address" class="input" name="address2" placeholder="주소" required><br>
+						<input type="text" id="sample6_detailAddress" class="input" name="address3" placeholder="상세주소" required>
+						<input type="text" id="sample6_extraAddress" class="input" name="address4" placeholder="참고항목"></td>
 				</tr>
 				<tr class="fileTr">
 					<td id="td">공간 이미지   </td>
@@ -125,11 +124,19 @@
 				</tr>
 				<tr>
 					<td id="td">지역</td>
-					<td>
+					<!-- <td>
 					<label><input type="checkbox" name="spaceArea"  id="spaceArea1" value="강북" >강북</label>
 					<label><input type="checkbox" name="spaceArea"  id="spaceArea2" value="강남" >강남</label>
 					<label><input type="checkbox" name="spaceArea"  id="spaceArea3" value="강서" >강서</label>
 					<label><input type="checkbox" name="spaceArea"  id="spaceArea4" value="강동" >강동</label>
+					</td> -->
+					<td>
+						<select id="spaceArea" name="spaceArea" style="width: 400px; height: 45px; margin-left: 20px; text-align: center;" required>
+							<option value="강북">강북</option>
+							<option value="강남">강남</option>
+							<option value="강서">강서</option>
+							<option value="강동">강동</option>
+						</select>
 					</td>
 				</tr>
 				<tr>

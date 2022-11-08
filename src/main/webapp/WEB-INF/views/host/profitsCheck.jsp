@@ -63,7 +63,7 @@
 
 		<div id="div2">
 			<span>조회기간 :</span> 
-			<input type="date" name="date1"> ~ <input type="date" name="date2">
+			<input type="date" name="date1" value='${date1}'> ~ <input type="date" name="date2" value='${date2}'>
 			<button type="submit" class="btn btn-default">조회하기</button>
 		</div>
 
@@ -72,6 +72,7 @@
 				<tr>
 					<td>예약번호</td>
 					<td>예약자</td>
+					<td>결제날짜</td>
 					<td>예약날짜</td>
 					<td>체크인</td>
 					<td>체크아웃</td>
@@ -81,6 +82,7 @@
 					<tr>
 						<td>${reservation.reservationNo }</td>
 						<td>${reservation.memberName }</td>
+						<td>${reservation.paymentDate}</td>
 						<td>${reservation.reservationDate}</td>
 						<td>${reservation.revStart }</td>
 						<td>${reservation.revEnd }</td>
