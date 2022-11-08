@@ -1,10 +1,12 @@
 package com.kh.mobiil.member.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.mobiil.host.domain.Host;
@@ -12,6 +14,7 @@ import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.store.MemberStore;
 import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Space;
 
 @Repository
 public class MemberStoreLogic implements MemberStore{
@@ -153,6 +156,49 @@ public class MemberStoreLogic implements MemberStore{
 		return result;
 	}
 
+	@Autowired
+	private SqlSessionTemplate session;
+	
+	// 정보 저장
+	@Override
+	public void registKakao(HashMap<String, Object> loginUser) {
+		session.insert("MemberMapper.registKakao", loginUser);
+	}
+	
+	// 정보 확인
+	@Override
+	public Member findKakao(HashMap<String, Object> loginUser) {
+		System.out.println("RN:"+loginUser.get("nickname"));
+		System.out.println("RE:"+loginUser.get("email"));
+		Member member = session.selectOne("MemberMapper.findKakao", loginUser);
+		return member;
+}
 
+	@Override
+	public Member selectOneByName(SqlSession session, String memberName) {
+		Member member = session.selectOne("MemberMapper.selectOneByName", memberName);
+		return member;
+	}
+
+
+	@Override
+	public int updateKakaoMember(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateKakaoMember", member);
+		return result;
+	}
+
+	@Override
+	public int getSpaceTotalCount(SqlSession session, String memberEmail) {
+		int result = session.selectOne("MemberMapper.getSpaceTotalCount", memberEmail);
+		return result;
+	}
+
+	@Override
+	public List<Space> selectMySpace(SqlSession session, String memberEmail, int currentPage, int spaceLimit) {
+		int offset = (currentPage-1) * spaceLimit;
+		RowBounds rowBounds = new RowBounds(offset, spaceLimit);
+		List<Space> sList = session.selectList("MemberMapper.selectMySpace", memberEmail, rowBounds);
+		return sList;
+	}
 
 }

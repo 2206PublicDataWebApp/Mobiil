@@ -44,8 +44,13 @@
 <jsp:include page="../common/menubar.jsp"></jsp:include>
 <div class="header">
         <div class="span">
-            <span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span> 
-            <span> | </span>
+		<c:if test="${loginUser.kakaoStatus eq 'N' }">
+			<span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span>
+		</c:if>
+		<c:if test="${loginUser.kakaoStatus eq 'Y' }">
+			<span onclick="location.href='/member/myKakaoInfo.kh'">My 정보 수정</span>
+		</c:if>	                
+			<span> | </span>
             <span onclick="location.href='#'">찜한 공간 보기</span> 
             <span> | </span> 
             <span onclick="location.href='/payment/list.kh'"><b>결제 내역 보기</b></span>
@@ -75,8 +80,8 @@
 			<c:forEach items="${reviewImg}" var="rImg">
 				<input type="hidden" value="${rImg.reviewImgNo}" name="reviewImgNo">
 				<input type="hidden" value="${rImg.reviewFileRename}" name="reviewFileRename">
+				<input type="file" class="file" name="reloadFile" accept=".jpg, .jpeg, .png">
 			</c:forEach>
-				<input multiple="multiple" type="file" class="file" name="reloadFile" accept=".jpg, .jpeg, .png">
 <!-- 				<a>사진name</a> -->
 				<input type="button" value="추가" onclick="addFile();">
 				<input type="button" value="삭제" onclick="delFile();">

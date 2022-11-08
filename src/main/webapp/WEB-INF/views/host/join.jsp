@@ -80,8 +80,10 @@
                 <label>예금주명</label><input type="text" class="input" id="holder" name="accountHolder" placeholder="" ><br>
                 <label>계좌번호</label><input type="text" class="input" id="num" name="accountNumber" placeholder="숫자만 입력" ><br>
                 <label>사업자 등록번호</label><input type="text" class="input" id="reg" name="companyRegNum" oninput="hypenReg(this)" maxlength="10" placeholder="숫자만 입력" ><br>
-                <label for="photo">사업자 등록증 사진</label><input type="file" class="input" id="photo" name="uploadFile"><br>
-
+                <div style="width: 650px;  margin: auto;">
+                <div style="float:left; margin-right:20px;"><label for="photo">사업자 등록증 사진</label></div>
+                 <div><input type="file" class="input" id="photo" name="uploadFile"><br></div>
+				</div>
                 <br>
                 <div><button type="button" class="button" onclick="joinform_check();">회원가입하기</button></div>
             </form>

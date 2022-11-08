@@ -23,17 +23,18 @@ import com.kh.mobiil.member.service.MemberService;
 import com.kh.mobiil.member.store.MemberStore;
 import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Space;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private SqlSessionTemplate session;
-	
+
 	@Autowired
 	private MemberStore mStore;
 
 	// 멤버(개인)
-	
+
 	@Override
 	public int registerMember(Member member) { // 회원가입
 		int result = mStore.insertMember(session, member);
@@ -51,25 +52,24 @@ public class MemberServiceImpl implements MemberService {
 		Member member = mStore.selectOneByEmail(session, memberEmail);
 		return member;
 	}
-	
+
 	@Override
 	public int modifyMember(Member member) { // 정보 수정
 		int result = mStore.updateMember(session, member);
 		return result;
 	}
-	
+
 	@Override
 	public int removeMember(String memberEmail) { // 회원 탈퇴
 		int result = mStore.deleteMember(session, memberEmail);
 		return result;
 	}
-	
+
 	@Override
 	public int checkDupEmail(String memberEmail) { // 이메일 중복 체크
 		int result = mStore.checkDupEmail(session, memberEmail);
 		return result;
 	}
-
 
 	@Override
 	public int checkDupNick(String memberNick) { // 닉네임 중복 체크
@@ -88,15 +88,123 @@ public class MemberServiceImpl implements MemberService {
 		List<Reservation> rList = mStore.selectAllReserve(session, memberEmail, currentPage, reserveLimit);
 		return rList;
 	}
-	
+
 	@Override
 	public Reservation printOneByNo(String reservationNo) {
 		Reservation reservation = mStore.selectOneByNo(session, reservationNo);
 		return reservation;
 	}
-	
+
+	// 토큰 키 받기
+	@Override
+	public String getAccessToken(String authorize_code) {
+
+		String access_Token = "";
+		String refresh_Token = "";
+		String reqURL = "https://kauth.kakao.com/oauth/token";
+
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true); // POST 요청
+
+			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=c61c3ed34bcf022b1aa5f4a4d4826902");
+			sb.append("&redirect_uri=http://localhost:9454/member/kakaoLogin.kh");
+			sb.append("&code=" + authorize_code);
+			bw.write(sb.toString());
+			bw.flush();
+
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode); // 결과 코드 200이면 성공
+
+			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = "";
+			String result = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+
+			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+
+			access_Token = element.getAsJsonObject().get("access_token").getAsString();
+			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+
+			System.out.println("access_token : " + access_Token);
+			System.out.println("refresh_token : " + refresh_Token);
+
+			br.close();
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return access_Token;
+	}
+
+	@Override
+	public Member getLoginUser(String access_Token) {
+
+		HashMap<String, Object> loginUser = new HashMap<String, Object>();
+		String reqURL = "https://kapi.kakao.com/v2/user/me";
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+
+			// 요청에 필요한 Header에 포함될 내용
+			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line = "";
+			String result = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+
+			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+
+			String email = kakao_account.getAsJsonObject().get("email").getAsString();
+			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+
+			loginUser.put("email", email);
+			loginUser.put("nickname", nickname);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Member result = mStore.findKakao(loginUser);
+		System.out.println("S:" + result);
+		if (result == null) {
+			mStore.registKakao(loginUser);
+			return mStore.findKakao(loginUser);
+		} else {
+			return result;
+		}
+
+	}
+
 	// 호스트
-	
+
 	@Override
 	public int registerHost(Host host) { // 회원가입
 		int result = mStore.insertHost(session, host);
@@ -110,17 +218,18 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int checkDupHostEmail(String hostEmail) {  // 이메일 중복 체크
+	public int checkDupHostEmail(String hostEmail) { // 이메일 중복 체크
 		int result = mStore.checkDupHostEmail(session, hostEmail);
 		return result;
 	}
-	
+
 	// 비밀번호 변경
 	@Override
 	public int modifyPwd(Member member) {
 		int result = mStore.updatePwd(session, member);
 		return result;
 	}
+
 	@Override
 	public int checkMemDupEmail(String memberEmail) {
 		int result = mStore.checkMemDupEmail(session, memberEmail);
@@ -139,8 +248,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
-
-	/////////////어드민 대시보드
+	///////////// 어드민 대시보드
 	@Override
 	public int getMemberCount() {
 		int result = mStore.selectMemberCount(session);
@@ -165,4 +273,28 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	
+	@Override
+	public Member printOneByName(String memberName) {
+		Member member = mStore.selectOneByName(session, memberName);
+		return member;
+	}
+
+	@Override
+	public int modifyKakaoMember(Member member) {
+		int result = mStore.updateKakaoMember(session, member);
+		return result;
+	}
+
+	@Override
+	public int getSpaceTotalCount(String memberEmail) {
+		int totalCount = mStore.getSpaceTotalCount(session, memberEmail);
+		return totalCount;
+	}
+
+	@Override
+	public List<Space> printMySpace(String memberEmail, int currentPage, int spaceLimit) {
+		List<Space> sList = mStore.selectMySpace(session, memberEmail, currentPage, spaceLimit);
+		return sList;
+	}
+
 }

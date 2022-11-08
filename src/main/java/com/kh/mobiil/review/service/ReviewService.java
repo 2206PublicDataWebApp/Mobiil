@@ -31,6 +31,8 @@ public interface ReviewService {
 
 	public List<ReviewImg> printImgByNo(Integer reviewNo);
 
+	public int removeReviewImg(Integer reviewNo);
+
 
 
 

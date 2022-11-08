@@ -92,7 +92,7 @@
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
 				<!-- 상단 바 영역 나중에 cif로 보이고 안보이고 처리 -->
-				<c:if test="${sessionScope.loginUser eq null and sessionScope.loginHost eq null}">			
+				<c:if test="${sessionScope.loginUser eq null and sessionScope.loginHost eq null }">			
 					<ul class="top-menu text-right list-inline">
 						<li>
 							<a href="/home/login.kh">로그인</a>
@@ -106,9 +106,16 @@
 						<li>
 							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')" id='myChat'></a>
 						</li>
+					<c:if test="${loginUser.kakaoStatus eq 'N' }"> 
 						<li>
 							<a href="/member/myInfo.kh">마이페이지</a>
 						</li>
+					</c:if>	
+					<c:if test="${loginUser.kakaoStatus eq 'Y' }"> 
+						<li>
+							<a href="/member/myKakaoInfo.kh">마이페이지</a>
+						</li>
+					</c:if>
 						<li>
 							<a href="/member/logout.kh">로그아웃</a>
 						</li>

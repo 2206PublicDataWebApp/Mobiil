@@ -1,5 +1,6 @@
 package com.kh.mobiil.member.store;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Space;
 
 public interface MemberStore {
 	
@@ -66,18 +68,18 @@ public interface MemberStore {
 	public int selectCountHostNick(String memberNick, SqlSessionTemplate session);
 
 
+	public Member findKakao(HashMap<String, Object> loginUser);
+
+	public void registKakao(HashMap<String, Object> loginUser);
+
+	public Member selectOneByName(SqlSession session, String memberName);
+
+	public int updateKakaoMember(SqlSession session, Member member);
 
 
+	public int getSpaceTotalCount(SqlSession session, String memberEmail);
 
 
-
-
-
-
-
-
-
-
-
+	public List<Space> selectMySpace(SqlSession session, String memberEmail, int currentPage, int spaceLimit);
 
 }

@@ -14,6 +14,7 @@
 		<result property="rUpdateDate" column="R_UPDATE_DATE" />
 		<result property="rStatus" column="R_STATUS" />
 		<result property="spaceName" column="SPACE_NAME" />
+		<result property="reservationNo" column="RESERV_NO" />
 	</resultMap>
 
 	<resultMap type="ReviewImg" id="reviewImgResultMap">
@@ -69,7 +70,7 @@
 	
 	<insert id="insertReview"> <!-- 리뷰 업로드 -->
 		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{spaceNo}, 
-		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT)
+		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT, #{reservationNo})
 	</insert>
 
 	<insert id="insertReviewImg"> <!-- 리뷰 이미지 업로드 -->
@@ -90,7 +91,8 @@
 	</select>
 	
 	<update id="reviewModify"> <!-- 리뷰 수정 -->
-		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents} WHERE REVIEW_NO = #{reviewNo}
+		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, R_UPDATE_DATE = DEFAULT
+		WHERE REVIEW_NO = #{reviewNo}
 	</update>
 
 	<update id="reviewImgModify"> <!-- 리뷰 사진 수정 -->
@@ -103,6 +105,10 @@
 		DELETE FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo}
 	</delete>
 
+	<delete id="deleteReviewImg"> <!-- 리뷰 삭제 시 이미지도 삭제 -->
+		DELETE FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+	
 	<select id="selectOneByNo" resultMap="reviewResultMap"> <!-- 리뷰 상세보기 -->
 		SELECT SPACE_NAME, REVIEW_NO, SPACE_TBL.SPACE_NO,
 		MEMBER_EMAIL, REVIEW_CONTENTS,

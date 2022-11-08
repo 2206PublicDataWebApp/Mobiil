@@ -7,7 +7,9 @@ import java.util.List;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
+import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Space;
 
 public interface MemberService {
 
@@ -37,6 +39,11 @@ public interface MemberService {
 	public List<Reservation> printAllReserve(String memberEmail, int currentPage, int reserveLimit); // 마이페이지 -> 결제 내역 조회
 	
 	public Reservation printOneByNo(String reservationNo); // 마이페이지 -> 결제 상세 내역
+	
+	public String getAccessToken (String authorize_code);
+	
+	public Member getLoginUser(String access_Token);
+
 
 	// 호스트
 	
@@ -63,6 +70,18 @@ public interface MemberService {
 
 
 	public int modifyHostPwd(Host host);
+
+
+	public Member printOneByName(String memberName);
+
+
+	public int modifyKakaoMember(Member member);
+
+
+	public int getSpaceTotalCount(String memberEmail); // 찜한 공간 갯수
+
+
+	public List<Space> printMySpace(String memberEmail, int currentPage, int spaceLimit); // 찜한 공간 목록
 
 
 

@@ -11,6 +11,8 @@ public class Review {
 	private Date rCreateDate;
 	private Date rUpdateDate;
 	private String rStatus;
+	private String reservationNo;
+	
 	private String spaceName; // space table 과 조인
 
 	public Review() {}
@@ -79,6 +81,14 @@ public class Review {
 		this.rStatus = rStatus;
 	}
 
+	public String getReservationNo() {
+		return reservationNo;
+	}
+
+	public void setReservationNo(String reservationNo) {
+		this.reservationNo = reservationNo;
+	}
+
 	public String getSpaceName() {
 		return spaceName;
 	}
@@ -91,10 +101,9 @@ public class Review {
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", spaceNo=" + spaceNo + ", memberEmail=" + memberEmail
 				+ ", reviewContents=" + reviewContents + ", reviewWriter=" + reviewWriter + ", rCreateDate="
-				+ rCreateDate + ", rUpdateDate=" + rUpdateDate + ", rStatus=" + rStatus + ", spaceName=" + spaceName
-				+ "]";
+				+ rCreateDate + ", rUpdateDate=" + rUpdateDate + ", rStatus=" + rStatus + ", reservationNo="
+				+ reservationNo + ", spaceName=" + spaceName + "]";
 	}
 
-	
 	
 }

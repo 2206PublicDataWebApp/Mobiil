@@ -12,14 +12,9 @@ public class Member {
 	private Date updateDate;
 	private String mStatus; 
 	private String manageStatus;
+	private String kakaoStatus;
 	
 	public Member() {}
-	
-	public Member(String memberEmail, String memberPwd) {
-		super();
-		this.memberEmail = memberEmail;
-		this.memberPwd = memberPwd;
-	}
 
 	public String getMemberEmail() {
 		return memberEmail;
@@ -93,12 +88,20 @@ public class Member {
 		this.manageStatus = manageStatus;
 	}
 
+	public String getKakaoStatus() {
+		return kakaoStatus;
+	}
+
+	public void setKakaoStatus(String kakaoStatus) {
+		this.kakaoStatus = kakaoStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [memberEmail=" + memberEmail + ", memberPwd=" + memberPwd + ", memberName=" + memberName
 				+ ", memberNick=" + memberNick + ", memberPhone=" + memberPhone + ", enrollDate=" + enrollDate
-				+ ", updateDate=" + updateDate + ", mStatus=" + mStatus + ", manageStatus=" + manageStatus + "]";
+				+ ", updateDate=" + updateDate + ", mStatus=" + mStatus + ", manageStatus=" + manageStatus
+				+ ", kakaoStatus=" + kakaoStatus + "]";
 	}
-	
 	
 }

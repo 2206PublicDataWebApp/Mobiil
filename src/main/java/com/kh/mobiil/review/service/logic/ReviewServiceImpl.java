@@ -89,6 +89,12 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewImg;
 	}
 
+	@Override
+	public int removeReviewImg(Integer reviewNo) {
+		int result = rStore.deleteReviewImg(session, reviewNo);
+		return result;
+	}
+
 
 
 

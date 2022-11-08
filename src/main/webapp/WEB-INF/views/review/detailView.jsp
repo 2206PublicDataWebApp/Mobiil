@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +45,12 @@
 <jsp:include page="../common/menubar.jsp"></jsp:include>
 <div class="header">
         <div class="span">
-            <span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span> 
+        <c:if test="${loginUser.kakaoStatus eq 'N' }">
+			<span onclick="location.href='/member/myInfo.kh'">My 정보 수정</span>
+		</c:if>
+		<c:if test="${loginUser.kakaoStatus eq 'Y' }">
+			<span onclick="location.href='/member/myKakaoInfo.kh'">My 정보 수정</span>
+		</c:if>
             <span> | </span>
             <span onclick="location.href='#'">찜한 공간 보기</span> 
             <span> | </span> 
@@ -68,13 +74,13 @@
 			<td id="cl" align="center" width="150">작성자</td>
 			<td>${review.reviewWriter}</td>
 		</tr>
+		<% pageContext.setAttribute("replaceChar", "\r\n"); %>
 		<tr>
 			<td id="cl" align="center" width="150">내용</td>
-			<td>${review.reviewContents}</td>
+			<td>${fn:replace(review.reviewContents, replaceChar, "<br/>")}</td>
 		</tr>
 		<tr>
 			<td id="cl" align="center" width="150">첨부파일</td>
-<%-- 			<c:forEach items="${rList}" var="Img"> --%>
 			<td>
 		 		<img alt="본문이미지1" src="/resources/reviewFiles/${rList[0].reviewFileRename }" width="200" height="200">
 		 		<img alt="본문이미지2" src="/resources/reviewFiles/${rList[1].reviewFileRename }" width="200" height="200">
@@ -83,7 +89,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<button onclick="" class="btn btn-info">공간 페이지의 리뷰 보러가기</button>
+				<button onclick="location.href='/space/spaceDetail.kh?spaceNo=${review.spaceNo}'" class="btn btn-info">공간 페이지의 리뷰 보러가기</button>
 				<button onclick="location.href='/review/modifyView.kh?reviewNo=${review.reviewNo }&page=${page}';" class="btn btn-info">수정</button>
 				<button onclick="reviewRemove()" href="/review/remove.kh?reviewNo=${review.reviewNo}&reservationNo=${reservationNo}" class="btn btn-danger" >삭제</button>
 		</tr>
