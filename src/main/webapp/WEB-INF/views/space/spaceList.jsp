@@ -11,49 +11,46 @@ input[type=text]{
 	border-width:1px;
 }
 .sort{
+	display:flex;
+	justify-content: space-between;
 	text-align:right;
-	width:1080px;
+	width:1140px;
 	margin: 0 auto;
+	margin-top:50px;
+	margin-bottom:30px;
 }
 .aSort{
 	margin-left: 15px;
+}
+.img-responsive{
+	width:100%;
+	height:100%;
 }
 </style>
 </head>
 
 <body id="body">
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
-
-<div id='search' style='text-align:center;'>
-<form action="/space/spaceArea.kh" method="get">
-	<input type="submit" name="searchArea" value="서울">
-	<input type="submit" name="searchArea" value="강동">
-	<input type="submit" name="searchArea" value="강서">
-	<input type="submit" name="searchArea" value="강남">
-	<input type="submit" name="searchArea" value="강북">
-</form>
-<form action="/space/spaceSearch.kh" method="get">
-	<select name="searchArea" >
-		<option value="서울" <c:if test="${searchArea eq '서울'}">selected</c:if>>서울</option>
-		<option value="강북" <c:if test="${searchArea eq '강북'}">selected</c:if>>강북</option>
-		<option value="강남" <c:if test="${searchArea eq '강남'}">selected</c:if>>강남</option>
-		<option value="강동" <c:if test="${searchArea eq '강동'}">selected</c:if>>강동</option>
-		<option value="강서" <c:if test="${searchArea eq '강서'}">selected</c:if>>강서</option>
-	</select>
-	<input type="text" name="searchValue" class="searchText" value="${searchValue }" style="height:24px;">
-	<input type="submit" value="검색" class="btn btn-dark">
-</form>
-<form action="/space/spacePrice.kh" method="get">
-<input type="text" class="searchText" name="minNum" value="${minNum }" style="height:24px;width:70px;">
-<input type="text" class="searchText" name="maxNum" value="${maxNum }" style="height:24px;width:70px;">
-<input type="submit" value="검색">
-</form>
-</div>
 <div class="sort">
+<form action="/space/spacePrice.kh" method="get" style='padding-top:15px;'>
+<input type="text" class="searchText" name="minNum" value="${minNum }" style="height:24px;width:70px;">원 ~ 
+<input type="text" class="searchText" name="maxNum" value="${maxNum }" style="height:24px;width:70px;">원
+<input type="submit" value="검색"  class='btn' style='padding:2px;'>
+</form>
+<form action="/space/spaceArea.kh" method="get" style=''>
+	<input type="submit" name="searchArea" value="서울" class='btn'>
+	<input type="submit" name="searchArea" value="강동" class='btn'>
+	<input type="submit" name="searchArea" value="강서" class='btn'>
+	<input type="submit" name="searchArea" value="강남" class='btn'>
+	<input type="submit" name="searchArea" value="강북" class='btn'>
+</form>
+<div style='margin-right: left;padding-top:15px;'>
+<a class='aSort' style='cursor: pointer; text-align:left;' onclick='asc()'>최신순</a>
 <a class='aSort' style='cursor: pointer; text-align:left;' onclick='heart()'>찜많은순</a>
 <a class='aSort' style='cursor: pointer; text-align:left;' onclick='review()'>리뷰많은순</a>
 </div>
-<section class="products section">
+</div>
+<section class="products section" style='padding-top:30px;'>
 	<div class="container">
 	<!-- 썸네일 1개당 영역 시작-->
 	<c:forEach items='${sList }' var='space'>
@@ -75,12 +72,12 @@ input[type=text]{
 			<div class="product-content">
 					<h4><a href="/space/spaceDetail.kh?spaceNo=${space.spaceNo }">${space.spaceName }</a></h4>
 					<p class="price">${space.spacePrice }원</p>
+
 			</div>
 		</div>
 	</div>
 	</c:forEach>
 		<!-- 썸네일 1개당 영역 끝-->
-		
 	<!-- 페이징 -->
 		<table align="center" class="table col-10 table-borderless" width="100%">
 		<tr align='center' height="20">
@@ -109,6 +106,19 @@ input[type=text]{
 		</tr>
 	</table>
 	</div>
+	<div id='search' style='text-align:center;'>
+	<form action="/space/spaceSearch.kh" method="get">
+	<select name="searchArea" >
+		<option value="서울" <c:if test="${searchArea eq '서울'}">selected</c:if>>서울</option>
+		<option value="강북" <c:if test="${searchArea eq '강북'}">selected</c:if>>강북</option>
+		<option value="강남" <c:if test="${searchArea eq '강남'}">selected</c:if>>강남</option>
+		<option value="강동" <c:if test="${searchArea eq '강동'}">selected</c:if>>강동</option>
+		<option value="강서" <c:if test="${searchArea eq '강서'}">selected</c:if>>강서</option>
+	</select>
+	<input type="text" name="searchValue" class="searchText" value="${searchValue }" style="height:24px;">
+	<input type="submit" value="검색" class="btn">
+</form>
+</div>
 </section>
 
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
@@ -135,6 +145,10 @@ input[type=text]{
 			}
 			
 		})
+	}
+	
+	function asc(){
+		location.href='/space/spaceList.kh';
 	}
 </script>
 </body>

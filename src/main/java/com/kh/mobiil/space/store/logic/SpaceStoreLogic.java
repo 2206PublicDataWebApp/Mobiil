@@ -173,6 +173,18 @@ public class SpaceStoreLogic implements SpaceStore{
 		return sList;
 	}
 
+	@Override
+	public int updateReply(SqlSessionTemplate session, HostReply hostReply) {
+		int result = session.update("SpaceMapper.updateReply", hostReply);
+		return result;
+	}
+
+	@Override
+	public int deleteReply(SqlSessionTemplate session, Integer replyNo) {
+		int result = session.delete("SpaceMapper.deleteReply", replyNo);
+		return result;
+	}
+
 	
 
 }

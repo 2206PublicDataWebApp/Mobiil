@@ -64,5 +64,9 @@ public interface SpaceService {
 
 	List<Space> printRivewDesc(RowBounds rowBounds);
 
+	int updateReply(HostReply hostReply);
+
+	int deleteReply(Integer replyNo);
+
 
 }

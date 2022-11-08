@@ -158,6 +158,18 @@ public class SpaceServiceImpl implements SpaceService{
 		return sList;
 	}
 
+	@Override
+	public int updateReply(HostReply hostReply) {
+		int result = sStore.updateReply(session, hostReply);
+		return result;
+	}
+
+	@Override
+	public int deleteReply(Integer replyNo) {
+		int result = sStore.deleteReply(session, replyNo);
+		return result;
+	}
+
 
 	
 }

@@ -39,5 +39,7 @@ public interface SpaceStore {
 	List<ReviewImg> selectReviewImg(SqlSessionTemplate session, Integer reviewNo);
 	List<Space> selectHeartDesc(SqlSessionTemplate session, RowBounds rowBounds);
 	List<Space> selectRivewDesc(SqlSessionTemplate session, RowBounds rowBounds);
+	int updateReply(SqlSessionTemplate session, HostReply hostReply);
+	int deleteReply(SqlSessionTemplate session, Integer replyNo);
 	
 }

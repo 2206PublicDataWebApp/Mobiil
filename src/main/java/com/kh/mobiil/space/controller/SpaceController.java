@@ -418,6 +418,26 @@ public class SpaceController {
 		return null;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/space/modifyReply.kh", method=RequestMethod.POST)
+	public int modifyReply(@ModelAttribute HostReply hostReply) {
+		
+		System.out.println(hostReply.getReplyContents());
+		int result = sService.updateReply(hostReply);
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/space/deleteReply.kh", method=RequestMethod.GET)
+	public String deleteReply(@RequestParam("replyNo") Integer replyNo) {
+		int result = sService.deleteReply(replyNo);
+		if(result > 0) {
+			return "O";
+		}else {
+			return "X";
+		}
+	}
+	
 	// 예약날짜 및 시간 유효성 체크
 	@ResponseBody
 	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)
