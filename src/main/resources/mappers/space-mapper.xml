@@ -6,72 +6,76 @@
   
 <mapper namespace="SpaceMapper">
 	<resultMap type="Space" id="SpaceResultMap">
-  		<id 	property="spaceNo" 			column="SPACE_NO"/>
-  		<result property="spaceName" 		column="SPACE_NAME"/>
-  		<result property="address" 			column="SPACE_ADDRESS"/>
-  		<result property="spaceComent" 		column="SPACE_COMENT"/>
-  		<result property="spaceArea" 		column="SPACE_AREA"/>
-  		<result property="spacePrice" 		column="SPACE_PRICE"/>
-  		<result property="approval" 		column="APPROVAL"/>
-  		<result property="approvalDate" 	column="APPROVAL_DATE"/>
-  		<result property="hostEmail" 		column="HOST_EMAIL"/>
-  		<result property="spaceStatus" 		column="SPACE_STATUS"/>
-  		<association property="spaceImg" 	javaType="SpaceImg">
-  			<result property="spaceFileRename" column="SPACE_FILERENAME"/>
+  		<id 	property="spaceNo" 				column="SPACE_NO"/>
+  		<result property="spaceName" 			column="SPACE_NAME"/>
+  		<result property="spaceComent" 			column="SPACE_COMENT"/>
+  		<result property="spaceArea" 			column="SPACE_AREA"/>
+  		<result property="spacePrice" 			column="SPACE_PRICE"/>
+  		<result property="approval" 			column="APPROVAL"/>
+  		<result property="approvalDate" 		column="APPROVAL_DATE"/>
+  		<result property="hostEmail" 			column="HOST_EMAIL"/>
+  		<result property="spaceStatus" 			column="SPACE_STATUS"/>
+  		<result property="address1" 			column="SPACE_ADDRESS1"/>
+  		<result property="address2" 			column="SPACE_ADDRESS2"/>
+  		<result property="address3" 			column="SPACE_ADDRESS3"/>
+  		<result property="address4" 			column="SPACE_ADDRESS4"/>
+  		<association property="spaceImg" 		javaType="SpaceImg">
+  			<result property="spaceFileRename"  column="SPACE_FILERENAME"/>
   		</association>
   	</resultMap>
-  	<resultMap type="SpaceImg" 				id="SpaceImgResultMap">
-  		<id 	property="spaceImgNo" 		column="SPACE_IMG_NO"/>
-  		<result property="spaceNo" 			column="SPACE_NO"/>
-  		<result property="spaceFileName" 	column="SPACE_FILENAME"/>
-  		<result property="spaceFileRename" 	column="SPACE_FILERENAME"/>
-  		<result property="spaceFilePath" 	column="SPACE_FILEPATH"/>
+  	<resultMap type="SpaceImg" 					id="SpaceImgResultMap">
+  		<id 	property="spaceImgNo" 			column="SPACE_IMG_NO"/>
+  		<result property="spaceNo" 				column="SPACE_NO"/>
+  		<result property="spaceFileName" 		column="SPACE_FILENAME"/>
+  		<result property="spaceFileRename" 		column="SPACE_FILERENAME"/>
+  		<result property="spaceFilePath" 		column="SPACE_FILEPATH"/>
   	</resultMap>
   	<resultMap type="Reservation" 				id="ReservationResultMap">
-  		<id 	property="reservationNo" 			column="RESERV_NO"/>
-  		<result property="memberEmail" 				column="MEMBER_EMAIL"/>
-  		<result property="hostEmail" 				column="HOST_EMAIL"/>
-  		<result property="spaceNo" 					column="SPACE_NO"/>
-  		<result property="spaceName" 				column="SPACE_TITLE"/>
-  		<result property="spaceAddress" 			column="SPACE_ADDRESS"/>
-  		<result property="price" 					column="PRICE"/>
-  		<result property="reservationDate" 			column="RESERV_DATE"/>
-  		<result property="memberName" 				column="MEMBER_NAME"/>
-  		<result property="memberPhone" 				column="MEMBER_PHONE"/>
-  		<result property="paymentDate" 				column="PAYMENT_DATE"/>
-  		<result property="reservationStatus" 		column="RESERV_STATUS"/>
-  		<result property="reviewStatus" 			column="REV_STATUS"/>
-  		<result property="revStart" 				column="REV_START"/>
-  		<result property="revEnd" 					column="REV_END"/>
+  		<id 	property="reservationNo" 		column="RESERV_NO"/>
+  		<result property="memberEmail" 			column="MEMBER_EMAIL"/>
+  		<result property="hostEmail" 			column="HOST_EMAIL"/>
+  		<result property="spaceNo" 				column="SPACE_NO"/>
+  		<result property="spaceName" 			column="SPACE_TITLE"/>
+  		<result property="spaceAddress" 		column="SPACE_ADDRESS"/>
+  		<result property="price" 				column="PRICE"/>
+  		<result property="reservationDate" 		column="RESERV_DATE"/>
+  		<result property="memberName" 			column="MEMBER_NAME"/>
+  		<result property="memberPhone" 			column="MEMBER_PHONE"/>
+  		<result property="paymentDate" 			column="PAYMENT_DATE"/>
+  		<result property="reservationStatus" 	column="RESERV_STATUS"/>
+  		<result property="reviewStatus" 		column="REV_STATUS"/>
+  		<result property="revStart" 			column="REV_START"/>
+  		<result property="revEnd" 				column="REV_END"/>
   	</resultMap>
-  	<resultMap type="Review" id="ReviewResultMap">
-		<id property="reviewNo" column="REVIEW_NO" />
-		<result property="spaceNo" column="SPACE_NO" />
-		<result property="reviewImgNo" column="REVIEW_IMG_NO" />
-		<result property="memberEmail" column="MEMBER_EMAIL" />
-		<result property="reviewContents" column="REVIEW_CONTENTS" />
-		<result property="reviewWriter" column="REVIEW_WRITER" />
-		<result property="rCreateDate" column="R_CREATE_DATE" />
-		<result property="rUpdateDate" column="R_UPDATE_DATE" />
-		<result property="rStatus" column="R_STATUS" />
-		<result property="spaceName" column="SPACE_NAME" />
+  	<resultMap type="Review" 					id="ReviewResultMap">
+		<id property="reviewNo" 				column="REVIEW_NO" />
+		<result property="spaceNo" 				column="SPACE_NO" />
+		<result property="reviewImgNo" 			column="REVIEW_IMG_NO" />
+		<result property="memberEmail" 			column="MEMBER_EMAIL" />
+		<result property="reviewContents" 		column="REVIEW_CONTENTS" />
+		<result property="reviewWriter" 		column="REVIEW_WRITER" />
+		<result property="rCreateDate" 			column="R_CREATE_DATE" />
+		<result property="rUpdateDate" 			column="R_UPDATE_DATE" />
+		<result property="rStatus" 				column="R_STATUS" />
+		<result property="spaceName" 			column="SPACE_NAME" />
 	</resultMap>
-	<resultMap type="HostReply" id="HostReplyResultMap">
-		<id property="replyNo" column="REPLY_NO"/>
-		<result property="reviewNo" column="REVIEW_NO"/>
-		<result property="hostEmail" column="HOST_EMAIL"/>
-		<result property="replyWriter" column="REPLY_WRITER"/>
-		<result property="replyContents" column="REPLY_CONTENTS"/>
-		<result property="createDate" column="CREATE_DATE"/>
-		<result property="updateDate" column="UPDATE_DATE"/>
+	<resultMap type="HostReply"					id="HostReplyResultMap">
+		<id property="replyNo" 					column="REPLY_NO"/>
+		<result property="reviewNo" 			column="REVIEW_NO"/>
+		<result property="hostEmail" 			column="HOST_EMAIL"/>
+		<result property="replyWriter" 			column="REPLY_WRITER"/>
+		<result property="replyContents" 		column="REPLY_CONTENTS"/>
+		<result property="createDate" 			column="CREATE_DATE"/>
+		<result property="updateDate" 			column="UPDATE_DATE"/>
 	</resultMap>
-	<resultMap type="ReviewImg" id="ReviewImgResultMap">
-		<id property="reviewImgNo" column="REVIEW_IMG_NO" />
-		<result property="reviewNo" column="REVIEW_NO" />
-		<result property="reviewFileName" column="REVIEW_FILENAME" />
-		<result property="reviewFileRename" column="REVIEW_FILERENAME" />
-		<result property="reviewFilePath" column="REVIEW_FILEPATH" />
+	<resultMap type="ReviewImg" 				id="ReviewImgResultMap">
+		<id property="reviewImgNo" 				column="REVIEW_IMG_NO" />
+		<result property="reviewNo" 			column="REVIEW_NO" />
+		<result property="reviewFileName"		column="REVIEW_FILENAME" />
+		<result property="reviewFileRename" 	column="REVIEW_FILERENAME" />
+		<result property="reviewFilePath" 		column="REVIEW_FILEPATH" />
 	</resultMap>
+	
   	<insert id="insertReservation">
   		INSERT INTO RESERVATION_TBL
   		VALUES(#{reservationNo},#{memberEmail},#{hostEmail},#{spaceNo},#{spaceName},#{spaceAddress},#{price},#{reservationDate},#{memberName},#{memberPhone},#{paymentDate},DEFAULT,DEFAULT,#{revStart},#{revEnd})
@@ -251,7 +255,7 @@
 		SELECT * FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo}
 	</select>
 	<select id="selectReview" resultMap="ReviewResultMap">
-		SELECT * FROM REVIEW_TBL WHERE SPACE_NO = #{spaceNo}
+		SELECT * FROM REVIEW_TBL WHERE SPACE_NO = #{spaceNo} ORDER BY R_UPDATE_DATE DESC
 	</select>
 	<select id="checkHeart" resultType="_int">
 		SELECT COUNT(*) FROM HEART_TBL 
@@ -264,7 +268,7 @@
 		AND REV_END > #{start}]]>
 	</select>
 	<select id="selectReply" resultMap="HostReplyResultMap">
-		SELECT * FROM HOSTREPLY_TBL WHERE REVIEW_NO = #{reviewNo}
+		SELECT * FROM HOSTREPLY_TBL WHERE REVIEW_NO = #{reviewNo} ORDER BY UPDATE_DATE ASC
 	</select>
 	<select id="selectAreaCount" resultType="_int">
 		SELECT count(*) AS COUNT FROM SPACE_TBL

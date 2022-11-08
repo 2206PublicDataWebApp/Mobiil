@@ -6,7 +6,10 @@ public class Space {
 
 		private int    spaceNo;		  	// 공간 순번
 		private String spaceName;		// 공간 이름
-		private String address;			// 공간 주소
+		private String address1;		// 공간 주소
+		private String address2;		// 공간 주소
+		private String address3;		// 공간 주소
+		private String address4;		// 공간 주소
 		private String spaceComent;		// 공간 소개
 		private String spaceArea;		// 공간 지역
 		private String spacePrice;		// 공간 가격
@@ -35,12 +38,36 @@ public class Space {
 			this.spaceName = spaceName;
 		}
 
-		public String getAddress() {
-			return address;
+		public String getAddress1() {
+			return address1;
 		}
 
-		public void setAddress(String address) {
-			this.address = address;
+		public void setAddress1(String address1) {
+			this.address1 = address1;
+		}
+
+		public String getAddress2() {
+			return address2;
+		}
+
+		public void setAddress2(String address2) {
+			this.address2 = address2;
+		}
+
+		public String getAddress3() {
+			return address3;
+		}
+
+		public void setAddress3(String address3) {
+			this.address3 = address3;
+		}
+
+		public String getAddress4() {
+			return address4;
+		}
+
+		public void setAddress4(String address4) {
+			this.address4 = address4;
 		}
 
 		public String getSpaceComent() {
@@ -115,13 +142,20 @@ public class Space {
 			this.spaceImg = spaceImg;
 		}
 
-		
 		@Override
 		public String toString() {
-			return "Space [spaceNo=" + spaceNo + ", spaceName=" + spaceName + ", address=" + address + ", spaceComent="
-					+ spaceComent + ", spaceArea=" + spaceArea + ", spacePrice=" + spacePrice + ", approval=" + approval
+			return "Space [spaceNo=" + spaceNo + ", spaceName=" + spaceName + ", address1=" + address1 + ", address2="
+					+ address2 + ", address3=" + address3 + ", address4=" + address4 + ", spaceComent=" + spaceComent
+					+ ", spaceArea=" + spaceArea + ", spacePrice=" + spacePrice + ", approval=" + approval
 					+ ", approvalDate=" + approvalDate + ", spaceStatus=" + spaceStatus + ", hostEmail=" + hostEmail
-					+ ", rejectMailChk=" + rejectMailChk + ", spaceImg=" + spaceImg + "]";
+					+ ", rejectMailChk=" + rejectMailChk + ", spaceImg=" + spaceImg + ", getSpaceNo()=" + getSpaceNo()
+					+ ", getSpaceName()=" + getSpaceName() + ", getAddress1()=" + getAddress1() + ", getAddress2()="
+					+ getAddress2() + ", getAddress3()=" + getAddress3() + ", getAddress4()=" + getAddress4()
+					+ ", getSpaceComent()=" + getSpaceComent() + ", getSpaceArea()=" + getSpaceArea()
+					+ ", getSpacePrice()=" + getSpacePrice() + ", getApproval()=" + getApproval()
+					+ ", getApprovalDate()=" + getApprovalDate() + ", getSpaceStatus()=" + getSpaceStatus()
+					+ ", getHostEmail()=" + getHostEmail() + ", getRejectMailChk()=" + getRejectMailChk()
+					+ ", getSpaceImg()=" + getSpaceImg() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+					+ ", toString()=" + super.toString() + "]";
 		}
-		
 }

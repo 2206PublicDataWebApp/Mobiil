@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Mobbil Payment</title>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <!-- iamport -->
@@ -61,7 +62,8 @@ function requestPay() {
 	var paymethod = $('input:radio[name=paymethod]:checked').val();
 	var IMP = window.IMP; // 생략 가능
 	var memberName = $('.memberName').val();
-	var memberPhone = $('.memberPhone').val();
+	var mPhone = $('.memberPhone').val();
+	console.log(mPhone);
 	var price = ${price };
 	var spaceNo = ${spaceNo};
 	const sDate = new Date('${sDate}');
@@ -84,8 +86,8 @@ function requestPay() {
         amount: price,
         buyer_email: '',
         buyer_name: memberName,
-        buyer_tel: memberPhone,
-        custom_data : { paymentDate:paymentDate, memberName:memberName, memberPhone:memberPhone, memberEmail:"${loginUser.memberEmail }", spaceNo : spaceNo, reservDate:reservDate, revStart:start, revEnd:end}
+        buyer_tel: mPhone,
+        custom_data : { paymentDate:paymentDate, memberName:memberName, memberPhone:mPhone, memberEmail:"${loginUser.memberEmail }", spaceNo : spaceNo, reservDate:reservDate, revStart:start, revEnd:end}
     }, function (rsp) { // callback
         if (rsp.success) {
             $.ajax({
