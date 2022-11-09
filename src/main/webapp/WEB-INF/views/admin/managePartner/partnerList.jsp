@@ -25,7 +25,7 @@
 						<td > 제목</td>
 						<td > 승인여부</td>
 						<td > 승인일 </td>
-						<td > 승인 거부 메일 </td>
+						<td > 메일 발송 여부 </td>
 						
 					</tr>
 					<c:forEach items="${pList }" var="partner" >

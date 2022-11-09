@@ -7,18 +7,21 @@
 <title>일정 등록</title>
 </head>
 <body>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- <form action= method="get" > -->
 	<table>
 		<tr>
 		<td>제목</td>
-		<td><input type="text" name="eventTitle" class="form-control" id="eventTitle" required="required"></td>
+		<td><input type="text" name="title" class="form-control" id="title" required="required"></td>
 		</tr>
 		<tr>
 		<td>시작일</td>
-		<td><input type="text" name="eventStart" class="form-control" id="eventStart" required="required" placeholder="YYYY-MM-DD 형식으로 작성하세요"></td>
+		<td><input type="date" name="start" class="form-control" id="start" required="required"></td>
 		</tr>
 		<tr>
 		<td>종료일</td>
-		<td><input type="text" name="eventEnd" class="form-control" id="eventEnd" required="required" placeholder="YYYY-MM-DD 형식으로 작성하세요"></td>
+		<td><input type="date" name="end" class="form-control" id="end" required="required"></td>
 		</tr>
 		<tr>
 		<td>배경색</td>
@@ -28,12 +31,54 @@
 		<td>테두리</td>
 		<td><input type="color" name="borderColor" class="form-control" id="borderColor" required="required" ></td>
 		</tr>
+		
 		<tr>
-		<td>공개/비공개</td>
-		<td><input type="radio" name="status" class="form-control" id="status" required="required" value = 'Y'>공개 
-			<input type="radio" name="status" class="form-control" id="status" required="required" value = 'N'>비공개</td>
+		<td><input type='button' value="저장" id="eSubmit" onclick = "eSubmit()"> </td>
 		</tr>
 		
 	</table>
+<script type="text/javascript">
+function eSubmit() {
+	var title = $("#title").val()
+	var start = $("#start").val()
+	var end = $("#end").val()
+	var backgroundColor = $("#backgroundColor").val()
+	var borderColor = $("#borderColor").val()
+
+	
+	if(start > end){
+		alert("날짜를 확인해주세요")
+	}else{
+     jQuery.ajax({
+         url : "/admin/calendar/registerEvent.kh"
+       , type : "get"
+       , data : {title: title,
+	    	   start:start,
+	    	   end:end,
+	    	   backgroundColor:backgroundColor,
+	    	   borderColor:borderColor}
+       , success:function(data) {
+    	   if(data == "success"){
+	           alert("등록 성공.");
+	           window.open('','_self').close();
+	           opener.location.reload();
+    	   }else{
+				console.log("실패")    		   
+    	   }
+       }
+       ,error: function() { 
+           alert("등록 실패"); 
+       }
+   });
+	}
+}
+
+
+
+</script>
+
+
 </body>
 </html>
+
+

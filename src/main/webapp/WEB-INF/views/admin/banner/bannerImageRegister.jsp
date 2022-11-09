@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/resources/plugins/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
+
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <table align="center" class="table col-10 mb-3 borderless" >

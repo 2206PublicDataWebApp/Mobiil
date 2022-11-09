@@ -75,7 +75,7 @@
 				<input type="button"  class = 'btn btn btn-secondary'onclick="history.back(-1);" value='이전으로'>
 			<c:if test='${loginUser.memberNick eq "관리자" }'>
 				<input type="button"  class="btn btn-success" onclick="approve(${partner.partnerNo}, '${partner.approval }');" value='승인'>
-				<input type="button" class="btn btn-danger" onclick="location.href='/admin/rejectMail.kh?partnerNo=${partner.partnerNo}';" value='거부'>
+				<input type="button" class="btn btn-danger" onclick="location.href='/admin/rejectMail.kh?partnerNo=${partner.partnerNo}';" value='메일작성'>
 			</c:if>
 			</td>
 			</tr>

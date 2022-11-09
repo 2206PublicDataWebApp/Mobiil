@@ -104,7 +104,7 @@
 							<option <c:if test="${search.searchCondition eq 'instrument'}">selected</c:if> value="instrument">악기</option>
 						</select>
 						<select class="form-select" name="searchArea" >
-							<option <c:if test="${search.searchArea eq '서울'}">selected</c:if> value="서울">서울</option>
+							<option <c:if test="${search.searchArea eq '전체'}">selected</c:if> value="전체">전체</option>
 							<option <c:if test="${search.searchArea eq '강북'}">selected</c:if> value="강북">강북</option>
 							<option <c:if test="${search.searchArea eq '강남'}">selected</c:if> value="강남">강남</option>
 							<option <c:if test="${search.searchArea eq '강동'}">selected</c:if> value="강동">강동</option>
@@ -131,7 +131,6 @@
 
 <script type="text/javascript">
 function openChatRoom(createUser, withUser) {
-	
 	if(confirm("채팅을 시작하시겠습니까?")){
 		$.ajax({
 			url:"/chat/createChatRoom.kh",

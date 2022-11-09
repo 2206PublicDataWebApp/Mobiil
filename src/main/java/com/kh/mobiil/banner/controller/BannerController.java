@@ -31,10 +31,6 @@ public class BannerController {
 	@Autowired
 	private MailController mailSender;
 
-	
-	
-	
-	
 	/**
 	 * 배너 삭제
 	 */

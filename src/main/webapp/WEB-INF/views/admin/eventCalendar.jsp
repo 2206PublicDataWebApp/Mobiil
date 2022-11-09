@@ -19,57 +19,53 @@
 }
 
 </style>
-
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href = "https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"  rel='stylesheet' >
 <script type="text/javascript" src = "https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 <script>
 
       document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-         initialView: 'dayGridMonth',
-       	 themeSystem: 'bootstrap4',
-         height: 650,
-         defaultAllDay: true,
-         customButtons: {
-     	    myCustomButton: {
-     	      text: '일정 추가!',
-     	      click: function() {
-     	    	 window.open('/admin/calendar/register.kh', 'window', 'width=500, height=600, menubar=no, status=no, toolbar=no')
-     	      }
-     	    }
-        },
-        headerToolbar: {
-            center: 'title',
-            right: 'prev,next today myCustomButton'
-          },
-         titleFormat: function (date) {
-             year = date.date.year;
-             month = date.date.month + 1;
-             return "Mobiil과 " + year + "년 " + month + "월";
-           },
-       
-           events: [
-        	    { // this object will be "parsed" into an Event Object
-        	      title: '캘린더 해봄', // a property!
-        	      start: '2022-11-04', // a property!
-        	      end: '2022-11-04', // a property! ** see important note below about 'end' **/
-        	      backgroundColor:'red',
-        	      borderColor: 'red'
-        	    },
-        	    { // this object will be "parsed" into an Event Object
-          	      title: '캘린더 해봄??', // a property!
-          	      start: '2022-11-05', // a property!
-          	      end: '2022-11-06', // a property! ** see important note below about 'end' **/
-          	      backgroundColor:'blue',
-          	      borderColor: 'blue',
-          	      allday: true
-          	    },
-        	  ]
-        });
-        calendar.render();
-      });
-
+    	  $(function () {
+              var request = $.ajax({
+                  url: "/admin/calendar/printEvents.kh", // 변경하기
+                  method: "GET",
+                  dataType: "json"
+              });
+     	 request.done(function (eList) {
+     		 console.log(eList)
+		        var calendarEl = document.getElementById('calendar');
+		        var calendar = new FullCalendar.Calendar(calendarEl, {
+		         initialView: 'dayGridMonth',
+		       	 themeSystem: 'bootstrap4',
+		         height: 650,
+		         defaultAllDay: true,
+		         customButtons: {
+		     	    myCustomButton: {
+		     	      text: '일정 추가!',
+		     	      click: function() {
+		     	    	 window.open('/admin/calendar/register.kh', 'window', 'width=500, height=600, menubar=no, status=no, toolbar=no')
+		     	      }
+		     	    }
+		        },
+		        headerToolbar: {
+					left: 'myCustomButton',
+		        	center: 'title',
+		            right: 'prev,next today'
+		          },
+		          
+		         titleFormat: function (date) {
+		             year = date.date.year;
+		             month = date.date.month + 1;
+		             return "Mobiil과 " + year + "년 " + month + "월";
+		           },
+		           
+		       	events: eList
+		       	
+		        });
+		        calendar.render();
+		      });
+    	  })
+      })
     </script>
 
 <title>Insert title here</title>
