@@ -100,18 +100,18 @@
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM SPACE_TBL
 		<where>
-			<if test="searchArea.toString() != '서울'">
+			<if test="searchArea.toString() != '전체'">
 				<if test="searchValue.toString() !=''">
 					SPACE_NAME LIKE '%'||#{searchValue}||'%'
 					AND SPACE_AREA = #{searchArea}
 				</if>
 			</if>
-			<if test="searchArea.toString() == '서울'">
+			<if test="searchArea.toString() == '전체'">
 				<if test="searchValue.toString() !=''">
 					SPACE_NAME LIKE '%'||#{searchValue}||'%'
 				</if>
 			</if>
-			<if test="searchArea.toString() == '서울'">
+			<if test="searchArea.toString() == '전체'">
 				<if test="searchValue.toString() ==''">
 					SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
 				</if>
@@ -142,18 +142,18 @@
 	<select id="selectAllByValue" resultMap="SpaceResultMap">
 		SELECT * FROM SPACE_TBL
 		<where>
-			<if test="searchArea.toString() != '서울'">
+			<if test="searchArea.toString() != '전체'">
 				<if test="searchValue.toString() !=''">
 					SPACE_NAME LIKE '%'||#{searchValue}||'%'
 					AND SPACE_AREA = #{searchArea}				
 				</if>
 			</if>
-			<if test="searchArea.toString() == '서울'">
+			<if test="searchArea.toString() == '전체'">
 				<if test="searchValue.toString() !=''">
 					SPACE_NAME LIKE '%'||#{searchValue}||'%'
 				</if>
 			</if>
-			<if test="searchArea.toString() == '서울'">
+			<if test="searchArea.toString() == '전체'">
 				<if test="searchValue.toString() ==''">
 					SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
 				</if>
@@ -195,10 +195,10 @@
 	<select id="selectByArea" resultMap="SpaceResultMap">
 		SELECT * FROM SPACE_TBL
 		<where>
-			<if test="searchArea.toString() != '서울'">
+			<if test="searchArea.toString() != '전체'">
 					SPACE_AREA = #{searchArea}
 			</if>
-			<if test="searchArea.toString() == '서울'">
+			<if test="searchArea.toString() == '전체'">
 				SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
 			</if>
 			AND SPACE_STATUS='Y'

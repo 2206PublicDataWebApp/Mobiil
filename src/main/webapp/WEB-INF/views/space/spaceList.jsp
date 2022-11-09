@@ -39,7 +39,7 @@ input[type=text]{
 <input type="submit" value="검색"  class='btn' style='padding:2px;'>
 </form>
 <form action="/space/spaceArea.kh" method="get" style=''>
-	<input type="submit" name="searchArea" value="서울" class='btn'>
+	<input type="submit" name="searchArea" value="전체" class='btn'>
 	<input type="submit" name="searchArea" value="강동" class='btn'>
 	<input type="submit" name="searchArea" value="강서" class='btn'>
 	<input type="submit" name="searchArea" value="강남" class='btn'>
@@ -110,7 +110,7 @@ input[type=text]{
 	<div id='search' style='text-align:center;'>
 	<form action="/space/spaceSearch.kh" method="get">
 	<select name="searchArea" >
-		<option value="서울" <c:if test="${searchArea eq '서울'}">selected</c:if>>서울</option>
+		<option value="전체" <c:if test="${searchArea eq '전체'}">selected</c:if>>전체</option>
 		<option value="강북" <c:if test="${searchArea eq '강북'}">selected</c:if>>강북</option>
 		<option value="강남" <c:if test="${searchArea eq '강남'}">selected</c:if>>강남</option>
 		<option value="강동" <c:if test="${searchArea eq '강동'}">selected</c:if>>강동</option>
