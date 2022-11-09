@@ -103,7 +103,6 @@ input[type=text] {
 						</c:if></td>
 				</tr>
 				</table>
-				
 		</div>
 		</c:if>
 		<c:if test="${empty sList }">

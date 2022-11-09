@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>결제 목록 조회</title>
  <style>
-
  		.th {
  		  text-align: center;
  		}
@@ -46,19 +45,20 @@
 	<table align="center" border="1" width="" class="table table-striped table-hover">
 		<tr>
 			<th class="th" width="100">번호</th>
-			<th class="th" width="200">예약번호</th>
-			<th class="th" width="200">결제일자</th>
+			<th class="th" width="250">예약번호</th>
+			<th class="th" width="150">결제일자</th>
 			<th class="th" width="300">공간명</th>
-			<th class="th" width="200">예약일자</th>
-			<th class="th" width="200">결제금액</th>
+			<th class="th" width="150">예약일자</th>
+			<th class="th" width="150">결제금액</th>
 			<th class="th" width="100">리뷰</th>
 		</tr>
 		<c:if test="${!empty rList}">
 		<c:forEach items="${rList }" var="reservation" varStatus="i">
+			<tr>
 				<td>${i.count}</td>
-				<td><a href="/payment/detail.kh?reservationNo=${reservation.reservationNo}&page=${currentPage }"><b>${reservation.reservationNo}<b></a></td>
+				<td><a href="/payment/detail.kh?reservationNo=${reservation.reservationNo}&page=${currentPage }"><b>[ ${reservation.reservationNo} ]<b></a></td>
 				<td>${reservation.paymentDate}</td>
-				<td><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>${reservation.spaceName}<b></a></td>
+				<td><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>[ ${reservation.spaceName} ]<b></a></td>
 				<td>${reservation.reservationDate}</td>
 				<td>${reservation.price}원</td>
 				<td>

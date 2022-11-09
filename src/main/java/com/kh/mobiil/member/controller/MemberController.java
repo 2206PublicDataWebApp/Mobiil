@@ -74,12 +74,13 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "/member/register.kh", method = RequestMethod.POST)
-	public ModelAndView memberJoin(@ModelAttribute Member member, ModelAndView mv) {
+	public ModelAndView memberJoin(@ModelAttribute Member member, ModelAndView mv, HttpServletRequest request) {
 		try {
 			int result = mService.registerMember(member);
 			if (result > 0) {
-				mv.addObject("msg", "회원가입에 성공했습니다.");
-				mv.setViewName("/member/login");
+				request.setAttribute("msg", "회원가입이 완료되었습니다.");
+				request.setAttribute("url", "/member/loginView.kh");
+				mv.setViewName("/common/alert");
 			} else {
 				mv.addObject("msg", "회원가입에 실패했습니다.");
 				mv.setViewName("common/errorPage");
@@ -210,7 +211,7 @@ public class MemberController {
 		session.setAttribute("memberEmail", loginUser.getMemberEmail());
 		session.setAttribute("memberNick", loginUser.getMemberNick());
 
-		return "redirect:/member/myKakaoInfo.kh";
+		return "redirect:/";
 	}
 	
 	
@@ -244,8 +245,8 @@ public class MemberController {
 		try {
 			HttpSession session = request.getSession();
 			Member member = (Member)session.getAttribute("loginUser");
-			String memberName = member.getMemberName();
-			Member mOne = mService.printOneByName(memberName);
+			String memberEmail = member.getMemberEmail();
+			Member mOne = mService.printOneByKEmail(memberEmail);
 			
 			mv.addObject("member", mOne);
 			mv.setViewName("member/myKakaoPage");
@@ -256,7 +257,41 @@ public class MemberController {
 		return mv;
 	}
 	
+	// 카카오 닉네임 바꾸기 화면
+	@RequestMapping(value = "/member/changeNickView.kh", method = RequestMethod.GET)
+	public ModelAndView changeNickView(ModelAndView mv, HttpServletRequest request) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberEmail = member.getMemberEmail();
+			Member mOne = mService.printNickByKEmail(memberEmail);
+			mv.addObject("member", mOne);
+			mv.setViewName("member/changeNick");
+			
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
 	
+	// 카카오 닉네임 변경
+	@RequestMapping(value = "/member/changeNick.kh", method = RequestMethod.POST)
+	public ModelAndView changeNick(ModelAndView mv, @ModelAttribute Member member, HttpServletRequest request) {
+		try {
+			int result = mService.modifyNick(member);
+			if (result > 0) {
+				request.setAttribute("msg", "닉네임 수정이 완료되었습니다. 다시 로그인 해주세요.");
+				request.setAttribute("url", "/member/logout.kh");
+				mv.setViewName("common/alert");
+			} else {
+				mv.addObject("msg", "닉네임 수정에 실패하였습니다1.");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "닉네임 수정에 실패하였습니다.").setViewName("common/errorPage");
+		}
+		return mv;
+	}
 	/**
 	 * 회원 정보 수정
 	 * 
@@ -307,7 +342,7 @@ public class MemberController {
 				request.setAttribute("url", "/member/myKakaoInfo.kh");
 				mv.setViewName("common/alert");
 			} else {
-				mv.addObject("msg", "정보 등록(수정)에 실패하였습니다.");
+				mv.addObject("msg", "정보 수정에 실패하였습니다.");
 				mv.setViewName("common/errorPage");
 			}
 		} catch (Exception e) {

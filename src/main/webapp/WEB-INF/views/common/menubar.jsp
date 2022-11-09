@@ -102,7 +102,7 @@
 				</c:if>
 				<!-- 로그인 유저 -->
 				<ul class="top-menu text-right list-inline">
-				<c:if test="${not empty loginUser and loginUser.memberNick ne '관리자' }"> 
+				<c:if test="${not empty loginUser and loginUser.mStatus eq 'Y' and loginUser.memberNick ne '관리자' }"> 
 						<li>
 							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')" id='myChat'></a>
 						</li>
@@ -124,6 +124,16 @@
 						<div id = "support">
 							<a href = "#" onclick="openChatRoom('${loginUser.memberNick}', '관리자');">	<span id="support-imge" class="material-symbols-outlined">contact_support</span></a>
 						</div>
+				</c:if>
+				<c:if test="${not empty loginUser and loginUser.mStatus eq 'N' and loginUser.memberNick ne '관리자' }"> 
+						<li>
+							카카오 회원은<a href="/member/changeNickView.kh"><b>[닉네임 수정]</b></a>후 
+							<br>서비스 이용이 가능합니다.
+						</li>
+						<br><br>
+						<li>
+							<a href="/member/logout.kh">로그아웃</a>
+						</li>
 				</c:if>
 				<!-- 로그인 호스트 -->
 				<c:if test="${not empty loginHost}"> 

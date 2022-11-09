@@ -274,8 +274,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public Member printOneByName(String memberName) {
-		Member member = mStore.selectOneByName(session, memberName);
+	public Member printOneByKEmail(String memberEmail) {
+		Member member = mStore.selectOneByKEmail(session, memberEmail);
 		return member;
 	}
 
@@ -295,6 +295,18 @@ public class MemberServiceImpl implements MemberService {
 	public List<Space> printMySpace(String memberEmail, int currentPage, int spaceLimit) {
 		List<Space> sList = mStore.selectMySpace(session, memberEmail, currentPage, spaceLimit);
 		return sList;
+	}
+
+	@Override
+	public Member printNickByKEmail(String memberEmail) {
+		Member member = mStore.selectNickByKEmail(session, memberEmail);
+		return member;
+	}
+
+	@Override
+	public int modifyNick(Member member) {
+		int result = mStore.updateNick(session, member);
+		return result;
 	}
 
 }
