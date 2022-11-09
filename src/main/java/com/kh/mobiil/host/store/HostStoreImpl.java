@@ -189,4 +189,10 @@ public class HostStoreImpl implements HostStore{
 		return result;
 	}
 
+	@Override
+	public int removeHost(SqlSession session, String hostEmail) {
+		int result = session.update("HostMapper.removeHost", hostEmail);
+		return result;
+	}
+
 }

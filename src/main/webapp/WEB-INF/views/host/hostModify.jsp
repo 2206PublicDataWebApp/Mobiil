@@ -38,6 +38,17 @@
         .button2 {
             height: 40px;
             width: 100px;
+            background-color:#f0adad;
+            border-radius: 20px;
+            border: none;
+            font-size: 20px;
+            margin: 1px 1px 10px 50px;
+            font-size: 15px;
+        }
+        
+        .button3 {
+            height: 40px;
+            width: 100px;
             background-color:#f3f3f3;
             border-radius: 20px;
             border: none;
@@ -128,12 +139,22 @@
 					<td colspan="2" align="center">
 					<br><br>
 						<input type="submit" class="button1" value="수정하기">
-						<input type="reset"  class="button2" value="취소" onclick="location.href='/host/hostInfo.mobiil'">
+						<input type="button" class="button2" value="탈퇴하기" onclick="removeMember();">
+						<input type="reset"  class="button3" value="취소" onclick="location.href='/host/hostInfo.mobiil'">
 					</td>
 				</tr>
 			</table>
 		</form>
 		</div>
+<script>
+	function removeMember() {
+		if(confirm("정말 탈퇴하시겠습니까?")) {
+			location.href = "/host/removeHost.kh";
+		}
+	}
+		
+</script>
+		
 		<br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>		
 </body>

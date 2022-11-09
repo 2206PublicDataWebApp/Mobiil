@@ -82,6 +82,13 @@
 		WHERE HOSTEMAIL = #{hostEmail}
 	  </update>
 	  
+	  <!-- 호스트 삭제 -->
+	  <update id="removeHost">
+	  	UPDATE HOST_TBL
+	  	SET HSTATUS = 'N'
+		WHERE HOSTEMAIL = #{hostEmail}	  	
+	  </update>
+	  
 	  <!-- 예약 갯수 확인 -->
 	  <select id="getRegervationTotalCount" resultType="_int">
  		SELECT COUNT(*) FROM RESERVATION_TBL
