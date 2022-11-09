@@ -212,6 +212,44 @@ public class HostController {
 	}
 
 	/**
+	 * 호스트 삭제
+	 * @param mv
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/host/removeHost.kh", method = RequestMethod.GET)
+	public ModelAndView removeHost(ModelAndView mv, HttpServletRequest request) {
+		
+		try {
+			HttpSession session =  request.getSession();
+			Host host = (Host) session.getAttribute("loginHost");
+			String hostEmail = host.getHostEmail();
+			int result = hService.removeHost(hostEmail);
+//			session.invalidate();
+			request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
+			mv.setViewName("redirect:/member/logout.kh");
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage());
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	// 로그아웃 o
+	@RequestMapping(value = "/host/logout.kh", method = RequestMethod.GET)
+	public ModelAndView hostLogout(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session != null) {
+			session.invalidate();
+			mv.setViewName("redirect:/home.tripkase");
+		} else {
+			mv.addObject("msg", "로그아웃 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
 	 * 예약확인
 	 * 
 	 * @param mv

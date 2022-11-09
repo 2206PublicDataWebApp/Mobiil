@@ -66,4 +66,6 @@ public interface HostService {
 
 	int priceSumByHostemail(String hostEmail);
 
+	int removeHost(String hostEmail);
+
 }

@@ -174,4 +174,10 @@ public class HostServiceImpl implements HostService{
 		return result;
 	}
 
+	@Override
+	public int removeHost(String hostEmail) {
+		int result = hStore.removeHost(session, hostEmail);
+		return result;
+	}
+
 }

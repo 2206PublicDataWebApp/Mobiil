@@ -63,7 +63,12 @@
 		padding : 5px;
 	}
 	
-	
+	#spaceArea{
+		width: 400px;
+	    height: 45px;
+	    margin-left: 20px;
+	    text-align: center;
+	}
 </style>
 <!-- include libraries(jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -91,11 +96,11 @@
 					</tr>
 					<tr>
 						<td id="td">주소</td>
-						<td><input type="text" id="sample6_postcode" class="input">
+						<td><input type="text" id="sample6_postcode" name="address1" value="${sOne.address1 }"class="input">
 							<input type="button" class="findAddress" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-							<input type="text" id="sample6_address" class="input" value="${sOne.address }"><br>
-							<input type="text" id="sample6_detailAddress"class="input" >
-							<input type="text" id="sample6_extraAddress"class="input" ></td>
+							<input type="text" id="sample6_address" name="address2" class="input" value="${sOne.address2 }"><br>
+							<input type="text" id="sample6_detailAddress" name="address3" class="input" value="${sOne.address3 }">
+							<input type="text" id="sample6_extraAddress" name="address4" class="input" value="${sOne.address4 }"></td>
 					</tr>
 					<tr>
 						<td id="td">공간 이미지</td>
@@ -113,7 +118,15 @@
 					</tr>
 					<tr>
 						<td id="td">지역</td>
-						<td><input type="text" id="spaceArea" class="input" name="spaceArea" value="${sOne.spaceArea }"></td>
+						<td>
+						<select id="spaceArea" name="spaceArea">
+							<%-- <option value="${sOne.spaceArea }">${sOne.spaceArea }</option> --%>
+							<option value="강북">강북</option>
+							<option value="강남">강남</option>
+							<option value="강서">강서</option>
+							<option value="강동">강동</option>
+						</select>
+						</td>
 					</tr>
 					<tr>
 						<td id="td">금액</td>

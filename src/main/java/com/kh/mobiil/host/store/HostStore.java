@@ -65,4 +65,6 @@ public interface HostStore {
 
 	int priceSumByHostemail(SqlSession session, String hostEmail);
 
+	int removeHost(SqlSession session, String hostEmail);
+
 }

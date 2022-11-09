@@ -46,7 +46,7 @@
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 	<div id="wapper">
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>
-		<h2 align="center">안녕하세요, OOO님</h2><br>
+		<h2 align="center">안녕하세요, ${hOne.hostName }님</h2><br>
 		<hr>
 		
 			<table align="center">

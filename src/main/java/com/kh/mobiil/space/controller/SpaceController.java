@@ -327,7 +327,7 @@ public class SpaceController {
 					rsv.setHostEmail(space.getHostEmail());
 					rsv.setSpaceNo(spaceNo);
 					rsv.setSpaceName(space.getSpaceName());
-					rsv.setSpaceAddress(space.getAddress());
+					rsv.setSpaceAddress(space.getAddress1());
 					rsv.setPrice(price);
 					rsv.setReservationDate(rsvDate);
 					rsv.setMemberName(memberName);
