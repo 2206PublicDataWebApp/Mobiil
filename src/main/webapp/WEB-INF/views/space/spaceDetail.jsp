@@ -11,7 +11,7 @@
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
 />
-
+<title>Mobbil SpaceDetail</title>
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <!-- fullcalendar CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
@@ -65,6 +65,21 @@
         margin-left: auto;
         margin-right: auto;
       }
+      .swiper-button-next::after{
+      	margin-right:80px;
+      	padding-left:70px;
+      	padding-right:30px;
+      	padding-top:175px;
+      	padding-bottom:175px;
+      }
+      .swiper-button-prev::after{
+     	margin-left:80px;
+      	padding-left:30px;
+      	padding-right:70px;
+      	padding-top:175px;
+      	padding-bottom:175px;
+      }
+      
       
   /* 이미지 클릭 시, 밝기 조절 */
   .img:hover {opacity: 0.8;}
@@ -109,11 +124,6 @@
     text-decoration: none;
     cursor: pointer;
   }
-  .rvImg{
-  	width:70px;
-  	height:70px;
-  	cursor:pointer;
-  }
 </style>
 </head>
 
@@ -150,7 +160,6 @@ function openChatRoom(createUser, withUser) {
 
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <div class="container">
-
         <div class="modal">
 		  <span class="close">&times;</span>
 		  <img class="modal_content" id="img01">
@@ -169,7 +178,6 @@ function openChatRoom(createUser, withUser) {
       <div class="swiper-button-prev"></div>
       <div class="swiper-pagination"></div>
     </div>
-
 <div class='reservDiv' style='display:inline-block;text-align:right;float:right;'>
 <br>
 <div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
@@ -227,13 +235,13 @@ function openChatRoom(createUser, withUser) {
 	</c:if>
 </div>
 </div>
-<div class='spaceComent' style='width:600px;display:inline-block;align:left;'>
+<div class='spaceComent' style='width:600px;display:inline-block;align:left;margin-top:80px;'>
 ${space.spaceComent }
 
 
 
 <br><br><br><br><br><br>
-<span>${space.address}</span>
+<span>${space.address2} ${space.address3} ${space.address4}</span>
 <div id="map" style="width:450px;height:300px;"></div>
 <br><br><br><br><br><br>
 
@@ -241,10 +249,6 @@ ${space.spaceComent }
 <div id="reivewBox" style='width:700px;align:left;'>
 </div>
 </div>
-<div class="modal2">
-		  <span class="close2">&times;</span>
-		  <img class="modal_content2" id="img02">
-		</div>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
@@ -337,7 +341,7 @@ ${space.spaceComent }
 	// 주소-좌표 변환 객체 생성
 	var geocoder = new kakao.maps.services.Geocoder();
 	// 주소로 좌표를 검색
-	geocoder.addressSearch('${space.address}', function(result, status) { // ${space.address} -> 공간 주소
+	geocoder.addressSearch('${space.address2} ${space.address3} ${space.address4}', function(result, status) {
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === kakao.maps.services.Status.OK) {
 	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -451,7 +455,7 @@ ${space.spaceComent }
 						var $hr = $('<hr>');
 						var $rWriter = $("<span class='reviewWriter' style='font-size:17px;font-weight:bold;'>").text(rList[i].reviewWriter);
 						var $rContentBox = $("<div style='margin-top:30px;margin-bottom:30px;' class='"+rList[i].reviewNo+"'>");
-						var $rContent = $("<span>").html(""+reviewContents);
+						var $rContent = $("<span class='rc"+rList[i].reviewNo+"'>").html(""+reviewContents);
 						var $rUpdateDate = $("<span style='margin-left:20px;font-size:12px;color:lightgray;font-weight:normal;'>").text(rList[i].rUpdateDate);
 						var $button = $("<div style='padding-top:30px;'>").append("<a style='text-decoration: underline;' href='javascript:void(0);' onclick='insertReplyView(this,"+rList[i].reviewNo+")'>답글달기</a>");
 						var $rvNo = $('.'+rList[i].reviewNo);
@@ -466,11 +470,18 @@ ${space.spaceComent }
 							type:'get',
 							data:{"reviewNo":rList[i].reviewNo},
 							success:function(riList){
-								for(var k in riList){
-									var fileName = riList[k].reviewFileRename;
-									$rContent.after($("<a>").append("<img class='rvImg' src='../../../resources/reviewFiles/"+fileName+"' onclick='rvImgClick('"+fileName+"')' alt='reviewImg'>"));
-									
+								if(riList != null){
+									var $slideContainer = $("<div class='rvSlide-container' style='margin-bottom:20px;'>");
+									var $slider = $("<div class='rvSlider' style='display:flex;overflow: auto;scroll-snap-type: x mandatory;'>");
+									$slideContainer.append($slider);
+									for(var k in riList){
+										$('.rc'+riList[k].reviewNo).before($slideContainer);
+										var $rvImg = $("<div class='rvImgDiv' style='flex: none;scroll-snap-align: start;width:20%;'>");
+										$rvImg.append("<img class='rvImg' style='display: inline-block;width:75px;height:75px;margin-left:10px;margin-right:10px;cursor:pointer;' src='../../../resources/reviewFiles/"+riList[k].reviewFileRename+"' onclick='window.open(this.src)' alt='reviewImg'/>");
+										$slider.append($rvImg);
+									}
 								}
+								
 							},
 							error:function(){
 							}
@@ -649,7 +660,7 @@ ${space.spaceComent }
         prevEl: ".swiper-button-prev",
       }
     });
-	
+    
 	    const modal = document.querySelector(".modal");
 	    const img = document.querySelector(".img");
 	    const modal_img = document.querySelector(".modal_content");
