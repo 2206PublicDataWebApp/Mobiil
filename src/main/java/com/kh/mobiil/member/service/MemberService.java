@@ -72,7 +72,7 @@ public interface MemberService {
 	public int modifyHostPwd(Host host);
 
 
-	public Member printOneByName(String memberName);
+	public Member printOneByKEmail(String memberEmail);
 
 
 	public int modifyKakaoMember(Member member);
@@ -82,6 +82,12 @@ public interface MemberService {
 
 
 	public List<Space> printMySpace(String memberEmail, int currentPage, int spaceLimit); // 찜한 공간 목록
+
+
+	public Member printNickByKEmail(String memberEmail);
+
+
+	public int modifyNick(Member member);
 
 
 

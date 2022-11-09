@@ -175,8 +175,8 @@ public class MemberStoreLogic implements MemberStore{
 }
 
 	@Override
-	public Member selectOneByName(SqlSession session, String memberName) {
-		Member member = session.selectOne("MemberMapper.selectOneByName", memberName);
+	public Member selectOneByKEmail(SqlSession session, String memberEmail) {
+		Member member = session.selectOne("MemberMapper.selectOneByKEmail", memberEmail);
 		return member;
 	}
 
@@ -199,6 +199,18 @@ public class MemberStoreLogic implements MemberStore{
 		RowBounds rowBounds = new RowBounds(offset, spaceLimit);
 		List<Space> sList = session.selectList("MemberMapper.selectMySpace", memberEmail, rowBounds);
 		return sList;
+	}
+
+	@Override
+	public Member selectNickByKEmail(SqlSession session, String memberEmail) {
+		Member member = session.selectOne("MemberMapper.selectNickByKEmail", memberEmail);
+		return member;
+	}
+
+	@Override
+	public int updateNick(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateNick", member);
+		return result;
 	}
 
 }

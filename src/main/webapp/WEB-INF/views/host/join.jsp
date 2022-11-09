@@ -82,8 +82,9 @@
                 <label>사업자 등록번호</label><input type="text" class="input" id="reg" name="companyRegNum" oninput="hypenReg(this)" maxlength="10" placeholder="숫자만 입력" ><br>
                 <div style="width: 650px;  margin: auto;">
                 <div style="float:left; margin-right:20px;"><label for="photo">사업자 등록증 사진</label></div>
-                 <div><input type="file" class="input" id="photo" name="uploadFile"><br></div>
+                <div><input type="file" class="input" id="file" name="uploadFile" accept=".jpg, .jpeg, .png"><br></div>
 				</div>
+				<img id="preview" style="width:600px; height:800px; display:none; margin-left:auto; margin-right:auto;">
                 <br>
                 <div><button type="button" class="button" onclick="joinform_check();">회원가입하기</button></div>
             </form>
@@ -303,6 +304,20 @@
 			}
 		});
           
+		$(document).ready(function() {
+			$("#file").on("change", handleImgFileSelect);
+		})
+		
+			function handleImgFileSelect(e){
+				var files = e.target.files;
+				var reader = new FileReader();
+				reader.onload = function(e){
+					$("#preview").attr("src", e.target.result);
+					$("#preview").css("display", "block");
+				}
+				reader.readAsDataURL(files[0]);
+
+			}
       </script>
       
   <br><br><br><br><br><br>

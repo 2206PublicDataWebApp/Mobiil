@@ -51,7 +51,7 @@
 			<span onclick="location.href='/member/myKakaoInfo.kh'">My 정보 수정</span>
 		</c:if>	                
 			<span> | </span>
-            <span onclick="location.href='#'">찜한 공간 보기</span> 
+            <span onclick="location.href='/member/mySpaceList.kh'">찜한 공간 보기</span> 
             <span> | </span> 
             <span onclick="location.href='/payment/list.kh'"><b>결제 내역 보기</b></span>
             <span> | </span> 
@@ -107,7 +107,7 @@
 	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
 	 	      return;
 		}else{ 
-			$("input").last().after("<input multiple='multiple' type='file' name='uploadFile' accept='.jpg, .jpeg, .png'>");
+			$("input").last().after("<input type='file' name='uploadFile' accept='.jpg, .jpeg, .png'>");
 			 maxFile ++;
 		}
 	}

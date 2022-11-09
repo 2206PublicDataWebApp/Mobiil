@@ -68,6 +68,7 @@
         <div class="required">
 <!--             <div>My 정보 수정</div> -->
             <form name="mypage_form" action="/member/modify.kh" method="post">
+                <input type="hidden" class="input" id="nick" name="originNick" value="${member.memberNick }" ><br>
                 <label>이름</label><input type="text" class="input" id="name" name="memberName" value="${member.memberName }" readonly><br>
                 <label>이메일</label><input type="email" class="input" id="email" name="memberEmail" value="${member.memberEmail }" readonly><br>
                 <label>닉네임</label><input type="text" class="input" id="nick" name="memberNick" value="${member.memberNick }" ><br>
@@ -75,7 +76,6 @@
                 <label>비밀번호 확인</label><input type="password" class="input" id="pwd2"  value="${member.memberPwd }" ><br>
                 <label>전화번호</label><input type="text" class="input" id="phone" name="memberPhone" value="${member.memberPhone }" oninput="hypenTel(this)" maxlength="13"><br>
                 <br>
-                                <input type="hidden" class="input" id="nick" name="originNick" value="${member.memberNick }" ><br>
                 <div><button type="button" class="button" onclick="mypageform_check();">수정하기</button></div>
                 <br><br><br>
                 <div><a type="button" class="remove" onclick="removeMember();">회원 탈퇴하기</a></div>

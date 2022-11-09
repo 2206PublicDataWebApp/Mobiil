@@ -23,21 +23,9 @@
         .tb {
             margin-left:auto;
 			margin-right:auto;
-        	width: 700px; 
+        	width: ; 
 			
         }
-
-		.title {
-		     text-align : center;
-/*    			 background-color:rgb(241, 234, 248); */
-        }
-
-        .input {              
-/*           	font-size: 50px; */
-        	width: 400px; 
-          	border: none;            
-        }
-	
     </style>
 
 </head>
@@ -52,7 +40,7 @@
 			<span onclick="location.href='/member/myKakaoInfo.kh'">My 정보 수정</span>
 		</c:if>
             <span> | </span>
-            <span onclick="location.href='#'">찜한 공간 보기</span> 
+            <span onclick="location.href='/member/mySpaceList.kh'">찜한 공간 보기</span> 
             <span> | </span> 
             <span onclick="location.href='/payment/list.kh'"><b>결제 내역 보기</b></span>
             <span> | </span> 
@@ -65,7 +53,7 @@
 <div class="table-responsive">
 	<input type="hidden" name="reviewNo" value="${reviewNo}">
 	<input type="hidden" name="reservationNo" value="${reservationNo}">
-	<table align="center" width="500" border="1" class="table table-bordered">
+	<table align="center" width="" border="1" class="table table-bordered">
 		<tr>
 			<td id="cl" align="center" width="150">공간명</td>
 			<td>${review.spaceName}</td>
@@ -82,9 +70,15 @@
 		<tr>
 			<td id="cl" align="center" width="150">첨부파일</td>
 			<td>
+				<c:if test="${!empty rList[0].reviewFileRename}">
 		 		<img alt="본문이미지1" src="/resources/reviewFiles/${rList[0].reviewFileRename }" width="200" height="200">
+		 		</c:if>
+				<c:if test="${!empty rList[1].reviewFileRename}"> 		
 		 		<img alt="본문이미지2" src="/resources/reviewFiles/${rList[1].reviewFileRename }" width="200" height="200">
+				</c:if>
+				<c:if test="${!empty rList[2].reviewFileRename}">		
 				<img alt="본문이미지3" src="/resources/reviewFiles/${rList[2].reviewFileRename }" width="200" height="200">
+				</c:if>
 			</td>
 		</tr>
 		<tr>

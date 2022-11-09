@@ -72,7 +72,7 @@ public interface MemberStore {
 
 	public void registKakao(HashMap<String, Object> loginUser);
 
-	public Member selectOneByName(SqlSession session, String memberName);
+	public Member selectOneByKEmail(SqlSession session, String memberEmail);
 
 	public int updateKakaoMember(SqlSession session, Member member);
 
@@ -81,5 +81,10 @@ public interface MemberStore {
 
 
 	public List<Space> selectMySpace(SqlSession session, String memberEmail, int currentPage, int spaceLimit);
+
+
+	public Member selectNickByKEmail(SqlSession session, String memberEmail);
+
+	public int updateNick(SqlSession session, Member member);
 
 }

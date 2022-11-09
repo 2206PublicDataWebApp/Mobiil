@@ -67,12 +67,12 @@
 
 	<!-- 정보 저장 -->
 	<insert id="registKakao" parameterType="java.util.HashMap">
-		INSERT INTO MEMBER_TBL VALUES(#{email}, NULL, #{nickname}, #{nickname}, NULL, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'Y')
+		INSERT INTO MEMBER_TBL VALUES(#{email}, NULL, #{nickname}, #{nickname}, NULL, DEFAULT, DEFAULT, 'N', DEFAULT, 'Y')
 	</insert>
 	
 	<!-- 멤버(개인회원) -->
 	<insert id="insertMember"> <!-- 회원가입 -->
-		  INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT)
+		  INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'N')
 	 </insert>
 
   	<select id="selectLoginOne" resultType="Member"> <!-- 로그인 -->
@@ -83,10 +83,18 @@
   		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND mStatus = 'Y' AND kakaoStatus = 'N'
   	</select>
   	
-  	<select id="selectOneByName" resultType="Member">
-  		SELECT * FROM MEMBER_TBL WHERE memberName = #{memberName} AND kakaoStatus = 'Y'
+  	<select id="selectOneByKEmail" resultType="Member">
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND kakaoStatus = 'Y'
   	</select>
   	 
+  	<select id="selectNickByKEmail" resultType="Member"> <!-- 카카오회원 닉네임 바꾸는 화면 -->
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND kakaoStatus = 'Y'
+  	</select>
+  	
+  	<update id="updateNick">
+  		UPDATE MEMBER_TBL SET mStatus = 'Y', memberNick = #{memberNick} WHERE memberEmail = #{memberEmail}
+  	</update>
+  	
   	<update id="updateMember"> <!-- 정보수정 -->
 		UPDATE MEMBER_TBL
 		SET memberNick = #{memberNick}, memberPwd = #{memberPwd}, memberPhone = #{memberPhone} WHERE memberEmail = #{memberEmail}
