@@ -74,7 +74,7 @@ function printAllSpace() {
 					infoContents = '<div style="padding:5px;"><span style="color: red;">'+data[i].spaceName+'</span></div>'
 				}
 				
-				geocoder.addressSearch(data[i].address, function(result, status) { // data는 공간리스트
+				geocoder.addressSearch(data[i].address2, function(result, status) { // data는 공간리스트
 				    if (status === kakao.maps.services.Status.OK) {
 				    	markerPosition = new kakao.maps.LatLng(result[0].y,result[0].x); // 마커 위치 지정
 				     	marker = new kakao.maps.Marker({ 

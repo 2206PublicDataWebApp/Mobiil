@@ -36,8 +36,8 @@
 		<if test="searchByWho.toString()== 'service'">
 			SELECT COUNT(*) FROM PARTNER_TBL
 			<where>
-			<!-- 지역이 서울이 아닌경우 -->
-			<if test="searchArea.toString() !='서울'">
+			<!-- 지역이 전체이 아닌경우 -->
+			<if test="searchArea.toString() !='전체'">
 				<!-- 제목 검색 -->
 					<if test="searchCondition.toString()== 'title'">
 						title LIKE '%'||#{searchValue}||'%' AND area =#{searchArea}
@@ -59,8 +59,8 @@
 			</if>
 			
 			
-			<!-- 지역이 서울인 경우 -->
-			<if test="searchArea.toString() =='서울'">
+			<!-- 지역이 전체인 경우 -->
+			<if test="searchArea.toString() =='전체'">
 				<!-- 제목 검색 -->
 					<if test="searchCondition.toString()== 'title'">
 						title LIKE '%'||#{searchValue}||'%' 
@@ -99,43 +99,43 @@
 		<if test="searchByWho.toString()== 'service'">
 			SELECT * FROM PARTNER_TBL
 			<where>
-			<if test="searchArea.toString()=='서울'">
+			<if test="searchArea.toString()=='전체'">
 				<if test="searchCondition.toString()== 'title'">
 					title LIKE '%'||#{searchValue}||'%'
 				</if>
 			</if>
-			<if test="searchArea.toString() !='서울'">
+			<if test="searchArea.toString() !='전체'">
 				<if test="searchCondition.toString()== 'title'">
 					title LIKE '%'||#{searchValue}||'%' AND
 					area=#{searchArea}
 				</if>
 			</if>
 
-			<if test="searchArea.toString() =='서울'">
+			<if test="searchArea.toString() =='전체'">
 				<if test="searchCondition.toString()== 'contents'">
 					contents LIKE '%'||#{searchValue}||'%'
 				</if>
 			</if>
 
-			<if test="searchArea.toString() !='서울'">
+			<if test="searchArea.toString() !='전체'">
 				<if test="searchCondition.toString()== 'contents'">
 					contents LIKE '%'||#{searchValue}||'%' AND area=#{searchArea}
 				</if>
 			</if>
 
-			<if test="searchArea.toString() =='서울'">
+			<if test="searchArea.toString() =='전체'">
 				<if test="searchCondition.toString()== 'instrument'">
 					instrument LIKE '%'||#{searchValue}||'%'
 				</if>
 			</if>
 
-			<if test="searchArea.toString() !='서울'">
+			<if test="searchArea.toString() !='전체'">
 				<if test="searchCondition.toString()== 'instrument'">
 					instrument LIKE '%'||#{searchValue}||'%' AND area=#{searchArea}
 				</if>
 			</if>
 
-			<if test="searchArea.toString() =='서울'">
+			<if test="searchArea.toString() =='전체'">
 				<if test="searchCondition.toString()== 'all'">
 					(title LIKE '%'||#{searchValue}||'%'
 					OR contents LIKE '%'||#{searchValue}||'%'
@@ -143,7 +143,7 @@
 				</if>
 			</if>
 
-			<if test="searchArea.toString() !='서울'">
+			<if test="searchArea.toString() !='전체'">
 				<if test="searchCondition.toString()== 'all'">
 					(title LIKE '%'||#{searchValue}||'%'
 					OR contents LIKE '%'||#{searchValue}||'%'
@@ -153,7 +153,7 @@
 			</if>
 			AND approval = 'Y'
 		</where>
-			ORDER BY 1 DESC
+			ORDER BY approvalDate DESC
 		</if>
 		
 		<!-- 어드민에서 보는 리스트(전체출력) -->
