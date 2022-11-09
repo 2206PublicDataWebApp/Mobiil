@@ -4,7 +4,7 @@
 #  Mobiil  
 
 ###### _KH정보교육원 빌려조 Fianl Project_            
-[고종규], [김다현], [정슬기](https://github.com/seulki1211), [최혜진]
+[고종규](https://github.com/JongGyuGo), [김다현], [정슬기](https://github.com/seulki1211), [최혜진]
 
 
 ## Purpose 
