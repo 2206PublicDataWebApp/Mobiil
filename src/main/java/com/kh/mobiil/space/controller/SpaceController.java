@@ -43,7 +43,6 @@ public class SpaceController {
 	@Autowired
 	private HostService hService;
 	
-	
 	// 공간 리스트 조회
 	@RequestMapping(value="/space/spaceList.kh", method=RequestMethod.GET)
 	public ModelAndView spaceListView(
@@ -383,18 +382,12 @@ public class SpaceController {
 	//결제가 완료시 DB 예약 테이블에 정보 저장 및 문자 전송
 	@ResponseBody
 	@RequestMapping(value="/space/paymentResult.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
-	public String registerReservation(
-			Reservation rsv
-			, @RequestParam(value="reservNo") String reservNo
-			, @RequestParam(value="price") Integer price
-			, @RequestParam(value="paymentDate") String paymentDate
-			, @RequestParam(value="memberName") String memberName
-			, @RequestParam(value="memberPhone") String memberPhone
-			, @RequestParam(value="memberEmail") String memberEmail
-			, @RequestParam(value="spaceNo") Integer spaceNo
-			, @RequestParam(value="reservDate") String reservDate
-			, @RequestParam(value="revStart") Integer revStart
-			, @RequestParam(value="revEnd") Integer revEnd) {
+	public String registerReservation(Reservation rsv
+			, @RequestParam(value="reservNo") String reservNo , 	 @RequestParam(value="price") Integer price
+			, @RequestParam(value="paymentDate") String paymentDate, @RequestParam(value="memberName") String memberName
+			, @RequestParam(value="memberPhone") String memberPhone, @RequestParam(value="memberEmail") String memberEmail
+			, @RequestParam(value="spaceNo") Integer spaceNo, 		 @RequestParam(value="reservDate") String reservDate
+			, @RequestParam(value="revStart") Integer revStart, 	 @RequestParam(value="revEnd") Integer revEnd) {
 		JSONObject obj = new JSONObject();
 			try {
 					SimpleDateFormat format = new SimpleDateFormat("yyyy. MM. dd.");
@@ -447,6 +440,8 @@ public class SpaceController {
 			}
 		return obj.toString();
 	}
+	
+	//예약완료 정보 조회
 	@RequestMapping(value="/space/reservationInfo.kh", method=RequestMethod.GET)
 	public ModelAndView reservationInfo(String reservationNo, ModelAndView mv) {
 		try {
