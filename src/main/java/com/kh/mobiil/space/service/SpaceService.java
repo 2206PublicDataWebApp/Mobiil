@@ -9,6 +9,7 @@ import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Search;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 
@@ -18,9 +19,11 @@ public interface SpaceService {
 	int checkTime(String start, String end, String reservDate);
 
 	// 리스트 게시물 전체 개수
-	int getTotalCount(String searchArea, String searchValue);
+	int getTotalCount(Search search);
+	// 리뷰순 정렬시 게시물 전체 개수
+	int getTotalCountReviewDesc(Search search);
 	
-	int getPriceCount(Integer minNum, Integer maxNum);
+	int getPriceCount(Search search);
 
 	List<Space> printSpace(RowBounds rowBounds);
 
@@ -63,10 +66,15 @@ public interface SpaceService {
 	List<Space> printHeartDesc(RowBounds rowBounds);
 
 	List<Space> printRivewDesc(RowBounds rowBounds);
+	List<Space> printRivewDescByArea(Search search, RowBounds rowBounds);
+	List<Space> printRivewDescByValue(Search search, RowBounds rowBounds);
 
 	int updateReply(HostReply hostReply);
 
 	int deleteReply(Integer replyNo);
+
+
+
 
 
 }

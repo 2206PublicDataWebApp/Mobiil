@@ -10,6 +10,7 @@ import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Search;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 
@@ -17,8 +18,9 @@ public interface SpaceStore {
 	// 날짜 및 시간 유효성 검사
 	int checkTime(SqlSessionTemplate session, String start, String end, String reservDate);
 	// 리스트 전체 게시물 개수
-	int selectTotalCount(SqlSessionTemplate session, String searchArea, String searchValue);
-	int selectPriceCount(SqlSessionTemplate session, Integer minNum, Integer maxNum);
+	int selectTotalCount(SqlSessionTemplate session, Search search);
+	int selectTotalCountReviewDesc(SqlSessionTemplate session, Search search);
+	int selectPriceCount(SqlSessionTemplate session, Search search);
 	List<Space> selectSpace(SqlSessionTemplate session, RowBounds rowBounds);
 	Space selectOneByNo(SqlSessionTemplate session, Integer spaceNo);
 	List<SpaceImg> selectImg(SqlSessionTemplate session, Integer spaceNo);
@@ -39,6 +41,8 @@ public interface SpaceStore {
 	List<ReviewImg> selectReviewImg(SqlSessionTemplate session, Integer reviewNo);
 	List<Space> selectHeartDesc(SqlSessionTemplate session, RowBounds rowBounds);
 	List<Space> selectRivewDesc(SqlSessionTemplate session, RowBounds rowBounds);
+	List<Space> selectReviewDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectRivewDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	int updateReply(SqlSessionTemplate session, HostReply hostReply);
 	int deleteReply(SqlSessionTemplate session, Integer replyNo);
 	

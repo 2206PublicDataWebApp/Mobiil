@@ -82,7 +82,7 @@
   	</insert>
   	<insert id="insertHeart">
   		INSERT INTO HEART_TBL
-  		VALUES(#{memberEmail},#{spaceNo},#{spaceName},#{spaceFileRename})
+  		VALUES(#{memberEmail},#{spaceNo},#{spaceName},#{spaceFileRename},#{spaceStatus})
   	</insert>
   	<insert id="insertReply">
   		INSERT INTO HOSTREPLY_TBL
@@ -98,42 +98,26 @@
   		DELETE FROM HEART_TBL WHERE MEMBER_EMAIL=#{memberEmail} AND SPACE_NO=#{spaceNo}
   	</delete>
 	<select id="selectTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM SPACE_TBL WHERE SPACE_STATUS='Y'
+	</select>
+	<select id="selectTotalCountReviewDesc" resultType="_int">
 		SELECT COUNT(*) FROM SPACE_TBL
 		<where>
-			<if test="searchArea.toString() != '전체'">
-				<if test="searchValue.toString() !=''">
-					SPACE_NAME LIKE '%'||#{searchValue}||'%'
-					AND SPACE_AREA = #{searchArea}
+			<if test="searchValue.toString() =='' AND searchArea.toString() != ''">
+				<if test="searchArea.toString() != '전체'">
+					SPACE_AREA = #{searchArea}
 				</if>
-			</if>
-			<if test="searchArea.toString() == '전체'">
-				<if test="searchValue.toString() !=''">
-					SPACE_NAME LIKE '%'||#{searchValue}||'%'
-				</if>
-			</if>
-			<if test="searchArea.toString() == '전체'">
-				<if test="searchValue.toString() ==''">
+				<if test="searchArea.toString() == '전체'">
 					SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북'
 				</if>
 			</if>
-			<if test="searchArea.toString() == '강동'">
-				<if test="searchValue.toString() ==''">
-					SPACE_AREA LIKE '강동'
+			<if test="searchValue.toString() !='' AND searchArea.toString() != ''">
+				<if test="searchArea.toString() == '전체'">
+					SPACE_NAME LIKE '%'||#{searchValue}||'%'
 				</if>
-			</if>
-			<if test="searchArea.toString() == '강서'">
-				<if test="searchValue.toString() ==''">
-					SPACE_AREA LIKE '강서'
-				</if>
-			</if>
-			<if test="searchArea.toString() == '강남'">
-				<if test="searchValue.toString() ==''">
-					SPACE_AREA LIKE '강남'
-				</if>
-			</if>
-			<if test="searchArea.toString() == '강북'">
-				<if test="searchValue.toString() ==''">
-					SPACE_AREA LIKE '강북'
+				<if test="searchArea.toString() != '전체'">
+					SPACE_NAME LIKE '%'||#{searchValue}||'%'
+					AND SPACE_AREA = #{searchArea}
 				</if>
 			</if>
 			AND SPACE_STATUS='Y'
@@ -229,6 +213,38 @@
         LEFT OUTER JOIN SPACE_IMG SI
 		ON ST.SPACE_NO = SI.SPACE_NO
         WHERE ST.SPACE_STATUS = 'Y'
+        GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE
+        ORDER BY (SELECT COUNT(*) FROM REVIEW_TBL RT WHERE ST.SPACE_NO = RT.SPACE_NO GROUP BY RT.SPACE_NO) DESC NULLS LAST
+	</select>
+	<select id="ReviewDescByArea" resultMap="SpaceResultMap">
+		SELECT ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, MAX(SI.SPACE_FILERENAME) SPACE_FILERENAME
+		FROM SPACE_TBL ST
+        LEFT OUTER JOIN SPACE_IMG SI
+		ON ST.SPACE_NO = SI.SPACE_NO
+		<where>
+			<if test="searchArea.toString() != '전체'">
+				ST.SPACE_AREA = #{spaceArea} AND ST.SPACE_STATUS = 'Y'
+			</if>
+			<if test="searchArea.toString() == '전체'">
+				ST.SPACE_STATUS = 'Y'
+			</if>
+		</where>
+        GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE
+        ORDER BY (SELECT COUNT(*) FROM REVIEW_TBL RT WHERE ST.SPACE_NO = RT.SPACE_NO GROUP BY RT.SPACE_NO) DESC NULLS LAST
+	</select>
+	<select id="ReviewDescByValue" resultMap="SpaceResultMap">
+		SELECT ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, MAX(SI.SPACE_FILERENAME) SPACE_FILERENAME
+		FROM SPACE_TBL ST
+        LEFT OUTER JOIN SPACE_IMG SI
+		ON ST.SPACE_NO = SI.SPACE_NO
+		<where>
+			<if test="searchArea.toString() != '전체'">
+				ST.SPACE_AREA = #{spaceArea} AND ST.SPACE_NAME LIKE '%'||#{searchValue}||'%' AND ST.SPACE_STATUS = 'Y'
+			</if>
+			<if test="searchArea.toString() == '전체'">
+				ST.SPACE_NAME LIKE '%'||#{searchValue}||'%' AND ST.SPACE_STATUS = 'Y'
+			</if>
+		</where>
         GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE
         ORDER BY (SELECT COUNT(*) FROM REVIEW_TBL RT WHERE ST.SPACE_NO = RT.SPACE_NO GROUP BY RT.SPACE_NO) DESC NULLS LAST
 	</select>

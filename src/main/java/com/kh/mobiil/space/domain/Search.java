@@ -8,6 +8,30 @@ public class Search {
 	private int minNum;
 	private int maxNum;
 	
+	
+	public Search() {}
+	
+	
+	public Search(int minNum, int maxNum) {
+		super();
+		this.minNum = minNum;
+		this.maxNum = maxNum;
+	}
+
+
+	public Search(String searchArea) {
+		super();
+		this.searchArea = searchArea;
+	}
+
+
+	public Search(String searchArea, String searchValue) {
+		super();
+		this.searchArea = searchArea;
+		this.searchValue = searchValue;
+	}
+
+
 	public Search(String heart, String review, String searchArea, String searchValue, int minNum, int maxNum) {
 		super();
 		this.heart = heart;

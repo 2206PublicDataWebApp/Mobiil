@@ -28,6 +28,7 @@ import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Search;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.service.SpaceService;
@@ -49,8 +50,9 @@ public class SpaceController {
 			ModelAndView mv
 			,@RequestParam(value="page", required=false) Integer page) {
 		// 페이징
+		Search search = new Search();
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = sService.getTotalCount("","");
+		int totalCount = sService.getTotalCount(search);
 		int naviLimit = 5;
 		int boardLimit = 9;
 		Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
@@ -59,6 +61,7 @@ public class SpaceController {
 		List<Space> sList = sService.printSpace(rowBounds);
 		if(!sList.isEmpty()) {
 			mv.addObject("urlVal", "spaceList");
+			mv.addObject("search", search);
 			mv.addObject("paging", paging);
 			mv.addObject("sList", sList);
 		}
@@ -73,8 +76,9 @@ public class SpaceController {
 			ModelAndView mv
 			,@RequestParam(value="page", required=false) Integer page) {
 		// 페이징
+			Search search = new Search();
 			int currentPage = (page != null) ? page : 1;
-			int totalCount = sService.getTotalCount("","");
+			int totalCount = sService.getTotalCount(search);
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
@@ -83,6 +87,7 @@ public class SpaceController {
 			List<Space> sList = sService.printHeartDesc(rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("urlVal", "heartDesc");
+				mv.addObject("search", search);
 				mv.addObject("paging", paging);
 				mv.addObject("sList", sList);
 			}
@@ -95,22 +100,66 @@ public class SpaceController {
 	@RequestMapping(value="/space/reviewDesc.kh", method=RequestMethod.GET)
 	public ModelAndView reviewSortView(
 			ModelAndView mv
+			,@RequestParam(value="searchArea", required=false) String searchArea
+			,@RequestParam(value="searchValue", required=false) String searchValue
+			,@RequestParam(value="minNum", required=false) Integer minNum
+			,@RequestParam(value="maxNum", required=false) Integer maxNum
 			,@RequestParam(value="page", required=false) Integer page) {
-		// 페이징
+		
+		if(searchArea == "" && searchValue == "" && minNum == null && maxNum == null) {
+			// 페이징
+			Search search = new Search();
 			int currentPage = (page != null) ? page : 1;
-			int totalCount = sService.getTotalCount("","");
+			int totalCount = sService.getTotalCount(search);
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			System.out.println(totalCount);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			
+			List<Space> sList = sService.printRivewDesc(rowBounds);
+			if(!sList.isEmpty()) {
+				mv.addObject("urlVal", "reviewDesc");
+				mv.addObject("search", search);
+				mv.addObject("paging", paging);
+				mv.addObject("sList", sList);
+			}
+		} else if(searchArea != "" && searchValue == "" && minNum == null && maxNum == null){
+			// 페이징
+			Search search = new Search(searchArea);
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = sService.getTotalCountReviewDesc(search);
+			int naviLimit = 5;
+			int boardLimit = 9;
+			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			System.out.println(totalCount);
+			List<Space> sList = sService.printRivewDescByArea(search, rowBounds);
+			if(!sList.isEmpty()) {
+				mv.addObject("urlVal", "reviewDesc");
+				mv.addObject("search", search);
+				mv.addObject("paging", paging);
+				mv.addObject("sList", sList);
+			}
+		} else if(searchArea != "" && searchValue != "" && minNum == null && maxNum == null) {
+			// 페이징
+			Search search = new Search(searchArea, searchValue);
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = sService.getTotalCountReviewDesc(search);
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
 			
-			List<Space> sList = sService.printRivewDesc(rowBounds);
+			List<Space> sList = sService.printRivewDescByValue(search, rowBounds);
 			if(!sList.isEmpty()) {
-				mv.addObject("urlVal", "heartDesc");
+				mv.addObject("urlVal", "reviewDesc");
+				mv.addObject("search", search);
 				mv.addObject("paging", paging);
 				mv.addObject("sList", sList);
 			}
-			mv.setViewName("space/spaceList");
+		}
+		mv.setViewName("space/spaceList");
 			return mv;
 	}
 	
@@ -123,8 +172,9 @@ public class SpaceController {
 			, @RequestParam(value="page", required=false) Integer page) {
 		try {
 			//페이징
+			Search search = new Search(searchArea, searchValue);
 			int currentPage = (page != null) ? page : 1;
-			int totalCount = sService.getTotalCount(searchArea,searchValue);
+			int totalCount = sService.getTotalCount(search);
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
@@ -137,8 +187,7 @@ public class SpaceController {
 				mv.addObject("sList", null);
 			}
 			mv.addObject("urlVal", "spaceSearch");
-			mv.addObject("searchArea", searchArea);
-			mv.addObject("searchValue", searchValue);
+			mv.addObject("search", search);
 			mv.addObject("paging", paging);
 			mv.setViewName("space/spaceList");
 		} catch (Exception e) {
@@ -155,8 +204,9 @@ public class SpaceController {
 			, @RequestParam(value="page", required=false) Integer page) {
 		try {
 			// 페이징
+			Search search = new Search(searchArea);
 			int currentPage = (page != null) ? page : 1;
-			int totalCount = sService.getTotalCount(searchArea,"");
+			int totalCount = sService.getTotalCount(search);
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
@@ -169,7 +219,7 @@ public class SpaceController {
 				mv.addObject("sList", null);
 			}
 			mv.addObject("urlVal", "spaceArea");
-			mv.addObject("searchArea", searchArea);
+			mv.addObject("search", search);
 			mv.addObject("paging", paging);
 			mv.setViewName("space/spaceList");
 		} catch (Exception e) {
@@ -193,8 +243,9 @@ public class SpaceController {
 				maxNum = 999999999;		//최대금액 자동으로 999999999 입력
 			}
 			// 페이징
+			Search search = new Search(minNum, maxNum);
 			int currentPage = (page != null) ? page : 1;
-			int totalCount = sService.getPriceCount(minNum,maxNum);
+			int totalCount = sService.getPriceCount(search);
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
@@ -207,8 +258,7 @@ public class SpaceController {
 				mv.addObject("sList", null);
 			}
 			mv.addObject("urlVal", "spacePrice");
-			mv.addObject("minNum", minNum);
-			mv.addObject("maxNum", maxNum);
+			mv.addObject("search", search);
 			mv.addObject("paging", paging);
 			mv.setViewName("space/spaceList");
 		} catch (Exception e) {
@@ -338,11 +388,13 @@ public class SpaceController {
 			, @RequestParam(value="spaceNo") Integer spaceNo
 			, @RequestParam(value="spaceName") String spaceName
 			, @RequestParam(value="spaceFileRename") String spaceFileRename
+			, @RequestParam(value="spaceStatus") String spaceStatus
 			, Heart heart) {
 		heart.setMemberEmail(memberEmail);
 		heart.setSpaceNo(spaceNo);
 		heart.setSpaceName(spaceName);
 		heart.setSpaceFileRename(spaceFileRename);
+		heart.setSpaceStatus(spaceStatus);
 		int result = sService.insertHeart(heart);
 		return result;
 	}

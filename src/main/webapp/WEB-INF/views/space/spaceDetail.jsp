@@ -11,7 +11,7 @@
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
 />
-<title>Mobbil SpaceDetail</title>
+<title>Mobiil SpaceDetail</title>
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <!-- fullcalendar CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
@@ -305,7 +305,7 @@ ${space.spaceComent }
 						$.ajax({
 							url: '/space/heart.kh',
 							type: 'GET',
-							data: { "memberEmail":"${loginUser.memberEmail}", "spaceNo":'${spaceNo}', "spaceName":'${space.spaceName }', "spaceFileRename":'${iList[0].spaceFileRename }' },
+							data: { "memberEmail":"${loginUser.memberEmail}", "spaceNo":'${spaceNo}', "spaceName":'${space.spaceName }', "spaceFileRename":'${iList[0].spaceFileRename }', "spaceStatus":'${space.spaceStatus}' },
 							success: function(result){
 								if(result != 0){
 									$('.heartImg').attr('src','');
@@ -475,10 +475,12 @@ ${space.spaceComent }
 									var $slider = $("<div class='rvSlider' style='display:flex;overflow: auto;scroll-snap-type: x mandatory;'>");
 									$slideContainer.append($slider);
 									for(var k in riList){
+										if(riList[k].reviewFileRename != null){
 										$('.rc'+riList[k].reviewNo).before($slideContainer);
 										var $rvImg = $("<div class='rvImgDiv' style='flex: none;scroll-snap-align: start;width:20%;'>");
 										$rvImg.append("<img class='rvImg' style='display: inline-block;width:75px;height:75px;margin-left:10px;margin-right:10px;cursor:pointer;' src='../../../resources/reviewFiles/"+riList[k].reviewFileRename+"' onclick='window.open(this.src)' alt='reviewImg'/>");
 										$slider.append($rvImg);
+										}
 									}
 								}
 								
