@@ -3,7 +3,7 @@
  
 #  Mobiil  
 
-###### _KH정보교육원 빌려조 Fianl Project_            
+###### _KH정보교육원 빌려조 Final Project_            
 [고종규](https://github.com/JongGyuGo), [김다현], [정슬기](https://github.com/seulki1211), [최혜진]
 
 
@@ -18,16 +18,15 @@
 
 ## Features
 * AJAX **실시간** 채팅
-* **Chart.js** 관리자페이지 차트
-* **SummerNote** 적용 게시판
-* **mailsender** 메일 발송 및 임시 비밀번호 발급
-* **카카오 MAP** API를 통한 지도
-* **I'mport** API 결제시스템
+* **Chart.js** 차트 구현
+* **SummerNote** 게시판 적용
+* **mailsender**  메일 발송 및 임시 비밀번호 발급
+* **카카오 MAP** API 적용
+* **I'mport** API 적용 및 결제
 * **CoolSMS** 결제 완료 문자 전송
-* **달력 API** 예약일정 달력 적용
+* **fullcalendar API** 적용 예약 및 일정 관리
+* **카카오 소셜로그인** API 
 * 결제가 완료된 금액 정산 조회
-* **소셜 로그인** API를 사용한 소셜 로그인
-
 
 ## Role 
 ##### 이름을 클릭해 보세요!
@@ -183,6 +182,14 @@ https://user-images.githubusercontent.com/110793386/199907210-96a1bf11-2761-4e2d
      - 배너 CRUD 
      - 배너 수정 시 배너 이미지와 내용을 분리하여 수정
 
+
+https://user-images.githubusercontent.com/110793386/200994969-a9473587-26be-477d-afa4-0e71a4e97160.mp4
+	 
+![final_calendar_service](https://user-images.githubusercontent.com/110793386/200994979-a99d0a3b-71c6-46f3-9e2a-009e52de0aca.png)
+
+     - 일정 달력 CRUD
+
+	 
  </div>
  </details>
 
