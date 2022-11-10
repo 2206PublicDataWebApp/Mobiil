@@ -24,9 +24,9 @@ public interface SpaceStore {
 	List<Space> selectSpace(SqlSessionTemplate session, RowBounds rowBounds);
 	Space selectOneByNo(SqlSessionTemplate session, Integer spaceNo);
 	List<SpaceImg> selectImg(SqlSessionTemplate session, Integer spaceNo);
-	List<Space> selectAllByValue(SqlSessionTemplate session, String searchArea, String searchValue, RowBounds rowBounds);
-	List<Space> selectByArea(SqlSessionTemplate session, String searchArea, RowBounds rowBounds);
-	List<Space> selectByPrice(SqlSessionTemplate session, Integer minNum, Integer maxNum, RowBounds rowBounds);
+	List<Space> selectAllByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	int insertReservation(SqlSessionTemplate session, Reservation rsv);
 	int selectAreaCount(String searchArea, SqlSessionTemplate session);
 	// 모든 스페이스 리스트

@@ -69,26 +69,20 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
-	public List<Space> selectAllByValue(SqlSessionTemplate session, String searchArea, String searchValue, RowBounds rowBounds) {
-		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("searchArea", searchArea);
-		paramMap.put("searchValue", searchValue);
-		List<Space> sList = session.selectList("SpaceMapper.selectAllByValue", paramMap, rowBounds);
+	public List<Space> selectAllByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectAllByValue", search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> selectByArea(SqlSessionTemplate session, String searchArea, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.selectByArea", searchArea, rowBounds);
+	public List<Space> selectByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectByArea", search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> selectByPrice(SqlSessionTemplate session, Integer minNum, Integer maxNum, RowBounds rowBounds) {
-		HashMap<String, Integer> paramMap = new HashMap<String, Integer>();
-		paramMap.put("minNum", minNum);
-		paramMap.put("maxNum", maxNum);
-		List<Space> sList = session.selectList("SpaceMapper.selectByPrice", paramMap, rowBounds);
+	public List<Space> selectByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectByPrice", search, rowBounds);
 		return sList;
 	}
 

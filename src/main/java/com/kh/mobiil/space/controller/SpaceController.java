@@ -180,7 +180,7 @@ public class SpaceController {
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
 			
-			List<Space> sList = sService.printAllByValue(searchArea, searchValue, rowBounds);
+			List<Space> sList = sService.printAllByValue(search, rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("sList", sList);
 			}else {
@@ -212,7 +212,7 @@ public class SpaceController {
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
 			
-			List<Space> sList = sService.printByArea(searchArea, rowBounds);
+			List<Space> sList = sService.printByArea(search, rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("sList", sList);
 			}else {
@@ -251,7 +251,7 @@ public class SpaceController {
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
 			
-			List<Space> sList = sService.printByPrice(minNum, maxNum, rowBounds);
+			List<Space> sList = sService.printByPrice(search, rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("sList", sList);
 			}else {

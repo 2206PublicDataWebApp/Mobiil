@@ -31,11 +31,11 @@ public interface SpaceService {
 
 	List<SpaceImg> printImg(Integer spaceNo);
 
-	List<Space> printAllByValue(String searchArea, String searchValue, RowBounds rowBounds);
+	List<Space> printAllByValue(Search search, RowBounds rowBounds);
 
-	List<Space> printByArea(String searchArea, RowBounds rowBounds);
+	List<Space> printByArea(Search search, RowBounds rowBounds);
 
-	List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds);
+	List<Space> printByPrice(Search search, RowBounds rowBounds);
 
 	int registerReservation(Reservation rsv);
 

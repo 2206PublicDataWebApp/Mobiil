@@ -70,20 +70,20 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public List<Space> printAllByValue(String searchArea, String searchValue, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectAllByValue(session, searchArea, searchValue, rowBounds);
+	public List<Space> printAllByValue(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectAllByValue(session, search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> printByArea(String searchArea, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectByArea(session, searchArea, rowBounds);
+	public List<Space> printByArea(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectByArea(session, search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectByPrice(session, minNum, maxNum, rowBounds);
+	public List<Space> printByPrice(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectByPrice(session, search, rowBounds);
 		return sList;
 	}
 
