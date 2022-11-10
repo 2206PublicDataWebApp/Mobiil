@@ -61,9 +61,9 @@ border-radius: 15px
 		        		var id = info.event.id;
 		        		var oneEvent = info.event;
 		        		$("#layer").append(
-		        						"<input type='button' value = '수정' onclick='modify("+id +"," +  divLeft + "," + divTop + ")'>"
-				 		       			+ " <input type='button' value = '삭제' onclick='remove("+id+")'>"
-				 		       			+ " <input type='button' value = '닫기' onclick='layerClose()'>");
+		        						"<input type='button' class='btn' value = '수정' onclick='modify("+id +"," +  divLeft + "," + divTop + ")'>"
+				 		       			+ " <input type='button' class='btn' value = '삭제' onclick='remove("+id+")'>"
+				 		       			+ " <input type='button' class='btn' value = '닫기' onclick='layerClose()'>");
 		        		// 값세팅
 		        		$("#modify-title").val(info.event.title); 
 		        	},
