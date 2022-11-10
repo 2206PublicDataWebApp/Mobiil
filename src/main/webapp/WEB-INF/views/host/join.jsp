@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <title>기업 회원가입</title>
+ <title>기업회원 가입</title>
     <style>
         .signup {
             text-align: center;

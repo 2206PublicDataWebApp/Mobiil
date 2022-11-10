@@ -80,7 +80,10 @@
 			<c:forEach items="${reviewImg}" var="rImg">
 				<input type="hidden" value="${rImg.reviewImgNo}" name="reviewImgNo">
 				<input type="hidden" value="${rImg.reviewFileRename}" name="reviewFileRename">
-				<input type="file" class="file" name="reloadFile" accept=".jpg, .jpeg, .png">
+					<input type="file" class="file" name="reloadFile" accept=".jpg, .jpeg, .png">
+					<a>${rImg.reviewFileName}</a>
+					
+					
 			</c:forEach>
 <!-- 				<a>사진name</a> -->
 				<input type="button" value="추가" onclick="addFile();">
@@ -107,7 +110,7 @@
 	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
 	 	      return;
 		}else{ 
-			$("input").last().after("<input type='file' name='uploadFile' accept='.jpg, .jpeg, .png'>");
+			$("input").last().after("<input type='file' name='reloadFile' accept='.jpg, .jpeg, .png'>");
 			 maxFile ++;
 		}
 	}

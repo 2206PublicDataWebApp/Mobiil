@@ -42,6 +42,7 @@
 		<result property="spaceNo" column="SPACE_NO" />
 		<result property="spaceName" column="SPACE_NAME" />
 		<result property="spaceFileRename" column="SPACE_FILERENAME" />
+		<result property="spaceStatus" column="SPACE_STATUS" />
 	</resultMap>
 	
 	<resultMap type="Space" id="SpaceResultMap">
@@ -143,14 +144,14 @@
   	</select>
   	
   	<select id="getSpaceTotalCount" resultType="_int"> <!-- 찜한 공간 페이징 갯수 -->
-  		SELECT COUNT(*) FROM HEART_TBL WHERE MEMBER_EMAIL = #{memberEmail}
+  		SELECT COUNT(*) FROM HEART_TBL WHERE MEMBER_EMAIL = #{memberEmail} AND SPACE_STATUS = 'Y'
   	</select>
   	
   	<select id="selectMySpace" resultMap="SpaceResultMap"> <!-- 찜한 공간 목록 -->
-  		SELECT SPACE_FILERENAME, MEMBER_EMAIL, SPACE_TBL.SPACE_NO, SPACE_TBL.SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_STATUS 
+  		SELECT SPACE_FILERENAME, MEMBER_EMAIL, SPACE_TBL.SPACE_NO, SPACE_TBL.SPACE_NAME, SPACE_AREA, SPACE_PRICE, SPACE_TBL.SPACE_STATUS 
   		FROM SPACE_TBL
 		JOIN HEART_TBL ON SPACE_TBL.SPACE_NO = HEART_TBL.SPACE_NO
-		WHERE MEMBER_EMAIL = #{memberEmail} AND SPACE_STATUS = 'Y'
+		WHERE MEMBER_EMAIL = #{memberEmail} AND SPACE_TBL.SPACE_STATUS = 'Y'
   	</select>
   	
   	<select id="selectOneByNo" resultMap="ReservationResultMap"> <!-- 결제 상세 내역 -->
