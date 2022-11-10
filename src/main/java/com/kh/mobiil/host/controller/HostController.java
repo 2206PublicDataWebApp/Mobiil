@@ -225,7 +225,6 @@ public class HostController {
 			Host host = (Host) session.getAttribute("loginHost");
 			String hostEmail = host.getHostEmail();
 			int result = hService.removeHost(hostEmail);
-//			session.invalidate();
 			request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
 			mv.setViewName("redirect:/member/logout.kh");
 		} catch (Exception e) {
@@ -324,6 +323,8 @@ public class HostController {
 				mv.addObject("startNavi", startNavi);
 				mv.addObject("endNavi", endNavi);
 				mv.addObject("rList", rList);
+				mv.setViewName("host/reservationList");
+			}else {
 				mv.setViewName("host/reservationList");
 			}
 		} catch (Exception e) {
@@ -526,6 +527,8 @@ public class HostController {
 				mv.addObject("endNavi", endNavi);
 				mv.addObject("sList", sList);
 				mv.setViewName("host/spaceList_host");
+			}else {
+				mv.setViewName("host/spaceList_host");
 			}
 		} catch (Exception e) {
 		}
@@ -707,6 +710,17 @@ public class HostController {
 			updateResult = hService.sendMail(spaceNo);	// 메일 보내고 메일 발송 여부 업데이트 메소드(성공시 1반환)
 		}
 		return mailResult+updateResult ; // 둘다 성공해야 2 반환
+	}
+	
+	/**
+	 * 
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/host/dashboard.kh")
+	public ModelAndView showDashboard(ModelAndView mv) {
+		mv.setViewName("/host/dashBoard");
+		return mv;
 	}
 }
 

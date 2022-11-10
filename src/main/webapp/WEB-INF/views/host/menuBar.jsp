@@ -30,6 +30,12 @@
 			padding-left : 20px;
 			font-size: 20px;
 		}
+		
+		a:hover {
+			  text-decoration: underline;
+			  font-size:23px; 
+			  color : #ec6e6e;
+			}
 	</style>
 </head>
 <body>
@@ -38,19 +44,19 @@
 		<br>
 		<ul>
 			<li>
-				<h3>호스트 페이지</h3>
+				<h3>호스트 페이지</h3><br>
 			</li>
 			<li>
-				<a class="function" href="/host/hostInfo.mobiil">정보 조회</a>
+				<a class="function" href="/host/hostInfo.mobiil">정보 조회</a><br><br>
 			</li>
 			<li>
-				<a class="function" href="/host/hostModifyView.mobiil">정보 수정</a>
+				<a class="function" href="/host/hostModifyView.mobiil">정보 수정</a><br><br>
 			</li>
 			<li>
 				<a class="function" href="javascript:void(0)" onclick="reservationCheck();">예약 확인</a><br><br>
 			</li>
 			<li>
-				<a class="function" href="/host/registList.mobiil">예약 리스트</a>
+				<a class="function" href="/host/registList.mobiil">예약 리스트</a><br><br>
 			</li>
 			<li>
 				<a class="function" href="javascript:void(0)" onclick="getProfitsCheck();">정산 확인</a><br><br>
@@ -59,7 +65,10 @@
 				<a class="function" href="/host/spaceInsertView.mobiil">공간 업로드</a><br><br>
 			</li>
 			<li>
-				<a class="function" href="/host/spaceList.mobiil">공간 리스트</a>
+				<a class="function" href="/host/spaceList.mobiil">공간 리스트</a><br><br>
+			</li>
+			<li>
+				<a class="function" href="/host/dashboard.kh">대쉬보드(연습)</a><br>
 			</li>
 		</ul>
 	</div>
