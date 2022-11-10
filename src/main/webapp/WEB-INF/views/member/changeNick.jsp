@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>닉네임 변경</title>
 <style>
 .nick {
 	text-align: center;
