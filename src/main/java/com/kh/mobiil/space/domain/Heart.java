@@ -6,6 +6,7 @@ public class Heart {
 	private int spaceNo;
 	private String spaceName;
 	private String spaceFileRename;
+	private String spaceStatus;
 	
 	public String getMemberEmail() {
 		return memberEmail;
@@ -31,10 +32,17 @@ public class Heart {
 	public void setSpaceFileRename(String spaceFileRename) {
 		this.spaceFileRename = spaceFileRename;
 	}
+	public String getSpaceStatus() {
+		return spaceStatus;
+	}
+	public void setSpaceStatus(String spaceStatus) {
+		this.spaceStatus = spaceStatus;
+	}
+	
 	@Override
 	public String toString() {
 		return "Heart [memberEmail=" + memberEmail + ", spaceNo=" + spaceNo + ", spaceName=" + spaceName
-				+ ", spaceFileRename=" + spaceFileRename + "]";
+				+ ", spaceFileRename=" + spaceFileRename + ", spaceStatus=" + spaceStatus + "]";
 	}
 	
 	

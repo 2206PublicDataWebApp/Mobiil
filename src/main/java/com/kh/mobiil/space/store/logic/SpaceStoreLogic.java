@@ -12,6 +12,7 @@ import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.space.domain.Heart;
 import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
+import com.kh.mobiil.space.domain.Search;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
 import com.kh.mobiil.space.store.SpaceStore;
@@ -21,20 +22,20 @@ public class SpaceStoreLogic implements SpaceStore{
 
 	// 리스트 전체 게시물 개수
 	@Override
-	public int selectTotalCount(SqlSessionTemplate session, String searchArea, String searchValue) {
-		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("searchArea", searchArea);
-		paramMap.put("searchValue", searchValue);
-		int totalCount = session.selectOne("SpaceMapper.selectTotalCount", paramMap);
+	public int selectTotalCount(SqlSessionTemplate session, Search search) {
+		int totalCount = session.selectOne("SpaceMapper.selectTotalCount", search);
 		return totalCount;
 	}
 	
 	@Override
-	public int selectPriceCount(SqlSessionTemplate session, Integer minNum, Integer maxNum) {
-		HashMap<String, Integer> paramMap = new HashMap<String, Integer>();
-		paramMap.put("minNum", minNum);
-		paramMap.put("maxNum", maxNum);
-		int totalCount = session.selectOne("SpaceMapper.selectPriceCount", paramMap);
+	public int selectTotalCountReviewDesc(SqlSessionTemplate session, Search search) {
+		int totalCount = session.selectOne("SpaceMapper.selectTotalCountReviewDesc", search);
+		return totalCount;
+	}
+
+	@Override
+	public int selectPriceCount(SqlSessionTemplate session, Search search) {
+		int totalCount = session.selectOne("SpaceMapper.selectPriceCount", search);
 		return totalCount;
 	}
 	
@@ -68,26 +69,20 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
-	public List<Space> selectAllByValue(SqlSessionTemplate session, String searchArea, String searchValue, RowBounds rowBounds) {
-		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("searchArea", searchArea);
-		paramMap.put("searchValue", searchValue);
-		List<Space> sList = session.selectList("SpaceMapper.selectAllByValue", paramMap, rowBounds);
+	public List<Space> selectAllByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectAllByValue", search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> selectByArea(SqlSessionTemplate session, String searchArea, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.selectByArea", searchArea, rowBounds);
+	public List<Space> selectByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectByArea", search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> selectByPrice(SqlSessionTemplate session, Integer minNum, Integer maxNum, RowBounds rowBounds) {
-		HashMap<String, Integer> paramMap = new HashMap<String, Integer>();
-		paramMap.put("minNum", minNum);
-		paramMap.put("maxNum", maxNum);
-		List<Space> sList = session.selectList("SpaceMapper.selectByPrice", paramMap, rowBounds);
+	public List<Space> selectByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectByPrice", search, rowBounds);
 		return sList;
 	}
 
@@ -170,6 +165,18 @@ public class SpaceStoreLogic implements SpaceStore{
 	@Override
 	public List<Space> selectRivewDesc(SqlSessionTemplate session, RowBounds rowBounds) {
 		List<Space> sList = session.selectList("SpaceMapper.ReviewSortDesc", null, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectReviewDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.ReviewDescByArea", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectRivewDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.ReviewDescByValue", search, rowBounds);
 		return sList;
 	}
 

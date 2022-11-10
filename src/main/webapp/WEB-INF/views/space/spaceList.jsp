@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Mobbil Space</title>
+<title>Mobiil Space</title>
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <style type="text/css">
 
@@ -85,7 +85,7 @@ input[type=text]{
 		<td align='center'>
 		<ul class="pagination justify-content-center">
 			<c:if test="${paging.currentPage != 1 }">
-			<li class="page-item"><a class="page-link" href='/space/${urlVal }.kh?page=${paging.currentPage - 1 }&searchArea=${searchArea }&searchValue=${searchValue }&minNum=${maxNum}&maxNum=${maxNum}'>이전</a>
+			<li class="page-item"><a class="page-link" href='/space/${urlVal }.kh?page=${paging.currentPage - 1 }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.maxNum}&maxNum=${search.maxNum}'>이전</a>
 			</li>
 			</c:if>
 			<c:forEach var='p' begin="${paging.startNavi }" end="${paging.endNavi }">
@@ -93,13 +93,13 @@ input[type=text]{
 				<li class="page-item disabled"><a class="page-link" href='#' >${p }</a></li>
 				</c:if>
 				<c:if test="${paging.currentPage ne p}">
-				<li class="page-item"><a class="page-link"  href="/space/${urlVal }.kh?page=${p }&searchArea=${searchArea }&searchValue=${searchValue }&minNum=${minNum}&maxNum=${maxNum}">${p }</a>
+				<li class="page-item"><a class="page-link"  href="/space/${urlVal }.kh?page=${p }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}">${p }</a>
 				</li>
 				</c:if>
 			</c:forEach>
 			
 			<c:if test="${paging.currentPage <paging.maxPage }">
-			<li class="page-item"><a class="page-link"  href='/space/${urlVal }.kh?page=${paging.currentPage + 1 }&searchArea=${searchArea }&searchValue=${searchValue }&minNum=${minNum}&maxNum=${maxNum}'>다음</a>
+			<li class="page-item"><a class="page-link"  href='/space/${urlVal }.kh?page=${paging.currentPage + 1 }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}'>다음</a>
 			</li>
 			</c:if>
 		</ul>
@@ -125,7 +125,7 @@ input[type=text]{
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 	function heart(){
-		$.ajax({
+		/* $.ajax({
 			url: '/space/heartDesc.kh',
 			type: 'get',
 			data: {"page":"${p }"},
@@ -133,23 +133,24 @@ input[type=text]{
 				location.href='/space/heartDesc.kh?page=${p }&searchArea=${searchArea }&searchValue=${searchValue }&minNum=${minNum}&maxNum=${maxNum}';
 			}
 			
-		})
+		}) */
 	}
 	
 	function review(){
 		$.ajax({
 			url: '/space/reviewDesc.kh',
 			type: 'get',
-			data: {"page":"${p }"},
+			data: {"page":"${p }", "searchArea":"${search.searchValue }", "searchValue":"${search.searchValue }",
+					"minNum":"${minNum}", "maxNum":"${maxNum}"},
 			success: function(){
-				location.href='/space/reviewDesc.kh?page=${p }&searchArea=${searchArea }&searchValue=${searchValue }&minNum=${minNum}&maxNum=${maxNum}';
+				location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
 			}
 			
 		})
 	}
 	
 	function asc(){
-		var area = '${searchArea}';
+		/* var area = '${searchArea}';
 		var minNum = '${minNum}';
 		var maxNum = '${maxNum}';
 		if(area != '' && minNum == '' && maxNum == ''){
@@ -157,7 +158,7 @@ input[type=text]{
 		}
 		if(area == '' && minNum != '' || maxNum != ''){
 			location.href='/space/spaceArea.kh?searchArea='+area;	
-		}
+		} */
 		
 	}
 </script>

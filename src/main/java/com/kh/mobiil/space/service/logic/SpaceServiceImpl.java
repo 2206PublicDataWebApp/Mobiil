@@ -14,6 +14,7 @@ import com.kh.mobiil.space.domain.HostReply;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 import com.kh.mobiil.space.domain.SpaceImg;
+import com.kh.mobiil.space.domain.Search;
 import com.kh.mobiil.space.service.SpaceService;
 import com.kh.mobiil.space.store.SpaceStore;
 
@@ -33,14 +34,20 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int getTotalCount(String searchArea, String searchValue) {
-		int totalCount = sStore.selectTotalCount(session, searchArea, searchValue);
+	public int getTotalCount(Search search) {
+		int totalCount = sStore.selectTotalCount(session, search);
 		return totalCount;
 	}
 
 	@Override
-	public int getPriceCount(Integer minNum, Integer maxNum) {
-		int totalCount = sStore.selectPriceCount(session, minNum, maxNum);
+	public int getTotalCountReviewDesc(Search search) {
+		int totalCount = sStore.selectTotalCountReviewDesc(session, search);
+		return totalCount;
+	}
+
+	@Override
+	public int getPriceCount(Search search) {
+		int totalCount = sStore.selectPriceCount(session, search);
 		return totalCount;
 	}
 	
@@ -63,20 +70,20 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public List<Space> printAllByValue(String searchArea, String searchValue, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectAllByValue(session, searchArea, searchValue, rowBounds);
+	public List<Space> printAllByValue(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectAllByValue(session, search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> printByArea(String searchArea, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectByArea(session, searchArea, rowBounds);
+	public List<Space> printByArea(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectByArea(session, search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> printByPrice(Integer minNum, Integer maxNum, RowBounds rowBounds) {
-		List<Space> sList = sStore.selectByPrice(session, minNum, maxNum, rowBounds);
+	public List<Space> printByPrice(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectByPrice(session, search, rowBounds);
 		return sList;
 	}
 
@@ -155,6 +162,18 @@ public class SpaceServiceImpl implements SpaceService{
 	@Override
 	public List<Space> printRivewDesc(RowBounds rowBounds) {
 		List<Space> sList = sStore.selectRivewDesc(session, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printRivewDescByArea(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectReviewDescByArea(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printRivewDescByValue(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectRivewDescByValue(session, search, rowBounds);
 		return sList;
 	}
 
