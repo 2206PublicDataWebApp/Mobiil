@@ -10,4 +10,8 @@ public interface CalendarService {
 
 	public List<Event> printEvents();
 
+	public int deleteEvent(int id);
+
+	public int modifyEvent(Event event);
+
 }

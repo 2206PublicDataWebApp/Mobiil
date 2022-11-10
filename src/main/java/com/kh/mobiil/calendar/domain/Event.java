@@ -2,12 +2,21 @@ package com.kh.mobiil.calendar.domain;
 
 
 public class Event {
-
+	
+	private String id;
 	private String title;
 	private String start;
 	private String end;
 	private String backgroundColor;
 	private String borderColor;
+	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -40,12 +49,9 @@ public class Event {
 	}
 	@Override
 	public String toString() {
-		return "Event [title=" + title + ", start=" + start + ", end=" + end + ", backgroundColor=" + backgroundColor
-				+ ", borderColor=" + borderColor + "]";
+		return "Event [id=" + id + ", title=" + title + ", start=" + start + ", end=" + end + ", backgroundColor="
+				+ backgroundColor + ", borderColor=" + borderColor + "]";
 	}
 
-	
-	
-	
 		
 }

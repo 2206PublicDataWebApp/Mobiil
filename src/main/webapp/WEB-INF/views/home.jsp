@@ -12,59 +12,9 @@
 <html>
 <head>
 <style type="text/css">
-/* 일요일 날짜 빨간색 */
-.fc-day-sun a {
-  color: red;
-  text-decoration: none;
-}
-
-/* 토요일 날짜 파란색 */
-.fc-day-sat a {
-  color: blue;
-  text-decoration: none;
-}
 
 </style>
 
-<link href = "https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"  rel='stylesheet' >
-<script type="text/javascript" src = "https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-<script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-         initialView: 'dayGridMonth',
-       	 themeSystem: 'bootstrap4',
-         height: 650,
-         titleFormat: function (date) {
-             year = date.date.year;
-             month = date.date.month + 1;
-             return "Mobiil과 " + year + "년 " + month + "월";
-           },
-           events: [
-        	    { // this object will be "parsed" into an Event Object
-        	      title: '캘린더 해봄', // a property!
-        	      start: '2022-11-04', // a property!
-        	      end: '2022-11-04', // a property! ** see important note below about 'end' **/
-        	      backgroundColor:'red',
-        	      borderColor: 'red'
-        	    },
-        	    { // this object will be "parsed" into an Event Object
-          	      title: '캘린더 해봄??', // a property!
-          	      start: '2022-11-05', // a property!
-          	      end: '2022-11-06', // a property! ** see important note below about 'end' **/
-          	      backgroundColor:'blue',
-          	      borderColor: 'blue'
-          	    },
-        	  ]
-        });
-        calendar.render();
-
-
-      });
-     //   calendar.addEvent( event [ title: '캘린더',  start: '2022-11-08' ,   end: '2022-11-04' ]);
-
-    </script>
 
 <title>Mobiil</title>
 </head>
@@ -93,7 +43,6 @@
   
 
 </div>
-
 
 <section class="product-category section" >
 	<div class="container">
@@ -131,7 +80,6 @@
 				</div>
 			</div>
 			
-			  <div id='calendar' class="col-md-12" ></div>
 		</div>
 	</div>
 </section>

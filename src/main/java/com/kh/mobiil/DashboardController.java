@@ -1,9 +1,5 @@
 package com.kh.mobiil;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -46,8 +42,8 @@ public class DashboardController {
 	private SpaceService sService;
 	
 	
-	/** 관리자페이지
-	 * 
+	/** 
+	 * 관리자페이지
 	 * @param mv
 	 * @return
 	 */
@@ -57,8 +53,8 @@ public class DashboardController {
 		return mv;
 	}
 	
-	/** 공간 전체 지도
-	 * 
+	/** 
+	 * 관리자페이지
 	 * @return
 	 */
 	@ResponseBody
@@ -120,14 +116,12 @@ public class DashboardController {
 	@ResponseBody
 	@RequestMapping(value="/admin/dashboard/partner.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String drawPartnerChart() {
-		
 		// 개인 회원수
 		int individual = mService.getMemberCount();
 		// 승인 파트너 회원수
 		int approved = pService.getApprovedPartnerCount();
 		// 미승인 파트너 수
 		int notApproved = pService.getNotApprovedPartnerCount();
-
 		// 파트너 등록도 안한사람
 		int notPartner = individual - approved - notApproved;
 		
@@ -153,14 +147,12 @@ public class DashboardController {
 			JSONObject roomAmount = new JSONObject();
 			JSONObject individualAmount = new JSONObject();
 			JSONObject hostAmount = new JSONObject();
-
 			
 			// 하루에 생긴 챗룸 수, 일반 가입자, 호스트 수
 			for(int dayBefore = 6; dayBefore > -1; dayBefore--) { // 6일전 5일전 4일전 3일전 2일전 1일전 0일전
 				int room =  cService.getDailyNewRoom(dayBefore);
 				int individual = mService.getDailyNewMember(dayBefore);
 				int host = mService.getDailyNewHost(dayBefore);
-				
 				// 해당 obj에 넣기
 				roomAmount.put("before"+dayBefore, room);
 				individualAmount.put("before"+dayBefore, individual);
@@ -170,7 +162,6 @@ public class DashboardController {
 			arr.add(roomAmount);
 			arr.add(individualAmount);
 			arr.add(hostAmount);
-			
 			// 막대차트 그리러가기
 			return gson.toJson(arr);
 		}

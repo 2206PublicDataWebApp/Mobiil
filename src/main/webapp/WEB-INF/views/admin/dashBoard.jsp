@@ -83,11 +83,11 @@ function printAllSpace() {
 				     	});
 					}; 
 					var infowindow = new kakao.maps.InfoWindow({
-			     		map : map,
-				     	position: markerPosition,
+				     		map : map,
+					     	position: markerPosition,
 			    		});
-			     		infowindow.open(map, marker); // 인포윈도 꽂기
-						infowindow.setContent(infoContents);
+				     		infowindow.open(map, marker); // 인포윈도 꽂기
+							infowindow.setContent(infoContents);
 					})   
 				}
 			},

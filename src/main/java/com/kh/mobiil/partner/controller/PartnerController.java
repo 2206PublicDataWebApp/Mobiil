@@ -61,7 +61,6 @@ public class PartnerController {
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
-			System.out.println(totalCount);
 			//-------------------- 리스트 출력
 			List<Partner> pList = pService.printAllPartner(sp,rowBounds); // 검색 조건, rowBounds(끊어서 가져오게)
 			
@@ -279,13 +278,11 @@ public class PartnerController {
 	@RequestMapping(value = "/partner/modify.kh", method = RequestMethod.GET)
 	public ModelAndView partnerModifyView(ModelAndView mv, @RequestParam("partnerNo") int partnerNo) {
 		Partner myPartnerInfo = pService.findByPartnerNo(partnerNo);
-	
 		// pOne 넘겨주고 정보 없을 시 처리는 jsp에서
 		mv.addObject("myPartnerInfo", myPartnerInfo);
 		mv.setViewName("/partner/partnerModify");
 		return mv;
 	}
-
 	
 	/**
 	 *  파트너 내용 수정
@@ -317,9 +314,6 @@ public class PartnerController {
 		mv.setViewName("partner/partnerImageRegister");
 		return mv;
 	}
-	
-	
-	
 	
 	/** 파트너 이미지 업데이트
 	 * 
@@ -378,9 +372,7 @@ public class PartnerController {
 	@ResponseBody
 	@RequestMapping(value="/admin/approvePartner.kh", method = RequestMethod.GET)
 	public String approvePartner(@RequestParam("partnerNo") int partnerNo) {
-		
 		int result = pService.approvePartner(partnerNo);
-		
 		if(result > 0) {
 			return "success";
 		}else {
@@ -397,9 +389,7 @@ public class PartnerController {
 	@ResponseBody
 	@RequestMapping(value="/partner/deletePartner.kh", method = RequestMethod.GET)
 	public String deletePartner(@RequestParam("partnerNo") int partnerNo) {
-		
 		int result = pService.deletePartner(partnerNo);
-		
 		if(result > 0) {
 			return "success";
 		}else {

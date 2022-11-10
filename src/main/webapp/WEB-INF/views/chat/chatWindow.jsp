@@ -74,26 +74,20 @@ color:black;
 }
 </style>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>채팅 리스트</title>
-
-
-
 <meta charset="UTF-8">
 </head>
 
-
 <body>
-
 <span id="header" align='center'><h1>myChat</h1></span>
 <div id='container'>
 <div id = "list" >
-	<table class= ''>
+	<table>
 		<tr>
 		<td>
 			<ul>
 <c:forEach items="${cList }" var="chatRoom" >
-
 		<c:if test="${chatRoom.roomStatus eq 'Y' }">
 			<c:if test="${!empty loginUser.memberNick }"> 
 				<c:if test="${chatRoom.createUser eq loginUser.memberNick }">
@@ -137,8 +131,6 @@ color:black;
 						</a>
 				</c:if>
 			</c:if>
-			
-			
 		</c:if>
 		
 		<c:if test="${(chatRoom.roomStatus eq 'N')}">
@@ -194,7 +186,6 @@ color:black;
 	location.reload();
 	},5*60*1000); // 5분에 한번 리로드	
 
-	
  	function showProfile(memberNick) {
 		if(memberNick != "관리자"){
 			$.ajax({
@@ -213,7 +204,5 @@ color:black;
 		}
 	}	
 </script>
-
-
 </body>
 </html>

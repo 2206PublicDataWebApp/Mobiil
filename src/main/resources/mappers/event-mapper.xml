@@ -6,6 +6,7 @@
 <mapper namespace="eventMapper">
 
 <resultMap type="Event" id="EventResultMap">
+  		<id 	property="id" 					column="eventId"/>
   		<result property="title" 				column="title"/>
   		<result property="start" 				column="eventStart"/>
   		<result property="end" 					column="eventEnd"/>
@@ -15,6 +16,7 @@
 
 	<insert id="insertEvent">
 		INSERT INTO EVENT_TBL VALUES(
+		SEQ_EVENTNO.NEXTVAL,
 		#{title},TO_CHAR(TO_DATE(#{start}), 'YYYY-MM-dd'),TO_CHAR(TO_DATE(#{end}) + 1D, 'YYYY-MM-dd')
 		,#{backgroundColor} , #{borderColor}
 		) 
@@ -24,5 +26,17 @@
 	<select id="selectEvents" resultMap="EventResultMap">
 		SELECT * FROM EVENT_TBL
 	</select>
+	
+	<delete id="deleteEvent">
+		delete from EVENT_TBL
+		where eventId = #{id}
+	</delete>
+	
+	<update id="updateEvent">
+		UPDATE EVENT_TBL
+		SET   title = #{title},eventStart= TO_CHAR(TO_DATE(#{start}), 'YYYY-MM-dd'), eventEnd = TO_CHAR(TO_DATE(#{end}) + 1D, 'YYYY-MM-dd'), 
+				backgroundColor = #{backgroundColor}, borderColor = #{borderColor}
+		WHERE eventId = #{id}
+	</update>
 
 </mapper>

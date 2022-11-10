@@ -1,11 +1,7 @@
 package com.kh.mobiil.chat.controller;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.validator.Msg;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +18,9 @@ import com.kh.mobiil.chat.domain.Chat;
 import com.kh.mobiil.chat.domain.ChatRoom;
 import com.kh.mobiil.chat.domain.ChatSearchResult;
 import com.kh.mobiil.chat.service.ChatService;
-import com.kh.mobiil.mail.controller.MailController;
-import com.kh.mobiil.mail.domain.MailInfo;
-import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
 import com.kh.mobiil.partner.domain.Partner;
 import com.kh.mobiil.partner.service.PartnerService;
-import com.kh.mobiil.space.domain.Space;
-import com.kh.mobiil.space.service.SpaceService;
 
 @Controller
 public class ChatController {
@@ -74,14 +65,13 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value="/chat/getProfile", method = RequestMethod.GET)
 	public String getProfile(@RequestParam("memberNick") String memberNick) {
-		int memberChk  = mService.checkDupNick(memberNick); // 이 사람이 멤버에 있는지
-		int hostChk =  mService.getCountHostNick(memberNick);    // 이 사람이 호스트에 있는지
-		Partner pOne = pService.printOnePartner(memberNick); 
+		int memberChk  = mService.checkDupNick(memberNick); 	// 이 사람이 멤버에 있는지
+		int hostChk =  mService.getCountHostNick(memberNick);   // 이 사람이 호스트에 있는지
+		Partner pOne = pService.printOnePartner(memberNick); 	// 이사람이 파트너인지
 		
 		if(hostChk > 0) {
 			return "noPartner";
 		}
-
 		if(memberChk > 0 && pOne != null ) {
 			return pOne.getProfileRename();
 		}else if(pOne == null) {
@@ -90,8 +80,6 @@ public class ChatController {
 			return "noPartner";
 		}
 	}
-	
-	
 	
 	/** 메뉴바 언리드카운트
 	 * 
@@ -134,9 +122,7 @@ public class ChatController {
 		mv.addObject("roomNo", roomNo);
 		mv.setViewName("/chat/chatLog");
 		return mv;
-		
 	}
-	
 	
 	/**
 	 *  채팅방 만들기
@@ -146,11 +132,10 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value="/chat/createChatRoom.kh", method = RequestMethod.GET, produces = "text/plain;charset=utf-8" )
 	public String createChatRoom(@ModelAttribute ChatRoom roomInfo) {
-		int memberChk  = mService.checkDupNick(roomInfo.getCreateUser()); // 이 사람이 멤버에 있는지
-		Partner partner = pService.printOnePartner(roomInfo.getCreateUser()); // 이 사람이 파트너에 등록했는지
-		int hostChk =  mService.getCountHostNick(roomInfo.getCreateUser());    // 이 사람이 호스트에 있는지
+		int memberChk  = mService.checkDupNick(roomInfo.getCreateUser()); 		// 이 사람이 멤버에 있는지
+		Partner partner = pService.printOnePartner(roomInfo.getCreateUser()); 	// 이 사람이 파트너에 등록했는지
+		int hostChk =  mService.getCountHostNick(roomInfo.getCreateUser());    	// 이 사람이 호스트에 있는지
 		int withHost =  mService.getCountHostNick(roomInfo.getWithUser()); 
-		
 		
 		if(memberChk > 0 || hostChk > 0) {// 내가 멤버혹은 호스트
 				if(roomInfo.getWithUser().equals("관리자") || withHost > 0 ) { // 채팅하고싶은 사람이 관리자 혹은 호스트다
@@ -166,7 +151,7 @@ public class ChatController {
 						}
 					}	
 				}else { // 채팅하고싶은사람이 일반유저다
-					if(partner == null ) { // 근데 내가 파트너 등록을 안했다
+					if(partner == null) { // 근데 내가 파트너 등록을 안했다
 						return "needRegist"; // 파트너로 등록해주세요
 					}else if(partner.getApproval().equals("N")){ // 파트너 등록은 했는데 승인이 안됏다
 						return	"needApproval"; // 파트너 승인이 필요합니다
@@ -212,15 +197,12 @@ public class ChatController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/chat/chatLog.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8" )
-	public String chatLog(@RequestParam("roomNo") int roomNo,
-							@RequestParam("memberNick") String memberNick) {
+	public String chatLog(@RequestParam("roomNo") int roomNo, @RequestParam("memberNick") String memberNick) {
 		List<Chat> cLog = cService.chatLog(roomNo); 
 		int result = cService.updateChatRead(roomNo, memberNick); // 읽은거
 		Gson gson = new GsonBuilder().setDateFormat("MM-dd HH:mm:ss").create(); // gson빌더로 gson 만드는데 date 포맷 지정
 		return gson.toJson(cLog);
 	}
-
-
 
 	/**
 	 * 최신 하나만 조회하기

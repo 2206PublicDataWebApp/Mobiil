@@ -97,8 +97,6 @@ public class BannerController {
 			,@RequestParam(value = "uploadFile", required = false) 
 							MultipartFile uploadFile
 			, HttpServletRequest request) { // resources 경로 가져오려고
-			System.out.println(banner.toString());
-			
 			String root = request.getSession().getServletContext().getRealPath("resources");
 			String savePath = root + "\\images\\slider"; // 저장경로 지정
 			String bannerFileName = uploadFile.getOriginalFilename();

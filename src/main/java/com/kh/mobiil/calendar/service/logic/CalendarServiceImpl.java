@@ -33,4 +33,18 @@ public class CalendarServiceImpl implements CalendarService{
 		return eList;
 	}
 
+
+	@Override
+	public int deleteEvent(int id) {
+		int result = cStore.deleteEvent(id, session);
+		return result;
+	}
+
+
+	@Override
+	public int modifyEvent(Event event) {
+		int result = cStore.updateEvent(event, session);
+		return result;
+	}
+
 }

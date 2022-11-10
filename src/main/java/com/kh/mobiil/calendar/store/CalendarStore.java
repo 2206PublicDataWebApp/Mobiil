@@ -12,4 +12,8 @@ public interface CalendarStore {
 
 	public List<Event> selectEvents(SqlSessionTemplate session);
 
+	public int deleteEvent(int id, SqlSessionTemplate session);
+
+	public int updateEvent(Event event, SqlSessionTemplate session);
+
 }

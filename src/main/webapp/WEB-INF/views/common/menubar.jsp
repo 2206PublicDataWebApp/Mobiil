@@ -14,7 +14,11 @@
  	
 }
 #support-imge{
- 	font-size: 100px
+ 	font-size: 70px
+}
+
+#calendar-img{
+ 	font-size: 70px
 }
 
 #admin-support{
@@ -70,6 +74,7 @@
   
 <!--    구글 아이콘 -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
 <!-- Start Top Header Bar -->
@@ -91,7 +96,6 @@
 				</div>
 			</div>
 			<div class="col-md-4 col-xs-12 col-sm-4">
-				<!-- 상단 바 영역 나중에 cif로 보이고 안보이고 처리 -->
 				<c:if test="${sessionScope.loginUser eq null and sessionScope.loginHost eq null }">			
 					<ul class="top-menu text-right list-inline">
 						<li>
@@ -103,6 +107,7 @@
 				<!-- 로그인 유저 -->
 				<ul class="top-menu text-right list-inline">
 				<c:if test="${not empty loginUser and loginUser.mStatus eq 'Y' and loginUser.memberNick ne '관리자' }"> 
+						
 						<li>
 							<a href= "#" onclick="chatWindow('${loginUser.memberNick }')" id='myChat'></a>
 						</li>
@@ -123,6 +128,7 @@
 						<!-- 관리자 문의 -->
 						<div id = "support">
 							<a href = "#" onclick="openChatRoom('${loginUser.memberNick}', '관리자');">	<span id="support-imge" class="material-symbols-outlined">contact_support</span></a>
+							<br><a href = "#"  onclick="openCalendar();"><span id="calendar-img" class="material-symbols-outlined">event</span></a>
 						</div>
 				</c:if>
 				<c:if test="${not empty loginUser and loginUser.mStatus eq 'N' and loginUser.memberNick ne '관리자' }"> 
@@ -149,6 +155,7 @@
 							<!-- 관리자 문의 -->
 						<div id = "support">
 							<a href = "#" onclick="openChatRoom('${loginHost.memberNick}', '관리자');">	<span id="support-imge" class="material-symbols-outlined">contact_support</span></a>
+							<br><a href = "#"  onclick="openCalendar();"><span id="calendar-img" class="material-symbols-outlined">event</span></a>
 						</div>
 				</c:if>
 				<!-- 로그인 관리자 -->
@@ -183,15 +190,16 @@
 					</li>
 					<li>
 					<c:if test="${not empty loginUser or not empty loginHost  }">
-					<a href="/partner/list.kh">PARTNER</a>
+						<a href="/partner/list.kh">PARTNER</a>
 					</c:if>
 					<c:if test="${empty loginUser and empty loginHost  }">
-					<a href="#" onclick="showAlert()">PARTNER</a>
+						<a href="#" onclick="showAlert()">PARTNER</a>
 					</c:if>
 					</li>
 					<li>
 						<a href="/space/spaceList.kh">Space</a>
 					</li>		
+					
 				</ul>
 			</div>			
 		</div><!-- / .container -->
@@ -263,6 +271,10 @@ function openChatRoom(createUser, withUser) {
 				},
 		})
 	}
+}
+
+function openCalendar() {
+	window.open('/calendar.kh', 'window', 'width=900, height=700, menubar=no, status=no, toolbar=no');
 }
 
 

@@ -22,6 +22,18 @@ public class CalendarStoreLogic implements CalendarStore {
 		List<Event> eList = session.selectList("eventMapper.selectEvents");
 		return eList;
 	}
+
+	@Override
+	public int deleteEvent(int id, SqlSessionTemplate session) {
+		int result = session.delete("eventMapper.deleteEvent", id);
+		return result;
+	}
+
+	@Override
+	public int updateEvent(Event event, SqlSessionTemplate session) {
+		int result = session.update("eventMapper.updateEvent", event);
+		return result;
+	}
 	
 
 }
