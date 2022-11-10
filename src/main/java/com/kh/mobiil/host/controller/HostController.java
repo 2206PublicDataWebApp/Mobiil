@@ -324,6 +324,8 @@ public class HostController {
 				mv.addObject("endNavi", endNavi);
 				mv.addObject("rList", rList);
 				mv.setViewName("host/reservationList");
+			}else {
+				mv.setViewName("host/reservationList");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString());
@@ -524,6 +526,8 @@ public class HostController {
 				mv.addObject("startNavi", startNavi);
 				mv.addObject("endNavi", endNavi);
 				mv.addObject("sList", sList);
+				mv.setViewName("host/spaceList_host");
+			}else {
 				mv.setViewName("host/spaceList_host");
 			}
 		} catch (Exception e) {

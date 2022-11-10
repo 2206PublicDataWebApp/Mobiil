@@ -30,6 +30,12 @@
 			padding-left : 20px;
 			font-size: 20px;
 		}
+		
+		a:hover {
+			  text-decoration: underline;
+			  font-size:23px; 
+			  color : #ec6e6e;
+			}
 	</style>
 </head>
 <body>
@@ -38,7 +44,7 @@
 		<br>
 		<ul>
 			<li>
-				<h3>호스트 페이지</h3>
+				<h3>호스트 페이지</h3><br>
 			</li>
 			<li>
 				<a class="function" href="/host/hostInfo.mobiil">정보 조회</a><br><br>
