@@ -47,14 +47,10 @@
   <!-- theme meta -->
   <meta name="theme-name" content="aviato" />
   
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/resources/images/mobiil_favicon.png" />
-  
   <!-- Themefisher Icon font -->
   <link rel="stylesheet" href="/resources/plugins/themefisher-font/style.css">
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="/resources/plugins/bootstrap/css/bootstrap.min.css">
-<!--     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"> -->
   
   <!-- Animate css -->
   <link rel="stylesheet" href="/resources/plugins/animate/animate.css">
