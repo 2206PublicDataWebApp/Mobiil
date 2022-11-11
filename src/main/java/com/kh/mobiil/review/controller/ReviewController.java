@@ -44,48 +44,46 @@ public class ReviewController {
 	}
 	
 	// 리뷰 등록
-	@RequestMapping(value="/review/register.kh", method=RequestMethod.POST)
-	public ModelAndView registReview(ModelAndView mv, @ModelAttribute Review review,
-			@ModelAttribute Reservation reservation,
-			@RequestParam(value="uploadFile", required=false) List<MultipartFile> uploadFile, 
-			MultipartHttpServletRequest mRequest, HttpServletRequest request) {
-		try {
-			int result = rService.registerReview(review);
-			int result2 = rService.updateRevStatus(reservation);
+		@RequestMapping(value="/review/register.kh", method=RequestMethod.POST)
+		public ModelAndView registReview(ModelAndView mv, @ModelAttribute Review review,
+				@ModelAttribute Reservation reservation,
+				@RequestParam(value="uploadFile", required=false) List<MultipartFile> uploadFile, 
+				MultipartHttpServletRequest mRequest, HttpServletRequest request) {
+			try {
+				int result = rService.registerReview(review);
+				int result2 = rService.updateRevStatus(reservation);
 
-			int imgNo = 1;
-			ReviewImg reviewImg = null;
-			for(MultipartFile mf : uploadFile) {
-				String reviewFileName = mf.getOriginalFilename();
-				if(!reviewFileName.equals("")) {
-					String root = request.getSession().getServletContext().getRealPath("resources");
-					String savePath = root + "\\reviewFiles";
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					
-					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + imgNo + "."+ reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
-					
-					File file = new File(savePath);
-					if(!file.exists()) { 
-						file.mkdir();
+				ReviewImg reviewImg = null;
+				for(MultipartFile mf : uploadFile) {
+					String reviewFileName = mf.getOriginalFilename();
+					if(!reviewFileName.equals("")) {
+						String root = request.getSession().getServletContext().getRealPath("resources");
+						String savePath = root + "\\reviewFiles";
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmSS");
+						
+						String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + "."+ reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+						
+						File file = new File(savePath);
+						if(!file.exists()) { 
+							file.mkdir();
+						}
+						mf.transferTo(new File(savePath + "\\" + reviewFileRename));
+						String reviewFilePath = savePath + "\\" + reviewFileRename;
+						reviewImg = new ReviewImg();
+						reviewImg.setReviewFileName(reviewFileName);
+						reviewImg.setReviewFileRename(reviewFileRename);
+						reviewImg.setReviewFilePath(reviewFilePath);
 					}
-					mf.transferTo(new File(savePath + "\\" + reviewFileRename));
-					String reviewFilePath = savePath + "\\" + reviewFileRename;
-					reviewImg = new ReviewImg();
-					reviewImg.setReviewFileName(reviewFileName);
-					reviewImg.setReviewFileRename(reviewFileRename);
-					reviewImg.setReviewFilePath(reviewFilePath);
-					imgNo += 1;
+					int result3 = rService.registerReviewImg(reviewImg);
+					mv.setViewName("redirect:/payment/list.kh");
 				}
-				int result3 = rService.registerReviewImg(reviewImg);
-				mv.setViewName("redirect:/payment/list.kh");
+			}catch (Exception e) {
+				e.printStackTrace();
+				mv.addObject("msg", e.getMessage());
+				mv.setViewName("common/errorPage");
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			mv.addObject("msg", e.getMessage());
-			mv.setViewName("common/errorPage");
+			return mv;
 		}
-		return mv;
-	}
 	
 	// 리뷰 상세조회
 	@RequestMapping(value="/review/detail.kh", method=RequestMethod.GET)
@@ -156,8 +154,8 @@ public class ReviewController {
 					if(file.exists()) {
 						file.delete();
 					}
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + num + "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmSS");
+					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis()))+ "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
 					file = new File(savedPath);
 					String reviewFilePath = savedPath + "\\" + reviewFileRename;
 					mf.transferTo(new File(reviewFilePath));
@@ -178,6 +176,7 @@ public class ReviewController {
 			}
 			return mv;
 		}
+
 
 	// 리뷰 삭제
 	@RequestMapping(value="/review/remove.kh", method = RequestMethod.GET)

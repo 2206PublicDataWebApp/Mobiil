@@ -17,7 +17,7 @@
 }
 
 .tb {
-	width: 50%;
+	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 	border : 1px solid;
@@ -62,29 +62,25 @@
             <span onclick="location.href='/partner/myPartnerInfo.kh?memberEmail=${loginUser.memberEmail}'">내 파트너 정보</span>
         </div>
 		<br><br><br>
-		<table border="1" class="tb">
+		<table border="0" class="tb">
 			<tr>
 				<th width="80" class="th" rowspan="5">예약 정보</th>
 				<td width="80" class="td">공간명</td>
 				<td width="200" class="data"><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>[ ${reservation.spaceName} ]</b></a></td>
 			</tr>
 			<tr>
-				<!-- <td></td> -->
 				<td class="td">날짜</td>
 				<td class="data">${reservation.reservationDate}</td>
 			</tr>
 			<tr>
-				<!-- <td></td> -->
 				<td class="td">시간</td>
 				<td class="data">${reservation.revStart}시 ~ ${reservation.revEnd}시</td>
 			</tr>
 			<tr>
-				<!-- <td></td> -->
 				<td class="td">사용료</td>
 				<td class="data">${reservation.price}원</td>
 			</tr>
 			<tr id="border">
-				<!-- <td></td> -->
 				<td class="td">예약번호</td>
 				<td class="data">${reservation.reservationNo}</td>
 			</tr>
@@ -94,22 +90,15 @@
 				<td class="data">${reservation.memberName}</td>
 			</tr>
 			<tr id="border">
-				<!-- <td></td> -->
 				<td class="td">연락처</td>
 				<td class="data">${reservation.memberPhone}</td>
 			</tr>
 			<tr>
-				<th class="th" rowspan="3">결제 정보</th>
-				<td class="td">결제 방법</td>
-				<td class="data"></td>
-			</tr>
-			<tr>
-				<!-- <td></td> -->
+				<th class="th" rowspan="2">결제 정보</th>
 				<td class="td">결제 금액</td>
 				<td class="data">${reservation.price}원</td>
 			</tr>
 			<tr>
-				<!-- <td></td> -->
 				<td class="td">결제 일시</td>
 				<td class="data">${reservation.paymentDate}</td>
 			</tr>

@@ -41,8 +41,7 @@
             <span onclick="location.href='/partner/myPartnerInfo.kh?memberEmail=${loginUser.memberEmail}'">내 파트너 정보</span>
 		</div>      
         <br><br><br>
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-	<table align="center" border="1" width="" class="table table-striped table-hover">
+	<table align="center" border="0" width="" class="table table-striped table-hover">
 		<tr>
 			<th class="th" width="100">번호</th>
 			<th class="th" width="250">예약번호</th>

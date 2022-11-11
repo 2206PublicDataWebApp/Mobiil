@@ -49,6 +49,15 @@
 	#name, #email {
 		 background-color: lightgray;
 	}
+.nick_ok{
+color:#008000;
+display: none;
+}
+
+.nick_already{
+color:#6A82FB; 
+display: none;
+}
     </style>
 </head>
 <body>
@@ -71,7 +80,10 @@
                 <input type="hidden" class="input" id="nick" name="originNick" value="${member.memberNick }" ><br>
                 <label>이름</label><input type="text" class="input" id="name" name="memberName" value="${member.memberName }" readonly><br>
                 <label>이메일</label><input type="email" class="input" id="email" name="memberEmail" value="${member.memberEmail }" readonly><br>
-                <label>닉네임</label><input type="text" class="input" id="nick" name="memberNick" value="${member.memberNick }" ><br>
+                <label>닉네임</label><input type="text" class="input" id="nick2" name="memberNick" value="${member.memberNick }" oninput = "checkNick()"><br>
+				<span class="nick_ok">사용 가능한 닉네임이에요 :)</span>
+				<span class="nick_already">이미 사용중인 닉네임이에요 :(</span>
+                <br>
                 <label>비밀번호</label><input type="password" class="input" id="pwd" name="memberPwd" value="${member.memberPwd }" ><br>
                 <label>비밀번호 확인</label><input type="password" class="input" id="pwd2"  value="${member.memberPwd }" ><br>
                 <label>전화번호</label><input type="text" class="input" id="phone" name="memberPhone" value="${member.memberPhone }" oninput="hypenTel(this)" maxlength="13"><br>
@@ -82,7 +94,7 @@
             </form>
         </div>
     </div>
-    
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script>
     
     function removeMember() {
@@ -101,7 +113,7 @@
     	if(confirm("닉네임 변경시 기존 채팅과 파트너 정보가 리셋됩니다. 수정하시겠습니까?")){
         var name = document.getElementById("name");
         var email = document.getElementById("email");
-        var nick = document.getElementById("nick");
+        var nick = document.getElementById("nick2");
         var pwd = document.getElementById("pwd");
         var pwd2 = document.getElementById("pwd2");
         var phone = document.getElementById("phone");
@@ -163,6 +175,29 @@
         document.mypage_form.submit();
     	}
     }
+    
+    function checkNick(){
+        var nickValue = $('#nick2').val();
+        
+        $.ajax({
+        	url : "/member/checkNick.kh",
+            data: { "memberNick" : nickValue },
+            type: "get",
+            success : function(result){
+                if(result == 0){
+                    $('.nick_ok').css("display","inline-block"); 
+                    $('.nick_already').css("display", "none");
+                } else { 
+                    $('.nick_already').css("display","inline-block");
+                    $('.nick_ok').css("display", "none");
+                }
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+      };
+
   </script>
   
   
