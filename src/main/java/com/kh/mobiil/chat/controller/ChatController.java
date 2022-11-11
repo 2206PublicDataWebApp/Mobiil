@@ -132,6 +132,7 @@ public class ChatController {
 	@ResponseBody
 	@RequestMapping(value="/chat/createChatRoom.kh", method = RequestMethod.GET, produces = "text/plain;charset=utf-8" )
 	public String createChatRoom(@ModelAttribute ChatRoom roomInfo) {
+		
 		int memberChk  = mService.checkDupNick(roomInfo.getCreateUser()); 		// 이 사람이 멤버에 있는지
 		Partner partner = pService.printOnePartner(roomInfo.getCreateUser()); 	// 이 사람이 파트너에 등록했는지
 		int hostChk =  mService.getCountHostNick(roomInfo.getCreateUser());    	// 이 사람이 호스트에 있는지

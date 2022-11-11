@@ -67,7 +67,7 @@
 			</td>
 			</tr>
 			<tr>
-			<td  align='center' required="required">>내용</td>
+			<td  align='center' required="required">내용</td>
 			<td colspan = '3'> <textarea class="summernote" name="contents"></textarea>  </td>
 			</tr>
 			<tr>
@@ -109,22 +109,32 @@ $('.summernote').summernote({
 
 function pSubmit(memberEmail) {
 	if(confirm("저장하시겠습니까?")){
+		if(partnerForm.title.value=="") { // document 를 생략해도 됨
+	        alert("제목을 입력하세요!");
+	        partnerForm.title.focus();
+	    	return false;
+	    }else if(partnerForm.contents.value==""){
+	        alert("내용을 입력하세요!");
+	        partnerForm.contents.focus();
+	        return false;
+	    }else if(partnerForm.uploadFile.value==""){
+	        alert("이미지를 등록하세요!");
+	        partnerForm.contents.focus();
+	        return false;
+	    }else if(partnerForm.instrument.value==""){
+	        alert("악기를 등록하세요!");
+	        partnerForm.contents.focus();
+	        return false;
+	    }else if(partnerForm.area.value==""){
+	        alert("지역을 등록하세요!");
+	        partnerForm.contents.focus();
+	        return false;
+	    }
 		alert("심사 후 리스트에 노출됩니다.");
 		return partnerForm.submit();
 	}
 }
-function formCheck() { // null 체크
-	if(partnerForm.title.value=="") { // document 를 생략해도 됨
-        alert("제목을 입력하세요!");
-        partnerForm.title.focus();
-    	return false;
-    }else if(partnerForm.title.value==""){
-        alert("내용을 입력하세요");
-        partnerForm.title.focus();
-        return false;
-    }
-	return partnerForm.submit();
- }
+
 
 </script>
 
