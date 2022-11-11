@@ -140,8 +140,8 @@ input[type=text]{
 		$.ajax({
 			url: '/space/reviewDesc.kh',
 			type: 'get',
-			data: {"page":"${p }", "searchArea":"${search.searchValue }", "searchValue":"${search.searchValue }",
-					"minNum":"${minNum}", "maxNum":"${maxNum}"},
+			data: {"page":"${p }", "searchArea":"${search.searchArea }", "searchValue":"${search.searchValue }"
+					, "minNum":"${search.minNum}", "maxNum":"${search.maxNum}"},
 			success: function(){
 				location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
 			}
