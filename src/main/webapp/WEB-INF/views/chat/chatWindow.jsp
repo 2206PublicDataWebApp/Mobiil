@@ -184,7 +184,7 @@ color:black;
 <script type="text/javascript">
 	setTimeout(function(){
 	location.reload();
-	},5*60*1000); // 5분에 한번 리로드	
+	},5*60*1000); // 5분 두 한번 리로드	
 
  	function showProfile(memberNick) {
 		if(memberNick != "관리자"){
