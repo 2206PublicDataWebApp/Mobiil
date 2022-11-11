@@ -68,13 +68,13 @@
 				<a class="function" href="/host/spaceList.mobiil">공간 리스트</a><br><br>
 			</li>
 			<li>
-				<a class="function" href="/host/dashboard.kh">대쉬보드(연습)</a><br>
+				<a class="function" href="/host/dashboard.kh">대시보드</a><br>
 			</li>
 		</ul>
 	</div>
 	<script>
 		function reservationCheck() {
-			var monthValue = 10;
+			var monthValue = 11;
 			location.href="/host/reservationCheck.mobiil?monthValue="+monthValue;
 		}
 	

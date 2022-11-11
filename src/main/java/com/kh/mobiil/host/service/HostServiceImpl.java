@@ -180,4 +180,22 @@ public class HostServiceImpl implements HostService{
 		return result;
 	}
 
+	@Override
+	public List<Reservation> getRegervationCountByMonth(String hostEmail) {
+		List<Reservation> result = hStore.getRegervationCountByMonth(session, hostEmail);
+		return result;
+	}
+
+	@Override
+	public List<Space> getSpaceCountByMonth(String hostEmail) {
+		List<Space> result = hStore.getSpaceCountByMonth(session, hostEmail);
+		return result;
+	}
+
+	@Override
+	public List<Reservation> getProfitByMonth(String hostEmail) {
+		List<Reservation> result = hStore.getProfitByMonth(session, hostEmail);
+		return result;
+	}
+
 }
