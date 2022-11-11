@@ -192,189 +192,6 @@ public class MemberController {
 	}
 	
 	/**
-	 * 카카오 로그인
-	 * @param code
-	 * @param session 
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value="/member/kakaoLogin.kh", method = RequestMethod.GET)
-	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Exception {
-		System.out.println("#########" + code);
-		
-		String access_Token = mService.getAccessToken(code);
-		System.out.println("###access_Token#### : " + access_Token);
-		
-		Member loginUser = mService.getLoginUser(access_Token);
-
-		session.setAttribute("loginUser", loginUser);
-		session.setAttribute("memberEmail", loginUser.getMemberEmail());
-		session.setAttribute("memberNick", loginUser.getMemberNick());
-
-		return "redirect:/";
-	}
-	
-	
-	/**
-	 * 마이페이지(My 정보 화면)
-	 * 
-	 * @param mv
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/member/myInfo.kh", method = RequestMethod.GET)
-	public ModelAndView showMyPage(ModelAndView mv, HttpServletRequest request) {
-		try {
-			HttpSession session = request.getSession();
-			Member member = (Member)session.getAttribute("loginUser");
-			String memberEmail = member.getMemberEmail();
-			Member mOne = mService.printOneByEmail(memberEmail);
-			
-			mv.addObject("member", mOne);
-			mv.setViewName("member/myPage");
-			
-		} catch (Exception e) {
-			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
-		}
-		return mv;
-	}
-
-	// 카카오 회원 마이 페이지(My 정보 화면)
-	@RequestMapping(value = "/member/myKakaoInfo.kh", method = RequestMethod.GET)
-	public ModelAndView showMyKakaoPage(ModelAndView mv, HttpServletRequest request) {
-		try {
-			HttpSession session = request.getSession();
-			Member member = (Member)session.getAttribute("loginUser");
-			String memberEmail = member.getMemberEmail();
-			Member mOne = mService.printOneByKEmail(memberEmail);
-			
-			mv.addObject("member", mOne);
-			mv.setViewName("member/myKakaoPage");
-			
-		} catch (Exception e) {
-			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
-		}
-		return mv;
-	}
-	
-	// 카카오 닉네임 바꾸기 화면
-	@RequestMapping(value = "/member/changeNickView.kh", method = RequestMethod.GET)
-	public ModelAndView changeNickView(ModelAndView mv, HttpServletRequest request) {
-		try {
-			HttpSession session = request.getSession();
-			Member member = (Member)session.getAttribute("loginUser");
-			String memberEmail = member.getMemberEmail();
-			Member mOne = mService.printNickByKEmail(memberEmail);
-			mv.addObject("member", mOne);
-			mv.setViewName("member/changeNick");
-			
-		} catch (Exception e) {
-			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
-		}
-		return mv;
-	}
-	
-	// 카카오 닉네임 변경
-	@RequestMapping(value = "/member/changeNick.kh", method = RequestMethod.POST)
-	public ModelAndView changeNick(ModelAndView mv, @ModelAttribute Member member, HttpServletRequest request) {
-		try {
-			int result = mService.modifyNick(member);
-			if (result > 0) {
-				request.setAttribute("msg", "닉네임 수정이 완료되었습니다. 다시 로그인 해주세요.");
-				request.setAttribute("url", "/member/logout.kh");
-				mv.setViewName("common/alert");
-			} else {
-				mv.addObject("msg", "닉네임 수정에 실패하였습니다1.");
-				mv.setViewName("common/errorPage");
-			}
-		} catch (Exception e) {
-			mv.addObject("msg", "닉네임 수정에 실패하였습니다.").setViewName("common/errorPage");
-		}
-		return mv;
-	}
-	/**
-	 * 회원 정보 수정
-	 * 
-	 * @param mv
-	 * @param member
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/member/modify.kh", method = RequestMethod.POST)
-	public ModelAndView modifyMember(ModelAndView mv, @ModelAttribute Member member,@RequestParam("originNick") String originNick, HttpServletRequest request) {
-		try {
-			// 닉변했으면
-			if(!member.getMemberNick().equals(originNick)) {
-				// 파트너 정보가 있었으면 기존 정보 삭제
-				Partner originPartner = pService.findByEmail(member.getMemberEmail());
-				if(originPartner != null) {
-					pService.deletePartner(originPartner.getPartnerNo());
-				}
-				// 기존 채팅방 삭제
-				List<ChatRoom> cList = cService.listByMemberNick(originNick);
-				for(int i = 0; i < cList.size(); i++) {
-					cService.disableRoom(cList.get(i).getRoomNo());
-				}
-			}
-			
-			int result = mService.modifyMember(member);
-			if (result > 0) {
-				request.setAttribute("msg", "정보 수정이 완료되었습니다. 다시 로그인해주세요");
-				request.setAttribute("url", "/member/logout.kh");
-				mv.setViewName("common/alert");
-			} else {
-				mv.addObject("msg", "정보 수정에 실패하였습니다.");
-				mv.setViewName("common/errorPage");
-			}
-		} catch (Exception e) {
-			mv.addObject("msg", "정보 수정에 실패하였습니다.").setViewName("common/errorPage");
-		}
-		return mv;
-	}
-
-	// 카카오 회원 정보 수정
-	@RequestMapping(value = "/member/kakaoModify.kh", method = RequestMethod.POST)
-	public ModelAndView modifyKakaoMember(ModelAndView mv, @ModelAttribute Member member, HttpServletRequest request) {
-		try {
-			int result = mService.modifyKakaoMember(member);
-			if (result > 0) {
-				request.setAttribute("msg", "정보 수정이 완료되었습니다.");
-				request.setAttribute("url", "/member/myKakaoInfo.kh");
-				mv.setViewName("common/alert");
-			} else {
-				mv.addObject("msg", "정보 수정에 실패하였습니다.");
-				mv.setViewName("common/errorPage");
-			}
-		} catch (Exception e) {
-			mv.addObject("msg", "정보 수정에 실패하였습니다.").setViewName("common/errorPage");
-		}
-		return mv;
-	}
-	
-	/**
-	 * 회원 탈퇴
-	 * 
-	 * @param mv
-	 * @param session
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/member/remove.kh", method = RequestMethod.GET)
-	public ModelAndView removeMember(ModelAndView mv, HttpSession session, HttpServletRequest request) {
-		try {
-			Member member = (Member) session.getAttribute("loginUser");
-			String memberEmail = member.getMemberEmail();
-			int result = mService.removeMember(memberEmail);
-				request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
-				request.setAttribute("url", "/member/logout.kh");
-				mv.setViewName("/common/alert");
-		} catch (Exception e) {
-			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
-		}
-		return mv;
-	}
-
-	/**
 	 * 비밀번호 찾기 화면
 	 * 
 	 * @return
@@ -464,6 +281,70 @@ public class MemberController {
 	}
 
 	/**
+	 * 마이페이지(My 정보 화면)
+	 * 
+	 * @param mv
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/myInfo.kh", method = RequestMethod.GET)
+	public ModelAndView showMyPage(ModelAndView mv, HttpServletRequest request) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberEmail = member.getMemberEmail();
+			Member mOne = mService.printOneByEmail(memberEmail);
+			
+			mv.addObject("member", mOne);
+			mv.setViewName("member/myPage");
+			
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+
+	/**
+	 * 회원 정보 수정
+	 * 
+	 * @param mv
+	 * @param member
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/modify.kh", method = RequestMethod.POST)
+	public ModelAndView modifyMember(ModelAndView mv, @ModelAttribute Member member,@RequestParam("originNick") String originNick, HttpServletRequest request) {
+		try {
+			// 닉변했으면
+			if(!member.getMemberNick().equals(originNick)) {
+				// 파트너 정보가 있었으면 기존 정보 삭제
+				Partner originPartner = pService.findByEmail(member.getMemberEmail());
+				if(originPartner != null) {
+					pService.deletePartner(originPartner.getPartnerNo());
+				}
+				// 기존 채팅방 삭제
+				List<ChatRoom> cList = cService.listByMemberNick(originNick);
+				for(int i = 0; i < cList.size(); i++) {
+					cService.disableRoom(cList.get(i).getRoomNo());
+				}
+			}
+			
+			int result = mService.modifyMember(member);
+			if (result > 0) {
+				request.setAttribute("msg", "정보 수정이 완료되었습니다. 다시 로그인해주세요");
+				request.setAttribute("url", "/member/logout.kh");
+				mv.setViewName("common/alert");
+			} else {
+				mv.addObject("msg", "정보 수정에 실패하였습니다.");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "정보 수정에 실패하였습니다.").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+
+	/**
 	 * 결제내역 목록조회
 	 * @param mv
 	 * @param page
@@ -498,7 +379,7 @@ public class MemberController {
 			mv.addObject("rList", rList);
 		}
 		mv.setViewName("member/paymentHistory");
-
+	
 		return mv;
 	}
 
@@ -524,8 +405,191 @@ public class MemberController {
 		return mv;
 	}
 
-///
+	/**
+	 * 찜한 공간 리스트 조회
+	 * @param mv
+	 * @param page
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/member/mySpaceList.kh", method=RequestMethod.GET)
+	public ModelAndView mySpaceListView(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
+			HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		String memberEmail = member.getMemberEmail();
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = mService.getSpaceTotalCount(memberEmail);
+		int spaceLimit = 9;
+		int naviLimit = 5;
+		int maxPage;
+		int startNavi;
+		int endNavi;
+		maxPage = (int) ((double) totalCount / spaceLimit + 0.9);
+		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
+		endNavi = startNavi + naviLimit - 1;
+		if (maxPage < endNavi) {
+			endNavi = maxPage;
+		}
+		List<Space> sList = mService.printMySpace(memberEmail, currentPage, spaceLimit);
+		if (!sList.isEmpty()) {
+			mv.addObject("memberEmail", memberEmail);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startNavi", startNavi);
+			mv.addObject("endNavi", endNavi);
+			mv.addObject("sList", sList);
+		}
+		mv.setViewName("/member/mySpace");
 	
+		return mv;
+	}
+
+	
+
+	// 카카오 회원
+	
+	/**
+	 * 카카오 로그인
+	 * @param code
+	 * @param session 
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/member/kakaoLogin.kh", method = RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Exception {
+		System.out.println("#########" + code);
+		
+		String access_Token = mService.getAccessToken(code);
+		System.out.println("###access_Token#### : " + access_Token);
+		
+		Member loginUser = mService.getLoginUser(access_Token);
+
+		session.setAttribute("loginUser", loginUser);
+		session.setAttribute("memberEmail", loginUser.getMemberEmail());
+		session.setAttribute("memberNick", loginUser.getMemberNick());
+
+		return "redirect:/";
+	}
+	
+	
+	/**
+	 * 카카오 회원 마이 페이지(My 정보 화면)
+	 * @param mv
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/myKakaoInfo.kh", method = RequestMethod.GET)
+	public ModelAndView showMyKakaoPage(ModelAndView mv, HttpServletRequest request) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberEmail = member.getMemberEmail();
+			Member mOne = mService.printOneByKEmail(memberEmail);
+			
+			mv.addObject("member", mOne);
+			mv.setViewName("member/myKakaoPage");
+			
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 카카오 닉네임 바꾸기 화면
+	 * @param mv
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/changeNickView.kh", method = RequestMethod.GET)
+	public ModelAndView changeNickView(ModelAndView mv, HttpServletRequest request) {
+		try {
+			HttpSession session = request.getSession();
+			Member member = (Member)session.getAttribute("loginUser");
+			String memberEmail = member.getMemberEmail();
+			Member mOne = mService.printNickByKEmail(memberEmail);
+			mv.addObject("member", mOne);
+			mv.setViewName("member/changeNick");
+			
+		} catch (Exception e) {
+			mv.addObject("msg", e.getMessage()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 카카오 닉네임 변경
+	 * @param mv
+	 * @param member
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/changeNick.kh", method = RequestMethod.POST)
+	public ModelAndView changeNick(ModelAndView mv, @ModelAttribute Member member, HttpServletRequest request) {
+		try {
+			int result = mService.modifyNick(member);
+			if (result > 0) {
+				request.setAttribute("msg", "닉네임 수정이 완료되었습니다. 다시 로그인 해주세요.");
+				request.setAttribute("url", "/member/logout.kh");
+				mv.setViewName("common/alert");
+			} else {
+				mv.addObject("msg", "닉네임 수정에 실패하였습니다1.");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "닉네임 수정에 실패하였습니다.").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 카카오 회원정보 수정
+	 * @param mv
+	 * @param member
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/kakaoModify.kh", method = RequestMethod.POST)
+	public ModelAndView modifyKakaoMember(ModelAndView mv, @ModelAttribute Member member, HttpServletRequest request) {
+		try {
+			int result = mService.modifyKakaoMember(member);
+			if (result > 0) {
+				request.setAttribute("msg", "정보 수정이 완료되었습니다.");
+				request.setAttribute("url", "/member/myKakaoInfo.kh");
+				mv.setViewName("common/alert");
+			} else {
+				mv.addObject("msg", "정보 수정에 실패하였습니다.");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "정보 수정에 실패하였습니다.").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 회원 탈퇴
+	 * 
+	 * @param mv
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/remove.kh", method = RequestMethod.GET)
+	public ModelAndView removeMember(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		try {
+			Member member = (Member) session.getAttribute("loginUser");
+			String memberEmail = member.getMemberEmail();
+			int result = mService.removeMember(memberEmail);
+				request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
+				request.setAttribute("url", "/member/logout.kh");
+				mv.setViewName("/common/alert");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+
 	/**
 	 * 로그아웃
 	 * 
@@ -546,7 +610,6 @@ public class MemberController {
 		return mv;
 	}	
 	
-///	
 	
 ///// 기업 회원 /////
 
@@ -772,41 +835,7 @@ public class MemberController {
 		if (result == 1) {
 			return "login/choose";
 		} else {
-			return "login/modifyPwd";
+			return "login/modifyHostPwd";
 		}
-	}
-
-	
-	// 찜한 공간 리스트 조회
-	@RequestMapping(value="/member/mySpaceList.kh", method=RequestMethod.GET)
-	public ModelAndView mySpaceListView(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
-			HttpSession session) {
-		Member member = (Member) session.getAttribute("loginUser");
-		String memberEmail = member.getMemberEmail();
-		int currentPage = (page != null) ? page : 1;
-		int totalCount = mService.getSpaceTotalCount(memberEmail);
-		int spaceLimit = 9;
-		int naviLimit = 5;
-		int maxPage;
-		int startNavi;
-		int endNavi;
-		maxPage = (int) ((double) totalCount / spaceLimit + 0.9);
-		startNavi = ((int) ((double) currentPage / naviLimit + 0.9) - 1) * naviLimit + 1;
-		endNavi = startNavi + naviLimit - 1;
-		if (maxPage < endNavi) {
-			endNavi = maxPage;
-		}
-		List<Space> sList = mService.printMySpace(memberEmail, currentPage, spaceLimit);
-		if (!sList.isEmpty()) {
-			mv.addObject("memberEmail", memberEmail);
-			mv.addObject("maxPage", maxPage);
-			mv.addObject("currentPage", currentPage);
-			mv.addObject("startNavi", startNavi);
-			mv.addObject("endNavi", endNavi);
-			mv.addObject("sList", sList);
-		}
-		mv.setViewName("/member/mySpace");
-
-		return mv;
 	}
 }
