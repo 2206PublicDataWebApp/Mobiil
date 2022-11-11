@@ -97,7 +97,7 @@ public class SpaceController {
 	
 	//리뷰많은순 조회
 	@ResponseBody
-	@RequestMapping(value="/space/reviewDesc.kh", method=RequestMethod.GET)
+	@RequestMapping(value="/space/reviewDesc.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
 	public ModelAndView reviewSortView(
 			ModelAndView mv
 			,@RequestParam(value="searchArea", required=false) String searchArea
@@ -114,7 +114,6 @@ public class SpaceController {
 			int naviLimit = 5;
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
-			System.out.println(totalCount);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
 			
 			List<Space> sList = sService.printRivewDesc(rowBounds);
@@ -126,7 +125,7 @@ public class SpaceController {
 			}
 		} else if(searchArea != "" && searchValue == "" && minNum == null && maxNum == null){
 			// 페이징
-			Search search = new Search(searchArea);
+			Search search = new Search(searchArea,"",0,0);
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = sService.getTotalCountReviewDesc(search);
 			int naviLimit = 5;
@@ -143,7 +142,7 @@ public class SpaceController {
 			}
 		} else if(searchArea != "" && searchValue != "" && minNum == null && maxNum == null) {
 			// 페이징
-			Search search = new Search(searchArea, searchValue);
+			Search search = new Search(searchArea, searchValue,0,0);
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = sService.getTotalCountReviewDesc(search);
 			int naviLimit = 5;
@@ -157,6 +156,46 @@ public class SpaceController {
 				mv.addObject("search", search);
 				mv.addObject("paging", paging);
 				mv.addObject("sList", sList);
+			}
+		} else if(minNum != 0 || maxNum != 0){
+			if(searchArea == "" && searchValue == "") {
+				if(minNum == null) {
+					minNum = 0;
+				}
+				if(maxNum == null) {
+					maxNum = 999999999;
+				}
+				Search search = new Search("","",minNum, maxNum);
+				int currentPage = (page != null) ? page : 1;
+				int totalCount = sService.getTotalCountReviewDesc(search);
+				int naviLimit = 5;
+				int boardLimit = 9;
+				Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+				RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+			}else if(searchArea != "" && searchValue == "") {
+				if(minNum == null) {
+					minNum = 0;
+				}
+				if(maxNum == null) {
+					maxNum = 999999999;
+				}
+				Search search = new Search(searchArea,"", minNum, maxNum);
+			}else if(searchArea == "" && searchValue != "") {
+				if(minNum == null) {
+					minNum = 0;
+				}
+				if(maxNum == null) {
+					maxNum = 999999999;
+				}
+				Search search = new Search("",searchValue, minNum, maxNum);
+			}else if(searchArea != "" && searchValue != ""){
+				if(minNum == null) {
+					minNum = 0;
+				}
+				if(maxNum == null) {
+					maxNum = 999999999;
+				}
+				Search search = new Search(searchArea, searchValue, minNum, maxNum);
 			}
 		}
 		mv.setViewName("space/spaceList");
@@ -172,7 +211,7 @@ public class SpaceController {
 			, @RequestParam(value="page", required=false) Integer page) {
 		try {
 			//페이징
-			Search search = new Search(searchArea, searchValue);
+			Search search = new Search(searchArea, searchValue,0,0);
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = sService.getTotalCount(search);
 			int naviLimit = 5;
@@ -204,7 +243,7 @@ public class SpaceController {
 			, @RequestParam(value="page", required=false) Integer page) {
 		try {
 			// 페이징
-			Search search = new Search(searchArea);
+			Search search = new Search(searchArea,"",0,0);
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = sService.getTotalCount(search);
 			int naviLimit = 5;
@@ -243,7 +282,7 @@ public class SpaceController {
 				maxNum = 999999999;		//최대금액 자동으로 999999999 입력
 			}
 			// 페이징
-			Search search = new Search(minNum, maxNum);
+			Search search = new Search("","",minNum, maxNum);
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = sService.getPriceCount(search);
 			int naviLimit = 5;
@@ -346,8 +385,6 @@ public class SpaceController {
 	@ResponseBody
 	@RequestMapping(value="/space/modifyReply.kh", method=RequestMethod.POST)
 	public int modifyReply(@ModelAttribute HostReply hostReply) {
-		
-		System.out.println(hostReply.getReplyContents());
 		int result = sService.updateReply(hostReply);
 		return result;
 	}
