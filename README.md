@@ -6,6 +6,12 @@
 ###### _KH정보교육원 빌려조 Final Project_            
 [고종규](https://github.com/JongGyuGo), [김다현], [정슬기](https://github.com/seulki1211), [최혜진]
 
+  > 문서: 2022.10.05. ~ 2022.10.14.
+  
+  > 개발: 2022.10.17. ~ 2022.11.14.
+
+ 
+
 
 ## Purpose 
 - 모빌은 모이고(MO) 빌리다(BIL)의 합성어입니다
