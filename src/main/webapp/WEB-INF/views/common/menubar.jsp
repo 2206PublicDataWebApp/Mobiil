@@ -13,6 +13,7 @@
  	font-size: 100px
  	
 }
+
 #support-imge{
  	font-size: 70px
 }
@@ -123,8 +124,8 @@
 						
 						<!-- 관리자 문의 -->
 						<div id = "support">
-							<a href = "#" onclick="openChatRoom('${loginUser.memberNick}', '관리자');">	<span id="support-imge" class="material-symbols-outlined">contact_support</span></a>
-							<br><a href = "#"  onclick="openCalendar();"><span id="calendar-img" class="material-symbols-outlined">event</span></a>
+							<p><a href = "#" onclick="openChatRoom('${loginUser.memberNick}', '관리자');">	<span id="support-imge" class="material-symbols-outlined">contact_support</span></a>
+							<a href = "#"  onclick="openCalendar();"><span id="calendar-img" class="material-symbols-outlined">event</span></a></p>
 						</div>
 				</c:if>
 				<c:if test="${not empty loginUser and loginUser.mStatus eq 'N' and loginUser.memberNick ne '관리자' }"> 
