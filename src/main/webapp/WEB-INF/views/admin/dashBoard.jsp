@@ -179,6 +179,7 @@ function printAllSpace() {
 			url: "/admin/dashboard/weekly.kh",
 			type:"get",
 			success: function(data) {
+				console.log(data)
 				const dailyNewChatRoomChart = new Chart(weeklyChart, {
 					type: 'line',
 					data:{

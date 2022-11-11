@@ -67,4 +67,10 @@ public interface HostStore {
 
 	int removeHost(SqlSession session, String hostEmail);
 
+	List<Reservation> getRegervationCountByMonth(SqlSession session, String hostEmail);
+
+	List<Space> getSpaceCountByMonth(SqlSession session, String hostEmail);
+
+	List<Reservation> getProfitByMonth(SqlSession session, String hostEmail);
+
 }

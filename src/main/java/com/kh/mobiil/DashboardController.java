@@ -132,6 +132,7 @@ public class DashboardController {
 		obj.put("notApproved", notApproved); // 파트너 미승인 회원
 		obj.put("notPartner", notPartner); // 파트너 미등록 회원 
 
+		
 		return obj.toJSONString();
 	}
 	
@@ -163,6 +164,8 @@ public class DashboardController {
 			arr.add(individualAmount);
 			arr.add(hostAmount);
 			// 막대차트 그리러가기
+			System.out.println("roomAmount : " + roomAmount);
+			System.out.println("arr : " + arr);
 			return gson.toJson(arr);
 		}
 }

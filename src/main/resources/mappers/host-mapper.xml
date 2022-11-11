@@ -241,6 +241,46 @@
 		WHERE SPACE_NO = #{spaceNo}
   	 </update>
   	 
+  	 <!-- 월별 예약 건수  -->
+  	 <select id="getRegervationCountByMonth" resultType="_int">
+ 		SELECT COUNT(*),
+ 		TO_CHAR(RESERV_DATE, 'YYYY-MM') AS MONTH
+	    FROM RESERVATION_TBL
+	    WHERE REV_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
+	    GROUP BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
+	    ORDER BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
+  	 </select>
+  	 
+  	 <!-- 예약 건수 1월 -->
+  	 <select id="getRev1" resultType="_int">
+ 		SELECT COUNT(*),
+	    TO_CHAR(RESERV_DATE, 'YYYY-MM') AS MONTH
+	    FROM RESERVATION_TBL
+	    WHERE TO_CHAR(RESERV_DATE, 'YYYY-MM') = '2022-01' 
+	    AND REV_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
+	    GROUP BY TO_CHAR(RESERV_DATE, 'YYYY-MM') 
+  	 </select>
+  	 
+  	 <!-- 월별 공간수 -->
+  	 <select id="getSpaceCountByMonth" resultType="_int">
+  	 	SELECT COUNT(*),
+ 		TO_CHAR(APPROVAL_DATE, 'YYYY-MM') AS MONTH
+	    FROM SPACE_TBL
+	    WHERE SPACE_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
+	    GROUP BY TO_CHAR(APPROVAL_DATE, 'YYYY-MM')
+	    ORDER BY TO_CHAR(APPROVAL_DATE, 'YYYY-MM')
+  	 </select>
+  	 
+  	 <!-- 월별 판매금액 -->
+  	 <select id="getProfitByMonth" resultType="_int">
+  	 	SELECT SUM((REV_END-REV_START)*PRICE) as PRICE,
+ 		TO_CHAR(RESERV_DATE, 'YYYY-MM') AS MONTH
+	    FROM RESERVATION_TBL
+	    WHERE REV_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
+	    GROUP BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
+	    ORDER BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
+  	 </select>
+  	 
   </mapper>
   
   

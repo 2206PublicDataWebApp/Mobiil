@@ -68,4 +68,10 @@ public interface HostService {
 
 	int removeHost(String hostEmail);
 
+	List<Reservation> getRegervationCountByMonth(String hostEmail);
+
+	List<Space> getSpaceCountByMonth(String hostEmail);
+
+	List<Reservation> getProfitByMonth(String hostEmail);
+
 }

@@ -195,4 +195,22 @@ public class HostStoreImpl implements HostStore{
 		return result;
 	}
 
+	@Override
+	public List<Reservation> getRegervationCountByMonth(SqlSession session, String hostEmail) {
+		List<Reservation> result = session.selectList("HostMapper.getRegervationCountByMonth", hostEmail);
+		return result;
+	}
+
+	@Override
+	public List<Space> getSpaceCountByMonth(SqlSession session, String hostEmail) {
+		List<Space> result = session.selectList("HostMapper.getSpaceCountByMonth", hostEmail);
+		return result;
+	}
+
+	@Override
+	public List<Reservation> getProfitByMonth(SqlSession session, String hostEmail) {
+		List<Reservation> result = session.selectList("HostMapper.getProfitByMonth", hostEmail);
+		return result;
+	}
+
 }

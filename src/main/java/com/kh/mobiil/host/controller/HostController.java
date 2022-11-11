@@ -12,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +27,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.ModelAndViewDefiningException;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.host.service.HostService;
 import com.kh.mobiil.mail.controller.MailController;
@@ -721,6 +727,82 @@ public class HostController {
 	public ModelAndView showDashboard(ModelAndView mv) {
 		mv.setViewName("/host/dashBoard");
 		return mv;
+	}
+	
+	/**
+	 * 월별 예약 건수 차트용
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/host/drawspaceChart.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String drawspaceChart(HttpServletRequest request) {
+		Gson gson = new Gson();
+		
+		HttpSession session = request.getSession();
+		Host host = (Host) session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		
+		List<Reservation> result = hService.getRegervationCountByMonth(hostEmail);	// 월별 예약 건수
+
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		
+		JSONArray arr = new JSONArray();
+		arr.add(obj);
+		
+		return gson.toJson(arr);
+	}
+	
+	/**
+	 * 월별 공간 등록수
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/host/spaceChart.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String drawspaceChart2(HttpServletRequest request) {
+		Gson gson = new Gson();
+		
+		HttpSession session = request.getSession();
+		Host host = (Host)session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		
+		List<Space> result = hService.getSpaceCountByMonth(hostEmail);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		
+		JSONArray arr = new JSONArray();
+		arr.add(obj);
+		
+		return gson.toJson(arr);
+	}
+	
+	/**
+	 * 월별 판매금액
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/host/profitChart.kh", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	public String drawProfitChart(HttpServletRequest request) {
+		
+		Gson gson = new Gson();
+		
+		HttpSession session = request.getSession();
+		Host host = (Host)session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		
+		List<Reservation> result = hService.getProfitByMonth(hostEmail);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		
+		JSONArray arr = new JSONArray();
+		arr.add(obj);
+		
+		return gson.toJson(arr);
 	}
 }
 

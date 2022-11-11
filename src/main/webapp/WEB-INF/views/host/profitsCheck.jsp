@@ -66,9 +66,8 @@
 		<div id="div2">
 			<span>조회기간 :</span> 
 			<input type="date" name="date1" value='${date1}'> ~ <input type="date" name="date2" value='${date2}'>
-			<button type="submit" class="btn btn-default">조회하기</button>
+			<button type="submit" class="btn btn-default" id="profitCheck">조회하기</button>
 		</div>
-
 		<div id="div3" align="center">
 			<table border='1' align="center" id="table" style="width: 1000px;">
 				<tr>
@@ -78,9 +77,10 @@
 					<td>예약날짜</td>
 					<td>체크인</td>
 					<td>체크아웃</td>
+					<td>이용시간</td>
 					<td>금액</td>
 				</tr>
-				<c:forEach items="${rList }" var="reservation">
+				<c:forEach items="${rList }" var="reservation"> 
 					<tr>
 						<td>${reservation.reservationNo }</td>
 						<td>${reservation.memberName }</td>
@@ -88,7 +88,8 @@
 						<td>${reservation.reservationDate}</td>
 						<td>${reservation.revStart }</td>
 						<td>${reservation.revEnd }</td>
-						<td>${reservation.price }</td>
+						<td>${reservation.revEnd - reservation.revStart}</td>
+						<td>${(reservation.revEnd - reservation.revStart) * reservation.price}</td>
 					<tr>
 				</c:forEach>
 				<tr>
@@ -118,9 +119,35 @@
 	</div>
 	
 	<script>
-	/* $(document).ready(function(){	// 보여지는 페이징만 합계를 구하기 때문에 사용하지 않음.
+	$(window).on('load', function(){
+	    $('#total').each(function(){
+	        var txt = $(this).text();
+	        $(this).html(txt.replace(/,/g, ''));
+
+	        var len = $(this).text().length;
+	        for (i = 0; i < len; i ++){
+	            $(this).eq(i).text(commaNum($(this).eq(i).text()));
+	        }
+	    });
+
+	    function commaNum(num){
+	        var len, point, str;
+	        num = num + '';
+	        point = num.length % 3
+	        len = num.length;
+	        str = num.substring(0, point);
+	        while (point < len){
+	            if (str != '') str += ',';
+	            str += num.substring(point, point + 3);
+	            point += 3;
+	        }
+	        return str;
+	    }
+	});
+	
+	 $(document).ready(function(){	// 보여지는 페이징만 합계를 구하기 때문에 사용하지 않음.
 		var rowCnt = 0;
-		var col6 = 5;		// 여섯번째 col index
+		var col6 = 7;		// 여섯번째 col index
 		var col6Sum = 0;	// 여섯번째 col sum
 		
 		$("#table tr").each(function(){
@@ -139,7 +166,7 @@
 		rowCnt++;
 	});
 	$("#total").text(col6Sum);
-	}); */
+	}); 
 	</script>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>	
