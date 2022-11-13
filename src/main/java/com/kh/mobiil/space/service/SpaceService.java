@@ -20,8 +20,8 @@ public interface SpaceService {
 
 	// 리스트 게시물 전체 개수
 	int getTotalCount(Search search);
-	// 리뷰순 정렬시 게시물 전체 개수
-	int getTotalCountReviewDesc(Search search);
+
+	int getSearchCount(Search search);
 	
 	int getPriceCount(Search search);
 
@@ -40,7 +40,9 @@ public interface SpaceService {
 	int registerReservation(Reservation rsv);
 
 	// 지역 카운트
-	int getAreaCount(String searchArea);
+	int getAreaCount(String area);
+	
+	int getByAreaCount(Search search);
 
 	// 모든 공간 리스트
 	List<Space> printAllSpace();
@@ -73,7 +75,19 @@ public interface SpaceService {
 
 	int deleteReply(Integer replyNo);
 
+	List<Space> printReviewDescByPrice(Search search, RowBounds rowBounds);
 
+	List<Space> printHeartDescByPrice(Search search, RowBounds rowBounds);
+
+	List<Space> printHeartDescByArea(Search search, RowBounds rowBounds);
+
+	List<Space> printHeartDescByValue(Search search, RowBounds rowBounds);
+
+	List<Space> printDateDescByPrice(Search search, RowBounds rowBounds);
+
+	List<Space> printDateDescByArea(Search search, RowBounds rowBounds);
+
+	List<Space> printDateDescByValue(Search search, RowBounds rowBounds);
 
 
 

@@ -28,8 +28,8 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 	
 	@Override
-	public int selectTotalCountReviewDesc(SqlSessionTemplate session, Search search) {
-		int totalCount = session.selectOne("SpaceMapper.selectTotalCountReviewDesc", search);
+	public int selectSearchCount(SqlSessionTemplate session, Search search) {
+		int totalCount = session.selectOne("SpaceMapper.selectSearchCount", search);
 		return totalCount;
 	}
 
@@ -93,8 +93,8 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
-	public int selectAreaCount(String searchArea, SqlSessionTemplate session) {
-		int result = session.selectOne("SpaceMapper.selectAreaCount", searchArea);
+	public int selectByAreaCount(Search search, SqlSessionTemplate session) {
+		int result = session.selectOne("SpaceMapper.selectByAreaCount", search);
 		return result;
 	}
 
@@ -164,19 +164,19 @@ public class SpaceStoreLogic implements SpaceStore{
 
 	@Override
 	public List<Space> selectRivewDesc(SqlSessionTemplate session, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.ReviewSortDesc", null, rowBounds);
+		List<Space> sList = session.selectList("SpaceMapper.reviewSortDesc", null, rowBounds);
 		return sList;
 	}
 
 	@Override
 	public List<Space> selectReviewDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.ReviewDescByArea", search, rowBounds);
+		List<Space> sList = session.selectList("SpaceMapper.reviewDescByArea", search, rowBounds);
 		return sList;
 	}
 
 	@Override
 	public List<Space> selectRivewDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.ReviewDescByValue", search, rowBounds);
+		List<Space> sList = session.selectList("SpaceMapper.reviewDescByValue", search, rowBounds);
 		return sList;
 	}
 
@@ -192,6 +192,52 @@ public class SpaceStoreLogic implements SpaceStore{
 		return result;
 	}
 
-	
+	@Override
+	public List<Space> selectReviewDescByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.reviewDescByPrice", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectHeartDescByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.heartDescByPrice", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectHeartDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.heartDescByArea", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectHeartDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.heartDescByValue", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectDateDescByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.dateDescByPrice", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectDateDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.dateDescByArea", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> selectDateDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.dateDescByValue", search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public int selectAreaCount(String area, SqlSessionTemplate session) {
+		int result = session.selectOne("SpaceMapper.selectAreaCount", area);
+		return result;
+	}
 
 }

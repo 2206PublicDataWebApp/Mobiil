@@ -19,7 +19,7 @@ public interface SpaceStore {
 	int checkTime(SqlSessionTemplate session, String start, String end, String reservDate);
 	// 리스트 전체 게시물 개수
 	int selectTotalCount(SqlSessionTemplate session, Search search);
-	int selectTotalCountReviewDesc(SqlSessionTemplate session, Search search);
+	int selectSearchCount(SqlSessionTemplate session, Search search);
 	int selectPriceCount(SqlSessionTemplate session, Search search);
 	List<Space> selectSpace(SqlSessionTemplate session, RowBounds rowBounds);
 	Space selectOneByNo(SqlSessionTemplate session, Integer spaceNo);
@@ -28,7 +28,7 @@ public interface SpaceStore {
 	List<Space> selectByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	List<Space> selectByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	int insertReservation(SqlSessionTemplate session, Reservation rsv);
-	int selectAreaCount(String searchArea, SqlSessionTemplate session);
+	int selectByAreaCount(Search search, SqlSessionTemplate session);
 	// 모든 스페이스 리스트
 	List<Space> selectAllSpace(SqlSessionTemplate session);
 	int checkHeart(SqlSessionTemplate session, Integer spaceNo, String memberEmail);
@@ -45,5 +45,13 @@ public interface SpaceStore {
 	List<Space> selectRivewDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	int updateReply(SqlSessionTemplate session, HostReply hostReply);
 	int deleteReply(SqlSessionTemplate session, Integer replyNo);
+	List<Space> selectReviewDescByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectHeartDescByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectHeartDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectHeartDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectDateDescByPrice(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectDateDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectDateDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	int selectAreaCount(String area, SqlSessionTemplate session);
 	
 }
