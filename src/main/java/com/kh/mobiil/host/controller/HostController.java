@@ -744,13 +744,13 @@ public class HostController {
 		String hostEmail = host.getHostEmail();
 		
 		List<Reservation> result = hService.getRegervationCountByMonth(hostEmail);	// 월별 예약 건수
-
+		System.out.println(result);
 		JSONObject obj = new JSONObject();
 		obj.put("result", result);
-		
+		System.out.println(obj);
 		JSONArray arr = new JSONArray();
 		arr.add(obj);
-		
+		System.out.println(arr);
 		return gson.toJson(arr);
 	}
 	
