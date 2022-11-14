@@ -52,8 +52,8 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 	
 	@Override
-	public List<Space> printSpace(RowBounds rowBounds) {
-		List<Space> sList = sStore.selectSpace(session, rowBounds);
+	public List<Space> printSpace(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectSpace(session, search, rowBounds);
 		return sList;
 	}
 
@@ -154,14 +154,14 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public List<Space> printHeartDesc(RowBounds rowBounds) {
-		List<Space> sList = sStore.selectHeartDesc(session, rowBounds);
+	public List<Space> printHeartDesc(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectHeartDesc(session, search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> printRivewDesc(RowBounds rowBounds) {
-		List<Space> sList = sStore.selectRivewDesc(session, rowBounds);
+	public List<Space> printRivewDesc(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectRivewDesc(session, search, rowBounds);
 		return sList;
 	}
 

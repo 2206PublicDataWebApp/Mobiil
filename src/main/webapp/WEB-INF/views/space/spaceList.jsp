@@ -138,16 +138,29 @@ input[type=text]{
 	}
 	
 	function review(){
-		$.ajax({
-			url: '/space/reviewDesc.kh',
-			type: 'get',
-			data: {"page":"${p }", "searchArea":"${search.searchArea }", "searchValue":"${search.searchValue }"
-					, "minNum":"${search.minNum}", "maxNum":"${search.maxNum}"},
-			success: function(){
-				location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
-			}
+		if('${search.searchArea }' == '' && '${search.searchValue }' == '' && '${search.maxNum}' == '0' && '${search.minNum}' == '0'){
+			$.ajax({
+				url: '/space/reviewDesc.kh',
+				type: 'get',
+				data: {"page":"${p }", "searchArea":"", "searchValue":""
+						, "minNum":"0", "maxNum":"0"},
+				success: function(){
+					location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
+				}
+			})
+		}else{
+			$.ajax({
+				url: '/space/reviewDesc.kh',
+				type: 'get',
+				data: {"page":"${p }", "searchArea":"${search.searchArea }", "searchValue":"${search.searchValue }"
+						, "minNum":"${search.minNum}", "maxNum":"${search.maxNum}"},
+				success: function(){
+					location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
+				}
+				
+			})
 			
-		})
+		}
 	}
 	
 	function asc(){

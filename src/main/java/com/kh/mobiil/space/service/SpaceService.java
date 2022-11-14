@@ -25,7 +25,7 @@ public interface SpaceService {
 	
 	int getPriceCount(Search search);
 
-	List<Space> printSpace(RowBounds rowBounds);
+	List<Space> printSpace(Search search, RowBounds rowBounds);
 
 	Space printOneByNo(Integer spaceNo);
 
@@ -65,9 +65,9 @@ public interface SpaceService {
 
 	List<ReviewImg> printReviewImg(Integer reviewNo);
 
-	List<Space> printHeartDesc(RowBounds rowBounds);
+	List<Space> printHeartDesc(Search search, RowBounds rowBounds);
 
-	List<Space> printRivewDesc(RowBounds rowBounds);
+	List<Space> printRivewDesc(Search search, RowBounds rowBounds);
 	List<Space> printRivewDescByArea(Search search, RowBounds rowBounds);
 	List<Space> printRivewDescByValue(Search search, RowBounds rowBounds);
 

@@ -51,8 +51,8 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
-	public List<Space> selectSpace(SqlSessionTemplate session, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.selectAllSpace", null, rowBounds);
+	public List<Space> selectSpace(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.selectAllSpace", search, rowBounds);
 		return sList;
 	}
 
@@ -157,14 +157,14 @@ public class SpaceStoreLogic implements SpaceStore{
 	}
 
 	@Override
-	public List<Space> selectHeartDesc(SqlSessionTemplate session, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.heartSortDesc", null, rowBounds);
+	public List<Space> selectHeartDesc(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.heartSortDesc", search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> selectRivewDesc(SqlSessionTemplate session, RowBounds rowBounds) {
-		List<Space> sList = session.selectList("SpaceMapper.reviewSortDesc", null, rowBounds);
+	public List<Space> selectRivewDesc(SqlSessionTemplate session, Search search, RowBounds rowBounds) {
+		List<Space> sList = session.selectList("SpaceMapper.reviewSortDesc", search, rowBounds);
 		return sList;
 	}
 

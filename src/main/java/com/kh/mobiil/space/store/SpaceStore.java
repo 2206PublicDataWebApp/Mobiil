@@ -21,7 +21,7 @@ public interface SpaceStore {
 	int selectTotalCount(SqlSessionTemplate session, Search search);
 	int selectSearchCount(SqlSessionTemplate session, Search search);
 	int selectPriceCount(SqlSessionTemplate session, Search search);
-	List<Space> selectSpace(SqlSessionTemplate session, RowBounds rowBounds);
+	List<Space> selectSpace(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	Space selectOneByNo(SqlSessionTemplate session, Integer spaceNo);
 	List<SpaceImg> selectImg(SqlSessionTemplate session, Integer spaceNo);
 	List<Space> selectAllByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds);
@@ -39,8 +39,8 @@ public interface SpaceStore {
 	int insertReply(SqlSessionTemplate session, HostReply hostReply);
 	List<HostReply> selectReply(SqlSessionTemplate session, int reviewNo);
 	List<ReviewImg> selectReviewImg(SqlSessionTemplate session, Integer reviewNo);
-	List<Space> selectHeartDesc(SqlSessionTemplate session, RowBounds rowBounds);
-	List<Space> selectRivewDesc(SqlSessionTemplate session, RowBounds rowBounds);
+	List<Space> selectHeartDesc(SqlSessionTemplate session, Search search, RowBounds rowBounds);
+	List<Space> selectRivewDesc(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	List<Space> selectReviewDescByArea(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	List<Space> selectRivewDescByValue(SqlSessionTemplate session, Search search, RowBounds rowBounds);
 	int updateReply(SqlSessionTemplate session, HostReply hostReply);
