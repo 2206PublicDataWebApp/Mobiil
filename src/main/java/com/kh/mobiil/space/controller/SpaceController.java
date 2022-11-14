@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.RowBounds;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh.mobiil.HomeController;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.host.service.HostService;
 import com.kh.mobiil.partner.domain.Page;
@@ -38,6 +41,8 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 @Controller
 public class SpaceController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SpaceController.class);
 	
 	@Autowired
 	private SpaceService sService;
@@ -387,7 +392,6 @@ public class SpaceController {
 			int boardLimit = 9;
 			Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
 			RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
-			System.out.println(totalCount);
 			List<Space> sList = sService.printByArea(search, rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("sList", sList);
@@ -655,10 +659,11 @@ public class SpaceController {
 						set.put("app_version", "test app 1.2");
 						try {
 							JSONObject rs = coolsms.send(set); // 보내기&전송결과받기
-							System.out.println(rs.toString());
+							logger.info(rs.toString());
 						} catch (CoolsmsException e) {
-							System.out.println(e.getMessage());
-							System.out.println(e.getCode());
+							logger.info(e.getMessage());
+							String str = String.valueOf(e.getCode());
+							logger.info(str);
 						}
 					}else {
 					}
