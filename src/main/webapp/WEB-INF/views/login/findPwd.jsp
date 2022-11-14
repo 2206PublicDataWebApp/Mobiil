@@ -78,8 +78,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
      
 	<script>
-// 	 $(function() {
-//          $("#member-regist").on("submit", function() {
 	function modifyPwd() {
 		
         var email = $("#email");
@@ -90,7 +88,12 @@
 	        email.focus();
 	        return false;
 	     }
-        
+		
+		if ( $('.email_ok').is(':visible') ) {
+			alert("가입이력이 있는 이메일을 입력하세요.");
+    		return false;
+		}
+		
         var inputCode = $(".mail_check_input").val();
         if (inputCode == "") {
         	alert("인증번호를 입력하세요.");
@@ -103,7 +106,7 @@
         		return false;
 			}
 		}
-		
+
 		location.href = "/login/modifyPwdView.kh?memberEmail="+email.val();
     }
 	

@@ -87,7 +87,7 @@
 	</update>
 
 	<select id="selectReviewImg" resultMap="reviewImgResultMap"> <!-- 리뷰 상세페이지에 리뷰 이미지 -->
-		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
+		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo} ORDER BY REVIEW_FILERENAME ASC
 	</select>
 	
 	<update id="reviewModify"> <!-- 리뷰 수정 -->

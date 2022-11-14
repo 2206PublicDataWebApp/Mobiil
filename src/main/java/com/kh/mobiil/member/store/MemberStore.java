@@ -25,8 +25,10 @@ public interface MemberStore {
 
 	public int updateMember(SqlSession session, Member member); // 정보 수정
 	
-	public int deleteMember(SqlSession session, String memberEmail); // 회원 탈퇴
+	public int deleteMember(SqlSession session, String memberEmail); // 회원 탈퇴(일반)
 	
+	public int deleteKakaoMember(SqlSession session, String memberEmail); // 회원 탈퇴(카카오)
+
 	public int checkDupEmail(SqlSession session, String memberEmail); // 이메일 중복 체크
 
 	public int checkDupNick(SqlSession session, String memberNick); // 닉네임 중복 체크

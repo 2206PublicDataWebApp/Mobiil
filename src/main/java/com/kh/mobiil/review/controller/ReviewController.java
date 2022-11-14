@@ -53,15 +53,16 @@ public class ReviewController {
 				int result = rService.registerReview(review);
 				int result2 = rService.updateRevStatus(reservation);
 
+				int imgNo = 1;
 				ReviewImg reviewImg = null;
 				for(MultipartFile mf : uploadFile) {
 					String reviewFileName = mf.getOriginalFilename();
 					if(!reviewFileName.equals("")) {
 						String root = request.getSession().getServletContext().getRealPath("resources");
 						String savePath = root + "\\reviewFiles";
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmSS");
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 						
-						String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + "."+ reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+						String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + imgNo + "."+ reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
 						
 						File file = new File(savePath);
 						if(!file.exists()) { 
@@ -73,6 +74,7 @@ public class ReviewController {
 						reviewImg.setReviewFileName(reviewFileName);
 						reviewImg.setReviewFileRename(reviewFileRename);
 						reviewImg.setReviewFilePath(reviewFilePath);
+						imgNo += 1;
 					}
 					int result3 = rService.registerReviewImg(reviewImg);
 					mv.setViewName("redirect:/payment/list.kh");
@@ -155,7 +157,7 @@ public class ReviewController {
 						file.delete();
 					}
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmSS");
-					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis()))+ "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
+					String reviewFileRename = sdf.format(new Date(System.currentTimeMillis())) + num + "." + reviewFileName.substring(reviewFileName.lastIndexOf(".")+1);
 					file = new File(savedPath);
 					String reviewFilePath = savedPath + "\\" + reviewFileRename;
 					mf.transferTo(new File(reviewFilePath));

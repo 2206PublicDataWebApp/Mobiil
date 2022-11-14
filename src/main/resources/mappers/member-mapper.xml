@@ -106,9 +106,13 @@
 		SET memberName = #{memberName}, memberNick = #{memberNick} WHERE memberEmail = #{memberEmail}
   	</update>
   	
-  	<update id="deleteMember"> <!-- 회원탈퇴 -->
+  	<update id="deleteMember"> <!-- 일반회원 탈퇴 -->
   		UPDATE MEMBER_TBL SET mStatus = 'N' WHERE memberEmail = #{memberEmail} 
   	</update>
+  	
+  	<delete id="deleteKakaoMember"> <!-- 카카오회원 탈퇴 -->
+  		DELETE FROM MEMBER_TBL WHERE memberEmail = #{memberEmail}
+  	</delete>
   	
   	<select id="checkEmailDuplicate" resultType="_int"> <!-- 이메일 중복방지 -->
   		SELECT COUNT(*) FROM (

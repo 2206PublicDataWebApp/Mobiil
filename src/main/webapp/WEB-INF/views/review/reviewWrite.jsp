@@ -82,24 +82,8 @@
 			<th class="title" width="">사진첨부</th>
 			<td>
 				<input type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png">
-				<input type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png">
-				<input type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png">
-<!-- 				<input type="file" class="file" name="uploadFile" accept=".jpg, .jpeg, .png"> -->
-<!-- 				<input type="file" class="file2" name="uploadFile" accept=".jpg, .jpeg, .png"> -->
-<!-- 				<input type="file" class="file3" name="uploadFile" accept=".jpg, .jpeg, .png"> -->
-				
-<!-- 				<input type="button" value="추가" onclick="addFile();"> -->
-<!-- 				<input type="button" value="삭제" onclick="delFile();"> -->
-				
-<!-- 				<div style="float:left; margin-right:20px;"> -->
-<!-- 				    <img id="preview" style="width:150px; height:150px; display: none;" > -->
-<!-- 				</div> -->
-<!-- 				<div style="float:left; margin-right:20px;"> -->
-<!-- 				    <img id="preview2" style="width:150px; height:150px; display: none;" > -->
-<!-- 			 	</div> -->
-<!-- 				<div style="float:left;"> -->
-<!-- 				  	<img id="preview3" style="width:150px; height:150px; display: none;" > -->
-<!-- 				</div> -->
+				<input type="button" value="추가" onclick="addFile();">
+				<input type="button" value="삭제" onclick="delFile();">
 			</td>
 		</tr>	
 		<tr>
@@ -114,40 +98,24 @@
 	</table>
 	</form>
 	<script>
-//  	var maxFile = 1;
+ 	var maxFile = 1;
  	
-// 	function addFile() {
-// 		if(maxFile >= 3) {
-// 	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
-// 	 	      return;
-// 		}else{ 
-// 			$("input").last().after("<input type='file' name='uploadFile' accept='.jpg, .jpeg, .png'>");
-// 			 maxFile ++;
-// 		}
-// 	}
+	function addFile() {
+		if(maxFile >= 3) {
+	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
+	 	      return;
+		}else{ 
+			$("input").last().after("<input type='file' class='file' name='uploadFile' accept='.jpg, .jpeg, .png'>");
+			 maxFile ++;
+		}
+	}
 	
-// 	function delFile() {
-// 		var inputFile = $("input[type=file]")
-// 		if(inputFile.length > 1) {
-// 			$("input").last().remove();
-// 		}
-// 	} 
-	
-// 	$(document).ready(function() {
-// 		$(".file").on("change", handleImgFileSelect);
-// 	})
-	
-// 		function handleImgFileSelect(e){
-// 			var files = e.target.files;
-// 			var reader = new FileReader();
-// 			reader.onload = function(e){
-// 				$("#preview").attr("src", e.target.result);
-// 				$("#preview").css("display", "block");
-// 			}
-// 			reader.readAsDataURL(files[0]);
-
-// 		}
-	
+	function delFile() {
+		var inputFile = $("input[type=file]")
+		if(inputFile.length > 1) {
+			$("input").last().remove();
+		}
+	} 
 	</script>
 	<br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>

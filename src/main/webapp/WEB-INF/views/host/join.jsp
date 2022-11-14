@@ -59,6 +59,7 @@
             <form name="join_form" action="/host/register.kh" method="post" enctype="multipart/form-data">
                 <label>이메일</label>
                 <input type="email" class="input" id="email" name="hostEmail" oninput = "checkEmail()" >
+                <br>
                 <span class="email_ok">사용 가능한 이메일이에요 :)</span>
 				<span class="email_already">이미 사용중인 이메일이에요 :(</span>
 				<div class="form-inline mb-3">
@@ -116,7 +117,7 @@
         var holder = document.getElementById("holder");
         var num = document.getElementById("num");
         var reg = document.getElementById("reg");
-        var photo = document.getElementById("photo");
+        var file = document.getElementById("file");
 
         var emailCheck = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
         if (!emailCheck.test(email.value)) {
@@ -125,6 +126,24 @@
             return false;
         }
         
+        if ( $('.email_already').is(':visible') ) {
+			alert("사용중이 아닌 이메일을 입력하세요.");
+       		return false;
+		}
+        
+        var inputCode = $(".mail_check_input").val();
+        if (inputCode == "") {
+        	alert("인증번호를 입력하세요.");
+    		return false;
+        }
+        
+		if (inputCode != "" || code != "") {
+			if (inputCode != code) {
+				alert("올바른 인증번호를 입력하세요.");
+        		return false;
+			}
+		}
+		
         if(pwd.value == "") {
             alert("비밀번호를 입력하세요.");
             pwd.focus();
@@ -217,13 +236,14 @@
             return false;
             }
         
-        if(photo.value == "") {
+        if(file.value == "") {
             alert("사업자 등록증 사진을 등록하세요.");
-            photo.focus();
+            file.focus();
             return false;
         }
-       
+
         document.join_form.submit();
+        
       }
 
       function checkEmail(){
