@@ -34,8 +34,8 @@ input[type=text]{
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 <div class="sort">
 <form action="/space/spacePrice.kh" method="get" style='padding-top:15px;'>
-<input type="text" class="searchText" name="minNum" value="${minNum }" style="height:24px;width:70px;">원 ~ 
-<input type="text" class="searchText" name="maxNum" value="${maxNum }" style="height:24px;width:70px;">원
+<input type="text" class="searchText" name="minNum" value="${search.minNum }" style="height:24px;width:70px;">원 ~ 
+<input type="text" class="searchText" name="maxNum" value="${search.maxNum }" style="height:24px;width:70px;">원
 <input type="submit" value="검색"  class='btn' style='padding:2px;'>
 </form>
 <form action="/space/spaceArea.kh" method="get" style=''>
@@ -125,40 +125,59 @@ input[type=text]{
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 	function heart(){
-		/* $.ajax({
+		$.ajax({
 			url: '/space/heartDesc.kh',
 			type: 'get',
-			data: {"page":"${p }"},
-			success: function(){
-				location.href='/space/heartDesc.kh?page=${p }&searchArea=${searchArea }&searchValue=${searchValue }&minNum=${minNum}&maxNum=${maxNum}';
-			}
-			
-		}) */
-	}
-	
-	function review(){
-		$.ajax({
-			url: '/space/reviewDesc.kh',
-			type: 'get',
 			data: {"page":"${p }", "searchArea":"${search.searchArea }", "searchValue":"${search.searchValue }"
-					, "minNum":"${search.minNum}", "maxNum":"${search.maxNum}"},
+				, "minNum":"${search.minNum}", "maxNum":"${search.maxNum}"},
 			success: function(){
-				location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
+				location.href='/space/heartDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
 			}
 			
 		})
 	}
 	
-	function asc(){
-		/* var area = '${searchArea}';
-		var minNum = '${minNum}';
-		var maxNum = '${maxNum}';
-		if(area != '' && minNum == '' && maxNum == ''){
-			location.href='/space/spaceArea.kh?searchArea='+area;			
+	function review(){
+		if('${search.searchArea }' == '' && '${search.searchValue }' == '' && '${search.maxNum}' == '0' && '${search.minNum}' == '0'){
+			$.ajax({
+				url: '/space/reviewDesc.kh',
+				type: 'get',
+				data: {"page":"${p }", "searchArea":"", "searchValue":""
+						, "minNum":"0", "maxNum":"0"},
+				success: function(){
+					location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
+				}
+			})
+		}else{
+			$.ajax({
+				url: '/space/reviewDesc.kh',
+				type: 'get',
+				data: {"page":"${p }", "searchArea":"${search.searchArea }", "searchValue":"${search.searchValue }"
+						, "minNum":"${search.minNum}", "maxNum":"${search.maxNum}"},
+				success: function(){
+					location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
+				}
+				
+			})
+			
 		}
-		if(area == '' && minNum != '' || maxNum != ''){
-			location.href='/space/spaceArea.kh?searchArea='+area;	
-		} */
+	}
+	
+	function asc(){
+		if('${search.searchArea }' == '' && '${search.searchValue }' == '' && '${search.maxNum}' == '0' && '${search.minNum}' == '0'){
+			location.href='/space/spaceList.kh';
+		}else{
+			$.ajax({
+			url: '/space/sortAsc.kh',
+			type: 'get',
+			data: {"page":"${p }", "searchArea":"${search.searchArea }", "searchValue":"${search.searchValue }"
+					, "minNum":"${search.minNum}", "maxNum":"${search.maxNum}"},
+			success: function(){
+				location.href='/space/sortAsc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
+			}	
+		});
+		}
+		
 		
 	}
 </script>

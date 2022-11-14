@@ -40,8 +40,8 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int getTotalCountReviewDesc(Search search) {
-		int totalCount = sStore.selectTotalCountReviewDesc(session, search);
+	public int getSearchCount(Search search) {
+		int totalCount = sStore.selectSearchCount(session, search);
 		return totalCount;
 	}
 
@@ -52,8 +52,8 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 	
 	@Override
-	public List<Space> printSpace(RowBounds rowBounds) {
-		List<Space> sList = sStore.selectSpace(session, rowBounds);
+	public List<Space> printSpace(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectSpace(session, search, rowBounds);
 		return sList;
 	}
 
@@ -94,8 +94,8 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public int getAreaCount(String searchArea) {
-		int result = sStore.selectAreaCount(searchArea, session);
+	public int getByAreaCount(Search search) {
+		int result = sStore.selectByAreaCount(search, session);
 		return result;
 	}
 
@@ -154,14 +154,14 @@ public class SpaceServiceImpl implements SpaceService{
 	}
 
 	@Override
-	public List<Space> printHeartDesc(RowBounds rowBounds) {
-		List<Space> sList = sStore.selectHeartDesc(session, rowBounds);
+	public List<Space> printHeartDesc(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectHeartDesc(session, search, rowBounds);
 		return sList;
 	}
 
 	@Override
-	public List<Space> printRivewDesc(RowBounds rowBounds) {
-		List<Space> sList = sStore.selectRivewDesc(session, rowBounds);
+	public List<Space> printRivewDesc(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectRivewDesc(session, search, rowBounds);
 		return sList;
 	}
 
@@ -189,6 +189,53 @@ public class SpaceServiceImpl implements SpaceService{
 		return result;
 	}
 
+	@Override
+	public List<Space> printReviewDescByPrice(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectReviewDescByPrice(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printHeartDescByPrice(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectHeartDescByPrice(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printHeartDescByArea(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectHeartDescByArea(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printHeartDescByValue(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectHeartDescByValue(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printDateDescByPrice(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectDateDescByPrice(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printDateDescByArea(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectDateDescByArea(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public List<Space> printDateDescByValue(Search search, RowBounds rowBounds) {
+		List<Space> sList = sStore.selectDateDescByValue(session, search, rowBounds);
+		return sList;
+	}
+
+	@Override
+	public int getAreaCount(String area) {
+		int result = sStore.selectAreaCount(area, session);
+		return result;
+	}
 
 	
 }
