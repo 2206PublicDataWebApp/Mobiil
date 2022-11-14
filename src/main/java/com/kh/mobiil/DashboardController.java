@@ -164,8 +164,6 @@ public class DashboardController {
 			arr.add(individualAmount);
 			arr.add(hostAmount);
 			// 막대차트 그리러가기
-			System.out.println("roomAmount : " + roomAmount);
-			System.out.println("arr : " + arr);
 			return gson.toJson(arr);
 		}
 }

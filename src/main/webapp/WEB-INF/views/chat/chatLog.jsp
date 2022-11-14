@@ -196,7 +196,6 @@ function search() {
 		data:{searchValue :searchValue},
 		type: "get",
 		success: function(data) {
-			console.log(data.length);
 			// data에는 리스트가 들어있음
 			// 3개까지만 꺼내서 url하이퍼 링크 건 리스트 반환 //
 			// 검색결과가 없으면 검색결과가 없습니다 출력

@@ -67,8 +67,8 @@ function printAllSpace() {
 				var markerPosition = "";
 				var marker = "";
 				var approval = data[i].approval;
-				
-				if(approval == 'Y'){
+
+				if(approval == 'Y' && data[i].spaceStatus == 'Y'){
 					infoContents = '<div style="padding:5px; text-align:center;"><a href="/space/spaceDetail.kh?spaceNo='+data[i].spaceNo+'" style="color:blue;text-align:center" target="_blank">'+data[i].spaceName+'</a></div>'
 				}else if(approval == 'N'){
 					infoContents = '<div style="padding:5px;"><span style="color: red;">'+data[i].spaceName+'</span></div>'
@@ -179,7 +179,6 @@ function printAllSpace() {
 			url: "/admin/dashboard/weekly.kh",
 			type:"get",
 			success: function(data) {
-				console.log(data)
 				const dailyNewChatRoomChart = new Chart(weeklyChart, {
 					type: 'line',
 					data:{
