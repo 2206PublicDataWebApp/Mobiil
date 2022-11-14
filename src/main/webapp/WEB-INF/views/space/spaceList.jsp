@@ -125,7 +125,18 @@ input[type=text]{
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>
 <script type="text/javascript">
 	function heart(){
-		$.ajax({
+		if('${search.searchArea }' == '' && '${search.searchValue }' == '' && '${search.maxNum}' == '0' && '${search.minNum}' == '0'){
+			$.ajax({
+				url: '/space/heartDesc.kh',
+				type: 'get',
+				data: {"page":"", "searchArea":"", "searchValue":""
+						, "minNum":"", "maxNum":""},
+				success: function(){
+					location.href='/space/heartDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=&maxNum=';
+				}
+			})
+		}else{
+			$.ajax({
 			url: '/space/heartDesc.kh',
 			type: 'get',
 			data: {"page":"${p }", "searchArea":"${search.searchArea }", "searchValue":"${search.searchValue }"
@@ -134,7 +145,8 @@ input[type=text]{
 				location.href='/space/heartDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
 			}
 			
-		})
+		});
+		}
 	}
 	
 	function review(){
@@ -142,10 +154,10 @@ input[type=text]{
 			$.ajax({
 				url: '/space/reviewDesc.kh',
 				type: 'get',
-				data: {"page":"${p }", "searchArea":"", "searchValue":""
-						, "minNum":"0", "maxNum":"0"},
+				data: {"page":"", "searchArea":"", "searchValue":""
+						, "minNum":"", "maxNum":""},
 				success: function(){
-					location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=${search.minNum}&maxNum=${search.maxNum}';
+					location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=&maxNum=';
 				}
 			})
 		}else{

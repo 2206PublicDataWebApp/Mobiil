@@ -219,8 +219,11 @@
 	
 	<!-- 지역별 조회 -->
 	<select id="selectByArea" resultMap="SpaceResultMap">
-		SELECT * FROM SPACE_TBL
-		<where>
+		SELECT ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, MAX(SI.SPACE_FILERENAME) SPACE_FILERENAME
+		FROM SPACE_TBL ST
+        LEFT OUTER JOIN SPACE_IMG SI
+		ON ST.SPACE_NO = SI.SPACE_NO
+        <where>
 			<if test="searchArea.toString() != '전체'">
 				SPACE_AREA = #{searchArea}
 			</if>
@@ -229,6 +232,8 @@
 			</if>
 			AND SPACE_STATUS='Y' AND APPROVAL='Y'
 		</where>
+		GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, APPROVAL_DATE
+		ORDER BY APPROVAL_DATE DESC
 	</select>
 	
 	<!-- 최신순/리뷰 많은순/찜 많은순 카운트 -->

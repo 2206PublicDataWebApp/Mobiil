@@ -448,12 +448,13 @@ ${space.spaceComent }
 				$("#rCount").text("리뷰(" + rList.length + ")");
 				if(rList != null){
 					for(var i in rList){
-						
+						var str = rList[i].reviewWriter;
+						var reviewWriter = str.substr(0,1);
 						var reviewContents = rList[i].reviewContents;
 						reviewContents = reviewContents.replace(/(?:\r\n|\r|\n)/g, '<br>');
 						var $div = $('<div>');
 						var $hr = $('<hr>');
-						var $rWriter = $("<span class='reviewWriter' style='font-size:17px;font-weight:bold;'>").text(rList[i].reviewWriter);
+						var $rWriter = $("<span class='reviewWriter' style='font-size:17px;font-weight:bold;'>").text(reviewWriter+"**");
 						var $rContentBox = $("<div style='margin-top:30px;margin-bottom:30px;' class='"+rList[i].reviewNo+"'>");
 						var $rContent = $("<span class='rc"+rList[i].reviewNo+"'>").html(""+reviewContents);
 						var $rUpdateDate = $("<span style='margin-left:20px;font-size:12px;color:lightgray;font-weight:normal;'>").text(rList[i].rUpdateDate);
