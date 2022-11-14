@@ -172,6 +172,11 @@ display: none;
             return false;
         }
             
+        if ( $('.nick_already').is(':visible') ) {
+			alert("사용중이 아닌 닉네임을 입력하세요.");
+       		return false;
+		}
+        
         document.mypage_form.submit();
     	}
     }

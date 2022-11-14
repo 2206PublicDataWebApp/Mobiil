@@ -91,6 +91,11 @@
 	        return false;
 	     }
         
+        if ( $('.email_ok').is(':visible') ) {
+			alert("가입이력이 있는 이메일을 입력하세요.");
+    		return false;
+		}
+        
         var inputCode = $(".mail_check_input").val();
         if (inputCode == "") {
         	alert("인증번호를 입력하세요.");

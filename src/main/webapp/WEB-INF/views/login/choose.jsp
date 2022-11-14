@@ -35,8 +35,6 @@
         <span onclick="location.href='/member/joinView.kh'">개인 회원가입하기</span>
         <span> | </span> 
         <span onclick="location.href='/host/joinView.kh'">기업 회원가입하기</span> 
-<!--         <span> | </span>  -->
-<!--         <span onclick="location.href='/login/findPwdView.kh'">비밀번호 찾기</span> -->
     </div>
       <br><br><br><br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>

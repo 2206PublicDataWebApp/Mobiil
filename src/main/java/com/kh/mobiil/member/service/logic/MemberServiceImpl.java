@@ -60,11 +60,17 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int removeMember(String memberEmail) { // 회원 탈퇴
+	public int removeMember(String memberEmail) { // 회원 탈퇴(일반)
 		int result = mStore.deleteMember(session, memberEmail);
 		return result;
 	}
 
+	@Override
+	public int removeKakaoMember(String memberEmail) { // 회원 탈퇴(카카오)
+		int result = mStore.deleteKakaoMember(session, memberEmail);
+		return result;
+	}
+	
 	@Override
 	public int checkDupEmail(String memberEmail) { // 이메일 중복 체크
 		int result = mStore.checkDupEmail(session, memberEmail);
@@ -308,5 +314,31 @@ public class MemberServiceImpl implements MemberService {
 		int result = mStore.updateNick(session, member);
 		return result;
 	}
+
+	@Override
+	public void kakaoRemove(String access_Token) {
+		  String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+		    try {
+		        URL url = new URL(reqURL);
+		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		        conn.setRequestMethod("POST");
+		        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+		        
+		        int responseCode = conn.getResponseCode();
+		        System.out.println("responseCode : " + responseCode);
+		        
+		        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		        
+		        String result = "";
+		        String line = "";
+		        
+		        while ((line = br.readLine()) != null) {
+		            result += line;
+		        }
+		        System.out.println(result);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
 
 }

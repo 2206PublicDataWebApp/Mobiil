@@ -465,6 +465,7 @@ public class MemberController {
 		Member loginUser = mService.getLoginUser(access_Token);
 
 		session.setAttribute("loginUser", loginUser);
+		session.setAttribute("access_Token", access_Token);
 		session.setAttribute("memberEmail", loginUser.getMemberEmail());
 		session.setAttribute("memberNick", loginUser.getMemberNick());
 
@@ -584,6 +585,30 @@ public class MemberController {
 				request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
 				request.setAttribute("url", "/member/logout.kh");
 				mv.setViewName("/common/alert");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	/**
+	 * 카카오 회원 탈퇴
+	 * @param mv
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/kakaoRemove.kh", method = RequestMethod.GET)
+	public ModelAndView kakaoRemove(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		try {
+			Member member = (Member) session.getAttribute("loginUser");
+			String memberEmail = member.getMemberEmail();
+			int result = mService.removeKakaoMember(memberEmail);
+			mService.kakaoRemove((String)session.getAttribute("access_Token"));
+			session.invalidate();
+			request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
+			request.setAttribute("url", "/member/logout.kh");
+			mv.setViewName("/common/alert");
 		} catch (Exception e) {
 			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
 		}

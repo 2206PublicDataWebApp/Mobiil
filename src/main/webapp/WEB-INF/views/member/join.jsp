@@ -79,8 +79,8 @@
 				<span class="email_already">이미 사용중인 이메일이에요 :(</span>
 				<div class="form-inline mb-3">
 					<div class="mail_check_input_box" id="mail_check_input_box_false">
-						<input type="text" class="mail_check_input form-control col-8" disabled="disabled">
-						<button type="button" id="mail_check_button" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
+						<input style="width:300px; margin: 1px 1px 10px 70px;" type="text" class="mail_check_input form-control col-8" disabled="disabled">
+						<button style="height:45px;" type="button" id="mail_check_button" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
 					</div>
 				</div>
 				<!-- 인증번호 확인 -->
@@ -185,6 +185,16 @@
 				alert("올바른 인증번호를 입력하세요.");
         		return false;
 			}
+		}
+		
+		if ( $('.email_already').is(':visible') ) {
+			alert("사용중이 아닌 이메일을 입력하세요.");
+       		return false;
+		}
+	
+		if ( $('.nick_already').is(':visible') ) {
+			alert("사용중이 아닌 닉네임을 입력하세요.");
+       		return false;
 		}
 		
         document.join_form.submit();

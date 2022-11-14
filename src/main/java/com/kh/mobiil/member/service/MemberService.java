@@ -51,7 +51,9 @@ public interface MemberService {
 
 	public Member printOneByKEmail(String memberEmail); // 카카오 마이 페이지에 정보 출력
 
-	public int removeMember(String memberEmail); // 회원 탈퇴(일반&카카오)
+	public int removeMember(String memberEmail); // 회원 탈퇴(일반)
+
+	public int removeKakaoMember(String memberEmail); // 회원 탈퇴(카카오)
 
 	// 호스트(기업)
 	public int checkHostDupEmail(String hostEmail); // 비밀번호 변경 시 이메일 존재 체크(기업)
@@ -73,5 +75,7 @@ public interface MemberService {
 	public int getDailyNewMember(int dayBefore); // 일일 일반 가입자
 
 	public int getDailyNewHost(int dayBefore); // 일일 호스트 가입자
+
+	public void kakaoRemove(String access_Token);
 
 }

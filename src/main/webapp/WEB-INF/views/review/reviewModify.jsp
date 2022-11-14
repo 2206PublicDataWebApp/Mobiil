@@ -80,13 +80,11 @@
 			<c:forEach items="${reviewImg}" var="rImg">
 				<input type="hidden" value="${rImg.reviewImgNo}" name="reviewImgNo">
 				<input type="hidden" value="${rImg.reviewFileRename}" name="reviewFileRename">
+				<c:if test="${!empty rImg.reviewFileRename}">
 					<input type="file" class="file" name="reloadFile" accept=".jpg, .jpeg, .png">
 					<a>${rImg.reviewFileName}</a>
+				</c:if>
 			</c:forEach>
-<!-- 				<a>사진name</a> -->
-<!-- 				<input type="button" value="추가" onclick="addFile();"> -->
-<!-- 				<input type="button" value="삭제" onclick="delFile();"> -->
-<!-- 				<img id="preview" style="width:150px; height:150px; display: none;" > -->
 			</td>
 		</tr>	
 		<tr>
@@ -101,24 +99,6 @@
 	</table>
 	</form>
 	<script>
-//  	var maxFile = 1;
- 	
-// 	function addFile() {
-// 		if(maxFile >= 3) {
-// 	 	      alert("이미지 업로드 최대 개수는 3개 입니다.");
-// 	 	      return;
-// 		}else{ 
-// 			$("input").last().after("<input type='file' name='reloadFile' accept='.jpg, .jpeg, .png'>");
-// 			 maxFile ++;
-// 		}
-// 	}
-	
-// 	function delFile() {
-// 		var inputFile = $("input[type=file]")
-// 		if(inputFile.length > 1) {
-// 			$("input").last().remove();
-// 		}
-// 	} 
 
 	</script>
 	<br><br><br>
