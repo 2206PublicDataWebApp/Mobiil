@@ -165,7 +165,7 @@
 		</div>
 	<script>
 	// 시간당 금액
-	var price = ${rOne.price } / (${rOne.revEnd } - ${rOne.revStart })  ;
+	var price = ${rOne.price } / (${rOne.revEnd } - ${rOne.revStart });
 	$("#hour").text("시간당 금액 : " + Math.floor(price)+"원");
 	document.getElementById('hour').style.color="red";
 	

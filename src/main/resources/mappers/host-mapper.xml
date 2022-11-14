@@ -242,13 +242,13 @@
   	 </update>
   	 
   	 <!-- 월별 예약 건수  -->
-  	 <select id="getRegervationCountByMonth" resultType="_int">
- 		SELECT COUNT(*),
- 		TO_CHAR(RESERV_DATE, 'YYYY-MM') AS MONTH
-	    FROM RESERVATION_TBL
-	    WHERE REV_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
-	    GROUP BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
-	    ORDER BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
+  	 <select id="getRegervationCountByMonth" resultType="map">
+ 		SELECT TO_CHAR(A.RESERV_DATE, 'YYYY-MM') as RESERV_DATE, COUNT(B.RESERV_DATE) as RevCount
+        FROM MONTH_TBL A
+        LEFT OUTER JOIN RESERVATION_TBL B ON (TO_CHAR(A.RESERV_DATE,'YYYY-MM') = TO_CHAR( B.RESERV_DATE, 'YYYY-MM'))
+        AND B.RESERV_STATUS = 'Y' AND B.HOST_EMAIL = #{hostEmail}
+        GROUP BY TO_CHAR(A.RESERV_DATE, 'YYYY-MM')
+        ORDER BY RESERV_DATE
   	 </select>
   	 
   	 <!-- 예약 건수 1월 -->
@@ -257,28 +257,28 @@
 	    TO_CHAR(RESERV_DATE, 'YYYY-MM') AS MONTH
 	    FROM RESERVATION_TBL
 	    WHERE TO_CHAR(RESERV_DATE, 'YYYY-MM') = '2022-01' 
-	    AND REV_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
+	    AND RESERV_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
 	    GROUP BY TO_CHAR(RESERV_DATE, 'YYYY-MM') 
   	 </select>
   	 
   	 <!-- 월별 공간수 -->
-  	 <select id="getSpaceCountByMonth" resultType="_int">
-  	 	SELECT COUNT(*),
- 		TO_CHAR(APPROVAL_DATE, 'YYYY-MM') AS MONTH
-	    FROM SPACE_TBL
-	    WHERE SPACE_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
-	    GROUP BY TO_CHAR(APPROVAL_DATE, 'YYYY-MM')
-	    ORDER BY TO_CHAR(APPROVAL_DATE, 'YYYY-MM')
+  	 <select id="getSpaceCountByMonth" resultType="map">
+  	 	SELECT TO_CHAR(A.RESERV_DATE, 'YYYY-MM') AS RESERV_DATE, COUNT(B.SPACE_NO) as SpaCount
+	    FROM MONTH_TBL A
+	    LEFT OUTER JOIN SPACE_TBL B ON (TO_CHAR(A.RESERV_DATE,'YYYY-MM') = TO_CHAR(B.APPROVAL_DATE, 'YYYY-MM'))
+	    AND B.SPACE_STATUS = 'Y' AND B.HOST_EMAIL = #{hostEmail}
+        GROUP BY TO_CHAR(A.RESERV_DATE, 'YYYY-MM')
+	    ORDER BY RESERV_DATE
   	 </select>
   	 
   	 <!-- 월별 판매금액 -->
-  	 <select id="getProfitByMonth" resultType="_int">
-  	 	SELECT SUM((REV_END-REV_START)*PRICE) as PRICE,
- 		TO_CHAR(RESERV_DATE, 'YYYY-MM') AS MONTH
-	    FROM RESERVATION_TBL
-	    WHERE REV_STATUS = 'Y' AND HOST_EMAIL = #{hostEmail}
-	    GROUP BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
-	    ORDER BY TO_CHAR(RESERV_DATE, 'YYYY-MM')
+  	 <select id="getProfitByMonth" resultType="map">
+  	 	SELECT TO_CHAR(A.RESERV_DATE, 'YYYY-MM') AS RESERV_DATE, SUM(FLOOR(B.REV_END-B.REV_START)*B.PRICE) as PRICE
+	    FROM MONTH_TBL A
+        LEFT OUTER JOIN RESERVATION_TBL B ON (TO_CHAR(A.RESERV_DATE,'YYYY-MM') = TO_CHAR(B.RESERV_DATE, 'YYYY-MM'))
+	    AND B.RESERV_STATUS = 'Y' AND B.HOST_EMAIL = #{hostEmail}
+	    GROUP BY TO_CHAR(A.RESERV_DATE, 'YYYY-MM')
+	    ORDER BY RESERV_DATE, 'YYYY-MM'
   	 </select>
   	 
   </mapper>
