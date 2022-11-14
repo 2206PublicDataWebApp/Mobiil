@@ -213,4 +213,14 @@ public class HostStoreImpl implements HostStore{
 		return result;
 	}
 
+	@Override
+	public int priceSumByHostemail(SqlSession session, String hostEmail, Date date1, Date date2) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("hostEmail", hostEmail);
+		map.put("date1", date1);
+		map.put("date2", date2);
+		int result = session.selectOne("HostMapper.priceSumByHostemail", map);
+		return result;
+	}
+
 }

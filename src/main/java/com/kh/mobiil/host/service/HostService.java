@@ -74,4 +74,6 @@ public interface HostService {
 
 	List<Reservation> getProfitByMonth(String hostEmail);
 
+	int priceSumByHostemail(String hostEmail, Date date1, Date date2);
+
 }

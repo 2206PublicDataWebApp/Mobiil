@@ -198,4 +198,10 @@ public class HostServiceImpl implements HostService{
 		return result;
 	}
 
+	@Override
+	public int priceSumByHostemail(String hostEmail, Date date1, Date date2) {
+		int result = hStore.priceSumByHostemail(session, hostEmail, date1, date2);
+		return result;
+	}
+
 }

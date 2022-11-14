@@ -96,7 +96,7 @@
 			// 일주일전 날짜
 			var date2 = weekYear + "-" + weekMonth + "-" + weekDay;
 			
-			location.href = "/host/profitsCheck.kh?date1="+date1+"&date2="+date2;
+			location.href = "/host/profitsCheck.kh?date1="+'2022-11-01'+"&date2="+'2022-11-02';
 		}
 	</script>
 </body>

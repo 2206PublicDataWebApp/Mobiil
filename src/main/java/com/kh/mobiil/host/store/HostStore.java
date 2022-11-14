@@ -73,4 +73,6 @@ public interface HostStore {
 
 	List<Reservation> getProfitByMonth(SqlSession session, String hostEmail);
 
+	int priceSumByHostemail(SqlSession session, String hostEmail, Date date1, Date date2);
+
 }

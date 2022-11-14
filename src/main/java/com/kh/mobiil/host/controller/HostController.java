@@ -421,7 +421,7 @@ public class HostController {
 			}
 			////////////////////////////////////////////////////////////
 			List<Reservation> rList = hService.rListByDate(currentPage, boardLimit, date1, date2, hostEmail);
-			int priceSum = hService.priceSumByHostemail(hostEmail);
+			int priceSum = hService.priceSumByHostemail(hostEmail, date1, date2);
 			System.out.println(priceSum);
 			System.out.println(rList);
 			if (!rList.isEmpty()) {
@@ -437,7 +437,7 @@ public class HostController {
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", e.getMessage());
-			mv.setViewName("common/errorPage");
+			mv.setViewName("host/profitsCheck"); 
 		}
 		return mv;
 	}

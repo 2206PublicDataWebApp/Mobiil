@@ -119,7 +119,7 @@
 	</div>
 	
 	<script>
-	$(window).on('load', function(){
+	/* $(window).on('load', function(){
 	    $('#total').each(function(){
 	        var txt = $(this).text();
 	        $(this).html(txt.replace(/,/g, ''));
@@ -166,7 +166,7 @@
 		rowCnt++;
 	});
 	$("#total").text(col6Sum);
-	}); 
+	});  */
 	</script>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>	

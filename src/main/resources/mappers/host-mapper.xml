@@ -142,11 +142,18 @@
 	  	ORDER BY 11 DESC
 	  </select>
 
-	  <!-- 정산 확인 금액 합계 -->
-	  <select id="priceSumByHostemail" resultType="_int">
+	
+	  <!-- <select id="priceSumByHostemail" resultType="_int">
 	  	SELECT SUM(PRICE) 
 	  	FROM RESERVATION_TBL
 	  	WHERE HOST_EMAIL = #{hostEmail}
+	  </select>  -->
+	  
+	  
+	  <select id="priceSumByHostemail" resultType="_int">
+	  	SELECT SUM((REV_END-REV_START)*PRICE) AS PRICE
+	  	FROM RESERVATION_TBL
+	  	WHERE RESERV_DATE BETWEEN  #{date1} AND #{date2} AND HOST_EMAIL = #{hostEmail}
 	  </select>
 	  
 	  <!-- 공간 업로드 -->

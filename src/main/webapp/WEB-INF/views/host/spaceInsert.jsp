@@ -115,7 +115,7 @@
 					<td>
 						<button type="button" class="btn btn-default" onclick="addFile();">+</button>
 						<button type="button" class="btn btn-default" onclick="removeFile();">-</button>
-						<input multiple="multiple" type="file" id="uploadFile" name="uploadFile">
+						<input multiple="multiple" type="file" id="uploadFile" name="uploadFile" required>
 					</td>
 				</tr>
 				<tr>
@@ -155,6 +155,16 @@
 	</form>
 	
 <script>
+
+	function fileuploadRequired() {
+		var chk = document.getElementById("uploadFile");
+		if(!chk.value){
+			alert("사진을 업로드 해주세요");
+			return false;
+		}
+		}
+	
+	
 	$(document).on('click', "input[type='checkbox']", function(){
 	    if(this.checked) {
 	        const checkboxes = $("input[type='checkbox']");
