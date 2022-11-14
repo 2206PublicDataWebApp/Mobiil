@@ -286,7 +286,6 @@ public class SpaceController {
 			,@RequestParam(value="minNum", required=false) Integer minNum
 			,@RequestParam(value="maxNum", required=false) Integer maxNum
 			,@RequestParam(value="page", required=false) Integer page) {
-		try {
 			if(searchArea == "" && searchValue == "") {
 			if(minNum != null || maxNum != null){
 				if(minNum == null) {
@@ -361,12 +360,25 @@ public class SpaceController {
 				mv.addObject("paging", paging);
 				mv.addObject("sList", sList);
 			}
+		}else {
+			// 페이징
+						Search search = new Search("","");
+						int currentPage = (page != null) ? page : 1;
+						int totalCount = sService.getTotalCount(search);
+						int naviLimit = 5;
+						int boardLimit = 9;
+						Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
+						RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
+						logger.info(String.valueOf(totalCount));
+						List<Space> sList = sService.printRivewDesc(search, rowBounds);
+						if(!sList.isEmpty()) {
+							mv.addObject("urlVal", "reviewDesc");
+							mv.addObject("search", search);
+							mv.addObject("paging", paging);
+							mv.addObject("sList", sList);
+						}
 		}
 			mv.setViewName("space/spaceList");
-		} catch (Exception e) {
-			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
-		}
-		
 				return mv;
 	}
 	
@@ -568,14 +580,6 @@ public class SpaceController {
 		}
 	}
 
-	//예약 날짜,시간 유효성 체크
-	@ResponseBody
-	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)
-	public String checkTime(String start, String end, String reservDate) {
-		int result = sService.checkTime(start, end, reservDate);
-		return String.valueOf(result);
-	}
-
 	//찜 여부 체크
 	@ResponseBody
 	@RequestMapping(value="/space/checkHeart.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
@@ -584,7 +588,7 @@ public class SpaceController {
 		int result = sService.checkHeart(spaceNo, memberEmail);
 		return result;
 	}
-	
+
 	//찜 추가
 	@ResponseBody
 	@RequestMapping(value="/space/heart.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
@@ -602,7 +606,7 @@ public class SpaceController {
 		int result = sService.insertHeart(heart);
 		return result;
 	}
-	
+
 	//찜 삭제
 	@ResponseBody
 	@RequestMapping(value="/space/deleteHeart.kh", produces="application/json;charset=utf-8", method=RequestMethod.GET)
@@ -614,7 +618,15 @@ public class SpaceController {
 		int result = sService.deleteHeart(heart);
 		return result;
 	}
-	
+
+	//예약 날짜,시간 유효성 체크
+	@ResponseBody
+	@RequestMapping(value="/space/checkTime.kh", method=RequestMethod.GET)
+	public String checkTime(String start, String end, String reservDate) {
+		int result = sService.checkTime(start, end, reservDate);
+		return String.valueOf(result);
+	}
+
 	//결제페이지로 날짜,시간,가격 출력
 	@RequestMapping(value="/space/payment.kh", method=RequestMethod.GET)
 	public ModelAndView payment( ModelAndView mv
