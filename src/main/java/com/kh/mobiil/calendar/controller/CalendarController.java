@@ -23,28 +23,6 @@ public class CalendarController {
 	private CalendarService cService;
 	
 	/**
-	 * 캘린더 띄우기
-	 * @param mv
-	 * @return
-	 */
-	@RequestMapping(value="/admin/calendar.kh")
-	public ModelAndView showCalendar(ModelAndView mv) {
-		mv.setViewName("/admin/eventCalendar");
-		return mv;
-	}
-	
-	/**
-	 * 일정 등록 뷰
-	 * @param mv
-	 * @return
-	 */
-	@RequestMapping(value="/admin/calendar/register.kh")
-	public ModelAndView showCalendarRegister(ModelAndView mv) {
-		mv.setViewName("/admin/eventRegister");
-		return mv;
-	}
-	
-	/**
 	 * 일정 등록
 	 * @param event
 	 * @return
@@ -59,41 +37,7 @@ public class CalendarController {
 			return  "fail";
 		}
 	}
-	/**
-	 * 일정 출력(관리자)
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/admin/calendar/printEvents.kh", method = RequestMethod.GET , produces = "application/json;charset=utf-8")
-	public String printEvents() {
-		List<Event> eList = cService.printEvents();
-		Gson gson = new Gson();
-		return gson.toJson(eList);
-	}
-	
-	/**
-	 * 캘린더 띄우기(서비스)
-	 * @param mv
-	 * @return
-	 */
-	@RequestMapping(value="/calendar.kh")
-	public ModelAndView showServiceCalendar(ModelAndView mv) {
-		mv.setViewName("/calendar");
-		return mv;
-	}
-	
-	/**
-	 * 일정 출력(서비스)
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/calendar/printEventsService.kh", method = RequestMethod.GET , produces = "application/json;charset=utf-8")
-	public String printEventsForService() {
-		List<Event> eList = cService.printEvents();
-		Gson gson = new Gson();
-		return gson.toJson(eList);
-	}
-	
+
 	/**
 	 * 일정 삭제
 	 * @param id
@@ -109,6 +53,7 @@ public class CalendarController {
 			return  "fail";
 		}
 	}
+
 	/**
 	 * 일정 수정
 	 * @param event
@@ -123,5 +68,62 @@ public class CalendarController {
 		}else {
 			return  "fail";
 		}
+	}
+
+	/**
+	 * 일정 출력(관리자)
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/admin/calendar/printEvents.kh", method = RequestMethod.GET , produces = "application/json;charset=utf-8")
+	public String printEvents() {
+		List<Event> eList = cService.printEvents();
+		Gson gson = new Gson();
+		return gson.toJson(eList);
+	}
+
+	/**
+	 * 일정 출력(서비스)
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/calendar/printEventsService.kh", method = RequestMethod.GET , produces = "application/json;charset=utf-8")
+	public String printEventsForService() {
+		List<Event> eList = cService.printEvents();
+		Gson gson = new Gson();
+		return gson.toJson(eList);
+	}
+
+	/**
+	 * 캘린더 띄우기
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/admin/calendar.kh")
+	public ModelAndView showCalendar(ModelAndView mv) {
+		mv.setViewName("/admin/eventCalendar");
+		return mv;
+	}
+	
+	/**
+	 * 캘린더 띄우기(서비스)
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/calendar.kh")
+	public ModelAndView showServiceCalendar(ModelAndView mv) {
+		mv.setViewName("/calendar");
+		return mv;
+	}
+
+	/**
+	 * 일정 등록 뷰
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping(value="/admin/calendar/register.kh")
+	public ModelAndView showCalendarRegister(ModelAndView mv) {
+		mv.setViewName("/admin/eventRegister");
+		return mv;
 	}
 }

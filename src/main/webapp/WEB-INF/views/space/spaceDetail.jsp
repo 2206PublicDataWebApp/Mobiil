@@ -124,6 +124,8 @@
     text-decoration: none;
     cursor: pointer;
   }
+  
+
 </style>
 </head>
 
@@ -166,7 +168,6 @@ function openChatRoom(createUser, withUser) {
 		</div>
 <h1 style='margin-top:80px;;'>${space.spaceName }</h1>
 
-<div style='text-align:right; '><img class='heartImg' style='cursor:pointer;'/></div>
 	<!-- Swiper -->
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
@@ -178,72 +179,68 @@ function openChatRoom(createUser, withUser) {
       <div class="swiper-button-prev"></div>
       <div class="swiper-pagination"></div>
     </div>
+    
 <div class='reservDiv' style='display:inline-block;text-align:right;float:right;'>
-<br>
-<div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
-<br>
-<div class='time' style='float:left;'>
-<select id="startTime" onchange="check();" style='margin-right:5px;text-align:left;' class='commonSelect'>
-<option value="시작">시작</option>
-<option value="9">9시</option>
-<option value="10">10시</option>
-<option value="11">11시</option>
-<option value="12">12시</option>
-<option value="13">13시</option>
-<option value="14">14시</option>
-<option value="15">15시</option>
-<option value="16">16시</option>
-<option value="17">17시</option>
-<option value="18">18시</option>
-<option value="19">19시</option>
-<option value="20">20시</option>
-<option value="21">21시</option>
-<option value="22">22시</option>
-<option value="23">23시</option>
-</select>
-<select id="endTime" onchange="check();" style='margin-left:5px;' class='commonSelect'>
-<option value="끝">끝</option>
-<option value="10">10시</option>
-<option value="11">11시</option>
-<option value="12">12시</option>
-<option value="13">13시</option>
-<option value="14">14시</option>
-<option value="15">15시</option>
-<option value="16">16시</option>
-<option value="17">17시</option>
-<option value="18">18시</option>
-<option value="19">19시</option>
-<option value="20">20시</option>
-<option value="21">21시</option>
-<option value="22">22시</option>
-<option value="23">23시</option>
-<option value="24">24시</option>
-</select>
-<span class='sum' style='font-weight:bold;font-size:20px;text-align:center;'></span>
-<input type="button" value="결제하기" onclick="payment()" style='margin-left:5px;text-align:right;' class='btn'>
-</div>
-<br>
-<br>
-<br>
-<br>
-<div class='payAndchat' style='text-align:center;'>
-	<c:if test='${!empty loginUser.memberNick }'>
-		<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${memberNick }');" value='채팅하기' style='margin-right:5px;' class='btn'>
-	</c:if>
-	<c:if test='${!empty loginHost.hostEmail }'>
-		<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅하기' style='margin-right:5px;' class='btn'>
-	</c:if>
-</div>
+<div style='text-align:right; '><img class='heartImg' style='cursor:pointer;'/></div>
+	<br>
+	<div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
+	<br>
+		<div class='time' style='float:left;'>
+		<select id="startTime" onchange="check();" style='margin-right:5px;text-align:left;' class='commonSelect'>
+			<option value="시작">시작</option>
+			<option value="9">9시</option>
+			<option value="10">10시</option>
+			<option value="11">11시</option>
+			<option value="12">12시</option>
+			<option value="13">13시</option>
+			<option value="14">14시</option>
+			<option value="15">15시</option>
+			<option value="16">16시</option>
+			<option value="17">17시</option>
+			<option value="18">18시</option>
+			<option value="19">19시</option>
+			<option value="20">20시</option>
+			<option value="21">21시</option>
+			<option value="22">22시</option>
+			<option value="23">23시</option>
+		</select>
+		<select id="endTime" onchange="check();" style='margin-left:5px;' class='commonSelect'>
+			<option value="끝">끝</option>
+			<option value="10">10시</option>
+			<option value="11">11시</option>
+			<option value="12">12시</option>
+			<option value="13">13시</option>
+			<option value="14">14시</option>
+			<option value="15">15시</option>
+			<option value="16">16시</option>
+			<option value="17">17시</option>
+			<option value="18">18시</option>
+			<option value="19">19시</option>
+			<option value="20">20시</option>
+			<option value="21">21시</option>
+			<option value="22">22시</option>
+			<option value="23">23시</option>
+			<option value="24">24시</option>
+		</select>
+		<span class='sum' style='font-weight:bold;font-size:20px;text-align:center;'></span>
+		<input type="button" value="결제" onclick="payment()" style='margin-left:5px;text-align:right;' class='btn'>
+		<c:if test='${!empty loginUser.memberNick }'>
+				<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${memberNick }');" value='채팅' style='margin-right:5px;' class='btn'>
+			</c:if>
+			<c:if test='${!empty loginHost.hostEmail }'>
+				<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅' style='margin-right:5px;' class='btn'>
+			</c:if>
+		</div>
+		<br><br><br>
+		<div id="map" style="width:300px;height:300px;"></div>
+		<span>${space.address2} ${space.address3} ${space.address4}</span>
+
 </div>
 <div class='spaceComent' style='width:600px;display:inline-block;align:left;margin-top:80px;'>
 ${space.spaceComent }
 
 
 
-<br><br><br><br><br><br>
-<span>${space.address2} ${space.address3} ${space.address4}</span>
-<div id="map" style="width:450px;height:300px;"></div>
-<br><br><br><br><br><br>
 
 <div style='width:700px;align:left;'><span style='font-size:24px;color:darkgreen;'><b id="rCount"></b></span></div>
 <div id="reivewBox" style='width:700px;align:left;'>

@@ -16,21 +16,9 @@ import com.kh.mobiil.chat.store.ChatStore;
 public class ChatStoreLogic implements ChatStore{
 
 	@Override
-	public ChatRoom selectOneRoom(ChatRoom roomInfo, SqlSessionTemplate session) {
-		ChatRoom chatRoom = session.selectOne("chatRoomMapper.selectOneRoom", roomInfo);
-		return chatRoom;
-	}
-
-	@Override
 	public int insertRoom(ChatRoom roomInfo, SqlSessionTemplate session) {
 		int result = session.insert("chatRoomMapper.insertRoom", roomInfo);
 		return result;
-	}
-
-	@Override
-	public List<ChatRoom> selectChatRoom(String memberNick, SqlSessionTemplate session) {
-		List<ChatRoom> cList = session.selectList("chatRoomMapper.selectAllRoom", memberNick);
-		return cList;
 	}
 
 	@Override
@@ -46,6 +34,12 @@ public class ChatStoreLogic implements ChatStore{
 	}
 
 	@Override
+	public Chat selectOneNew(int roomNo, SqlSessionTemplate session) {
+		Chat cOne = session.selectOne("chatMapper.selectOneNew", roomNo);
+		return cOne;
+	}
+
+	@Override
 	public int updateChatRead(int roomNo, String memberNick, SqlSessionTemplate session) {
 		UnreadInfo unreadInfo = new UnreadInfo(memberNick, roomNo);
 		int result = session.update("chatMapper.updateChatRead", unreadInfo);
@@ -53,15 +47,15 @@ public class ChatStoreLogic implements ChatStore{
 	}
 
 	@Override
-	public Chat selectOneNew(int roomNo, SqlSessionTemplate session) {
-		Chat cOne = session.selectOne("chatMapper.selectOneNew", roomNo);
-		return cOne;
+	public ChatRoom selectOneRoom(ChatRoom roomInfo, SqlSessionTemplate session) {
+		ChatRoom chatRoom = session.selectOne("chatRoomMapper.selectOneRoom", roomInfo);
+		return chatRoom;
 	}
 
 	@Override
-	public int selectDailyNewRoom(int dayBefore, SqlSessionTemplate session) {
-		int result = session.selectOne("chatRoomMapper.selectDailyNewRoom", dayBefore);
-		return result;
+	public List<ChatRoom> selectChatRoom(String memberNick, SqlSessionTemplate session) {
+		List<ChatRoom> cList = session.selectList("chatRoomMapper.selectAllRoom", memberNick);
+		return cList;
 	}
 
 	@Override
@@ -81,6 +75,12 @@ public class ChatStoreLogic implements ChatStore{
 	public List<ChatSearchResult> selectSearchResult(String searchValue, SqlSessionTemplate session) {
 		List<ChatSearchResult> sList = session.selectList("chatMapper.selectSearchResult", searchValue);
 		return sList;
+	}
+
+	@Override
+	public int selectDailyNewRoom(int dayBefore, SqlSessionTemplate session) {
+		int result = session.selectOne("chatRoomMapper.selectDailyNewRoom", dayBefore);
+		return result;
 	}
 	
 }

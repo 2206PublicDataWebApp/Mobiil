@@ -23,10 +23,6 @@
 	
 	</insert>
 	
-	<select id="selectEvents" resultMap="EventResultMap">
-		SELECT * FROM EVENT_TBL
-	</select>
-	
 	<delete id="deleteEvent">
 		delete from EVENT_TBL
 		where eventId = #{id}
@@ -38,5 +34,9 @@
 				backgroundColor = #{backgroundColor}, borderColor = #{borderColor}
 		WHERE eventId = #{id}
 	</update>
+	
+	<select id="selectEvents" resultMap="EventResultMap">
+		SELECT * FROM EVENT_TBL
+	</select>
 
 </mapper>

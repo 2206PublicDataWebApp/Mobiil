@@ -1,6 +1,6 @@
 package com.kh.mobiil.chat.domain;
 
-public class UnreadInfo {
+public class UnreadInfo { // 읽음표시할때 사용하는 vo
 	private String memberNick;
 	private int refRoomNo;
 	

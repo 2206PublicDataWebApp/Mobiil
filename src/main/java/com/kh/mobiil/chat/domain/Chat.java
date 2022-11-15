@@ -2,7 +2,7 @@ package com.kh.mobiil.chat.domain;
 
 import java.sql.Timestamp;
 
-public class Chat {
+public class Chat { // 챗메시지 내용
 	
 	private int chatNo;
 	private int refRoomNo;

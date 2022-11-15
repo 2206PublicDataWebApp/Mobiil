@@ -15,6 +15,13 @@
 	</insert>
 	
 	
+	<update id="updateChatRead">
+		UPDATE CHAT_TBL
+		SET read_chk = 'Y'
+		WHERE refRoomNo = #{refRoomNo} 
+			AND sender != #{memberNick}
+	</update>
+	
 	<select id="selectChatLog" resultType="Chat">
 		SELECT * FROM CHAT_TBL
 		WHERE refRoomNo = #{roomNo}
@@ -28,12 +35,7 @@
 			AND read_chk = 'N' 
 	</select>
 	
-	<update id="updateChatRead">
-		UPDATE CHAT_TBL
-		SET read_chk = 'Y'
-		WHERE refRoomNo = #{refRoomNo} 
-			AND sender != #{memberNick}
-	</update>
+	
 	
 	<select id="selectOneNew" resultType="Chat">
 	<![CDATA[ 

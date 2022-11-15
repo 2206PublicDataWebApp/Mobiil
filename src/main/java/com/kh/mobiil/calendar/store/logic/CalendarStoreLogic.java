@@ -18,9 +18,9 @@ public class CalendarStoreLogic implements CalendarStore {
 	}
 
 	@Override
-	public List<Event> selectEvents(SqlSessionTemplate session) {
-		List<Event> eList = session.selectList("eventMapper.selectEvents");
-		return eList;
+	public int updateEvent(Event event, SqlSessionTemplate session) {
+		int result = session.update("eventMapper.updateEvent", event);
+		return result;
 	}
 
 	@Override
@@ -30,9 +30,9 @@ public class CalendarStoreLogic implements CalendarStore {
 	}
 
 	@Override
-	public int updateEvent(Event event, SqlSessionTemplate session) {
-		int result = session.update("eventMapper.updateEvent", event);
-		return result;
+	public List<Event> selectEvents(SqlSessionTemplate session) {
+		List<Event> eList = session.selectList("eventMapper.selectEvents");
+		return eList;
 	}
 	
 

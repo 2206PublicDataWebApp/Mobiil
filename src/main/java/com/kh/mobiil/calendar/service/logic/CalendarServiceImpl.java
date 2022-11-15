@@ -28,9 +28,9 @@ public class CalendarServiceImpl implements CalendarService{
 
 
 	@Override
-	public List<Event> printEvents() {
-		List<Event> eList = cStore.selectEvents(session); 
-		return eList;
+	public int modifyEvent(Event event) {
+		int result = cStore.updateEvent(event, session);
+		return result;
 	}
 
 
@@ -42,9 +42,9 @@ public class CalendarServiceImpl implements CalendarService{
 
 
 	@Override
-	public int modifyEvent(Event event) {
-		int result = cStore.updateEvent(event, session);
-		return result;
+	public List<Event> printEvents() {
+		List<Event> eList = cStore.selectEvents(session); 
+		return eList;
 	}
 
 }

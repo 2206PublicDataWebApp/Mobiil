@@ -34,97 +34,7 @@ public class ChatController {
 	@Autowired
 	private MemberService mService;
 	
-	 /**채팅방 리스트 띄우기 + 언리드 카운트 띄우기
-	  * 
-	  * @param memberNick
-	  * @param mv
-	  * @return
-	  */
-	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
-	public ModelAndView showChatList(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
-		
-		//memberNick은 로그인한사람의 memberNick임
-		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
-		
-		// refRoomNo랑 언리드 read_ckh 확인해서 출력
-		for(int i = 0; i < cList.size() ; i++) {
-			int refRoomNo = cList.get(i).getRoomNo();
-			int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
-			cList.get(i).setUnReadCount(unReadCount);
-		}
-		mv.addObject("cList", cList);
-		mv.setViewName("/chat/chatWindow");
-		return mv;
-	}
-	
-	/**프사 보여주기
-	 * 
-	 * @param memberNick
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/chat/getProfile", method = RequestMethod.GET)
-	public String getProfile(@RequestParam("memberNick") String memberNick) {
-		int memberChk  = mService.checkDupNick(memberNick); 	// 이 사람이 멤버에 있는지
-		int hostChk =  mService.getCountHostNick(memberNick);   // 이 사람이 호스트에 있는지
-		Partner pOne = pService.printOnePartner(memberNick); 	// 이사람이 파트너인지
-		
-		if(hostChk > 0) {
-			return "noPartner";
-		}
-		if(memberChk > 0 && pOne != null ) {
-			return pOne.getProfileRename();
-		}else if(pOne == null) {
-			return "noPartner";
-		}else {
-			return "noPartner";
-		}
-	}
-	
-	/** 메뉴바 언리드카운트
-	 * 
-	 * @param memberNick
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/chat/getTotalUnread.kh", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
-	public String getTotalUnread(@RequestParam(value = "memberNick") String memberNick) {
-		//memberNick은 로그인한사람의 memberNick임
-		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
-		int TotalUnread = 0;
-		// refRoomNo랑 언리드 read_ckh 확인해서 출력
-		for(int i = 0; i < cList.size() ; i++) {
-			int refRoomNo = cList.get(i).getRoomNo();
-			int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
-			cList.get(i).setUnReadCount(unReadCount);
-			TotalUnread  = TotalUnread + unReadCount;
-		}
-		String result = String.valueOf(TotalUnread);
-		return result;
-	}
-
-	
-	/**
-	 *  채팅방 띄우기
-	 * @param memberNick
-	 * @param roomNo
-	 * @param roomStatus
-	 * @param mv
-	 * @return
-	 */
-	@RequestMapping(value="/chat/chatRoom.kh")
-	public ModelAndView showChatRoom(@RequestParam(value = "memberNick", required = false) String memberNick,
-									@RequestParam("roomNo") int roomNo,
-									@RequestParam(value = "roomStatus", required = false ) String roomStatus,
-									ModelAndView mv) {
-		mv.addObject("memberNick", memberNick);
-		mv.addObject("roomStatus", roomStatus);
-		mv.addObject("roomNo", roomNo);
-		mv.setViewName("/chat/chatLog");
-		return mv;
-	}
-	
-	/**
+	 /**
 	 *  채팅방 만들기
 	 * @param roomInfo
 	 * @return
@@ -173,7 +83,7 @@ public class ChatController {
 		}
 		return "noLogin";		
 	}
-	
+
 	/**
 	 *  채팅 보내기
 	 * @param chat
@@ -189,7 +99,7 @@ public class ChatController {
 			return "fail";
 		}
 	}
-	
+
 	/**
 	 * 채팅 로그 조회하기
 	 * @param roomNo
@@ -231,7 +141,66 @@ public class ChatController {
 		}
 		return gson.toJson(jsonObj);
 	}
+
+	/** 메뉴바 언리드카운트
+	 * 
+	 * @param memberNick
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/chat/getTotalUnread.kh", method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+	public String getTotalUnread(@RequestParam(value = "memberNick") String memberNick) {
+		//memberNick은 로그인한사람의 memberNick임
+		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
+		int TotalUnread = 0;
+		// refRoomNo랑 언리드 read_ckh 확인해서 출력
+		for(int i = 0; i < cList.size() ; i++) {
+			int refRoomNo = cList.get(i).getRoomNo();
+			int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
+			cList.get(i).setUnReadCount(unReadCount);
+			TotalUnread  = TotalUnread + unReadCount;
+		}
+		String result = String.valueOf(TotalUnread);
+		return result;
+	}
+
+	/**프사 보여주기
+	 * 
+	 * @param memberNick
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/chat/getProfile", method = RequestMethod.GET)
+	public String getProfile(@RequestParam("memberNick") String memberNick) {
+		int memberChk  = mService.checkDupNick(memberNick); 	// 이 사람이 멤버에 있는지
+		int hostChk =  mService.getCountHostNick(memberNick);   // 이 사람이 호스트에 있는지
+		Partner pOne = pService.printOnePartner(memberNick); 	// 이사람이 파트너인지
+		
+		if(hostChk > 0) {
+			return "noPartner";
+		}
+		if(memberChk > 0 && pOne != null ) {
+			return pOne.getProfileRename();
+		}else if(pOne == null) {
+			return "noPartner";
+		}else {
+			return "noPartner";
+		}
+	}
 	
+	/**
+	 * 공간검색
+	 * @param searchValue
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/chat/searchSpace.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String searchSpace(@RequestParam("searchValue") String searchValue) { // gson으로 돌려주기
+		Gson gson = new Gson();
+		List<ChatSearchResult> sList = cService.searchSpace(searchValue);
+		return gson.toJson(sList);
+	}
+
 	/**
 	 * 채팅방 비활성화(채팅 나가기) 채팅방은 비활성화 이후 그날 자정 폭파
 	 * @param roomNo
@@ -249,15 +218,45 @@ public class ChatController {
 	}
 
 	/**
-	 * 공간검색
-	 * @param searchValue
+	 *  채팅방 띄우기
+	 * @param memberNick
+	 * @param roomNo
+	 * @param roomStatus
+	 * @param mv
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/chat/searchSpace.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public String searchSpace(@RequestParam("searchValue") String searchValue) { // gson으로 돌려주기
-		Gson gson = new Gson();
-		List<ChatSearchResult> sList = cService.searchSpace(searchValue);
-		return gson.toJson(sList);
+	@RequestMapping(value="/chat/chatRoom.kh")
+	public ModelAndView showChatRoom(@RequestParam(value = "memberNick", required = false) String memberNick,
+									@RequestParam("roomNo") int roomNo,
+									@RequestParam(value = "roomStatus", required = false ) String roomStatus,
+									ModelAndView mv) {
+		mv.addObject("memberNick", memberNick);
+		mv.addObject("roomStatus", roomStatus);
+		mv.addObject("roomNo", roomNo);
+		mv.setViewName("/chat/chatLog");
+		return mv;
+	}
+
+	/**채팅방 리스트 띄우기 + 언리드 카운트 띄우기
+	  * 
+	  * @param memberNick
+	  * @param mv
+	  * @return
+	  */
+	@RequestMapping(value="/chat/chatWindow.kh", method = RequestMethod.GET)
+	public ModelAndView showChatList(@RequestParam(value = "memberNick") String memberNick, ModelAndView mv) {
+		
+		//memberNick은 로그인한사람의 memberNick임
+		List<ChatRoom> cList = cService.listByMemberNick(memberNick);
+		
+		// refRoomNo랑 언리드 read_ckh 확인해서 출력
+		for(int i = 0; i < cList.size() ; i++) {
+			int refRoomNo = cList.get(i).getRoomNo();
+			int unReadCount = cService.unReadCount(refRoomNo, memberNick); // sender가 내가 아니고 status가 N인걸 센다..
+			cList.get(i).setUnReadCount(unReadCount);
+		}
+		mv.addObject("cList", cList);
+		mv.setViewName("/chat/chatWindow");
+		return mv;
 	}
 }
