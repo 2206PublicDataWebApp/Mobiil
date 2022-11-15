@@ -116,7 +116,7 @@ input[type=text]{
 		<option value="강동" <c:if test="${searchArea eq '강동'}">selected</c:if>>강동</option>
 		<option value="강서" <c:if test="${searchArea eq '강서'}">selected</c:if>>강서</option>
 	</select>
-	<input type="text" name="searchValue" class="searchText" value="${searchValue }" style="height:24px;">
+	<input type="text" name="searchValue" class="searchText" value="${search.searchValue }" style="height:24px;">
 	<input type="submit" value="검색" class="btn">
 </form>
 </div>
@@ -132,7 +132,7 @@ input[type=text]{
 				data: {"page":"", "searchArea":"", "searchValue":""
 						, "minNum":"", "maxNum":""},
 				success: function(){
-					location.href='/space/heartDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=&maxNum=';
+					location.href='/space/heartDesc.kh?page=${page }&searchArea=&searchValue=&minNum=${minNum}&maxNum=${maxNum}';
 				}
 			})
 		}else{
@@ -157,7 +157,7 @@ input[type=text]{
 				data: {"page":"", "searchArea":"", "searchValue":""
 						, "minNum":"", "maxNum":""},
 				success: function(){
-					location.href='/space/reviewDesc.kh?page=${page }&searchArea=${search.searchArea }&searchValue=${search.searchValue }&minNum=&maxNum=';
+					location.href='/space/reviewDesc.kh?page=${page }&searchArea=&searchValue=&minNum=${minNum}&maxNum=${maxNum}';
 				}
 			})
 		}else{

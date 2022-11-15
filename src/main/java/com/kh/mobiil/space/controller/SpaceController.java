@@ -229,7 +229,6 @@ public class SpaceController {
 					List<Space> sList = sService.printHeartDesc(search, rowBounds);
 					if(!sList.isEmpty()) {
 						mv.addObject("urlVal", "heartDesc");
-						mv.addObject("search", search);
 						mv.addObject("paging", paging);
 						mv.addObject("sList", sList);
 					}
@@ -321,7 +320,6 @@ public class SpaceController {
 			List<Space> sList = sService.printRivewDesc(search, rowBounds);
 			if(!sList.isEmpty()) {
 				mv.addObject("urlVal", "reviewDesc");
-				mv.addObject("search", search);
 				mv.addObject("paging", paging);
 				mv.addObject("sList", sList);
 			}
@@ -360,23 +358,6 @@ public class SpaceController {
 				mv.addObject("paging", paging);
 				mv.addObject("sList", sList);
 			}
-		}else {
-			// 페이징
-						Search search = new Search("","");
-						int currentPage = (page != null) ? page : 1;
-						int totalCount = sService.getTotalCount(search);
-						int naviLimit = 5;
-						int boardLimit = 9;
-						Page paging = new Page(currentPage, totalCount, naviLimit, boardLimit);
-						RowBounds rowBounds = new RowBounds(paging.getOffset(), boardLimit);
-						logger.info(String.valueOf(totalCount));
-						List<Space> sList = sService.printRivewDesc(search, rowBounds);
-						if(!sList.isEmpty()) {
-							mv.addObject("urlVal", "reviewDesc");
-							mv.addObject("search", search);
-							mv.addObject("paging", paging);
-							mv.addObject("sList", sList);
-						}
 		}
 			mv.setViewName("space/spaceList");
 				return mv;
@@ -691,7 +672,7 @@ public class SpaceController {
 						Message coolsms = new Message(api_key, api_secret);
 						HashMap<String, String> set = new HashMap<String, String>();
 						set.put("to", memberPhone); 				// 받는 번호
-						set.put("from", "01067462778"); 			// 보내는 번호
+						set.put("from", ""); 			// 보내는 번호
 						set.put("text", "[Mobiil]"+rsvDate+" "+revStart+"시~"+revEnd+"시 예약이 완료되었습니다."); // 문자내용
 						set.put("type", "SMS"); 					// 문자 타입
 						set.put("app_version", "test app 1.2");

@@ -244,7 +244,7 @@ public class SpaceServiceImpl implements SpaceService{
 		return result;
 	}
 
-	// 시간 유효성 체크
+	// 날짜 및 시간 유효성 검사
 	@Override
 	public int checkTime(String start, String end, String reservDate) {
 		int result = sStore.checkTime(session, start, end, reservDate);
@@ -265,7 +265,7 @@ public class SpaceServiceImpl implements SpaceService{
 		return rsv;
 	}
 
-	// 채팅 모든 공간 리스트
+	// 지도 모든 공간 리스트
 	@Override
 	public List<Space> printAllSpace() {
 		List<Space> sList = sStore.selectAllSpace(session);
