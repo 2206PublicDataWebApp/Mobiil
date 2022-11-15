@@ -7,39 +7,34 @@
 <meta charset="UTF-8">
 <title>리뷰 작성</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
- <style>
-         .header {
-            text-align: center;
-            margin-top: 50px;
-        }
-     
-         .span {
-            text-align: center;
-            font-size: 15px;
-            cursor: pointer;
-        }
-        
-        .tb {
-            margin-left:auto;
-			margin-right:auto;
-        	width: 700px; 
-			
-        }
+<style>
+.header {
+	text-align: center;
+	margin-top: 50px;
+}
 
-		.title {
-		     text-align : center;
-/*    			 background-color:rgb(241, 234, 248); */
-        }
+.span {
+	text-align: center;
+	font-size: 15px;
+	cursor: pointer;
+}
 
-        .input {              
-/*           	font-size: 50px; */
-        	width: 400px; 
-          	border: none;            
-        }
-	
-    </style>
+.tb {
+	margin-left: auto;
+	margin-right: auto;
+	width: 700px;
+}
+
+.title {
+	text-align: center;
+}
+
+.input {
+	width: 400px;
+	border: none;
+}
+</style>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>

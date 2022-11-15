@@ -4,50 +4,50 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <title>기업회원 가입</title>
-    <style>
-        .signup {
-            text-align: center;
-        }
+<title>기업회원 가입</title>
+<style>
+.signup {
+	text-align: center;
+}
 
-        .input {
-            height: 30px;
-            width: 400px;
-            font-size: 15px;
-            margin: 1px 80px 10px 20px;
-        }
+.input {
+	height: 30px;
+	width: 400px;
+	font-size: 15px;
+	margin: 1px 80px 10px 20px;
+}
 
-        .button {
-            height: 50px;
-            width: 400px;
-            background-color:rgb(212, 191, 232);
-            border-radius: 10px;
-            border: none;
-            font-size: 15px;
-        }
-        
-        .required label {
-            font-weight: bold;
-            display: inline-block; 
-            width: 150px;
-            text-align: right;
-        }
+.button {
+	height: 50px;
+	width: 400px;
+	background-color: rgb(212, 191, 232);
+	border-radius: 10px;
+	border: none;
+	font-size: 15px;
+}
 
-        .required label:before {
-            color: rgb(238, 51, 34);
-            content: '* ';
-        }
+.required label {
+	font-weight: bold;
+	display: inline-block;
+	width: 150px;
+	text-align: right;
+}
 
-		.email_ok{
-		color:#008000;
-		display: none;
-		}
-		
-		.email_already{
-		color:#6A82FB; 
-		display: none;
-		}
-    </style>
+.required label:before {
+	color: rgb(238, 51, 34);
+	content: '* ';
+}
+
+.email_ok {
+	color: #008000;
+	display: none;
+}
+
+.email_already {
+	color: #6A82FB;
+	display: none;
+}
+</style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>
@@ -64,8 +64,8 @@
 				<span class="email_already">이미 사용중인 이메일이에요 :(</span>
 				<div class="form-inline mb-3">
 					<div class="mail_check_input_box" id="mail_check_input_box_false">
-						<input type="text" class="mail_check_input form-control col-8" disabled="disabled">
-						<button type="button" id="mail_check_button" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
+						<input style="width:300px; margin: 1px 1px 10px 100px;" type="text" class="mail_check_input form-control col-8" disabled="disabled">
+						<button style="height:45px;" type="button" id="mail_check_button" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
 					</div>
 				</div>
 				<!-- 인증번호 확인 -->
@@ -92,19 +92,19 @@
         </div>
     </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script>
+<script>
         
-        const hypenTel = (target) => {
-            target.value = target.value
-                .replace(/[^0-9]/g, '')
-                .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
-            }
-            
-            const hypenReg = (target) => {
-            target.value = target.value
-                .replace(/[^0-9]/g, '')
-                .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`);
-            }
+    const hypenTel = (target) => {
+        target.value = target.value
+            .replace(/[^0-9]/g, '')
+            .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+        }
+        
+   	const hypenReg = (target) => {
+        target.value = target.value
+            .replace(/[^0-9]/g, '')
+            .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`);
+        }
 
       function joinform_check() {
         var email = document.getElementById("email");
@@ -338,9 +338,8 @@
 				reader.readAsDataURL(files[0]);
 
 			}
-      </script>
-      
-  <br><br><br><br><br><br>
-  <jsp:include page="../common/footer.jsp"></jsp:include>
+</script>
+<br><br><br><br><br><br>
+<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

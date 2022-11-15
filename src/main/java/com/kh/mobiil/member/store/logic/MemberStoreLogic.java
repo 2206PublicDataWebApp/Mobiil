@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.store.MemberStore;
-import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 
@@ -21,6 +20,9 @@ public class MemberStoreLogic implements MemberStore{
 
 	// 멤버(개인)
 	
+	@Autowired
+	private SqlSessionTemplate session;
+
 	@Override
 	public int insertMember(SqlSession session, Member member) { // 회원가입
 		int result = session.insert("MemberMapper.insertMember", member);
@@ -28,9 +30,34 @@ public class MemberStoreLogic implements MemberStore{
 	}
 
 	@Override
+	public int checkDupEmail(SqlSession session, String memberEmail) { // 이메일 중복 체크
+		int result = session.selectOne("MemberMapper.checkEmailDuplicate", memberEmail);
+		return result;
+	}
+
+	@Override
+	public int checkDupNick(SqlSession session, String memberNick) { // 닉네임 중복 체크
+		int result = session.selectOne("MemberMapper.checkNickDuplicate", memberNick);
+		return result;
+	}
+
+	@Override
 	public Member selectLoginMember(SqlSession session, Member member) { // 로그인
 		Member mOne = session.selectOne("MemberMapper.selectLoginOne", member);
 		return mOne;
+	}
+
+	@Override // 비밀번호 변경 시 이메일 존재 체크(개인)
+	public int checkMemDupEmail(SqlSession session, String memberEmail) {
+		int result = session.selectOne("MemberMapper.checkMemDupEmail", memberEmail); 
+		return result;
+	}
+
+	// 비밀번호 찾기 후 변경
+	@Override
+	public int updatePwd(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updatePwd", member);
+		return result;
 	}
 
 	@Override
@@ -42,31 +69,6 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public int updateMember(SqlSession session, Member member) { // 정보수정
 		int result = session.update("MemberMapper.updateMember", member);
-		return result;
-	}
-	
-	@Override
-	public int deleteMember(SqlSession session, String memberEmail) { // 회원 탈퇴(일반)
-		int result = session.update("MemberMapper.deleteMember", memberEmail);
-		return result;
-	}
-	
-	@Override
-	public int deleteKakaoMember(SqlSession session, String memberEmail) { // 회원 탈퇴(카카오)
-		int result = session.delete("MemberMapper.deleteKakaoMember", memberEmail);
-		return result;
-	}
-	
-	@Override
-	public int checkDupEmail(SqlSession session, String memberEmail) { // 이메일 중복 체크
-		int result = session.selectOne("MemberMapper.checkEmailDuplicate", memberEmail);
-		return result;
-	}
-	
-	
-	@Override
-	public int checkDupNick(SqlSession session, String memberNick) { // 닉네임 중복 체크
-		int result = session.selectOne("MemberMapper.checkNickDuplicate", memberNick);
 		return result;
 	}
 	
@@ -83,12 +85,77 @@ public class MemberStoreLogic implements MemberStore{
 		List<Reservation> rList = session.selectList("MemberMapper.selectAllReserve", memberEmail, rowBounds);
 		return rList;
 	}
-	
+
 	@Override
 	public Reservation selectOneByNo(SqlSession session, String reservationNo) {
 		Reservation reservation = session.selectOne("MemberMapper.selectOneByNo", reservationNo);
 		return reservation;
 	}
+
+	@Override
+	public int getSpaceTotalCount(SqlSession session, String memberEmail) {
+		int result = session.selectOne("MemberMapper.getSpaceTotalCount", memberEmail);
+		return result;
+	}
+
+	@Override
+	public List<Space> selectMySpace(SqlSession session, String memberEmail, int currentPage, int spaceLimit) {
+		int offset = (currentPage-1) * spaceLimit;
+		RowBounds rowBounds = new RowBounds(offset, spaceLimit);
+		List<Space> sList = session.selectList("MemberMapper.selectMySpace", memberEmail, rowBounds);
+		return sList;
+	}
+
+	// 정보 확인
+		@Override
+		public Member findKakao(HashMap<String, Object> loginUser) {
+			Member member = session.selectOne("MemberMapper.findKakao", loginUser);
+			return member;
+	}
+
+	// 정보 저장
+	@Override
+	public void registKakao(HashMap<String, Object> loginUser) {
+		session.insert("MemberMapper.registKakao", loginUser);
+	}
+
+	@Override
+	public Member selectNickByKEmail(SqlSession session, String memberEmail) {
+		Member member = session.selectOne("MemberMapper.selectNickByKEmail", memberEmail);
+		return member;
+	}
+
+	@Override
+	public int updateNick(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateNick", member);
+		return result;
+	}
+
+	@Override
+	public int updateKakaoMember(SqlSession session, Member member) {
+		int result = session.update("MemberMapper.updateKakaoMember", member);
+		return result;
+	}
+
+	@Override
+	public Member selectOneByKEmail(SqlSession session, String memberEmail) {
+		Member member = session.selectOne("MemberMapper.selectOneByKEmail", memberEmail);
+		return member;
+	}
+
+	@Override
+	public int deleteMember(SqlSession session, String memberEmail) { // 회원 탈퇴(일반)
+		int result = session.update("MemberMapper.deleteMember", memberEmail);
+		return result;
+	}
+	
+	@Override
+	public int deleteKakaoMember(SqlSession session, String memberEmail) { // 회원 탈퇴(카카오)
+		int result = session.delete("MemberMapper.deleteKakaoMember", memberEmail);
+		return result;
+	}
+	
+	
 	
 	// 호스트
 	
@@ -99,28 +166,15 @@ public class MemberStoreLogic implements MemberStore{
 	}
 
 	@Override
-	public Host selectLoginHost(SqlSession session, Host host) { // 로그인
-		Host hOne = session.selectOne("MemberMapper.selectLoginhOne", host);
-		return hOne;
-	}
-
-	@Override
 	public int checkDupHostEmail(SqlSession session, String hostEmail) { // 이메일 중복 체크
 		int result = session.selectOne("MemberMapper.checkHostEmailDuplicate", hostEmail);
 		return result;
 	}
-	
-	// 비밀번호 찾기 후 변경
-	@Override
-	public int updatePwd(SqlSession session, Member member) {
-		int result = session.update("MemberMapper.updatePwd", member);
-		return result;
-	}
 
-	@Override // 비밀번호 변경 시 이메일 존재 체크(개인)
-	public int checkMemDupEmail(SqlSession session, String memberEmail) {
-		int result = session.selectOne("MemberMapper.checkMemDupEmail", memberEmail); 
-		return result;
+	@Override
+	public Host selectLoginHost(SqlSession session, Host host) { // 로그인
+		Host hOne = session.selectOne("MemberMapper.selectLoginhOne", host);
+		return hOne;
 	}
 
 	@Override // 비밀번호 변경 시 이메일 존재 체크(기업)
@@ -139,6 +193,12 @@ public class MemberStoreLogic implements MemberStore{
 	////////어드민 대시보드
 
 	@Override
+	public int selectCountHostNick(String memberNick, SqlSessionTemplate session) {
+		int result = session.selectOne("MemberMapper.selectCountHostNick", memberNick);
+		return result;
+	}
+
+	@Override
 	public int selectMemberCount(SqlSessionTemplate session) {
 		int result = session.selectOne("MemberMapper.selectMemberCount");
 		return result;
@@ -153,69 +213,6 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public int selecHostDaily(int dayBefore, SqlSessionTemplate session) {
 		int result = session.selectOne("MemberMapper.selectHostDailyCount", dayBefore);
-		return result;
-	}
-
-	@Override
-	public int selectCountHostNick(String memberNick, SqlSessionTemplate session) {
-		int result = session.selectOne("MemberMapper.selectCountHostNick", memberNick);
-		return result;
-	}
-
-	@Autowired
-	private SqlSessionTemplate session;
-	
-	// 정보 저장
-	@Override
-	public void registKakao(HashMap<String, Object> loginUser) {
-		session.insert("MemberMapper.registKakao", loginUser);
-	}
-	
-	// 정보 확인
-	@Override
-	public Member findKakao(HashMap<String, Object> loginUser) {
-		System.out.println("RN:"+loginUser.get("nickname"));
-		System.out.println("RE:"+loginUser.get("email"));
-		Member member = session.selectOne("MemberMapper.findKakao", loginUser);
-		return member;
-}
-
-	@Override
-	public Member selectOneByKEmail(SqlSession session, String memberEmail) {
-		Member member = session.selectOne("MemberMapper.selectOneByKEmail", memberEmail);
-		return member;
-	}
-
-
-	@Override
-	public int updateKakaoMember(SqlSession session, Member member) {
-		int result = session.update("MemberMapper.updateKakaoMember", member);
-		return result;
-	}
-
-	@Override
-	public int getSpaceTotalCount(SqlSession session, String memberEmail) {
-		int result = session.selectOne("MemberMapper.getSpaceTotalCount", memberEmail);
-		return result;
-	}
-
-	@Override
-	public List<Space> selectMySpace(SqlSession session, String memberEmail, int currentPage, int spaceLimit) {
-		int offset = (currentPage-1) * spaceLimit;
-		RowBounds rowBounds = new RowBounds(offset, spaceLimit);
-		List<Space> sList = session.selectList("MemberMapper.selectMySpace", memberEmail, rowBounds);
-		return sList;
-	}
-
-	@Override
-	public Member selectNickByKEmail(SqlSession session, String memberEmail) {
-		Member member = session.selectOne("MemberMapper.selectNickByKEmail", memberEmail);
-		return member;
-	}
-
-	@Override
-	public int updateNick(SqlSession session, Member member) {
-		int result = session.update("MemberMapper.updateNick", member);
 		return result;
 	}
 

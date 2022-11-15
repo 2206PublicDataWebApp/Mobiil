@@ -1,29 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
- <title>개인/기업 로그인 선택</title>
-    <style>
-        .btn {
-           width: 100%; 
-           text-align: center;
-        }
-        .button {
-            width: 250px;
-            height : 250px;
-            border-radius: 20px;
-            background-color:rgb(212, 191, 232);
-            border : none;
-            font-size: 25px;
-        }
-        .span {
-            text-align: center;
-            font-size: 15px;
-            cursor: pointer;
-        }
-    </style>
+<title>개인/기업 로그인 선택</title>
+<style>
+.btn {
+	width: 100%;
+	text-align: center;
+}
+
+.button {
+	width: 250px;
+	height: 250px;
+	border-radius: 20px;
+	background-color: rgb(212, 191, 232);
+	border: none;
+	font-size: 25px;
+}
+
+.span {
+	text-align: center;
+	font-size: 15px;
+	cursor: pointer;
+}
+</style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>

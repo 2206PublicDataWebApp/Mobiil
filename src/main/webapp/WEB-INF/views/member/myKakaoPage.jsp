@@ -1,77 +1,76 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>My Kakao Page</title>
- <style>
-.signup {
-    text-align: center;
-    margin-top: 50px;
+<style>
+.myKakaoPage {
+	text-align: center;
+	margin-top: 50px;
 }
 
 .input {
-    height: 30px;
-    width: 400px;
-    font-size: 15px;
-    margin: 1px 80px 10px 20px;
+	height: 30px;
+	width: 400px;
+	font-size: 15px;
+	margin: 1px 80px 10px 20px;
 }
 
 .button {
-    height: 40px;
-    width: 400px;
-    background-color:rgb(212, 191, 232);
-    border-radius: 20px;
-    border: none;
-    font-size: 20px;
-    margin: 1px 1px 10px 50px;
+	height: 40px;
+	width: 400px;
+	background-color: rgb(212, 191, 232);
+	border-radius: 20px;
+	border: none;
+	font-size: 20px;
+	margin: 1px 1px 10px 50px;
 }
-        
+
 .remove {
-    font-size: 15px;
-    margin-left : 350px;
-    cursor: pointer;
-    
+	font-size: 15px;
+	margin-left: 350px;
+	cursor: pointer;
 }
- .span {
-    text-align: center;
-    font-size: 15px;
-    cursor: pointer;
+
+.span {
+	text-align: center;
+	font-size: 15px;
+	cursor: pointer;
 }
+
 .required label {
-    font-weight: bold;
-    display: inline-block; 
-    width: 120px;
-    text-align: right;
+	font-weight: bold;
+	display: inline-block;
+	width: 120px;
+	text-align: right;
 }
-	
+
 .required label:before {
-color: rgb(238, 51, 34);
-content: '* ';
+	color: rgb(238, 51, 34);
+	content: '* ';
 }
 
-.nick_ok{
-color:#008000;
-display: none;
+.nick_ok {
+	color: #008000;
+	display: none;
 }
 
-.nick_already{
-color:#6A82FB; 
-display: none;
+.nick_already {
+	color: #6A82FB;
+	display: none;
 }
 
 #email {
-background-color: lightgray;
+	background-color: lightgray;
 }
-
 </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>
-
-    <div class="signup">
+    <div class="myKakaoPage">
         <div class="span">
             <span onclick="location.href='/member/myKakaoInfo.kh'"><b>My 정보 수정</b></span> 
             <span> | </span>
@@ -101,8 +100,7 @@ background-color: lightgray;
             </form>
         </div>
     </div>
-    
-    <script>
+<script>
     function removeKakaoMember() {
 		if(confirm("정말 탈퇴하시겠습니까?")) {
 			location.href = "/member/kakaoRemove.kh";
@@ -156,9 +154,7 @@ background-color: lightgray;
                 }
             });
           };
-  </script>
-  
-  
+</script>
 <br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

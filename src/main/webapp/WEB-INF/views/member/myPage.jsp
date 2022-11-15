@@ -6,49 +6,51 @@
 <meta charset="UTF-8">
 <title>My Page</title>
  <style>
-        .signup {
-            text-align: center;
-            margin-top: 50px;
-        }
+.myPage {
+    text-align: center;
+    margin-top: 50px;
+}
 
-        .input {
-            height: 30px;
-            width: 400px;
-            font-size: 15px;
-            margin: 1px 80px 10px 20px;
-        }
+.input {
+    height: 30px;
+    width: 400px;
+    font-size: 15px;
+    margin: 1px 80px 10px 20px;
+}
 
-        .button {
-            height: 40px;
-            width: 400px;
-            background-color:rgb(212, 191, 232);
-            border-radius: 20px;
-            border: none;
-            font-size: 20px;
-            margin: 1px 1px 10px 50px;
-        }
-        
-        .remove {
-            font-size: 15px;
-            margin-left : 350px;
-            cursor: pointer;
-            
-        }
-         .span {
-            text-align: center;
-            font-size: 15px;
-            cursor: pointer;
-        }
-        .required label {
-            font-weight: bold;
-            display: inline-block; 
-            width: 120px;
-            text-align: right;
-        }
-	
-	#name, #email {
-		 background-color: lightgray;
-	}
+.button {
+    height: 40px;
+    width: 400px;
+    background-color:rgb(212, 191, 232);
+    border-radius: 20px;
+    border: none;
+    font-size: 20px;
+    margin: 1px 1px 10px 50px;
+}
+
+.remove {
+    font-size: 15px;
+    margin-left : 350px;
+    cursor: pointer;
+    
+}
+ .span {
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.required label {
+    font-weight: bold;
+    display: inline-block; 
+    width: 120px;
+    text-align: right;
+}
+
+#name, #email {
+	 background-color: lightgray;
+}
+
 .nick_ok{
 color:#008000;
 display: none;
@@ -58,12 +60,11 @@ display: none;
 color:#6A82FB; 
 display: none;
 }
-    </style>
+</style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>
-
-    <div class="signup">
+    <div class="myPage">
         <div class="span">
             <span onclick="location.href='/member/myInfo.kh'"><b>My 정보 수정</b></span> 
             <span> | </span>
@@ -75,7 +76,6 @@ display: none;
         </div>
         <br><br><br>
         <div class="required">
-<!--             <div>My 정보 수정</div> -->
             <form name="mypage_form" action="/member/modify.kh" method="post">
                 <input type="hidden" class="input" id="nick" name="originNick" value="${member.memberNick }" ><br>
                 <label>이름</label><input type="text" class="input" id="name" name="memberName" value="${member.memberName }" readonly><br>
@@ -95,8 +95,7 @@ display: none;
         </div>
     </div>
  <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script>
-    
+<script>
     function removeMember() {
 		if(confirm("정말 탈퇴하시겠습니까?")) {
 			location.href = "/member/remove.kh";
@@ -203,9 +202,7 @@ display: none;
         });
       };
 
-  </script>
-  
-  
+</script>
 <br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>

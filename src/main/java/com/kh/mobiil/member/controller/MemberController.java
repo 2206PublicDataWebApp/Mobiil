@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -12,7 +11,6 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -33,8 +31,6 @@ import com.kh.mobiil.member.domain.Member;
 import com.kh.mobiil.member.service.MemberService;
 import com.kh.mobiil.partner.domain.Partner;
 import com.kh.mobiil.partner.service.PartnerService;
-import com.kh.mobiil.partner.domain.Page;
-import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 
@@ -102,8 +98,6 @@ public class MemberController {
 		int result = mService.checkDupEmail(memberEmail);
 		return result + "";
 	}
-
-	///
 	
 	/**
 	 * 회원가입 시 닉네임 중복 체크(개인+카카오회원)
@@ -345,6 +339,31 @@ public class MemberController {
 	}
 
 	/**
+	 * 회원 탈퇴
+	 * 
+	 * @param mv
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/remove.kh", method = RequestMethod.GET)
+	public ModelAndView removeMember(ModelAndView mv, HttpSession session, HttpServletRequest request) {
+		try {
+			Member member = (Member) session.getAttribute("loginUser");
+			String memberEmail = member.getMemberEmail();
+			int result = mService.removeMember(memberEmail);
+				request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
+				request.setAttribute("url", "/member/logout.kh");
+				mv.setViewName("/common/alert");
+		} catch (Exception e) {
+			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
+		}
+		return mv;
+	}
+
+///// 개인회원 & 카카오회원 /////
+	
+	/**
 	 * 결제내역 목록조회
 	 * @param mv
 	 * @param page
@@ -443,11 +462,30 @@ public class MemberController {
 	
 		return mv;
 	}
+	
+	/**
+	 * 로그아웃
+	 * 
+	 * @param mv
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/member/logout.kh", method = RequestMethod.GET)
+	public ModelAndView Logout(ModelAndView mv, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session != null) {
+			session.invalidate();
+			mv.setViewName("redirect:/");
+		} else {
+			mv.addObject("msg", "로그아웃 실패");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
 
 	
+///// 카카오 회원 /////
 
-	// 카카오 회원
-	
 	/**
 	 * 카카오 로그인
 	 * @param code
@@ -457,10 +495,8 @@ public class MemberController {
 	 */
 	@RequestMapping(value="/member/kakaoLogin.kh", method = RequestMethod.GET)
 	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpSession session) throws Exception {
-		System.out.println("#########" + code);
 		
 		String access_Token = mService.getAccessToken(code);
-		System.out.println("###access_Token#### : " + access_Token);
 		
 		Member loginUser = mService.getLoginUser(access_Token);
 
@@ -569,29 +605,6 @@ public class MemberController {
 	}
 	
 	/**
-	 * 회원 탈퇴
-	 * 
-	 * @param mv
-	 * @param session
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/member/remove.kh", method = RequestMethod.GET)
-	public ModelAndView removeMember(ModelAndView mv, HttpSession session, HttpServletRequest request) {
-		try {
-			Member member = (Member) session.getAttribute("loginUser");
-			String memberEmail = member.getMemberEmail();
-			int result = mService.removeMember(memberEmail);
-				request.setAttribute("msg", "회원탈퇴가 완료되었습니다.");
-				request.setAttribute("url", "/member/logout.kh");
-				mv.setViewName("/common/alert");
-		} catch (Exception e) {
-			mv.addObject("msg", e.toString()).setViewName("common/errorPage");
-		}
-		return mv;
-	}
-	
-	/**
 	 * 카카오 회원 탈퇴
 	 * @param mv
 	 * @param session
@@ -615,25 +628,7 @@ public class MemberController {
 		return mv;
 	}
 
-	/**
-	 * 로그아웃
-	 * 
-	 * @param mv
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/member/logout.kh", method = RequestMethod.GET)
-	public ModelAndView Logout(ModelAndView mv, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		if (session != null) {
-			session.invalidate();
-			mv.setViewName("redirect:/");
-		} else {
-			mv.addObject("msg", "로그아웃 실패");
-			mv.setViewName("common/errorPage");
-		}
-		return mv;
-	}	
+		
 	
 	
 ///// 기업 회원 /////

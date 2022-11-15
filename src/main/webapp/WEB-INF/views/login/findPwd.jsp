@@ -4,48 +4,48 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <title>개인회원 비밀번호 찾기</title>
-    <style>
-    	#input{
-    		width : 200px;
-    	}
-    	.email_ok{
-		color:red;
-		display: none;
-		}
-		
-		.email_already{
-		color:#008000; 
-		display: none;
-		}
-	
-        .pwdfind {
-            text-align: center;
-        }
+<title>개인회원 비밀번호 찾기</title>
+<style>
+#input{
+	width : 200px;
+}
 
-        #email {
-            height: 40px;
-            width: 500px;
-            font-size: 20px;
-        }
+.email_ok{
+color:red;
+display: none;
+}
 
-        .button {
-            height: 50px;
-            width: 500px;
-            background-color:rgb(212, 191, 232);
-            border-radius: 10px;
-            border: none;
-            font-size: 18px;
-        }
+.email_already{
+color:#008000; 
+display: none;
+}
 
-        .ment {
-            font-size: 15px;
-        }
-    </style>
+.pwdfind {
+    text-align: center;
+}
+
+#email {
+    height: 40px;
+    width: 500px;
+    font-size: 20px;
+}
+
+.button {
+    height: 50px;
+    width: 500px;
+    background-color:rgb(212, 191, 232);
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+}
+
+.ment {
+    font-size: 15px;
+}
+</style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>
-
     <div class="pwdfind">
         <h1>개인회원 비밀번호 찾기</h1>
         <br><br><br>
@@ -54,11 +54,11 @@
             <br>
 				<span class="email_ok">존재하지 않는 이메일입니다. 다른 이메일을 입력하세요.</span>
 				<span class="email_already">존재하는 이메일입니다.</span>
-				
+				<br>
 				<div class="form-inline mb-3">
 					<div class="mail_check_input_box" id="mail_check_input_box_false">
-						<input type="text" id="input" class="mail_check_input form-control col-8" disabled="disabled">
-						<button type="button" id="mail_check_button" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
+						<input style="width:400px; margin: 1px 1px 10px 10px;" type="text" class="mail_check_input form-control col-8" disabled="disabled">
+						<button style="height:45px;" type="button" id="mail_check_button" class="btn btn-outline-primary btn-sm">인증번호 전송</button>
 					</div>
 				</div>
 				<!-- 인증번호 확인 -->

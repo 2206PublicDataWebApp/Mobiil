@@ -1,11 +1,9 @@
 package com.kh.mobiil.member.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.kh.mobiil.host.domain.Host;
 import com.kh.mobiil.member.domain.Member;
-import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.space.domain.Reservation;
 import com.kh.mobiil.space.domain.Space;
 
@@ -55,16 +53,20 @@ public interface MemberService {
 
 	public int removeKakaoMember(String memberEmail); // 회원 탈퇴(카카오)
 
+	public void kakaoRemove(String access_Token); // 회원 탈퇴(카카오) 토큰키 unlink
+
 	// 호스트(기업)
-	public int checkHostDupEmail(String hostEmail); // 비밀번호 변경 시 이메일 존재 체크(기업)
 
 	public int registerHost(Host host); // 회원가입
 
 	public int checkDupHostEmail(String hostEmail); // 이메일 중복 체크
-
+	
 	public Host loginHost(Host host); // 로그인
 
+	public int checkHostDupEmail(String hostEmail); // 비밀번호 변경 시 이메일 존재 체크(기업)
+
 	public int modifyHostPwd(Host host); // 비밀번호 찾기 후 변경
+
 
 	
 	public int getCountHostNick(String memberNick); // 멤버닉으로 몇명인지 체크
@@ -75,7 +77,5 @@ public interface MemberService {
 	public int getDailyNewMember(int dayBefore); // 일일 일반 가입자
 
 	public int getDailyNewHost(int dayBefore); // 일일 호스트 가입자
-
-	public void kakaoRemove(String access_Token);
 
 }

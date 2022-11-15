@@ -5,31 +5,29 @@
 <head>
 <meta charset="UTF-8">
 <title>개인회원 로그인</title>
- <style>
-        .login {
-            text-align: center;
-        }
+<style>
+.login {
+    text-align: center;
+}
 
-        #input {
-            height: 40px;
-            width: 500px;
-            font-size: 20px;
-        }
+#input {
+    height: 40px;
+    width: 500px;
+    font-size: 20px;
+}
 
-        .button {
-            height: 50px;
-            width: 330px;
-            background-color:rgb(212, 191, 232);
-            border-radius: 5px;
-            border: none;
-            font-size: 16px;
-        }
-        
-    </style>
+.button {
+    height: 50px;
+    width: 330px;
+    background-color:rgb(212, 191, 232);
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+</style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>
-
     <div class="login">
         <h1>개인회원 로그인</h1>
         <br>

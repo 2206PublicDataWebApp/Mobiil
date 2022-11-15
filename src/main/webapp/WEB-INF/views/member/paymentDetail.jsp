@@ -99,7 +99,7 @@
 				<td class="data">${reservation.price}원</td>
 			</tr>
 			<tr>
-				<td class="td">결제 일시</td>
+				<td class="td">결제일</td>
 				<td class="data">${reservation.paymentDate}</td>
 			</tr>
 		</table>

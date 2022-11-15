@@ -7,20 +7,20 @@
 <meta charset="UTF-8">
 <title>결제 목록 조회</title>
  <style>
- 		.th {
- 		  text-align: center;
- 		}
- 		
-        .paylist {
-            text-align: center;
-            margin-top: 50px;
-        }
-     
-         .span {
-            text-align: center;
-            font-size: 15px;
-            cursor: pointer;
-        }
+.th {
+  text-align: center;
+}
+
+.paylist {
+    text-align: center;
+    margin-top: 50px;
+}
+  
+ .span {
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+}
  </style>        
 </head>
 <body>
