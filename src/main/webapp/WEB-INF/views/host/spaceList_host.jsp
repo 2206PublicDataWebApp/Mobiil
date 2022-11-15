@@ -34,6 +34,11 @@
 		font-size: 15px;
 	}
 	
+	.nameLink:hover{
+		text-decoration: underline;
+		font-size:14px;
+	}
+	
 </style>
 </head>
 <body>
@@ -55,7 +60,7 @@
 						<c:forEach items="${sList }" var="space">
 						<tr>
 							<td>${space.spaceNo }</td>
-							<td>${space.spaceName }</td>
+							<td><a class='nameLink' href='/space/spaceDetail.kh?spaceNo=${space.spaceNo }'>${space.spaceName }</a></td>
 							<td>${space.spaceArea }</td>
 							<td>${space.spacePrice }</td>
 							<td><button type="button" class="button1" onclick="location.href='/host/spaceModifyView.mobiil?spaceNo=${space.spaceNo}'">수정</button></td>

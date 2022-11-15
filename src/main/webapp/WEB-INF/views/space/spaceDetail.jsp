@@ -501,7 +501,7 @@ ${space.spaceComent }
 								for(var j in hrList){
 								var $rNo = $('.'+hrList[j].reviewNo);
 								var $hdiv = $('<div id="hostReplyList" style="text-align:left;padding-left:50px;">');
-								var $hrWriter = $("<span style='font-size:17px;font-weight:bold;color:green;'>").text(hrList[j].replyWriter);
+								var $hrWriter = $("<span style='font-size:17px;font-weight:bold;color:green;'>").text("호스트");
 								var $hrUpdateDate = $("<span style='text-align:left;padding-left:20px;font-size:12px;color:lightgray;'>").text(hrList[j].updateDate);
 								var $hrContent = $("<div style='margin-bottom:30px;margin-top:20px;text-align:left;padding-left:50px;'>").append($("<span class='mdf"+hrList[j].replyNo+"'>").html(""+hrList[j].replyContents));
 								var $modify = $("<span>").append("<a style='margin-left:20px;font-size:13px;' href='javascript:void(0);' onclick='modifyReplyView(this,"+hrList[j].replyNo+")'>수정</a>")
