@@ -109,11 +109,13 @@
   		DELETE FROM HOSTREPLY_TBL WHERE REPLY_NO = #{replyNo}
   	</delete>
   	
+  	<!-- 기본 모든 공간 카운트 -->
   	<select id="selectBasicTotalCount" resultType="_int">
   		SELECT COUNT(*) FROM SPACE_TBL
   		WHERE SPACE_STATUS='Y' AND APPROVAL='Y'
   	</select>
-  	<!-- 모든 공간 카운트 -->
+  	
+  	<!-- 지역+검색 카운트 -->
 	<select id="selectTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM SPACE_TBL
 		<where>
@@ -219,8 +221,11 @@
 	
 	<!-- 지역별 조회 -->
 	<select id="selectByArea" resultMap="SpaceResultMap">
-		SELECT * FROM SPACE_TBL
-		<where>
+		SELECT ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, MAX(SI.SPACE_FILERENAME) SPACE_FILERENAME
+		FROM SPACE_TBL ST
+        LEFT OUTER JOIN SPACE_IMG SI
+		ON ST.SPACE_NO = SI.SPACE_NO
+        <where>
 			<if test="searchArea.toString() != '전체'">
 				SPACE_AREA = #{searchArea}
 			</if>
@@ -229,6 +234,8 @@
 			</if>
 			AND SPACE_STATUS='Y' AND APPROVAL='Y'
 		</where>
+		GROUP BY ST.SPACE_NO, ST.SPACE_NAME, ST.SPACE_AREA, ST.SPACE_PRICE, APPROVAL_DATE
+		ORDER BY APPROVAL_DATE DESC
 	</select>
 	
 	<!-- 최신순/리뷰 많은순/찜 많은순 카운트 -->
@@ -435,9 +442,17 @@
 		</if>
 	</select>
 	
-	<select id="selectAreaCount" resultType="_int">
+	<!-- 지역에 따른 카운트 -->
+	<select id="selectByAreaCount" resultType="_int">
 		SELECT count(*) AS COUNT FROM SPACE_TBL
-		WHERE SPACE_AREA LIKE #{searchArea}
+		<where>
+			<if test="searchArea.toString() == '전체'">
+				(SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북')
+			</if>
+			<if test="searchArea.toString() != '전체'">
+				SPACE_AREA LIKE #{searchArea}
+			</if>
+		</where>
 		AND SPACE_STATUS='Y' AND APPROVAL='Y'
 	</select>
 	
@@ -453,51 +468,58 @@
 		ORDER BY TO_NUMBER(SPACE_PRICE) ASC
 	</select>
 	
-	
-	<select id="selectImg" resultMap="SpaceImgResultMap">
-		SELECT * FROM SPACE_IMG WHERE SPACE_NO = #{spaceNo}
-	</select>
+	<!-- 상세페이지 -->
 	<select id="selectOneByNo" resultMap="SpaceResultMap">
 		SELECT * FROM SPACE_TBL WHERE SPACE_NO = #{spaceNo}
 	</select>
 	
-	
-	
-	<select id="selectResevation" resultMap="ReservationResultMap">
-		SELECT * FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo}
+	<!-- 상세 이미지 -->
+	<select id="selectImg" resultMap="SpaceImgResultMap">
+		SELECT * FROM SPACE_IMG WHERE SPACE_NO = #{spaceNo}
 	</select>
+	
+	<!-- 리뷰 -->
 	<select id="selectReview" resultMap="ReviewResultMap">
 		SELECT * FROM REVIEW_TBL WHERE SPACE_NO = #{spaceNo} AND R_STATUS='Y' ORDER BY R_UPDATE_DATE DESC
 	</select>
+	
+	<!-- 리뷰이미지 조회 -->
+	<select id="selectReviewImg" resultMap="ReviewImgResultMap">
+		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
+	</select>
+	
+	<!-- 예약정보 조회 -->
+	<select id="selectResevation" resultMap="ReservationResultMap">
+		SELECT * FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo}
+	</select>
+	
+	<!-- 찜 여부 -->
 	<select id="checkHeart" resultType="_int">
 		SELECT COUNT(*) FROM HEART_TBL 
 		WHERE MEMBER_EMAIL=#{memberEmail} AND SPACE_NO=#{spaceNo}
 	</select>
+	
+	<!-- 날짜시간 중복 여부 -->
 	<select id="checkTime" resultType="_int">
 		<![CDATA[SELECT COUNT(*) FROM RESERVATION_TBL
 		WHERE RESERV_DATE = #{reservDate} 
 		AND REV_START < #{end} 
 		AND REV_END > #{start}]]>
 	</select>
+	
+	<!-- 호스트 댓글 조회 -->
 	<select id="selectReply" resultMap="HostReplyResultMap">
 		SELECT * FROM HOSTREPLY_TBL WHERE REVIEW_NO = #{reviewNo} ORDER BY UPDATE_DATE ASC
 	</select>
-	<select id="selectByAreaCount" resultType="_int">
+	
+	<!-- 채팅쪽 지역 카운트 -->
+	<select id="selectAreaCount" resultType="_int">
 		SELECT count(*) AS COUNT FROM SPACE_TBL
-		<where>
-			<if test="searchArea.toString() == '전체'">
-				(SPACE_AREA LIKE '강동' OR SPACE_AREA LIKE '강서' OR SPACE_AREA LIKE '강남' OR SPACE_AREA LIKE '강북')
-			</if>
-			<if test="searchArea.toString() != '전체'">
-				SPACE_AREA LIKE #{searchArea}
-			</if>
-		</where>
+		WHERE SPACE_AREA LIKE #{searchArea}
 		AND SPACE_STATUS='Y' AND APPROVAL='Y'
 	</select>
 	
-	<select id="selectReviewImg" resultMap="ReviewImgResultMap">
-		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
-	</select>
+	<!-- 채팅쪽 -->
 	<select id="selectAllSpaceForMap" resultMap="SpaceResultMap">
 		SELECT SPACE_NO, SPACE_NAME, SPACE_ADDRESS2, SPACE_STATUS, APPROVAL FROM SPACE_TBL
 		ORDER BY 1
