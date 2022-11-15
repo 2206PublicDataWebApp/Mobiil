@@ -10,10 +10,10 @@ public interface CalendarStore {
 
 	public int insertEvent(Event event, SqlSessionTemplate session);
 
-	public List<Event> selectEvents(SqlSessionTemplate session);
+	public int updateEvent(Event event, SqlSessionTemplate session);
 
 	public int deleteEvent(int id, SqlSessionTemplate session);
 
-	public int updateEvent(Event event, SqlSessionTemplate session);
+	public List<Event> selectEvents(SqlSessionTemplate session);
 
 }

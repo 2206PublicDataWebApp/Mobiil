@@ -20,27 +20,15 @@ public class PartnerStoreLogic implements PartnerStore{
 	}
 
 	@Override
-	public Partner selectOnePartner(String memberEmail, SqlSessionTemplate session) {
-		Partner pOne = session.selectOne("partnerMapper.selectOnePartner", memberEmail);
-		return pOne;
-	}
-
-	@Override
-	public int selectTotalCount(SearchPartner sp, SqlSessionTemplate session) {
-		int result = session.selectOne("partnerMapper.selectTotalCount", sp);
+	public int updatePartnerContents(Partner partner, SqlSessionTemplate session) {
+		int result = session.update("partnerMapper.updatePartnerContents", partner);
 		return result;
 	}
 
 	@Override
-	public List<Partner> selectPartnerList(SearchPartner sp, RowBounds rowBounds, SqlSessionTemplate session) {
-		List<Partner> pList = session.selectList("partnerMapper.selectPartnerList", sp, rowBounds);
-		return pList;
-	}
-
-	@Override
-	public Partner selectOnePartnerByNo(int partnerNo, SqlSessionTemplate session) {
-		Partner partner = session.selectOne("partnerMapper.selectOneByNo", partnerNo);
-		return partner;
+	public int updatePartnerImage(Partner partner, SqlSessionTemplate session) {
+		int result = session.update("partnerMapper.updatePartnerImage", partner);
+		return result;
 	}
 
 	@Override
@@ -50,8 +38,8 @@ public class PartnerStoreLogic implements PartnerStore{
 	}
 
 	@Override
-	public int updatePartnerContents(Partner partner, SqlSessionTemplate session) {
-		int result = session.update("partnerMapper.updatePartnerContents", partner);
+	public int updateRejectMail(int partnerNo, SqlSessionTemplate session) {
+		int result = session.update("partnerMapper.updateRejectMail", partnerNo);
 		return result;
 	}
 
@@ -62,8 +50,32 @@ public class PartnerStoreLogic implements PartnerStore{
 	}
 
 	@Override
-	public int updateRejectMail(int partnerNo, SqlSessionTemplate session) {
-		int result = session.update("partnerMapper.updateRejectMail", partnerNo);
+	public Partner selectOnePartner(String memberEmail, SqlSessionTemplate session) {
+		Partner pOne = session.selectOne("partnerMapper.selectOnePartner", memberEmail);
+		return pOne;
+	}
+
+	@Override
+	public Partner selectOnePartnerByMemberNick(String memberNick, SqlSessionTemplate session) {
+		Partner pOne = session.selectOne("partnerMapper.selectOneByMemberNick", memberNick);
+		return pOne;
+	}
+
+	@Override
+	public Partner selectOnePartnerByNo(int partnerNo, SqlSessionTemplate session) {
+		Partner partner = session.selectOne("partnerMapper.selectOneByNo", partnerNo);
+		return partner;
+	}
+
+	@Override
+	public List<Partner> selectPartnerList(SearchPartner sp, RowBounds rowBounds, SqlSessionTemplate session) {
+		List<Partner> pList = session.selectList("partnerMapper.selectPartnerList", sp, rowBounds);
+		return pList;
+	}
+
+	@Override
+	public int selectTotalCount(SearchPartner sp, SqlSessionTemplate session) {
+		int result = session.selectOne("partnerMapper.selectTotalCount", sp);
 		return result;
 	}
 
@@ -76,18 +88,6 @@ public class PartnerStoreLogic implements PartnerStore{
 	@Override
 	public int selectNotApprovedPartnerCount(SqlSessionTemplate session) {
 		int result = session.selectOne("partnerMapper.selectNotApprovedPartnerCount");
-		return result;
-	}
-
-	@Override
-	public Partner selectOnePartnerByMemberNick(String memberNick, SqlSessionTemplate session) {
-		Partner pOne = session.selectOne("partnerMapper.selectOneByMemberNick", memberNick);
-		return pOne;
-	}
-
-	@Override
-	public int updatePartnerImage(Partner partner, SqlSessionTemplate session) {
-		int result = session.update("partnerMapper.updatePartnerImage", partner);
 		return result;
 	}
 

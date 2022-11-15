@@ -18,6 +18,38 @@
 	
 	</insert>
 	
+	<update id="updateApproval">
+		UPDATE PARTNER_TBL
+		SET		approval = 'Y', approvalDate = DEFAULT
+		WHERE partnerNo = #{partnerNo}
+	</update>
+	
+	<update id="updatePartnerContents">
+		UPDATE PARTNER_TBL
+		SET		area = #{area}, instrument = #{instrument},
+				title = #{title}, contents = #{contents},
+				approval = 'N', approvalDate = null, rejectMailChk = 'N'
+		WHERE partnerNo = #{partnerNo}
+	</update>
+	
+	<update id="updatePartnerImage">
+		UPDATE PARTNER_TBL
+		SET 	profileFileName = #{profileFileName}, profileRename = #{profileRename}, profilePath= #{profilePath},
+				approval = 'N', approvalDate = null, rejectMailChk = 'N'
+		WHERE partnerNo = #{partnerNo}
+	</update>
+	
+	<update id="updateRejectMail">
+		UPDATE PARTNER_TBL
+		SET rejectMailChk = 'Y'
+		WHERE partnerNo = #{partnerNo}
+	</update>
+	
+	<delete id="deletePartnerInfo">
+		DELETE FROM PARTNER_TBL
+		WHERE partnerNo = #{partnerNo}
+	</delete>
+	
 	<select id="selectOnePartner" resultType="Partner">
 		SELECT * FROM PARTNER_TBL
 		WHERE memberEmail = #{memberEmail}
@@ -164,37 +196,15 @@
 		
 	</select>
 	
-	<update id="updateApproval">
-		UPDATE PARTNER_TBL
-		SET		approval = 'Y', approvalDate = DEFAULT
-		WHERE partnerNo = #{partnerNo}
-	</update>
 	
-	<update id="updatePartnerContents">
-		UPDATE PARTNER_TBL
-		SET		area = #{area}, instrument = #{instrument},
-				title = #{title}, contents = #{contents},
-				approval = 'N', approvalDate = null, rejectMailChk = 'N'
-		WHERE partnerNo = #{partnerNo}
-	</update>
 	
-	<update id="updatePartnerImage">
-		UPDATE PARTNER_TBL
-		SET 	profileFileName = #{profileFileName}, profileRename = #{profileRename}, profilePath= #{profilePath},
-				approval = 'N', approvalDate = null, rejectMailChk = 'N'
-		WHERE partnerNo = #{partnerNo}
-	</update>
 	
-	<update id="updateRejectMail">
-		UPDATE PARTNER_TBL
-		SET rejectMailChk = 'Y'
-		WHERE partnerNo = #{partnerNo}
-	</update>
 	
-	<delete id="deletePartnerInfo">
-		DELETE FROM PARTNER_TBL
-		WHERE partnerNo = #{partnerNo}
-	</delete>
+	
+	
+	
+	
+	
 	
 	<select id="selectApprovedPartnerCount" resultType="_int">
 		SELECT COUNT(*) FROM PARTNER_TBL

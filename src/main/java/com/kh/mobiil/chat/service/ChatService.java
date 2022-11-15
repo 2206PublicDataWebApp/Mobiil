@@ -8,11 +8,7 @@ import com.kh.mobiil.chat.domain.ChatSearchResult;
 
 public interface ChatService {
 
-	public ChatRoom findByUsers(ChatRoom roomInfo);
-
 	public int registerChatRoom(ChatRoom roomInfo);
-
-	public List<ChatRoom> listByMemberNick(String memberNick);
 
 	public int registerChat(Chat chat);
 
@@ -20,16 +16,19 @@ public interface ChatService {
 
 	public Chat chatNewOne(int roomNo);
 
-	public int getDailyNewRoom(int dayBefore);
+	public ChatRoom findByUsers(ChatRoom roomInfo);
+
+	public List<ChatRoom> listByMemberNick(String memberNick);
+
+	public int updateChatRead(int roomNo, String memberNick);
 
 	public int unReadCount(int refRoomNo, String memberNick);
 
 	public int disableRoom(int roomNo);
 
-	// 채팅방에서 공간검색하기 
-	public List<ChatSearchResult> searchSpace(String searchValue);
+	public List<ChatSearchResult> searchSpace(String searchValue);  // 채팅방에서 공간검색하기 
 
-	public int updateChatRead(int roomNo, String memberNick);
+	public int getDailyNewRoom(int dayBefore);
 
 
 }

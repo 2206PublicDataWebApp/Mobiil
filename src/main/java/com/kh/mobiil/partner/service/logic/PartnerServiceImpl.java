@@ -28,32 +28,8 @@ public class PartnerServiceImpl implements PartnerService {
 	}
 
 	@Override
-	public Partner findByEmail(String memberEmail) {
-		Partner pOne = pStore.selectOnePartner(memberEmail, session);
-		return pOne;
-	}
-
-	@Override
-	public int getTotalCount(SearchPartner sp) {
-		int result = pStore.selectTotalCount(sp, session);
-		return result;
-	}
-
-	@Override
-	public List<Partner> printAllPartner(SearchPartner sp, RowBounds rowBounds) {
-		List<Partner> pList = pStore.selectPartnerList(sp,rowBounds,session);
-		return pList;
-	}
-
-	@Override
-	public Partner findByPartnerNo(int partnerNo) {
-		Partner partner = pStore.selectOnePartnerByNo(partnerNo, session);
-		return partner;
-	}
-
-	@Override
-	public int approvePartner(int partnerNo) {
-		int result = pStore.updateApproval(partnerNo, session);
+	public int updateImage(Partner partner) {
+		int result = pStore.updatePartnerImage(partner, session);
 		return result;
 	}
 
@@ -64,14 +40,44 @@ public class PartnerServiceImpl implements PartnerService {
 	}
 
 	@Override
+	public int approvePartner(int partnerNo) {
+		int result = pStore.updateApproval(partnerNo, session);
+		return result;
+	}
+
+	@Override
 	public int deletePartner(int partnerNo) {
 		int result = pStore.deletePartnerInfo(partnerNo, session);
 		return result;
 	}
 
 	@Override
-	public int sendMail(int partnerNo) {
-		int result = pStore.updateRejectMail(partnerNo, session);
+	public Partner findByEmail(String memberEmail) {
+		Partner pOne = pStore.selectOnePartner(memberEmail, session);
+		return pOne;
+	}
+
+	@Override
+	public Partner findByPartnerNo(int partnerNo) {
+		Partner partner = pStore.selectOnePartnerByNo(partnerNo, session);
+		return partner;
+	}
+
+	@Override
+	public Partner printOnePartner(String memberNick) {
+		Partner pOne = pStore.selectOnePartnerByMemberNick(memberNick, session);
+		return pOne;
+	}
+
+	@Override
+	public List<Partner> printAllPartner(SearchPartner sp, RowBounds rowBounds) {
+		List<Partner> pList = pStore.selectPartnerList(sp,rowBounds,session);
+		return pList;
+	}
+
+	@Override
+	public int getTotalCount(SearchPartner sp) {
+		int result = pStore.selectTotalCount(sp, session);
 		return result;
 	}
 
@@ -88,14 +94,8 @@ public class PartnerServiceImpl implements PartnerService {
 	}
 
 	@Override
-	public Partner printOnePartner(String memberNick) {
-		Partner pOne = pStore.selectOnePartnerByMemberNick(memberNick, session);
-		return pOne;
-	}
-
-	@Override
-	public int updateImage(Partner partner) {
-		int result = pStore.updatePartnerImage(partner, session);
+	public int sendMail(int partnerNo) {
+		int result = pStore.updateRejectMail(partnerNo, session);
 		return result;
 	}
 

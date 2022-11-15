@@ -38,14 +38,16 @@
 		ORDER BY 1
 	</select>
 	
-	<select id="countBanner" resultType="_int">
-		SELECT COUNT(*) FROM BANNER_TBL
-		WHERE bannerNo = #{bannerNo}
-	</select>
+	
 
 	<select id="selectOneBanner" resultType="Banner">
 		SELECT * FROM BANNER_TBL
 		WHERE bannerNo = #{i}
+	</select>
+	
+	<select id="countBanner" resultType="_int">
+		SELECT COUNT(*) FROM BANNER_TBL
+		WHERE bannerNo = #{bannerNo}
 	</select>
 
 </mapper>

@@ -8,19 +8,19 @@ import com.kh.mobiil.banner.domain.Banner;
 
 public interface BannerStore  {
 
- 	public	List<Banner> selectAllBanner(SqlSessionTemplate session);
-
-	public int chkBanner(SqlSessionTemplate session, int bannerNo);
+ 	public int insertBanner(SqlSessionTemplate session, Banner banner);
 
 	public int renewBanner(SqlSessionTemplate session, Banner banner);
-
-	public int insertBanner(SqlSessionTemplate session, Banner banner);
-
-	public Banner selectOneBanner(SqlSessionTemplate session, int i);
 
 	public int updateContents(SqlSessionTemplate session, Banner banner);
 
 	public int updateImage(SqlSessionTemplate session, Banner banner);
+
+	public	List<Banner> selectAllBanner(SqlSessionTemplate session);
+
+	public Banner selectOneBanner(SqlSessionTemplate session, int i);
+
+	public int chkBanner(SqlSessionTemplate session, int bannerNo);
 
 
 }

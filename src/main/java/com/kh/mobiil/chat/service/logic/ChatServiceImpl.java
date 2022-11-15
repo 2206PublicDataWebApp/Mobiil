@@ -21,6 +21,36 @@ public class ChatServiceImpl implements ChatService {
 	private SqlSessionTemplate session;
 	
 	@Override
+	public int registerChatRoom(ChatRoom roomInfo) {
+		int result = cStore.insertRoom(roomInfo, session);
+		return result;
+	}
+	@Override
+	public int registerChat(Chat chat) {
+		int result = cStore.insertChat(chat, session);
+		return result;
+	}
+	@Override
+	public List<Chat> chatLog(int roomNo) {
+		List<Chat> cLog = cStore.selectChatLog(roomNo, session);
+		return cLog;
+	}
+	@Override
+	public Chat chatNewOne(int roomNo) {
+		Chat cOne = cStore.selectOneNew(roomNo, session);
+		return cOne;
+	}
+	@Override
+	public int updateChatRead(int roomNo, String memberNick) {
+		int result = cStore.updateChatRead(roomNo,memberNick, session);
+		return result;
+	}
+	@Override
+	public int unReadCount(int refRoomNo, String memberNick) {
+		int result = cStore.selectUnRead(refRoomNo, memberNick, session);
+		return result;
+	}
+	@Override
 	public List<ChatRoom> listByMemberNick(String memberNick) {
 		List<ChatRoom> cList = cStore.selectChatRoom(memberNick, session);
 		return cList;
@@ -31,43 +61,13 @@ public class ChatServiceImpl implements ChatService {
 		return chatRoom;
 	}
 	@Override
-	public int registerChatRoom(ChatRoom roomInfo) {
-		int result = cStore.insertRoom(roomInfo, session);
-		return result;
-	}
-	@Override
-	public List<Chat> chatLog(int roomNo) {
-		List<Chat> cLog = cStore.selectChatLog(roomNo, session);
-		return cLog;
-	}
-	@Override
-	public int registerChat(Chat chat) {
-		int result = cStore.insertChat(chat, session);
-		return result;
-	}
-	@Override
 	public List<ChatSearchResult> searchSpace(String searchValue) {
 		List<ChatSearchResult> sList = cStore.selectSearchResult(searchValue, session);
 		return sList;
 	}
 	@Override
-	public Chat chatNewOne(int roomNo) {
-		Chat cOne = cStore.selectOneNew(roomNo, session);
-		return cOne;
-	}
-	@Override
-	public int unReadCount(int refRoomNo, String memberNick) {
-		int result = cStore.selectUnRead(refRoomNo, memberNick, session);
-		return result;
-	}
-	@Override
 	public int disableRoom(int roomNo) {
 		int result = cStore.disableRoom(roomNo, session);
-		return result;
-	}
-	@Override
-	public int updateChatRead(int roomNo, String memberNick) {
-		int result = cStore.updateChatRead(roomNo,memberNick, session);
 		return result;
 	}
 	@Override

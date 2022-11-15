@@ -20,20 +20,8 @@ public class BannerServiceImpl implements BannerService{
 	private SqlSessionTemplate session;
 	
 	@Override
-	public List<Banner> printAllBanner() {
-		List<Banner> bList = bStore.selectAllBanner(session);
-		return bList;
-	}
-
-	@Override
 	public int chkBanner(int bannerNo) {
 		int result = bStore.chkBanner(session, bannerNo);
-		return result;
-	}
-
-	@Override
-	public int renewBanner(Banner banner) {
-		int result = bStore.renewBanner(session, banner);
 		return result;
 	}
 
@@ -44,9 +32,9 @@ public class BannerServiceImpl implements BannerService{
 	}
 
 	@Override
-	public Banner printOneBanenr(int i) {
-		Banner oneBanner = bStore.selectOneBanner(session, i);
-		return oneBanner;
+	public int renewBanner(Banner banner) {
+		int result = bStore.renewBanner(session, banner);
+		return result;
 	}
 
 	@Override
@@ -59,6 +47,18 @@ public class BannerServiceImpl implements BannerService{
 	public int updateImage(Banner banner) {
 		int result = bStore.updateImage(session, banner);
 		return result;
+	}
+
+	@Override
+	public List<Banner> printAllBanner() {
+		List<Banner> bList = bStore.selectAllBanner(session);
+		return bList;
+	}
+
+	@Override
+	public Banner printOneBanenr(int i) {
+		Banner oneBanner = bStore.selectOneBanner(session, i);
+		return oneBanner;
 	}
 
 }

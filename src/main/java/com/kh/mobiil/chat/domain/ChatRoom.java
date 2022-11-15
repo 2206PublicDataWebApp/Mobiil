@@ -2,7 +2,7 @@ package com.kh.mobiil.chat.domain;
 
 import java.sql.Date;
 
-public class ChatRoom {
+public class ChatRoom { // 채팅방 정보
 	
 	private int roomNo;
 	private String createUser;
