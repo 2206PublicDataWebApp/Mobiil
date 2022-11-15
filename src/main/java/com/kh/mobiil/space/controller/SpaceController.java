@@ -672,7 +672,7 @@ public class SpaceController {
 						Message coolsms = new Message(api_key, api_secret);
 						HashMap<String, String> set = new HashMap<String, String>();
 						set.put("to", memberPhone); 				// 받는 번호
-						set.put("from", ""); 			// 보내는 번호
+						set.put("from", "01067462778"); 			// 보내는 번호
 						set.put("text", "[Mobiil]"+rsvDate+" "+revStart+"시~"+revEnd+"시 예약이 완료되었습니다."); // 문자내용
 						set.put("type", "SMS"); 					// 문자 타입
 						set.put("app_version", "test app 1.2");
