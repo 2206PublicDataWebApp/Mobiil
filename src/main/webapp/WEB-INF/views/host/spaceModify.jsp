@@ -135,7 +135,7 @@
 					</tr>
 					<tr>
 						<td colspan='2' align="center">
-						<button class="button1" type="submit">공간 업로드</button>
+						<button class="button1" type="submit">수정하기</button>
 						<button class="button2" type="reset" onclick="location.href='/host/spaceList.mobiil'">취소</button>
 						</td>
 					</tr>

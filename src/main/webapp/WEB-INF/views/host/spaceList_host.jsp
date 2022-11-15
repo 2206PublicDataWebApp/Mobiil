@@ -86,7 +86,7 @@
 				</table>
 				<br><br>
 		</div>
-		<br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <jsp:include page="../../views/common/footer.jsp"></jsp:include>		
 </body>
 </html>
