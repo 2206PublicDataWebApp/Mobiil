@@ -16,7 +16,7 @@
 	width: 400px;
 	font-size: 15px;
 	margin: 1px 80px 10px 20px;
-    border-color: rgb(239, 237, 237);
+	border-color: rgb(239, 237, 237);
 }
 
 .button {
@@ -40,31 +40,29 @@
 	content: '* ';
 }
 
-	.email_ok{
-	color:#008000;
+.email_ok {
+	color: #008000;
 	display: none;
-	}
-	
-	.email_already{
-	color:#6A82FB; 
-	display: none;
-	}
+}
 
-	.nick_ok{
-	color:#008000;
+.email_already {
+	color: #6A82FB;
 	display: none;
-	}
-	
-	.nick_already{
-	color:#6A82FB; 
-	display: none;
-	}
+}
 
+.nick_ok {
+	color: #008000;
+	display: none;
+}
+
+.nick_already {
+	color: #6A82FB;
+	display: none;
+}
 </style>
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"></jsp:include>
-
 	<div class="signup">
 		<h1>개인 회원가입</h1>
 		<br>
@@ -86,7 +84,6 @@
 				<!-- 인증번호 확인 -->
 				<div class="auth-success" id="auth-success">인증번호가 일치합니다.</div>
 				<div class="auth-fail" id="auth-fail">인증번호가 일치하지 않습니다.</div>
-				
 				<br>
 				<label>비밀번호</label><input type="password" class="input" id="pwd" name="memberPwd" placeholder="영문자/숫자/특수문자 포함, 6자~20자"><br> 
 				<label>비밀번호 확인</label><input type="password" class="input" id="pwd2" name="memberPwd2" placeholder="영문자/숫자/특수문자 포함, 6자~20자"><br> 
@@ -95,8 +92,7 @@
 				<br>
 				<span class="nick_ok">사용 가능한 닉네임이에요 :)</span>
 				<span class="nick_already">이미 사용중인 닉네임이에요 :(</span>
-				<br> 
-				<br>
+				<br><br>
 				<div>
 					<button type="button" class="button" onclick="joinform_check();">회원가입하기</button>
 				</div>
@@ -201,110 +197,107 @@
         
     }
     
-    	   function checkEmail(){
-            var emailValue = $('#email').val();
+   function checkEmail(){
+       var emailValue = $('#email').val();
+       
+       $.ajax({
+       	url : "/member/checkEmail.kh",
+           data: { "memberEmail" : emailValue },
+           type: "get",
+           success : function(result){
+               if(result == 0){ // 사용 가능 이메일
+                   $('.email_ok').css("display","inline-block"); 
+                   $('.email_already').css("display", "none");
+                   $('#mail_check_button').css("display", "inline-block");
+               } else { // 이미 존재하는 이메일
+                   $('.email_already').css("display","inline-block");
+                   $('.email_ok').css("display", "none");
+                   $('#mail_check_button').css("display", "none");
+               }
+           },
+           error:function(){
+               alert("에러입니다");
+           }
+       });
+     };
             
-            $.ajax({
-            	url : "/member/checkEmail.kh",
-                data: { "memberEmail" : emailValue },
-                type: "get",
-                success : function(result){
-                    if(result == 0){ // 사용 가능 이메일
-                        $('.email_ok').css("display","inline-block"); 
-                        $('.email_already').css("display", "none");
-                        $('#mail_check_button').css("display", "inline-block");
-                    } else { // 이미 존재하는 이메일
-                        $('.email_already').css("display","inline-block");
-                        $('.email_ok').css("display", "none");
-                        $('#mail_check_button').css("display", "none");
-                    }
-                },
-                error:function(){
-                    alert("에러입니다");
+    function checkNick(){
+        var nickValue = $('#nick').val();
+        
+        $.ajax({
+        	url : "/member/checkNick.kh",
+            data: { "memberNick" : nickValue },
+            type: "get",
+            success : function(result){
+                if(result == 0){
+                    $('.nick_ok').css("display","inline-block"); 
+                    $('.nick_already').css("display", "none");
+                } else { 
+                    $('.nick_already').css("display","inline-block");
+                    $('.nick_ok').css("display", "none");
                 }
-            });
-          };
-            
-            function checkNick(){
-                var nickValue = $('#nick').val();
+            },
+            error:function(){
+                alert("에러입니다");
+            }
+        });
+      };
                 
-                $.ajax({
-                	url : "/member/checkNick.kh",
-                    data: { "memberNick" : nickValue },
-                    type: "get",
-                    success : function(result){
-                        if(result == 0){
-                            $('.nick_ok').css("display","inline-block"); 
-                            $('.nick_already').css("display", "none");
-                        } else { 
-                            $('.nick_already').css("display","inline-block");
-                            $('.nick_ok').css("display", "none");
-                        }
-                    },
-                    error:function(){
-                        alert("에러입니다");
-                    }
-                });
-              };
+                
+	//인증번호 코드
+	
+	$("#auth-success").hide();
+	$("#auth-fail").hide();
 
-                
-                
-        		//인증번호 코드
-        		
-        		$("#auth-success").hide();
-        		$("#auth-fail").hide();
+	var checkCode = false;
 
-        		var checkCode = false;
- 
-        		//인증번호를 저장할 변수
-        		var code = "";
+	//인증번호를 저장할 변수
+	var code = "";
+	
+	//인증번호 이메일 전송
+	$("#mail_check_button").on("click", function(e){
+		e.preventDefault();
+		var email = $("#email").val();
+		var checkBox = $(".mail_check_input");
+		
+		$.ajax({
+			type:"get",
+			url : "/mailCheck",
+			data : {memberEmail : email},
+			success : function(data){ // 인증번호를 가져옴
+ 			alert("인증번호가 발송되었습니다. 메일함을 확인해주세요.");
+				checkBox.attr("disabled", false); // 인증번호 입력 가능
+				checkBox.val(''); // 기존에 값이 있었으면 지워줌
+				$("#auth-success").hide();
+				$("#auth-fail").hide();
+				checkCode = false;
+				code = data; // 인증번호를 변수에 저장
+			},
+			error : function(data) {
+       			alert("인증번호 발송 실패");
+			}
+		});
+	});
         		
-        		//인증번호 이메일 전송
-        		$("#mail_check_button").on("click", function(e){
-        			e.preventDefault();
-        			var email = $("#email").val();
-        			var checkBox = $(".mail_check_input");
-        			
-        			$.ajax({
-        				type:"get",
-        				url : "/mailCheck",
-        				data : {memberEmail : email},
-        				success : function(data){ // 인증번호를 가져옴
-		        			alert("인증번호가 발송되었습니다. 메일함을 확인해주세요.");
-        					checkBox.attr("disabled", false); // 인증번호 입력 가능
-        					checkBox.val(''); // 기존에 값이 있었으면 지워줌
-        					$("#auth-success").hide();
-        					$("#auth-fail").hide();
-        					checkCode = false;
-        					code = data; // 인증번호를 변수에 저장
-        				},
-        				error : function(data) {
-                			alert("인증번호 발송 실패");
-        				}
-        			});
-        		});
-        		
-        		//인증코드 입력 시 동일성 확인
-        		$(".mail_check_input").keyup(function() {
-        			var inputCode = $(".mail_check_input").val();
-        			if (inputCode != "" || code != "") {
-        				if (inputCode == code) {
-        					$("#auth-success").show();
-        					$("#auth-success").css('color','green');
-        					$("#auth-fail").hide();
-        					$(".mail_check_input").attr("disabled", true); //인증번호 입력 멈춤
-        					checkCode = true;
-        				} else {
-        					$("#auth-success").hide();
-        					$("#auth-fail").show();
-        					$("#auth-fail").css('color','red');
-
-        					checkCode = false;
-        				}
-        			}
-        		});
-                
-                
+	//인증코드 입력 시 동일성 확인
+	$(".mail_check_input").keyup(function() {
+		var inputCode = $(".mail_check_input").val();
+		if (inputCode != "" || code != "") {
+			if (inputCode == code) {
+				$("#auth-success").show();
+				$("#auth-success").css('color','green');
+				$("#auth-fail").hide();
+				$(".mail_check_input").attr("disabled", true); //인증번호 입력 멈춤
+				checkCode = true;
+			} else {
+				$("#auth-success").hide();
+				$("#auth-fail").show();
+				$("#auth-fail").css('color','red');
+	
+				checkCode = false;
+			}
+		}
+	});
   </script>
   <br><br><br><br><br><br>
   <jsp:include page="../common/footer.jsp"></jsp:include>

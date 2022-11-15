@@ -61,65 +61,18 @@
   		</association>
   	</resultMap>
   	
- 	<!-- 정보 찾기 --> 
-	<select id="findKakao" parameterType="java.util.HashMap" resultType="Member">
-		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{email} AND memberName = #{nickname} 
-	</select>
-
-	<!-- 정보 저장 -->
-	<insert id="registKakao" parameterType="java.util.HashMap">
-		INSERT INTO MEMBER_TBL VALUES(#{email}, NULL, #{nickname}, #{nickname}, NULL, DEFAULT, DEFAULT, 'N', DEFAULT, 'Y')
-	</insert>
-	
-	<!-- 멤버(개인회원) -->
+ 	<!-- 멤버(개인회원) -->
+ 	
 	<insert id="insertMember"> <!-- 회원가입 -->
-		  INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'N')
-	 </insert>
-
-  	<select id="selectLoginOne" resultType="Member"> <!-- 로그인 -->
-  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
-  	</select>
-  	
-  	<select id="selectOneByEmail" resultType="Member"> <!-- 마이페이지 -->
-  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND mStatus = 'Y' AND kakaoStatus = 'N'
-  	</select>
-  	
-  	<select id="selectOneByKEmail" resultType="Member">
-  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND kakaoStatus = 'Y'
-  	</select>
-  	 
-  	<select id="selectNickByKEmail" resultType="Member"> <!-- 카카오회원 닉네임 바꾸는 화면 -->
-  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND kakaoStatus = 'Y'
-  	</select>
-  	
-  	<update id="updateNick">
-  		UPDATE MEMBER_TBL SET mStatus = 'Y', memberNick = #{memberNick} WHERE memberEmail = #{memberEmail}
-  	</update>
-  	
-  	<update id="updateMember"> <!-- 정보수정 -->
-		UPDATE MEMBER_TBL
-		SET memberNick = #{memberNick}, memberPwd = #{memberPwd}, memberPhone = #{memberPhone} WHERE memberEmail = #{memberEmail}
-	</update>
-  	
-  	<update id="updateKakaoMember">
-  		UPDATE MEMBER_TBL
-		SET memberName = #{memberName}, memberNick = #{memberNick} WHERE memberEmail = #{memberEmail}
-  	</update>
-  	
-  	<update id="deleteMember"> <!-- 일반회원 탈퇴 -->
-  		UPDATE MEMBER_TBL SET mStatus = 'N' WHERE memberEmail = #{memberEmail} 
-  	</update>
-  	
-  	<delete id="deleteKakaoMember"> <!-- 카카오회원 탈퇴 -->
-  		DELETE FROM MEMBER_TBL WHERE memberEmail = #{memberEmail}
-  	</delete>
-  	
-  	<select id="checkEmailDuplicate" resultType="_int"> <!-- 이메일 중복방지 -->
+		INSERT INTO MEMBER_TBL VALUES(#{memberEmail}, #{memberPwd}, #{memberName}, #{memberNick}, #{memberPhone}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'N')
+	</insert>
+	 
+	<select id="checkEmailDuplicate" resultType="_int"> <!-- 이메일 중복방지 -->
   		SELECT COUNT(*) FROM (
 		SELECT memberEmail FROM MEMBER_TBL WHERE mStatus = 'Y'
 		UNION
 		SELECT hostEmail FROM HOST_TBL WHERE hStatus = 'Y') WHERE memberEmail = #{memberEmail}
-  	</select>
+	</select>
   	
   	<select id="checkNickDuplicate" resultType="_int"> <!-- 닉네임 중복방지 -->
   	  	SELECT COUNT(*) FROM (
@@ -127,14 +80,27 @@
   	  	UNION
   	  	SELECT memberNick FROM HOST_TBL WHERE hStatus = 'Y') WHERE memberNick = #{memberNick}
   	</select>
+  	  	
+  	<select id="selectLoginOne" resultType="Member"> <!-- 로그인 -->
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND memberPwd = #{memberPwd} AND mStatus = 'Y'
+  	</select>
   	
   	<select id="checkMemDupEmail" resultType="_int"> <!-- 비밀번호 변경 시 이메일 존재 체크(개인) -->
   		SELECT COUNT(*) FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND mStatus = 'Y'
   	</select>
   	
-  	<select id="checkHostDupEmail" resultType="_int"> <!-- 비밀번호 변경 시 이메일 존재 체크(기업) -->
-  		SELECT COUNT(*) FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hStatus = 'Y'
+  	<update id="updatePwd">
+		UPDATE MEMBER_TBL SET memberPwd = #{memberPwd} WHERE memberEmail = #{memberEmail}
+	</update>
+	
+	<select id="selectOneByEmail" resultType="Member"> <!-- 마이페이지 -->
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND mStatus = 'Y' AND kakaoStatus = 'N'
   	</select>
+  	
+  	<update id="updateMember"> <!-- 정보수정 -->
+		UPDATE MEMBER_TBL
+		SET memberNick = #{memberNick}, memberPwd = #{memberPwd}, memberPhone = #{memberPhone} WHERE memberEmail = #{memberEmail}
+	</update>
   	
   	<select id="selectTotalCount" resultType="_int"> <!-- 결제내역 페이징 갯수-->
   		SELECT COUNT(*) FROM RESERVATION_TBL WHERE MEMBER_EMAIL = #{memberEmail} AND RESERV_STATUS = 'Y'
@@ -145,6 +111,10 @@
  		FROM RESERVATION_TBL
 		LEFT JOIN REVIEW_TBL ON RESERVATION_TBL.RESERV_NO = REVIEW_TBL.RESERV_NO
 		WHERE RESERVATION_TBL.MEMBER_EMAIL = #{memberEmail} AND RESERV_STATUS = 'Y' ORDER BY PAYMENT_DATE DESC, RESERV_NO
+  	</select>
+  	
+  	<select id="selectOneByNo" resultMap="ReservationResultMap"> <!-- 결제 상세 내역 -->
+		SELECT * FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo} AND RESERV_STATUS = 'Y'
   	</select>
   	
   	<select id="getSpaceTotalCount" resultType="_int"> <!-- 찜한 공간 페이징 갯수 -->
@@ -158,50 +128,83 @@
 		WHERE MEMBER_EMAIL = #{memberEmail} AND SPACE_TBL.SPACE_STATUS = 'Y'
   	</select>
   	
-  	<select id="selectOneByNo" resultMap="ReservationResultMap"> <!-- 결제 상세 내역 -->
-		SELECT * FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo} AND RESERV_STATUS = 'Y'
+  	<!-- 정보 찾기 -->
+  	<select id="findKakao" parameterType="java.util.HashMap" resultType="Member">
+		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{email} AND memberName = #{nickname} 
+	</select>
+	
+	<!-- 정보 저장 -->
+	<insert id="registKakao" parameterType="java.util.HashMap">
+		INSERT INTO MEMBER_TBL VALUES(#{email}, NULL, #{nickname}, #{nickname}, NULL, DEFAULT, DEFAULT, 'N', DEFAULT, 'Y')
+	</insert>
+	  	 
+  	<select id="selectNickByKEmail" resultType="Member"> <!-- 카카오회원 닉네임 바꾸는 화면 -->
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND kakaoStatus = 'Y'
   	</select>
   	
-	<update id="updatePwd">
-		UPDATE MEMBER_TBL SET memberPwd = #{memberPwd} WHERE memberEmail = #{memberEmail}
-	</update>
+  	<update id="updateNick">
+  		UPDATE MEMBER_TBL SET mStatus = 'Y', memberNick = #{memberNick} WHERE memberEmail = #{memberEmail}
+  	</update>
   	
-  	<update id="updateHostPwd">
-		UPDATE HOST_TBL SET hostPwd= #{hostPwd} WHERE hostEmail = #{hostEmail}
-	</update>
+  	<update id="updateKakaoMember">
+  		UPDATE MEMBER_TBL
+		SET memberName = #{memberName}, memberNick = #{memberNick} WHERE memberEmail = #{memberEmail}
+  	</update>
+  	
+	<select id="selectOneByKEmail" resultType="Member">
+  		SELECT * FROM MEMBER_TBL WHERE memberEmail = #{memberEmail} AND kakaoStatus = 'Y'
+  	</select>
 	
-  	<!-- 호스트 -->
+	<update id="deleteMember"> <!-- 일반회원 탈퇴 -->
+  		UPDATE MEMBER_TBL SET mStatus = 'N' WHERE memberEmail = #{memberEmail} 
+  	</update>
+  	
+  	<delete id="deleteKakaoMember"> <!-- 카카오회원 탈퇴 -->
+  		DELETE FROM MEMBER_TBL WHERE memberEmail = #{memberEmail}
+  	</delete>
+  	
+  	
+	<!-- 호스트 -->  	
   	<insert id="insertHost">
 		INSERT INTO HOST_TBL VALUES(#{hostEmail}, #{hostPwd}, #{hostName}, #{hostPhone}, #{companyName}, #{companyRegNum}, 
 		#{accountName}, #{accountHolder}, #{accountNumber}, #{regPhotoName}, #{regPhotoRename}, #{regPhotoPath}, DEFAULT, DEFAULT, DEFAULT, #{companyName})
 	 </insert>
-  
-  	<select id="selectLoginhOne" resultType="Host">
-  		SELECT * FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hostPwd = #{hostPwd} AND hStatus = 'Y'
-  	</select>
-  	
-  	<select id="checkHostEmailDuplicate" resultType="_int">
+	 
+	 <select id="checkHostEmailDuplicate" resultType="_int">
   		SELECT COUNT(*) FROM (
 		SELECT hostEmail FROM HOST_TBL WHERE hStatus = 'Y'
 		UNION
 		SELECT memberEmail FROM MEMBER_TBL WHERE mStatus = 'Y') WHERE hostEmail =  #{hostEmail}
   	</select>
+  	  
+  	<select id="selectLoginhOne" resultType="Host">
+  		SELECT * FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hostPwd = #{hostPwd} AND hStatus = 'Y'
+  	</select>
   	
+  	<select id="checkHostDupEmail" resultType="_int"> <!-- 비밀번호 변경 시 이메일 존재 체크(기업) -->
+  		SELECT COUNT(*) FROM HOST_TBL WHERE hostEmail = #{hostEmail} AND hStatus = 'Y'
+  	</select>
   	
+  	<update id="updateHostPwd">
+		UPDATE HOST_TBL SET hostPwd= #{hostPwd} WHERE hostEmail = #{hostEmail}
+	</update> 
+
   	
-<!--   	어드민 대시보드에 숫자뽑는 쿼리들  -->
-<!-- 	일반회원 카운트 -->
+	<!--   	어드민 대시보드에 숫자뽑는 쿼리들  -->
+	<!-- 	일반회원 카운트 -->
   	<select id="selectMemberCount" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER_TBL
   		WHERE mStatus = 'Y'
   	</select>
-<!-- 	일일 일반회원 가입 카운트 -->
+  	
+	<!-- 일일 일반회원 가입 카운트 -->
   	<select id="selectMemberDailyCount" resultType="_int">
 		SELECT COUNT(*) FROM MEMBER_TBL
 		WHERE (TO_CHAR(enrollDate) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD')))
 				AND (mStatus = 'Y')
 	</select>
-<!-- 	일일 호스트회원 가입 카운트 -->
+	
+	<!-- 일일 호스트회원 가입 카운트 -->
 	<select id="selectHostDailyCount" resultType="_int">
 		SELECT COUNT(*) FROM HOST_TBL
 		WHERE (TO_CHAR(enrollDate) = TO_CHAR(TO_DATE(SYSDATE-#{dayBefore},'YY/MM/DD')))

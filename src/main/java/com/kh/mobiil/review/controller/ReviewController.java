@@ -4,14 +4,12 @@ import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +22,6 @@ import com.kh.mobiil.review.domain.Review;
 import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.review.service.ReviewService;
 import com.kh.mobiil.space.domain.Reservation;
-import com.kh.mobiil.space.domain.Space;
 
 @Controller
 public class ReviewController {
@@ -32,7 +29,12 @@ public class ReviewController {
 	@Autowired
 	private ReviewService rService;
 	
-	// 리뷰 등록 화면
+	/**
+	 * 리뷰 등록 화면
+	 * @param mv
+	 * @param reservationNo
+	 * @return
+	 */
 	@RequestMapping(value="/review/writeView.kh", method=RequestMethod.GET)
 	public ModelAndView reviewWriteView(ModelAndView mv,
 			@RequestParam(value="reservationNo") String reservationNo) {
@@ -43,12 +45,20 @@ public class ReviewController {
 		return mv;
 	}
 	
-	// 리뷰 등록
+	/**
+	 * 리뷰 등록
+	 * @param mv
+	 * @param review
+	 * @param reservation
+	 * @param uploadFile
+	 * @param request
+	 * @return
+	 */
 		@RequestMapping(value="/review/register.kh", method=RequestMethod.POST)
 		public ModelAndView registReview(ModelAndView mv, @ModelAttribute Review review,
 				@ModelAttribute Reservation reservation,
 				@RequestParam(value="uploadFile", required=false) List<MultipartFile> uploadFile, 
-				MultipartHttpServletRequest mRequest, HttpServletRequest request) {
+				HttpServletRequest request) {
 			try {
 				int result = rService.registerReview(review);
 				int result2 = rService.updateRevStatus(reservation);
@@ -87,7 +97,15 @@ public class ReviewController {
 			return mv;
 		}
 	
-	// 리뷰 상세조회
+	/**
+	 * 리뷰 상세조회
+	 * @param mv
+	 * @param reservationNo
+	 * @param reviewNo
+	 * @param page
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/review/detail.kh", method=RequestMethod.GET)
 		public ModelAndView reviewDetailView(ModelAndView mv,
 				@RequestParam("reservationNo") String reservationNo, 
@@ -109,7 +127,13 @@ public class ReviewController {
 		return mv;
 	}
 	
-	// 리뷰 수정화면
+	/**
+	 * 리뷰 수정 화면
+	 * @param mv
+	 * @param reviewNo
+	 * @param page
+	 * @return
+	 */
 	@RequestMapping(value="/review/modifyView.kh", method=RequestMethod.GET)
 	public ModelAndView reviewModifyView(
 			ModelAndView mv
@@ -131,8 +155,16 @@ public class ReviewController {
 	
 	}
 	
-	
-	// 리뷰 수정
+	/**
+	 * 리뷰 수정
+	 * @param review
+	 * @param mv
+	 * @param reloadFile
+	 * @param reviewNoArr
+	 * @param reviewFileRenameArr
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/review/modify.kh", method=RequestMethod.POST)
 	public ModelAndView reviewModify(
 			@ModelAttribute Review review,
@@ -180,7 +212,15 @@ public class ReviewController {
 		}
 
 
-	// 리뷰 삭제
+	/**
+	 * 리뷰 삭제
+	 * @param mv
+	 * @param reviewNo
+	 * @param reservationNo
+	 * @param request
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/review/remove.kh", method = RequestMethod.GET)
 	public ModelAndView reviewRemove(ModelAndView mv, @RequestParam("reviewNo") Integer reviewNo,
 			@RequestParam("reservationNo") String reservationNo, HttpServletRequest request, HttpSession session) { 

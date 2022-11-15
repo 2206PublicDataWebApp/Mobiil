@@ -11,7 +11,6 @@ import com.kh.mobiil.review.domain.ReviewImg;
 import com.kh.mobiil.review.service.ReviewService;
 import com.kh.mobiil.review.store.ReviewStore;
 import com.kh.mobiil.space.domain.Reservation;
-import com.kh.mobiil.space.domain.Space;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -23,11 +22,23 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewStore rStore;
 	
 	@Override
+	public Reservation printReservation(String reservationNo) {
+		Reservation reservation = rStore.selectReservation(session, reservationNo);
+		return reservation;
+	}
+
+	@Override
 	public int registerReview(Review review) {
 		int result = rStore.insertReview(session, review);
 		return result;
 	}
 	
+	@Override
+	public int registerReviewImg(ReviewImg ReviewImg) {
+		int result = rStore.insertReviewImg(session, ReviewImg);
+		return result;
+	}
+
 	@Override
 	public int updateRevStatus(Reservation reservation) {
 		int result = rStore.updateRevStatus(session, reservation);
@@ -35,18 +46,23 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int registerReviewImg(ReviewImg ReviewImg) {
-		int result = rStore.insertReviewImg(session, ReviewImg);
-		return result;
-	}
-
-	// 리뷰 상세보기에 리뷰 이미지 불러오기
-	@Override
 	public List<ReviewImg> printReviewImg(Integer reviewNo) {
 		List<ReviewImg> rList = rStore.selectReviewImg(session, reviewNo);
 		return rList;
 	}
 	
+	@Override
+	public Review printOneByNo(Integer reviewNo) {
+		Review review = rStore.selectOneByNo(session, reviewNo);
+		return review;
+	}
+
+	@Override
+	public List<ReviewImg> printImgByNo(Integer reviewNo) {
+		List<ReviewImg> reviewImg = rStore.selectImgByNo(session, reviewNo);
+		return reviewImg;
+	}
+
 	@Override
 	public int reviewModify(Review review) {
 		int result = rStore.reviewModify(session, review);
@@ -66,32 +82,14 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Review printOneByNo(Integer reviewNo) {
-		Review review = rStore.selectOneByNo(session, reviewNo);
-		return review;
-	}
-
-	@Override
-	public Reservation printReservation(String reservationNo) {
-		Reservation reservation = rStore.selectReservation(session, reservationNo);
-		return reservation;
+	public int removeReviewImg(Integer reviewNo) {
+		int result = rStore.deleteReviewImg(session, reviewNo);
+		return result;
 	}
 
 	@Override
 	public int updateRevStatusN(String reservationNo) {
 		int result = rStore.updateRevStatusN(session, reservationNo);
-		return result;
-	}
-
-	@Override
-	public List<ReviewImg> printImgByNo(Integer reviewNo) {
-		List<ReviewImg> reviewImg = rStore.selectImgByNo(session, reviewNo);
-		return reviewImg;
-	}
-
-	@Override
-	public int removeReviewImg(Integer reviewNo) {
-		int result = rStore.deleteReviewImg(session, reviewNo);
 		return result;
 	}
 

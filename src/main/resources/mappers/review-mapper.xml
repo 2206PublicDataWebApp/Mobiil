@@ -58,58 +58,19 @@
 			<result property="spaceFileRename" column="SPACE_FILERENAME" />
 		</association>
 	</resultMap>
-
-
-	<select id="selectReservation" resultMap="ReservationResultMap"> <!-- 리뷰 작성 화면에 공간명, 공간번호 불러오기 -->
+	
+	<!-- 리뷰 작성 화면에 공간명, 공간번호 불러오기 -->
+	<select id="selectReservation" resultMap="ReservationResultMap"> 
 		SELECT * FROM RESERVATION_TBL WHERE RESERV_NO = #{reservationNo} AND RESERV_STATUS = 'Y'
 	</select>
 	
-	<select id="selectImgByNo" resultMap="reviewImgResultMap"> <!-- 리뷰 수정 화면에 리뷰 사진 불러오기 -->
+	<!-- 리뷰 수정 화면에 리뷰 사진 불러오기 -->
+	<select id="selectImgByNo" resultMap="reviewImgResultMap"> 
 		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
 	</select>
 	
-	<insert id="insertReview"> <!-- 리뷰 업로드 -->
-		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{spaceNo}, 
-		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT, #{reservationNo})
-	</insert>
-
-	<insert id="insertReviewImg"> <!-- 리뷰 이미지 업로드 -->
-		INSERT INTO REVIEW_IMG VALUES(SEQ_REVIEW_IMG_NO.NEXTVAL, SEQ_REVIEW_NO.CURRVAL,
-		#{reviewFileName}, #{reviewFileRename}, #{reviewFilePath})
-	</insert>
-	
-	<update id="updateRevStatus"> <!-- 리뷰 등록 시 reservation의 리뷰 상태 Y로 업데이트 -->
-		UPDATE RESERVATION_TBL SET REV_STATUS = 'Y' WHERE RESERV_NO = #{reservationNo}
-	</update>
-
-	<update id="updateRevStatusN"> <!-- 리뷰 삭제 시 reservation의 리뷰 상태 N으로 업데이트 -->
-		UPDATE RESERVATION_TBL SET REV_STATUS = 'N' WHERE RESERV_NO = #{reservationNo}
-	</update>
-
-	<select id="selectReviewImg" resultMap="reviewImgResultMap"> <!-- 리뷰 상세페이지에 리뷰 이미지 -->
-		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo} ORDER BY REVIEW_FILERENAME ASC
-	</select>
-	
-	<update id="reviewModify"> <!-- 리뷰 수정 -->
-		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, R_UPDATE_DATE = DEFAULT
-		WHERE REVIEW_NO = #{reviewNo}
-	</update>
-
-	<update id="reviewImgModify"> <!-- 리뷰 사진 수정 -->
-		UPDATE REVIEW_IMG
-		SET REVIEW_FILENAME = #{reviewFileName}, REVIEW_FILERENAME = #{reviewFileRename}, REVIEW_FILEPATH = #{reviewFilePath}
-  	 	WHERE REVIEW_IMG_NO = #{reviewImgNo}
-	</update>
-	
-	<delete id="deleteReview"> <!-- 리뷰 삭제 -->
-		DELETE FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo}
-	</delete>
-
-	<delete id="deleteReviewImg"> <!-- 리뷰 삭제 시 이미지도 삭제 -->
-		DELETE FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
-	</delete>
-	
-	<select id="selectOneByNo" resultMap="reviewResultMap"> <!-- 리뷰 상세보기 -->
+	<!-- 리뷰 상세보기 -->
+	<select id="selectOneByNo" resultMap="reviewResultMap"> 
 		SELECT SPACE_NAME, REVIEW_NO, SPACE_TBL.SPACE_NO,
 		MEMBER_EMAIL, REVIEW_CONTENTS,
 		REVIEW_WRITER, R_CREATE_DATE,
@@ -120,5 +81,55 @@
 		WHERE REVIEW_NO = #{reviewNo}
 		AND R_STATUS = 'Y'
 	</select>
+	
+	<!-- 리뷰 상세페이지에 리뷰 이미지 -->
+	<select id="selectReviewImg" resultMap="reviewImgResultMap"> 
+		SELECT * FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo} ORDER BY REVIEW_FILERENAME ASC
+	</select>
+	
+	<!-- 리뷰 업로드 -->
+	<insert id="insertReview"> 
+		INSERT INTO REVIEW_TBL VALUES(SEQ_REVIEW_NO.NEXTVAL, #{spaceNo}, 
+		#{memberEmail}, #{reviewContents}, #{reviewWriter}, DEFAULT, DEFAULT, DEFAULT, #{reservationNo})
+	</insert>
+	
+	<!-- 리뷰 이미지 업로드 -->
+	<insert id="insertReviewImg"> 
+		INSERT INTO REVIEW_IMG VALUES(SEQ_REVIEW_IMG_NO.NEXTVAL, SEQ_REVIEW_NO.CURRVAL,
+		#{reviewFileName}, #{reviewFileRename}, #{reviewFilePath})
+	</insert>
+	
+	<!-- 리뷰 등록 시 reservation의 리뷰 상태 Y로 업데이트 -->
+	<update id="updateRevStatus"> 
+		UPDATE RESERVATION_TBL SET REV_STATUS = 'Y' WHERE RESERV_NO = #{reservationNo}
+	</update>
+	
+	<!-- 리뷰 삭제 시 reservation의 리뷰 상태 N으로 업데이트 -->
+	<update id="updateRevStatusN"> 
+		UPDATE RESERVATION_TBL SET REV_STATUS = 'N' WHERE RESERV_NO = #{reservationNo}
+	</update>
+	
+	<!-- 리뷰 수정 -->
+	<update id="reviewModify"> 
+		UPDATE REVIEW_TBL SET REVIEW_CONTENTS = #{reviewContents}, R_UPDATE_DATE = DEFAULT
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<!-- 리뷰 사진 수정 -->
+	<update id="reviewImgModify"> 
+		UPDATE REVIEW_IMG
+		SET REVIEW_FILENAME = #{reviewFileName}, REVIEW_FILERENAME = #{reviewFileRename}, REVIEW_FILEPATH = #{reviewFilePath}
+  	 	WHERE REVIEW_IMG_NO = #{reviewImgNo}
+	</update>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview"> 
+		DELETE FROM REVIEW_TBL WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+	
+	<!-- 리뷰 삭제 시 이미지 삭제 -->
+	<delete id="deleteReviewImg"> 
+		DELETE FROM REVIEW_IMG WHERE REVIEW_NO = #{reviewNo}
+	</delete>
 
 </mapper>
