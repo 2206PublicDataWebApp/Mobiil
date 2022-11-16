@@ -11,8 +11,8 @@
 	}
 	
 	#image{
-	  	width: 500px;
-		height : 300px;
+	  	width: 450px;
+		height : 400px;
 		margin-left: 50px;
 	}
 	

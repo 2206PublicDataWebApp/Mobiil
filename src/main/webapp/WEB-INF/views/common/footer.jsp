@@ -46,7 +46,7 @@
 						<a href="https://github.com/seulki1211">정슬기</a>
 					</li>
 					<li>
-						<a href="#">최혜진</a>
+						<a href="https://github.com/Choehyejin">최혜진</a>
 					</li>
 				</ul>
 				<p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>

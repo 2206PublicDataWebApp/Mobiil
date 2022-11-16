@@ -144,7 +144,7 @@
 				<tr>
 					<td id="td">변경 전 금액</td>
 					<td>
-					<input type="text" id="price" class="input" name="price" size="31" value="${rOne.price }"><span id="hour"></span>
+					<input type="text" id="price" class="input" name="price" size="31" value="${(rOne.revEnd - rOne.revStart) *  rOne.price }"><span id="hour"></span>
 					</td>
 				</tr>
 				<tr>
@@ -166,7 +166,7 @@
 		</div>
 	<script>
 	// 시간당 금액
-	var price = ${rOne.price } / (${rOne.revEnd } - ${rOne.revStart });
+	var price = ${rOne.price };
 	$("#hour").text("시간당 금액 : " + Math.floor(price)+"원");
 	document.getElementById('hour').style.color="red";
 	
