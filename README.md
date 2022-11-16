@@ -69,7 +69,7 @@
  > 결제
  >  > 작성 중
  
- ### 찜 / 결제 및 예약
+    찜 / 결제 및 예약
  
 https://user-images.githubusercontent.com/105486016/202107551-84bb85b3-9a3e-47ed-94f9-a61b651e7a06.mp4
 
