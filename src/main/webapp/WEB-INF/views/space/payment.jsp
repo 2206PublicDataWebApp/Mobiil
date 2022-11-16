@@ -40,16 +40,17 @@ input[type=text] {
 			</div>
 		</div>
 		<hr>
-		<div
-			style='margin-bottom: 80px; text-align: center; display: inline-block; float: center;'>
+		<div style='margin-bottom: 80px; text-align: center; display: inline-block; float: center;'>
 			<h2 style='margin-top: 50px; margin-bottom: 50px;'>예약자 정보</h2>
-			<div
-				style='display: inline-block; float: center; text-align: center;'>
-				<input type="checkbox" name="checkbox" id="checkbox"
-					value="checkbox" style="margin-bottom: 10px; margin-left: 100px;">내
-				정보 불러오기 <br> 이름 : <input type="text" id="memberName"
-					class="memberName" style="height: 24px; margin-bottom: 10px;">
-				<br> 전화번호 : <input type="text" id="memberPhone"
+			<div style='display: inline-block; float: center; text-align: center;'>
+				<input type="checkbox" name="checkbox" id="checkbox" value="checkbox" style="margin-bottom: 10px; margin-left: 110px;">내 정보 불러오기
+				<br>
+				<div>
+				<a style='margin-right:33px;'>이름 : </a><input type="text" id="memberName"
+					class="memberName" style="height: 24px;">
+				</div>
+				<br>
+				<a style='margin-right:5px;'>전화번호 : </a><input type="text" id="memberPhone"
 					class="memberPhone" style="height: 24px; margin-bottom: 10px;">
 				<br>
 				<br> <input type="radio" name="paymethod" value="card">

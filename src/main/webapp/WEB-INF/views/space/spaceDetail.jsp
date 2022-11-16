@@ -185,8 +185,8 @@ function openChatRoom(createUser, withUser) {
 	<br>
 	<div style="float:center;width:300px;font-size:11px;" id='calendar'></div>
 	<br>
-		<div class='time' style='float:left;'>
-		<select id="startTime" onchange="check();" style='margin-right:5px;text-align:left;' class='commonSelect'>
+		<div class='time' style='float:left;display:inline-block;'>
+		<select id="startTime" onchange="check();" style='margin-right:5px;' class='commonSelect'>
 			<option value="시작">시작</option>
 			<option value="9">9시</option>
 			<option value="10">10시</option>
@@ -222,16 +222,20 @@ function openChatRoom(createUser, withUser) {
 			<option value="23">23시</option>
 			<option value="24">24시</option>
 		</select>
-		<span class='sum' style='font-weight:bold;font-size:20px;text-align:center;'></span>
-		<input type="button" value="결제" onclick="payment()" style='margin-left:5px;text-align:right;' class='btn'>
+		<span class='sum' style='font-weight:bold;font-size:20px;margin-left:20px;'></span>
+		<br><br>
+		</div>
+		<br><br>
+		<div style='display:inline-block;width:300px;text-align:center;float:left;'>
+		<input type="button" value="결제" onclick="payment()" style='margin-left:5px;' class='btn'>
 		<c:if test='${!empty loginUser.memberNick }'>
 				<input type="button" onclick="openChatRoom('${loginUser.memberNick}', '${memberNick }');" value='채팅' style='margin-right:5px;' class='btn'>
 			</c:if>
 			<c:if test='${!empty loginHost.hostEmail }'>
 				<input type="button" onclick="openChatRoom('${loginHost.memberNick}', '${memberNick }');" value='채팅' style='margin-right:5px;' class='btn'>
 			</c:if>
+		<br><br>
 		</div>
-		<br><br><br>
 		<div id="map" style="width:300px;height:300px;"></div>
 		<span>${space.address2} ${space.address3} ${space.address4}</span>
 
@@ -243,7 +247,7 @@ ${space.spaceComent }
 
 
 <div style='width:700px;align:left;'><span style='font-size:24px;color:darkgreen;'><b id="rCount"></b></span></div>
-<div id="reivewBox" style='width:700px;align:left;'>
+<div id="reivewBox" style='width:700px;'>
 </div>
 </div>
 </div>
@@ -394,6 +398,9 @@ ${space.spaceComent }
 	    		  const today = new Date();
 	    		  if(today>clickDate){
 	    			  alert("선택할 수 없는 날짜입니다.");
+	    			  fcDayElements.forEach((element, key, parent) => {
+	  	    		    element.style.backgroundColor = "";
+	  	    		  });
 	    		  }
 	    		},
 	    	  function( dropInfo ) { 
