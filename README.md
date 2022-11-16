@@ -41,10 +41,12 @@
 <details>
 <summary>고종규</summary>
 <div markdown="1">
-
+<br>
+<br>
  > 공간
- >  > 작성중
- 
+ * <b>공간 업로드 및 수정, 삭제</b>
+ * 업로드
+ ![1](https://user-images.githubusercontent.com/109054053/202120901-6ab0ccc5-1752-4fe5-8f07-5735a6e39c0c.PNG)
  > 예약
  >  > 작성 중
 </div>
