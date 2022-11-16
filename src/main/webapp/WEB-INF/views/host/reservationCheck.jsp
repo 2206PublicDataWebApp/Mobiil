@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../resources/css/calendar.css">	
 <title>예약 확인</title>
@@ -36,7 +37,7 @@
     </div>
   </div>
   
-  <script>	// 여기서 달력 span태그에 값 넣기 시도해보기
+  <script>	// 여기서 달력 span태그에 값 넣기
   window.onload = function() {
 	  <c:forEach items="${rList}" var="reservation">
 		var rDate = '${reservation.reservationDate}'

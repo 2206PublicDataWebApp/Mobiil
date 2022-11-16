@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>호스트 수정 페이지</title>
 
 <style>
@@ -81,7 +82,6 @@
 
 
 </head>
-
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 	<jsp:include page="../host/menuBar.jsp"></jsp:include>

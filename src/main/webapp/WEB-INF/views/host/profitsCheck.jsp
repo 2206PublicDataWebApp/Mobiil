@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta charset="UTF-8">
 <title>정산확인</title>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>      

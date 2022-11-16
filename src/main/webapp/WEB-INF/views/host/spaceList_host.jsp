@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta charset="UTF-8">
 <title>공간 리스트</title>
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
