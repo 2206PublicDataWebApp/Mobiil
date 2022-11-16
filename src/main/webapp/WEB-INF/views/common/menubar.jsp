@@ -250,9 +250,6 @@ function  getTotalUnread() {
 	}
 
 	function openChatRoom(createUser, withUser) {
-		console.log(createUser)
-		console.log(withUser)
-
 		if (confirm("채팅을 시작하시겠습니까?")) {
 			$
 					.ajax({
@@ -270,14 +267,14 @@ function  getTotalUnread() {
 										.open('/chat/chatWindow.kh?memberNick='
 												+ createUser + '', 'window',
 												'width=500, height=700, menubar=no, status=no, toolbar=no');
-							} else if (data == "success") {
+							} else if (data == "fail") {
+								alert("생성에 실패했습니다.");
+							} else {
 								alert("채팅이 시작됩니다.");
 								window
 										.open('/chat/chatWindow.kh?memberNick='
 												+ createUser + '', 'window',
 												'width=500, height=700, menubar=no, status=no, toolbar=no');
-							} else {
-								alert("생성에 실패했습니다.");
 							}
 						},
 						error : function() {
