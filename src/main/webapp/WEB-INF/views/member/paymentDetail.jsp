@@ -13,19 +13,18 @@
 
 .td {
 	height: 50px;
-    background-color: rgb(237, 228, 245);
 }
 
-.tb {
+#tb {
 	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
-	border : 1px solid;
+ 	border : 1px solid;
+	text-align : center;
 }
 
 .th {
 	text-align: center;
-	background-color: rgb(228, 213, 242);
 }
 
 .signup {
@@ -37,10 +36,6 @@
 	text-align: center;
 	font-size: 15px;
 	cursor: pointer;
-}
-
-.data {
-	background-color: rgb(242, 237, 245);
 }
 </style>
 </head>
@@ -62,45 +57,44 @@
             <span onclick="location.href='/partner/myPartnerInfo.kh?memberEmail=${loginUser.memberEmail}'">내 파트너 정보</span>
         </div>
 		<br><br><br>
-		<table border="0" class="tb">
+		<table border="1" id="tb" >
 			<tr>
-				<th width="80" class="th" rowspan="5">예약 정보</th>
+				<th width="80" class="th" rowspan="7">예약 정보</th>
 				<td width="80" class="td">공간명</td>
 				<td width="200" class="data"><a href="/space/spaceDetail.kh?spaceNo=${reservation.spaceNo}"><b>[ ${reservation.spaceName} ]</b></a></td>
 			</tr>
 			<tr>
 				<td class="td">날짜</td>
-				<td class="data">${reservation.reservationDate}</td>
+				<td>${reservation.reservationDate}</td>
 			</tr>
 			<tr>
 				<td class="td">시간</td>
-				<td class="data">${reservation.revStart}시 ~ ${reservation.revEnd}시</td>
+				<td>${reservation.revStart}시 ~ ${reservation.revEnd}시</td>
 			</tr>
 			<tr>
 				<td class="td">사용료</td>
-				<td class="data">${reservation.price}원</td>
-			</tr>
-			<tr id="border">
-				<td class="td">예약번호</td>
-				<td class="data">${reservation.reservationNo}</td>
+				<td>${reservation.price}원</td>
 			</tr>
 			<tr>
-				<th class="th" rowspan="2">예약 정보</th>
+				<td class="td">예약번호</td>
+				<td>${reservation.reservationNo}</td>
+			</tr>
+			<tr>
 				<td class="td">이름</td>
-				<td class="data">${reservation.memberName}</td>
+				<td>${reservation.memberName}</td>
 			</tr>
 			<tr id="border">
 				<td class="td">연락처</td>
-				<td class="data">${reservation.memberPhone}</td>
+				<td>${reservation.memberPhone}</td>
 			</tr>
 			<tr>
 				<th class="th" rowspan="2">결제 정보</th>
 				<td class="td">결제 금액</td>
-				<td class="data">${reservation.price}원</td>
+				<td>${reservation.price}원</td>
 			</tr>
 			<tr>
 				<td class="td">결제일</td>
-				<td class="data">${reservation.paymentDate}</td>
+				<td>${reservation.paymentDate}</td>
 			</tr>
 		</table>
 		<br>
