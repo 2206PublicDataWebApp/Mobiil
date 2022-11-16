@@ -43,35 +43,62 @@
 <div markdown="1">
 <br>
 <br>
+
+
  > 공간
  * <b>공간 업로드 및 수정, 삭제</b>
  * 업로드
  <img src="/https://user-images.githubusercontent.com/109054053/202120901-6ab0ccc5-1752-4fe5-8f07-5735a6e39c0c.PNG>
  > 예약
  >  > 작성 중
+ 
+ 
 </div>
 </details>
  
 <details>
 <summary>김다현</summary>
 <div markdown="1">
+		 
 <br>
-<br>
-> 공간
 
-* <b>공간 리스트 정렬</b>
+ ## * 공간 리스트
+		 
 https://user-images.githubusercontent.com/105486016/202107815-bf216833-6fc4-48af-9ccc-1523cb30702f.mp4
-지역별 조회(공간 승인 날짜 내림차순 정렬),  기본 정렬 외 지역/가격/검색 + 
+		 
+	    - 지역별 조회(공간 승인 날짜 내림차순 정렬), 지역+공간 이름 검색, 가격 검색, 최신순 정렬, 리뷰 많은순 정령, 찜 많은순 정렬 가능
+	    - 지역/가격/검색 + 최신순,찜많은순,리뷰많은순 정렬 가능
 
+ ## * 공간 상세페이지
+		 
+![상세조회](https://user-images.githubusercontent.com/105486016/202125033-1e66902c-a3bd-4969-b674-075cfbab84ad.gif)
+		 
+	    - 공간 이름, 공간 소개 내용, 찜 여부를 나타내는 하트, 결제를 위해 필요한 fullcalendar와 시간 선택 셀렉트박스,
+	        리뷰(비로그인, 개인 회원은 답글보기 버튼이 나타나지 않음), 호스트 댓글 조회
+				 
+ ## * 찜 기능 / 결제 및 예약
+		 
+https://user-images.githubusercontent.com/105486016/202107551-84bb85b3-9a3e-47ed-94f9-a61b651e7a06.mp4
+		 
+	    - 로그인 한 개인 회원의 이메일을 이용해 aJax로 DB에 저장된 정보를 비교하여 찜 여부를 int로 받아 존재하면 빨간 하트가 되고,
+	       존재하지 않으면 빈 하트가 표시된다.
+	    - 아임포트 API를 이용해 결제를 하고, 결제가 완료되면 예약 정보를 DB에 저장하여 예약 완료 페이지에서 정보를 확인할 수 있다.
+	    - 예약이 완료 되면 coolSMS API를 이용해 문자가 전송된다. ↓
+		 
+ ![화면 캡처 2022-11-16 172532](https://user-images.githubusercontent.com/105486016/202127563-a6befeb9-9685-4d34-82d4-fa98a40ba57b.png)
 
-호스트 댓글
+		 
+ ## * 호스트 답글
+	
+		 
  ![호스트댓글](https://user-images.githubusercontent.com/105486016/202091596-ef8f0b0a-57b1-4abc-b18a-5cde1b438e1b.gif)
 
+	    - 상세 페이지에서 로그인 한 호스트의 이메일과 공간을 등록한 호스트 이메일을 비교하여 같은 이메일이면
+	       답글달기 버튼이 나타나 답글을 등록할 수 있다.
+	    - 답글은 수정과 삭제가 가능하며, replace 처리를 통해 개행이 가능하다.
 
 
-결제
-https://user-images.githubusercontent.com/105486016/202107551-84bb85b3-9a3e-47ed-94f9-a61b651e7a06.mp4
-    찜 / 결제 및 예약
+
 
 
 </div>
