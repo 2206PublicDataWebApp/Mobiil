@@ -57,7 +57,9 @@
 > 공간
  >  > 작성중
 리스트 정렬
-https://user-images.githubusercontent.com/105486016/202090897-70526177-cb12-4ab2-b9eb-18c1ebf9cc75.mp4
+
+https://user-images.githubusercontent.com/105486016/202107815-bf216833-6fc4-48af-9ccc-1523cb30702f.mp4
+
 
 호스트 댓글
 ![호스트댓글](https://user-images.githubusercontent.com/105486016/202091596-ef8f0b0a-57b1-4abc-b18a-5cde1b438e1b.gif)
