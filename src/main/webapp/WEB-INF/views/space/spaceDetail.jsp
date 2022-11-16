@@ -419,22 +419,24 @@ ${space.spaceComent }
 			end = $('#endTime option:selected').val();
 			if(sDate == "" || start == "시작" || end == "끝"){
 				alert("날짜 혹은 시간을 확인해주세요.");
-			}
-			$.ajax({
-				url : "/space/checkTime.kh",
-				data : {"start": start, "end":end, "reservDate":sDate},
-				type : "get",
-				success : function(result) {
-					if(result != 0){
-						alert("예약할 수 없는 시간입니다.");
-					}else{
-						location.href = '/space/payment.kh?sDate='+sDate+'&start='+start+'&end='+end+'&price='+price;
+			}else{
+				$.ajax({
+					url : "/space/checkTime.kh",
+					data : {"start": start, "end":end, "reservDate":sDate},
+					type : "get",
+					success : function(result) {
+						if(result != 0){
+							alert("예약할 수 없는 시간입니다.");
+						}else{
+							location.href = '/space/payment.kh?sDate='+sDate+'&start='+start+'&end='+end+'&price='+price;
+						}
+					},
+					error : function(){
+						alert("통신 실패");
 					}
-				},
-				error : function(){
-					alert("통신 실패");
-				}
-			})
+				})
+				
+			}
 		}
 		
 	}
