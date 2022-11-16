@@ -4,7 +4,7 @@
 #  Mobiil  
 
 ###### _KH정보교육원 빌려조 Final Project_            
-[고종규](https://github.com/JongGyuGo), [김다현](https://github.com/hhdk0), [정슬기](https://github.com/seulki1211), [최혜진]
+[고종규](https://github.com/JongGyuGo), [김다현](https://github.com/hhdk0), [정슬기](https://github.com/seulki1211), [최혜진](https://github.com/Choehyejin)
 
   > 문서: 2022.10.05. ~ 2022.10.14.
   
