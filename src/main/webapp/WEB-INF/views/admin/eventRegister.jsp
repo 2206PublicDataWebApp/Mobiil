@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
   <link rel="stylesheet" href="/resources/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="/resources/images/mobiil.ico">
   
   <style type="text/css">
  

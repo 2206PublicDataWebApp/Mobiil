@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
 
 <meta charset="UTF-8">
 <title>파트너 정보 수정</title>

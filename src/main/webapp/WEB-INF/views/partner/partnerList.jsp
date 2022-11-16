@@ -5,8 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-</head>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
 <title>Mobiil Partner</title>
+
+</head>
 
 <body id="body">
 

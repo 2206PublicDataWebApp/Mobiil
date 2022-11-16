@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <meta charset="UTF-8">
 <title>닉네임 변경</title>
 <style>

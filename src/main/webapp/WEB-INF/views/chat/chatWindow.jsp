@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,7 +189,7 @@ color:black;
 	},5*60*1000); // 5분 두 한번 리로드	
 
  	function showProfile(memberNick) {
-		if(memberNick != "관리자"){
+		if(memberNick != "관리자" && memberNick != null){
 			$.ajax({
 				url:"getProfile",
 				data:{memberNick: memberNick},

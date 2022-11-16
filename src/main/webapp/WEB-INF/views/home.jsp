@@ -11,6 +11,8 @@
 
 <html>
 <head>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <style type="text/css">
 
 </style>

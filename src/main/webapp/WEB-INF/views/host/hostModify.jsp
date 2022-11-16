@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <title>호스트 수정 페이지</title>
 
 <style>

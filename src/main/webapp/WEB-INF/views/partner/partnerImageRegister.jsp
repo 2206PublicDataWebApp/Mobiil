@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>파트너 프로필 사진 변경</title>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
   <link rel="stylesheet" href="/resources/plugins/bootstrap/css/bootstrap.min.css">
 </head>
 <body>

@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>파트너 관리</title>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 </head>
 <body>
 <jsp:include page="../../../views/common/admin-top.jsp"></jsp:include>

@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>배너 등록</title>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 </head>
 <body>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>

@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <title>Insert title here</title>
 </head>
 <body>

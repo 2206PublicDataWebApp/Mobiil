@@ -274,8 +274,6 @@ public class HostController {
 		mv.addObject("monthValue", monthValue);
 		mv.setViewName("host/menuBar");
 		List<Reservation> rList = hService.regervationListByHostemail(hostEmail, monthValue);
-		System.out.println(monthValue);
-		System.out.println(rList);
 		try {
 			if (!rList.isEmpty()) {
 				mv.addObject("monthValue", monthValue);
@@ -306,7 +304,6 @@ public class HostController {
 		///////////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = hService.getRegervationTotalCount(hostEmail);
-		System.out.println(totalCount);
 		int boardLimit = 10;
 		int naviLimit = 5;
 		int maxPage;
@@ -321,7 +318,6 @@ public class HostController {
 		////////////////////////////////////////////////////////////
 		
 		List<Reservation> rList = hService.regervationList(currentPage, boardLimit, hostEmail);
-		System.out.println(rList);
 		try {
 			if (!rList.isEmpty()) {
 				mv.addObject("currentPage", currentPage);
@@ -422,8 +418,6 @@ public class HostController {
 			////////////////////////////////////////////////////////////
 			List<Reservation> rList = hService.rListByDate(currentPage, boardLimit, date1, date2, hostEmail);
 			int priceSum = hService.priceSumByHostemail(hostEmail, date1, date2);
-			System.out.println(priceSum);
-			System.out.println(rList);
 			if (!rList.isEmpty()) {
 				mv.addObject("currentPage", currentPage);
 				mv.addObject("maxPage", maxPage);
@@ -636,7 +630,6 @@ public class HostController {
 		///////////////////////////////////////////////////////////
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = hService.getSpaceTotalCount();
-		System.out.println(totalCount);
 		int boardLimit = 10;
 		int naviLimit = 5;
 		int maxPage;

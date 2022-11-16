@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <style type="text/css">
 
 #support{
@@ -32,10 +33,12 @@
 <title>Insert title here</title>
 
 
+
   <!-- Basic Page Needs
   ================================================== -->
   <meta charset="utf-8">
   <title>Mobiil</title>
+  
 
   <!-- Mobile Specific Metas
   ================================================== -->
@@ -221,60 +224,73 @@ function  getTotalUnread() {
 	if("${loginUser.memberNick }" != ""){
 		var memberNick = "${loginUser.memberNick }";
 	}
-	$.ajax({
-		url:"/chat/getTotalUnread.kh",
-		data:{memberNick :memberNick},
-		type: "get",
-		success: function(data) {
-			$("#myChat").text("마이채팅 (" + data + ")");
-		},
-		error: function() {
-			console.log("에러")
+	
+	
+	if (memberNick != null) {
+			$.ajax({
+				url : "/chat/getTotalUnread.kh",
+				data : {
+					memberNick : memberNick
+				},
+				type : "get",
+				success : function(data) {
+					$("#myChat").text("마이채팅 (" + data + ")");
+				},
+				error : function() {
+					console.log("에러")
+				}
+
+			})
 		}
-	})
-}
-
-function showAlert() {
-	alert("로그인 후 이용해주세요.")
-	location.href="/home/login.kh";
-}
-
-function openChatRoom(createUser, withUser) {
-	console.log(createUser)
-	console.log(withUser)
-
-	if(confirm("채팅을 시작하시겠습니까?")){
-		$.ajax({
-			url:"/chat/createChatRoom.kh",
-			tyep: "get",
-			data: {createUser: createUser,
-					withUser:withUser},
-			success:
-				function(data) {
-				console.log(data);
-					if(data == "already"){
-						alert("이미 생성된 채팅방입니다");
-						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
-					}else if(data == "success"){
-						alert("채팅이 시작됩니다.");
-						window.open('/chat/chatWindow.kh?memberNick='+createUser+'', 'window', 'width=500, height=700, menubar=no, status=no, toolbar=no');
-					}else{
-						alert("생성에 실패했습니다.");
-					}
-				},
-			error:
-				function() {
-					alert("에러")
-				},
-		})
 	}
-}
 
-function openCalendar() {
-	window.open('/calendar.kh', 'window', 'width=900, height=700, menubar=no, status=no, toolbar=no');
-}
+	function showAlert() {
+		alert("로그인 후 이용해주세요.")
+		location.href = "/home/login.kh";
+	}
 
+	function openChatRoom(createUser, withUser) {
+		console.log(createUser)
+		console.log(withUser)
 
+		if (confirm("채팅을 시작하시겠습니까?")) {
+			$
+					.ajax({
+						url : "/chat/createChatRoom.kh",
+						tyep : "get",
+						data : {
+							createUser : createUser,
+							withUser : withUser
+						},
+						success : function(data) {
+							console.log(data);
+							if (data == "already") {
+								alert("이미 생성된 채팅방입니다");
+								window
+										.open('/chat/chatWindow.kh?memberNick='
+												+ createUser + '', 'window',
+												'width=500, height=700, menubar=no, status=no, toolbar=no');
+							} else if (data == "success") {
+								alert("채팅이 시작됩니다.");
+								window
+										.open('/chat/chatWindow.kh?memberNick='
+												+ createUser + '', 'window',
+												'width=500, height=700, menubar=no, status=no, toolbar=no');
+							} else {
+								alert("생성에 실패했습니다.");
+							}
+						},
+						error : function() {
+							alert("에러")
+						},
+					})
+		}
+	}
+
+	function openCalendar() {
+		window.open('/calendar.kh', 'window',
+				'width=900, height=700, menubar=no, status=no, toolbar=no');
+	}
 </script>
  
     

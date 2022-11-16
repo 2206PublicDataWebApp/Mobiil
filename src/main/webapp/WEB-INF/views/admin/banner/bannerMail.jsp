@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>광고 문의 메일 작성</title>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 </head>
 <body>
 <body id="body">

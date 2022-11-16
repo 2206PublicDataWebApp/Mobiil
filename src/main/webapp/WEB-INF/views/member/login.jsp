@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <meta charset="UTF-8">
 <title>개인회원 로그인</title>
 <style>

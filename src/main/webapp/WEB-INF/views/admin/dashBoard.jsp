@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard</title>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <style type="text/css">
 
 #memberAmount{

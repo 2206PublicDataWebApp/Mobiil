@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/resources/plugins/bootstrap/css/bootstrap.min.css">
 

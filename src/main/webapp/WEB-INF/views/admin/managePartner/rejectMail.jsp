@@ -6,6 +6,8 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>승인 거절 메일 작성</title>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 </head>
 <body>
 <body id="body">

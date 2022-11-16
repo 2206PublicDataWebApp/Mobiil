@@ -7,6 +7,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta charset="UTF-8">
 <title>대시보드</title>
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>

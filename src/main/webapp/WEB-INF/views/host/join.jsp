@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <title>기업회원 가입</title>
 <style>
 .signup {

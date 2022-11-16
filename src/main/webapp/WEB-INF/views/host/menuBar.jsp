@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="/resources/images/mobiil.ico">
+
 <title>모빌</title>
 	<style>
 		body{

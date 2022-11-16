@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>배너 이미지 변경</title>
   <link rel="stylesheet" href="/resources/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="/resources/images/mobiil.ico">
+  
 </head>
 <body>
 
