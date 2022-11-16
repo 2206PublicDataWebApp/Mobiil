@@ -41,7 +41,7 @@
 
 
 </head>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <body>
 <jsp:include page="../../views/common/menubar.jsp"></jsp:include>
 	<div id="wapper">

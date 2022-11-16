@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta charset="UTF-8">
 <title>공간 수정 페이지</title>
 <style>
