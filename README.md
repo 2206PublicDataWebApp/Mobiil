@@ -59,19 +59,16 @@
  > 공간 리스트 정렬
  > https://user-images.githubusercontent.com/105486016/202107815-bf216833-6fc4-48af-9ccc-1523cb30702f.mp4
  > 지역별 조회(공간 승인 날짜 내림차순 정렬),  기본 정렬 외 지역/가격/검색 + 
-
-
-호스트 댓글
-![호스트댓글](https://user-images.githubusercontent.com/105486016/202091596-ef8f0b0a-57b1-4abc-b18a-5cde1b438e1b.gif)
-
-
- 
+ > 
+ > 
+ > 호스트 댓글
+ > ![호스트댓글](https://user-images.githubusercontent.com/105486016/202091596-ef8f0b0a-57b1-4abc-b18a-5cde1b438e1b.gif)
+ > 
+ > 
+ >  
  > 결제
- >  > 작성 중
- 
-    찜 / 결제 및 예약
- 
-https://user-images.githubusercontent.com/105486016/202107551-84bb85b3-9a3e-47ed-94f9-a61b651e7a06.mp4
+ > https://user-images.githubusercontent.com/105486016/202107551-84bb85b3-9a3e-47ed-94f9-a61b651e7a06.mp4
+ >     찜 / 결제 및 예약
 
 
 </div>
