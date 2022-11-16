@@ -43,16 +43,24 @@
 <div markdown="1">
 <br>
 <br>
+   
+* <b>예약 일정 확인</b>
+   
+https://user-images.githubusercontent.com/109054053/202122427-f0d51ef0-390e-4669-b3a3-29743d5748c8.mp4
 
+* <b>기간별 판매 금액 확인</b>
 
- > 공간
- * <b>공간 업로드 및 수정, 삭제</b>
- * 업로드
- <img src="/https://user-images.githubusercontent.com/109054053/202120901-6ab0ccc5-1752-4fe5-8f07-5735a6e39c0c.PNG>
- > 예약
- >  > 작성 중
- 
- 
+https://user-images.githubusercontent.com/109054053/202122846-0a6d3032-7818-407c-a770-698171724c5d.mp4
+
+* <b>월별 데이터 현황</b>
+
+https://user-images.githubusercontent.com/109054053/202123506-62a7eeeb-70cf-40e5-9c27-baae7586c8da.mp4
+
+* <b>기타 기능</b>
+   
+1. 호스트 정보 조회 및 정보 수정
+2. 공간 CRUD
+3. 예약 CRUD
 </div>
 </details>
  
