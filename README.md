@@ -47,20 +47,27 @@
 * <b>예약 일정 확인</b>
    
 https://user-images.githubusercontent.com/109054053/202122427-f0d51ef0-390e-4669-b3a3-29743d5748c8.mp4
+	
+<br>
 
 * <b>기간별 판매 금액 확인</b>
 
 https://user-images.githubusercontent.com/109054053/202122846-0a6d3032-7818-407c-a770-698171724c5d.mp4
 
+<br>
+	
 * <b>월별 데이터 현황</b>
 
 https://user-images.githubusercontent.com/109054053/202123506-62a7eeeb-70cf-40e5-9c27-baae7586c8da.mp4
 
+<br>
+	
 * <b>기타 기능</b>
    
 1. 호스트 정보 조회 및 정보 수정
 2. 공간 CRUD
 3. 예약 CRUD
+<br>
 </div>
 </details>
  
