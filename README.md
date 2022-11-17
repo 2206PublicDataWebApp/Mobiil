@@ -48,18 +48,132 @@
    
 https://user-images.githubusercontent.com/109054053/202122427-f0d51ef0-390e-4669-b3a3-29743d5748c8.mp4
 	
+	- 해당 호스트가 등록한 공간을 예약한 예약자 정보를 불러와서 예약한 일자에 보여준다.
+	
 <br>
 
 * <b>기간별 판매 금액 확인</b>
 
-https://user-images.githubusercontent.com/109054053/202122846-0a6d3032-7818-407c-a770-698171724c5d.mp4
+https://user-images.githubusercontent.com/109054053/202375613-b0420b3d-9cba-4c70-82cc-297c046c30b2.mp4
 
+	- 조회하고싶은 기간을 선택하게되면 예약 리스트를 보여주고, 그 기간내의 총 판매금액을 보여준다.
+	
+	<!-- 정산 확인 총 금액  -->
+	  <select id="priceSumByHostemail" resultType="_int">
+	  	SELECT SUM((REV_END-REV_START)*PRICE) AS PRICE
+	  	FROM RESERVATION_TBL
+	  	WHERE RESERV_DATE BETWEEN  #{date1} AND #{date2} AND HOST_EMAIL = #{hostEmail}
+	  </select>
 <br>
 	
 * <b>월별 데이터 현황</b>
 
-https://user-images.githubusercontent.com/109054053/202123506-62a7eeeb-70cf-40e5-9c27-baae7586c8da.mp4
+https://user-images.githubusercontent.com/109054053/202375412-e5092ff5-d5db-45c4-811f-624238cb0f28.mp4
 
+	- 해당 호스트의 월별 예약 현황, 월별 공간 갯수, 월별 판매 금액을 차트로 보여준다.
+	
+	/**
+	 * 월별 예약 건수
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/host/drawspaceChart.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String drawspaceChart(HttpServletRequest request) {
+		Gson gson = new Gson();
+		
+		HttpSession session = request.getSession();
+		Host host = (Host) session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		
+		List<Reservation> result = hService.getRegervationCountByMonth(hostEmail);
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		JSONArray arr = new JSONArray();
+		arr.add(obj);
+		return gson.toJson(arr);
+	}
+	
+	/**
+	 * 월별 공간 등록수
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/host/spaceChart.kh", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String drawspaceChart2(HttpServletRequest request) {
+		Gson gson = new Gson();
+		
+		HttpSession session = request.getSession();
+		Host host = (Host)session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		
+		List<Space> result = hService.getSpaceCountByMonth(hostEmail);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		
+		JSONArray arr = new JSONArray();
+		arr.add(obj);
+		
+		return gson.toJson(arr);
+	}
+	
+	/**
+	 * 월별 판매금액
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/host/profitChart.kh", method = RequestMethod.GET, produces="application/json;charset=utf-8")
+	public String drawProfitChart(HttpServletRequest request) {
+		
+		Gson gson = new Gson();
+		
+		HttpSession session = request.getSession();
+		Host host = (Host)session.getAttribute("loginHost");
+		String hostEmail = host.getHostEmail();
+		
+		List<Reservation> result = hService.getProfitByMonth(hostEmail);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		
+		JSONArray arr = new JSONArray();
+		arr.add(obj);
+		
+		return gson.toJson(arr);
+	}
+	
+	 <!-- 월별 예약 건수  -->
+  	 <select id="getRegervationCountByMonth" resultType="map">
+ 		SELECT TO_CHAR(A.RESERV_DATE, 'YYYY-MM') as RESERV_DATE, COUNT(B.RESERV_DATE) as RevCount
+        FROM MONTH_TBL A
+        LEFT OUTER JOIN RESERVATION_TBL B ON (TO_CHAR(A.RESERV_DATE,'YYYY-MM') = TO_CHAR( B.RESERV_DATE, 'YYYY-MM'))
+        AND B.RESERV_STATUS = 'Y' AND B.HOST_EMAIL = #{hostEmail}
+        GROUP BY TO_CHAR(A.RESERV_DATE, 'YYYY-MM')
+        ORDER BY RESERV_DATE
+  	 </select>
+  	   	 
+  	 <!-- 월별 공간수 -->
+  	 <select id="getSpaceCountByMonth" resultType="map">
+  	 	SELECT TO_CHAR(A.RESERV_DATE, 'YYYY-MM') AS RESERV_DATE, COUNT(B.SPACE_NO) as SpaCount
+	    FROM MONTH_TBL A
+	    LEFT OUTER JOIN SPACE_TBL B ON (TO_CHAR(A.RESERV_DATE,'YYYY-MM') = TO_CHAR(B.APPROVAL_DATE, 'YYYY-MM'))
+	    AND B.SPACE_STATUS = 'Y' AND B.HOST_EMAIL = #{hostEmail}
+        GROUP BY TO_CHAR(A.RESERV_DATE, 'YYYY-MM')
+	    ORDER BY RESERV_DATE
+  	 </select>
+  	 
+  	 <!-- 월별 판매금액 -->
+  	 <select id="getProfitByMonth" resultType="map">
+  	 	SELECT TO_CHAR(A.RESERV_DATE, 'YYYY-MM') AS RESERV_DATE, SUM(FLOOR(B.REV_END-B.REV_START)*B.PRICE) as PRICE
+	    FROM MONTH_TBL A
+        LEFT OUTER JOIN RESERVATION_TBL B ON (TO_CHAR(A.RESERV_DATE,'YYYY-MM') = TO_CHAR(B.RESERV_DATE, 'YYYY-MM'))
+	    AND B.RESERV_STATUS = 'Y' AND B.HOST_EMAIL = #{hostEmail}
+	    GROUP BY TO_CHAR(A.RESERV_DATE, 'YYYY-MM')
+	    ORDER BY RESERV_DATE, 'YYYY-MM'
+  	 </select>
 <br>
 	
 * <b>기타 기능</b>
@@ -68,56 +182,6 @@ https://user-images.githubusercontent.com/109054053/202123506-62a7eeeb-70cf-40e5
 2. 공간 CRUD
 3. 예약 CRUD
 <br>
-</div>
-</details>
- 
-<details>
-<summary>김다현</summary>
-<div markdown="1">
-		 
-<br>
-
- ## * 공간 리스트
-		 
-https://user-images.githubusercontent.com/105486016/202107815-bf216833-6fc4-48af-9ccc-1523cb30702f.mp4
-		 
-	    - 지역별 조회(공간 승인 날짜 내림차순 정렬), 지역+공간 이름 검색, 가격 검색
-	        ,최신순 정렬, 리뷰 많은순 정렬, 찜 많은순 정렬 가능
-	    - 지역/가격/검색 + 최신순,찜많은순,리뷰많은순 정렬 가능
-
- ## * 공간 상세페이지
-		 
-![상세조회](https://user-images.githubusercontent.com/105486016/202125033-1e66902c-a3bd-4969-b674-075cfbab84ad.gif)
-		 
-	    - 공간 이름, 공간 소개 내용, 찜 여부를 나타내는 하트, 결제를 위한 fullcalendar와 시 선택 셀렉트박스,
-	        리뷰(비로그인, 개인 회원은 답글보기 버튼이 나타나지 않음), 호스트 댓글 조회
-				 
- ## * 찜 기능 / 결제 및 예약
-		 
-https://user-images.githubusercontent.com/105486016/202107551-84bb85b3-9a3e-47ed-94f9-a61b651e7a06.mp4
-		 
-	    - 로그인 한 개인 회원의 이메일을 이용해 aJax로 DB에 저장된 정보를 비교하여 찜 여부를 int로 받아
-	       존재하면 빨간 하트가 되고, 존재하지 않으면 빈 하트가 표시된다.
-	    - 아임포트 API를 이용해 결제를 하고, 결제가 완료되면 예약 정보를 DB에 저장하여
-	       예약 완료 페이지에서 정보를 확인할 수 있다.
-	    - 예약이 완료 되면 coolSMS API를 이용해 문자가 전송된다. ↓
-		 
- ![화면 캡처 2022-11-16 172532](https://user-images.githubusercontent.com/105486016/202127563-a6befeb9-9685-4d34-82d4-fa98a40ba57b.png)
-
-		 
- ## * 호스트 답글
-	
-		 
- ![호스트댓글](https://user-images.githubusercontent.com/105486016/202091596-ef8f0b0a-57b1-4abc-b18a-5cde1b438e1b.gif)
-
-	    - 상세 페이지에서 로그인 한 호스트의 이메일과 공간을 등록한 호스트 이메일을 비교하여
-	       같은 이메일이면 답글달기 버튼이 나타나 답글을 등록할 수 있다.
-	    - 답글은 수정과 삭제가 가능하며, replace 처리를 통해 개행이 가능하다.
-
-
-
-
-
 </div>
 </details>
  
