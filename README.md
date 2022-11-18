@@ -383,11 +383,60 @@ https://user-images.githubusercontent.com/110793386/200994969-a9473587-26be-477d
 <summary>최혜진</summary>
 <div markdown="1">
 
- > 회원가입 및 로그인
- >  > 작성중
- 
- > 마이페이지 및 리뷰
- >  > 작성 중
+         > 회원가입 및 로그인
+	 
+           * 일반/기업회원 가입 및 로그인
+<img width="1280" alt="image" src="https://user-images.githubusercontent.com/109094051/202393865-5ee472d5-49f7-41ab-ad18-7c743eff7774.png">
+<img width="1280" alt="image" src="https://user-images.githubusercontent.com/109094051/202394445-41146406-4891-4be1-95c4-b304d40a13cf.png">
+<img width="1280" alt="image" src="https://user-images.githubusercontent.com/109094051/202394496-d04d0cc1-b576-4599-a73e-4f0a21b1450e.png">
+
+                - 회원가입 시 유효성 체크와 이메일과 닉네임 중복방지
+<img width="1280" alt="image" src="https://user-images.githubusercontent.com/109094051/202394083-7401b884-aa28-4cdb-a461-fc03f1dc428f.png">
+
+                - 이메일로 인증번호를 받아 입력 후 회원가입
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/109094051/202380812-88944634-b9e1-4a8d-95f1-fc32fa66b688.png">
+
+---
+
+           * 비밀번호 찾기
+                - 일반회원/ 기업회원이 비밀번호를 잊었을 경우, 가입했던 이메일을 입력하고 인증번호를 받아 입력하면 비밀번호 변경 페이지로 이동
+                - 비밀번호를 변경 후 변경된 비밀번호로 로그인 가능
+<img width="411" alt="image" src="https://user-images.githubusercontent.com/109094051/202397450-2a981201-2cca-4900-853c-88639a08e76f.png">
+<img width="569" alt="image" src="https://user-images.githubusercontent.com/109094051/202397973-b7a64832-cf19-4d64-af4c-6b772fe1bf23.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/109094051/202386193-12367558-2a8e-4d1f-8a4c-1d5882e8b864.png">
+
+---
+
+           * 카카오 회원가입 및 로그인
+                - 카카오 계정 아이디와 비밀번호 입력 후 서비스 동의를 체크하면 가입 완료
+                - 카카오 가입 후 닉네임을 변경해야 서비스 이용이 가능, 닉네임 변경 후 재로그인하면 일반 회원과 같이 서비스 이용이 가능
+<img width="916" alt="image" src="https://user-images.githubusercontent.com/109094051/202590392-3d689fa8-cb1d-4dff-9787-cfcf5a65ccb8.png">
+
+---
+
+         > 마이페이지 및 리뷰
+           * 정보조회 및 수정
+                - 회원이 본인의 정보를 조회 및 수정 가능
+<img width="818" alt="image" src="https://user-images.githubusercontent.com/109094051/202591493-83e842a3-d9fc-45ea-b4d8-8e6e21fd4460.png">
+
+---
+
+           * 내가 찜한 공간 조회
+                - 찜한 공간 조회, 공간 상세페이지로 이동 가능
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/109094051/202595568-ff587abe-b12a-4dfd-91b5-2ea1df4dde90.png">
+
+---
+
+           * 결제내역 목록, 상세조회
+                - 회원이 결제한 목록을 조회할 수 있고 공간명을 누르면 공간 상세 페이지로 이동 가능
+                - 예약 번호를 누르면 결제 상세 정보 조회 가능
+<img width="1280" alt="image" src="https://user-images.githubusercontent.com/109094051/202600751-003b9396-d2f0-45d4-837a-92d7c049d404.png">
+
+---
+
+           * 리뷰 작성 및 수정
+	   	- 결제내역 목록 페이지에서 리뷰 작성, 조회가 가능하고 조회 페이지에서 리뷰 수정 삭제와 공간페이지의 리뷰 조회 가능
+<img width="1280" alt="image" src="https://user-images.githubusercontent.com/109094051/202600938-80f65b8f-ad78-4d2c-a852-631ad8540dd4.png">
 
 </div>
 </details>
